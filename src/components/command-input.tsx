@@ -644,7 +644,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
                 const isActive = index === highlightedIndex;
                 return (
                   <li
-                    key={`${suggestion.suggestion}-${index}`}
+                    key={`${suggestion.suggestion}-${suggestion.tooltip ?? ""}`}
                     className={`cursor-pointer px-3 py-2 transition-colors ${
                       isActive
                         ? "bg-accent text-accent-foreground"

@@ -212,9 +212,9 @@ function DebugNodeComponent({ id, data, selected }: DebugNodeProps) {
               {history
                 .slice(-5)
                 .reverse()
-                .map((entry, i) => (
+                .map((entry) => (
                   <div
-                    key={`${entry.timestamp.getTime()}-${i}`}
+                    key={`${entry.timestamp.getTime()}-${formatValue(entry.value)}`}
                     className="flex items-center gap-2 text-xs"
                   >
                     <span className="text-muted-foreground shrink-0">

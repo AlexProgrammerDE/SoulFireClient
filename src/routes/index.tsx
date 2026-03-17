@@ -111,6 +111,10 @@ const mobileIntegratedServerFormSchema = z.object({
 });
 
 type LoginType = "INTEGRATED" | "DEDICATED" | "EMAIL_CODE" | null;
+type IntegratedLog = {
+  id: number;
+  message: string;
+};
 
 type TargetRedirectFunction = () => Promise<void>;
 type LoginFunction = (
@@ -118,6 +122,10 @@ type LoginFunction = (
   address: string,
   token: string,
 ) => Promise<void>;
+
+function createIntegratedLog(message: string, id: number): IntegratedLog {
+  return { id, message };
+}
 
 type AuthFlowData = {
   email: string;
@@ -485,12 +493,20 @@ function IntegratedMenu({
   const { t } = useTranslation("login");
   const [integratedState, setIntegratedState] =
     useState<IntegratedState>("configure");
-  const [logs, setLogs] = useState<string[]>([t("integrated.preparing")]);
+  const [logs, setLogs] = useState<IntegratedLog[]>([
+    createIntegratedLog(t("integrated.preparing"), 0),
+  ]);
 
   useEffect(() => {
     const cancel = cancellablePromiseDefault(
       listen("integrated-server-start-log", (event) => {
-        setLogs((prev) => [...prev, event.payload as string]);
+        setLogs((prev) => [
+          ...prev,
+          createIntegratedLog(
+            event.payload as string,
+            (prev[prev.length - 1]?.id ?? 0) + 1,
+          ),
+        ]);
       }),
     );
     return () => {
@@ -662,7 +678,7 @@ function useElapsedSeconds() {
   return elapsed;
 }
 
-function IntegratedLoadingMenu({ logs }: { logs: string[] }) {
+function IntegratedLoadingMenu({ logs }: { logs: IntegratedLog[] }) {
   const { t } = useTranslation("login");
   const scrollRef = useRef<HTMLDivElement>(null);
   const elapsed = useElapsedSeconds();
@@ -689,12 +705,12 @@ function IntegratedLoadingMenu({ logs }: { logs: string[] }) {
       <CardContent>
         <Scroller ref={scrollRef} className="h-48" hideScrollbar>
           <div className="flex flex-col gap-1">
-            {logs.map((log, index) => (
+            {logs.map((log) => (
               <p
-                key={`${index}-${log}`}
+                key={log.id}
                 className="select-text rounded-md bg-muted px-3 py-2 font-mono text-xs break-all"
               >
-                {log}
+                {log.message}
               </p>
             ))}
           </div>
@@ -711,8 +727,8 @@ function IntegratedErrorMenu({
   setIntegratedState,
   startIntegratedServer,
 }: {
-  logs: string[];
-  setLogs: (logs: string[]) => void;
+  logs: IntegratedLog[];
+  setLogs: (logs: IntegratedLog[]) => void;
   setLoginType: (type: LoginType) => void;
   setIntegratedState: (state: IntegratedState) => void;
   startIntegratedServer: (onError: () => void) => void;
@@ -732,12 +748,12 @@ function IntegratedErrorMenu({
       <CardContent>
         <Scroller ref={scrollRef} className="h-48" hideScrollbar>
           <div className="flex flex-col gap-1">
-            {logs.map((log, index) => (
+            {logs.map((log) => (
               <p
-                key={`${index}-${log}`}
+                key={log.id}
                 className="select-text rounded-md bg-muted px-3 py-2 font-mono text-xs break-all"
               >
-                {log}
+                {log.message}
               </p>
             ))}
           </div>
@@ -783,7 +799,7 @@ function IntegratedErrorMenu({
           </Button>
           <Button
             onClick={() => {
-              setLogs([t("integrated.preparing")]);
+              setLogs([createIntegratedLog(t("integrated.preparing"), 0)]);
               setIntegratedState("loading");
               startIntegratedServer(() => setIntegratedState("error"));
             }}

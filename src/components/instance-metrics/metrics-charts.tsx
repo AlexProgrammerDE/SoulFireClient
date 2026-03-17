@@ -5,7 +5,6 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Cell,
   Line,
   LineChart,
   Pie,
@@ -801,11 +800,7 @@ export function DimensionPieChart({
               innerRadius={40}
               isAnimationActive={false}
               strokeWidth={3}
-            >
-              {chartData.map((entry) => (
-                <Cell key={entry.dimension} fill={entry.fill} />
-              ))}
-            </Pie>
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>
@@ -870,11 +865,7 @@ export function GameModePieChart({
               innerRadius={40}
               isAnimationActive={false}
               strokeWidth={3}
-            >
-              {chartData.map((entry) => (
-                <Cell key={entry.mode} fill={entry.fill} />
-              ))}
-            </Pie>
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>

@@ -487,10 +487,6 @@ function AddButton() {
     null,
   );
   const [checkDialogOpen, setCheckDialogOpen] = useState(false);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   // Batch add proxies mutation
   const { mutateAsync: addProxiesBatchMutation } = useMutation({
     mutationKey: ["instance", "proxies", "add-batch", instanceInfo.id],
@@ -796,10 +792,6 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();

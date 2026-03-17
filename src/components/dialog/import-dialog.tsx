@@ -215,7 +215,6 @@ function MainDialog(
   return (
     <Credenza open={true} onOpenChange={props.closer}>
       <CredenzaContent>
-        {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Ctrl+V paste handler */}
         <div role="dialog" onPaste={handlePaste}>
           <CredenzaHeader>
             <CredenzaTitle>{props.title}</CredenzaTitle>
