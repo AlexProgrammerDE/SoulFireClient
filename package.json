@@ -94,8 +94,10 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.0",
     "@biomejs/biome": "2.4.7",
     "@protobuf-ts/plugin": "^2.11.1",
+    "@rolldown/plugin-babel": "^0.2.1",
     "@tailwindcss/postcss": "^4.2.0",
     "@tanstack/devtools-vite": "^0.6.0",
     "@tanstack/react-devtools": "^0.10.0",
@@ -105,6 +107,7 @@
     "@tanstack/router-cli": "^1.161.3",
     "@tanstack/router-plugin": "^1.161.3",
     "@tauri-apps/cli": "2.10.1",
+    "@types/babel__core": "^7.20.5",
     "@types/file-saver": "^2.0.7",
     "@types/loadable__component": "^5.13.10",
     "@types/node": "^24.10.13",
@@ -114,6 +117,7 @@
     "@types/urijs": "^1.19.26",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.24",
+    "babel-plugin-react-compiler": "^1.0.0",
     "cross-env": "^10.1.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
