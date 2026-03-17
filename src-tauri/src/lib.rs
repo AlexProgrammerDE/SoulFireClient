@@ -25,6 +25,8 @@ mod utils;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    configure_linux_env();
+
     // jsonwebtoken v10 requires selecting one process-level CryptoProvider.
     let _ = jsonwebtoken::crypto::rust_crypto::DEFAULT_PROVIDER.install_default();
 
@@ -168,3 +170,19 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
+#[cfg(target_os = "linux")]
+fn configure_linux_env() {
+    if env::var_os("WAYLAND_DISPLAY").is_some()
+        && env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none()
+    {
+        info!("Detected Wayland; disabling WebKit dmabuf renderer for stability");
+        // SAFETY: this runs during single-threaded startup before Tauri/WebKit spawn threads.
+        unsafe {
+            env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+        }
+    }
+}
+
+#[cfg(not(target_os = "linux"))]
+fn configure_linux_env() {}
