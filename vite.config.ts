@@ -1,5 +1,4 @@
 import * as fs from "node:fs";
-import { resolve } from "node:path";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react-swc";
@@ -53,9 +52,7 @@ export default defineConfig({
   ],
   clearScreen: false,
   resolve: {
-    alias: {
-      "@": resolve(process.cwd(), "src"),
-    },
+    tsconfigPaths: true,
   },
   server: {
     host: host || false,
