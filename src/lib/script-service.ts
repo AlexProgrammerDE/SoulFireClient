@@ -15,17 +15,17 @@ import {
 } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 
-// Re-export for convenience
-export { EdgeType, PortType };
 export type {
   GetNodeTypesRequest,
   GetNodeTypesResponse,
   NodeTypeDefinition,
   ProtoPortDefinition,
   ScriptData,
-  ScriptNode,
   ScriptEdge,
+  ScriptNode,
 };
+// Re-export for convenience
+export { EdgeType, PortType };
 
 /**
  * Query options for listing all scripts in an instance

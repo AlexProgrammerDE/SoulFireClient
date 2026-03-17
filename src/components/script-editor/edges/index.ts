@@ -11,11 +11,11 @@ const edgeTypes: EdgeTypes = {
   data: DataEdge,
 };
 
-export {
-  edgeTypes,
-  ExecutionEdge,
-  DataEdge,
-  type ExecutionEdgeType,
-  type DataEdgeType,
-};
 export * from "./connection-validation";
+export {
+  DataEdge,
+  type DataEdgeType,
+  ExecutionEdge,
+  type ExecutionEdgeType,
+  edgeTypes,
+};

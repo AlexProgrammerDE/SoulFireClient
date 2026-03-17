@@ -76,4 +76,4 @@ function DataEdge({
   );
 }
 
-export { DataEdge, getDataTypeColor, DATA_TYPE_COLORS };
+export { DATA_TYPE_COLORS, DataEdge, getDataTypeColor };

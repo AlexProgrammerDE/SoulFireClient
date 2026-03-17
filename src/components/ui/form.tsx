@@ -75,4 +75,4 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-export { Field, FieldLabel, FieldDescription, FieldError, FieldGroup };
+export { Field, FieldDescription, FieldError, FieldGroup, FieldLabel };
