@@ -595,11 +595,30 @@ function AddButton() {
     });
 
     const abortController = new AbortController();
+
+    const failedProxies: string[] = [];
+    let removalPromise: Promise<void> = Promise.resolve();
+
+    const flushFailedProxies = async (force = false) => {
+      while (failedProxies.length >= 50 || (force && failedProxies.length > 0)) {
+        const chunk = failedProxies.splice(0, 50);
+        removalPromise = removalPromise.then(() =>
+          removeProxiesBatchMutation(chunk).catch(console.error),
+        );
+        await removalPromise;
+      }
+    };
+
+    const handleCompletion = async () => {
+      await flushFailedProxies(true);
+    };
+
     const loadingData: ExternalToast = {
       cancel: {
         label: t("common:cancel"),
         onClick: () => {
           abortController.abort();
+          void handleCompletion();
         },
       },
     };
@@ -629,6 +648,9 @@ function AddButton() {
         const data = r.data;
         switch (data.oneofKind) {
           case "end": {
+            if (!abortController.signal.aborted) {
+              await flushFailedProxies(true);
+            }
             toast.success(
               t("proxy.checkToast.success", {
                 count: failed,
@@ -651,7 +673,8 @@ function AddButton() {
               failed++;
               const proxyToRemove = data.single.proxy;
               if (proxyToRemove) {
-                await removeProxiesBatchMutation([proxyToRemove.address]);
+                failedProxies.push(proxyToRemove.address);
+                void flushFailedProxies(false);
               }
             }
 
@@ -666,6 +689,7 @@ function AddButton() {
     });
     responses.onError((e) => {
       console.error(e);
+      void handleCompletion();
       toast.error(t("proxy.checkToast.error"), {
         id: toastId,
         cancel: undefined,
@@ -862,11 +886,30 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       .rows.map((r) => r.original);
 
     const abortController = new AbortController();
+
+    const failedProxies: string[] = [];
+    let removalPromise: Promise<void> = Promise.resolve();
+
+    const flushFailedProxies = async (force = false) => {
+      while (failedProxies.length >= 50 || (force && failedProxies.length > 0)) {
+        const chunk = failedProxies.splice(0, 50);
+        removalPromise = removalPromise.then(() =>
+          removeProxiesBatchMutation(chunk).catch(console.error),
+        );
+        await removalPromise;
+      }
+    };
+
+    const handleCompletion = async () => {
+      await flushFailedProxies(true);
+    };
+
     const loadingData: ExternalToast = {
       cancel: {
         label: t("common:cancel"),
         onClick: () => {
           abortController.abort();
+          void handleCompletion();
         },
       },
     };
@@ -896,6 +939,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         const data = r.data;
         switch (data.oneofKind) {
           case "end": {
+            if (!abortController.signal.aborted) {
+              await flushFailedProxies(true);
+            }
             toast.success(
               t("proxy.checkToast.success", {
                 count: failed,
@@ -919,7 +965,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               // Remove the invalid proxy by address
               const proxyToRemove = data.single.proxy;
               if (proxyToRemove) {
-                await removeProxiesBatchMutation([proxyToRemove.address]);
+                failedProxies.push(proxyToRemove.address);
+                void flushFailedProxies(false);
               }
             }
 
@@ -934,6 +981,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
     });
     responses.onError((e) => {
       console.error(e);
+      void handleCompletion();
       toast.error(t("proxy.checkToast.error"), {
         id: toastId,
         cancel: undefined,
