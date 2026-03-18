@@ -3,7 +3,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
 import {
+  ActivityIcon,
   HouseIcon,
+  LogsIcon,
   SquareTerminalIcon,
   TextSearchIcon,
   UsersIcon,
@@ -21,6 +23,7 @@ import {
 type NavLinks = {
   title: string;
   icon: (props: { className: string }) => ReactNode;
+  active?: boolean;
   linkProps: LinkProps;
 }[];
 
@@ -42,7 +45,23 @@ export function NavControls() {
       },
     },
     {
-      title: t("instanceSidebar.terminal"),
+      title: t("instanceSidebar.events"),
+      icon: ActivityIcon,
+      linkProps: {
+        to: "/instance/$instance/events",
+        params: { instance: instanceInfo.id },
+      },
+    },
+    {
+      title: t("instanceSidebar.logs"),
+      icon: LogsIcon,
+      linkProps: {
+        to: "/instance/$instance/logs",
+        params: { instance: instanceInfo.id },
+      },
+    },
+    {
+      title: t("instanceSidebar.console"),
       icon: SquareTerminalIcon,
       linkProps: {
         to: "/instance/$instance/terminal",

@@ -2,31 +2,26 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import CommandInput from "@/components/command-input.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import type { CommandScope } from "@/generated/soulfire/command.ts";
 import { InstancePermission } from "@/generated/soulfire/common.ts";
 import type { LogScope } from "@/generated/soulfire/logs.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
-export const Route = createFileRoute("/_dashboard/instance/$instance/terminal")(
-  {
-    component: Terminal,
-  },
-);
+export const Route = createFileRoute("/_dashboard/instance/$instance/logs")({
+  component: Logs,
+});
 
-function TerminalSkeleton() {
+function LogsSkeleton() {
   return (
     <div className="flex flex-col gap-2">
-      <Skeleton className="h-[calc(75vh-8rem)] w-full rounded-md" />
-      <Skeleton className="h-9 w-full rounded-md" />
+      <Skeleton className="h-[calc(100dvh-14rem)] w-full rounded-xl" />
     </div>
   );
 }
 
-function Terminal() {
+function Logs() {
   const { t } = useTranslation("common");
 
   return (
@@ -37,8 +32,8 @@ function Terminal() {
           content: t("breadcrumbs.controls"),
         },
       ]}
-      pageName={t("pageName.console")}
-      loadingSkeleton={<TerminalSkeleton />}
+      pageName={t("pageName.logs")}
+      loadingSkeleton={<LogsSkeleton />}
     >
       <Content />
     </InstancePageLayout>
@@ -48,16 +43,7 @@ function Terminal() {
 function Content() {
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const personalLogScope = useMemo<LogScope>(
-    () => ({
-      scope: {
-        oneofKind: "personal",
-        personal: {},
-      },
-    }),
-    [],
-  );
-  const commandScope = useMemo<CommandScope>(
+  const logScope = useMemo<LogScope>(
     () => ({
       scope: {
         oneofKind: "instance",
@@ -69,13 +55,14 @@ function Content() {
     [instanceInfo.id],
   );
 
-  return (
-    <div className="flex flex-col gap-2">
-      <TerminalComponent scope={personalLogScope} />
-      {hasInstancePermission(
-        instanceInfo,
-        InstancePermission.INSTANCE_COMMAND_EXECUTION,
-      ) && <CommandInput scope={commandScope} />}
-    </div>
-  );
+  if (
+    !hasInstancePermission(
+      instanceInfo,
+      InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
+    )
+  ) {
+    return null;
+  }
+
+  return <TerminalComponent scope={logScope} />;
 }
