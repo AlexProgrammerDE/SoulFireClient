@@ -293,6 +293,9 @@
     "deleteInstance": "ลบอินสแตนซ์",
     "controlsGroup": "ส่วนควบคุม",
     "overview": "ภาพรวม",
+    "events": "",
+    "logs": "บันทึก",
+    "console": "",
     "terminal": "เทอร์มินัล",
     "bots": "บอท",
     "audit-log": "บันทึกตรวจสอบ",
@@ -360,6 +363,8 @@
   "noInstancesFound": "ไม่พบบัญชีอินสแตนซ์",
   "pageName": {
     "terminal": "เทอร์มินัล",
+    "console": "",
+    "events": "",
     "logs": "บันทึก",
     "audit-log": "บันทึกตรวจสอบ",
     "bots": "บอท",
@@ -375,6 +380,38 @@
     "discoverPlugins": "ปลั๊กอิน",
     "adminScripts": "สคริปต์",
     "instanceScripts": "สคริปต์"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "บอท",
+      "chat": "",
+      "commands": "",
+      "scripts": "สคริปต์",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "หยุดชั่วคราว",
+      "newWhilePaused": "",
+      "pause": "หยุดชั่วคราว",
+      "resume": "ดำเนินการต่อ"
+    }
   },
   "access": {
     "webdav": {

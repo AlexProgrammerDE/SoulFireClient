@@ -293,6 +293,9 @@
     "deleteInstance": "Hapus Instansi",
     "controlsGroup": "Kontrol",
     "overview": "Ikhtisar",
+    "events": "",
+    "logs": "Log",
+    "console": "",
     "terminal": "Terminal",
     "bots": "Bot",
     "audit-log": "Log Audit",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Tidak ada instansi ditemukan",
   "pageName": {
     "terminal": "Terminal",
+    "console": "",
+    "events": "",
     "logs": "Log",
     "audit-log": "Log Audit",
     "bots": "Bot",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plugin",
     "adminScripts": "Skrip",
     "instanceScripts": "Skrip"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Bot",
+      "chat": "",
+      "commands": "",
+      "scripts": "Skrip",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Dijeda",
+      "newWhilePaused": "",
+      "pause": "Jeda",
+      "resume": "Lanjutkan"
+    }
   },
   "access": {
     "webdav": {

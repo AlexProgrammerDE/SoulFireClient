@@ -293,6 +293,9 @@
     "deleteInstance": "Smazat instanci",
     "controlsGroup": "Ovládací prvky",
     "overview": "Přehled",
+    "events": "",
+    "logs": "Logy",
+    "console": "",
     "terminal": "Terminál",
     "bots": "Boti",
     "audit-log": "Audit log",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Nebyly nalezeny žádné instance",
   "pageName": {
     "terminal": "Terminál",
+    "console": "",
+    "events": "",
     "logs": "Logy",
     "audit-log": "Audit log",
     "bots": "Boti",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Pluginy",
     "adminScripts": "Skripty",
     "instanceScripts": "Skripty"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Boti",
+      "chat": "",
+      "commands": "",
+      "scripts": "Skripty",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Pozastaveno",
+      "newWhilePaused": "",
+      "pause": "Pozastavit",
+      "resume": "Pokračovat"
+    }
   },
   "access": {
     "webdav": {

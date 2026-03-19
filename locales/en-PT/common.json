@@ -293,6 +293,9 @@
     "deleteInstance": "Scuttle Hull",
     "controlsGroup": "Controls o’ the ship",
     "overview": "Spyglass View",
+    "events": "",
+    "logs": "Captain’s Logs",
+    "console": "",
     "terminal": "Deck o' Terminals",
     "bots": "Crew",
     "audit-log": "Captain’s Chronicle",
@@ -360,6 +363,8 @@
   "noInstancesFound": "No hulls found drifting",
   "pageName": {
     "terminal": "Deck o' Terminals",
+    "console": "",
+    "events": "",
     "logs": "Captain’s Logs",
     "audit-log": "Captain’s Chronicle",
     "bots": "Crew",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Pirate Add-ons",
     "adminScripts": "Script Scrolls",
     "instanceScripts": "Script Scrolls"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Crew",
+      "chat": "",
+      "commands": "",
+      "scripts": "Script Scrolls",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Ship be idle",
+      "newWhilePaused": "",
+      "pause": "Drop anchor",
+      "resume": "Sail onward"
+    }
   },
   "access": {
     "webdav": {

@@ -293,6 +293,9 @@
     "deleteInstance": "ǝɔuɐʇsᴉ ǝʇǝlǝpǝᗡ",
     "controlsGroup": "sdoɹʇuoↃ",
     "overview": "ʍǝɹʌǝᴚ ǝʌᴉǝʌɹƆ",
+    "events": "",
+    "logs": "sƃo˥",
+    "console": "",
     "terminal": "ןɐuᴉɯɹǝ┴",
     "bots": "sʇoԐ",
     "audit-log": "ƃo˥-ʇᴉp∩∀ ƃo˥-ʇᴉp∩∀",
@@ -360,6 +363,8 @@
   "noInstancesFound": "punoɟ sǝɔuɐʇsᴉ oN",
   "pageName": {
     "terminal": "ןɐuᴉɯɹǝ┴",
+    "console": "",
+    "events": "",
     "logs": "sƃo˥",
     "audit-log": "ƃo˥-ʇᴉp∩∀ ƃo˥-ʇᴉp∩∀",
     "bots": "sʇoԐ",
@@ -375,6 +380,38 @@
     "discoverPlugins": "sƃuᴉƃnlԀ",
     "adminScripts": "sʇdᴉɹɔS",
     "instanceScripts": "sʇdᴉɹɔS"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "sʇoԐ",
+      "chat": "",
+      "commands": "",
+      "scripts": "sʇdᴉɹɔS",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "pǝsnsɐԀ",
+      "newWhilePaused": "",
+      "pause": "ǝsnsɐԀ",
+      "resume": "ǝɯnsǝᴚ"
+    }
   },
   "access": {
     "webdav": {

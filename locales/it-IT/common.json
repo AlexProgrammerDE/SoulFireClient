@@ -293,6 +293,9 @@
     "deleteInstance": "Elimina istanza",
     "controlsGroup": "Controlli",
     "overview": "Panoramica",
+    "events": "",
+    "logs": "Log",
+    "console": "",
     "terminal": "Terminale",
     "bots": "Bot",
     "audit-log": "Registro di audit",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Nessuna istanza trovata",
   "pageName": {
     "terminal": "Terminale",
+    "console": "",
+    "events": "",
     "logs": "Log",
     "audit-log": "Registro di audit",
     "bots": "Bot",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plugin",
     "adminScripts": "Script",
     "instanceScripts": "Script"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Bot",
+      "chat": "",
+      "commands": "",
+      "scripts": "Script",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "In pausa",
+      "newWhilePaused": "",
+      "pause": "Pausa",
+      "resume": "Riprendi"
+    }
   },
   "access": {
     "webdav": {

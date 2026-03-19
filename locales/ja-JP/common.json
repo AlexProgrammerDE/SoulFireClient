@@ -293,6 +293,9 @@
     "deleteInstance": "インスタンスを削除",
     "controlsGroup": "コントロール",
     "overview": "概要",
+    "events": "",
+    "logs": "ログ",
+    "console": "",
     "terminal": "ターミナル",
     "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
     "audit-log": "監査ログ",
@@ -360,6 +363,8 @@
   "noInstancesFound": "インスタンスが見つかりません",
   "pageName": {
     "terminal": "ターミナル",
+    "console": "",
+    "events": "",
     "logs": "ログ",
     "audit-log": "監査ログ",
     "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
@@ -375,6 +380,38 @@
     "discoverPlugins": "プラグイン",
     "adminScripts": "スクリプト",
     "instanceScripts": "スクリプト"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
+      "chat": "",
+      "commands": "",
+      "scripts": "スクリプト",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "一時停止中",
+      "newWhilePaused": "",
+      "pause": "一時停止",
+      "resume": "再開"
+    }
   },
   "access": {
     "webdav": {

@@ -293,6 +293,9 @@
     "deleteInstance": "Ta bort instans",
     "controlsGroup": "Kontroller",
     "overview": "Översikt",
+    "events": "",
+    "logs": "Loggar",
+    "console": "",
     "terminal": "Terminal",
     "bots": "Bottar",
     "audit-log": "Granskningslogg",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Inga instanser hittades",
   "pageName": {
     "terminal": "Terminal",
+    "console": "",
+    "events": "",
     "logs": "Loggar",
     "audit-log": "Granskningslogg",
     "bots": "Bottar",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Skript",
     "instanceScripts": "Skript"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Bottar",
+      "chat": "",
+      "commands": "",
+      "scripts": "Skript",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Pausad",
+      "newWhilePaused": "",
+      "pause": "Pausa",
+      "resume": "Återuppta"
+    }
   },
   "access": {
     "webdav": {

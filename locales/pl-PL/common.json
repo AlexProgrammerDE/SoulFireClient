@@ -293,6 +293,9 @@
     "deleteInstance": "Usuń instancję",
     "controlsGroup": "Sterowanie",
     "overview": "Przegląd",
+    "events": "",
+    "logs": "Logi",
+    "console": "Konsola",
     "terminal": "Konsola",
     "bots": "Boty",
     "audit-log": "Dziennik zdarzeń",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
     "terminal": "Konsola",
+    "console": "Konsola",
+    "events": "",
     "logs": "Logi",
     "audit-log": "Dziennik zdarzeń",
     "bots": "Boty",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Wtyczki",
     "adminScripts": "Skrypty",
     "instanceScripts": "Skrypty"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Boty",
+      "chat": "",
+      "commands": "",
+      "scripts": "Skrypty",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Wstrzymana",
+      "newWhilePaused": "",
+      "pause": "Wstrzymaj",
+      "resume": "Wznów"
+    }
   },
   "access": {
     "webdav": {

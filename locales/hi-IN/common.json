@@ -293,6 +293,9 @@
     "deleteInstance": "इंस्टेंस हटाएँ",
     "controlsGroup": "नियंत्रण",
     "overview": "अवलोकन",
+    "events": "",
+    "logs": "लॉग्स",
+    "console": "",
     "terminal": "टर्मिनल",
     "bots": "बॉट्स",
     "audit-log": "ऑडिट लॉग",
@@ -360,6 +363,8 @@
   "noInstancesFound": "कोई इंस्टेंस नहीं मिला",
   "pageName": {
     "terminal": "टर्मिनल",
+    "console": "",
+    "events": "",
     "logs": "लॉग्स",
     "audit-log": "ऑडिट लॉग",
     "bots": "बॉट्स",
@@ -375,6 +380,38 @@
     "discoverPlugins": "प्लगइन्स",
     "adminScripts": "स्क्रिप्ट्स",
     "instanceScripts": "स्क्रिप्ट्स"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "बॉट्स",
+      "chat": "",
+      "commands": "",
+      "scripts": "स्क्रिप्ट्स",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "रुका हुआ है",
+      "newWhilePaused": "",
+      "pause": "रोकें",
+      "resume": "फिर से शुरू करें"
+    }
   },
   "access": {
     "webdav": {

@@ -293,6 +293,9 @@
     "deleteInstance": "Удалить экземпляр",
     "controlsGroup": "Управление",
     "overview": "Обзор",
+    "events": "",
+    "logs": "Логи",
+    "console": "",
     "terminal": "Терминал",
     "bots": "Боты",
     "audit-log": "Журнал аудита",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
     "terminal": "Терминал",
+    "console": "",
+    "events": "",
     "logs": "Логи",
     "audit-log": "Журнал аудита",
     "bots": "Боты",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Плагины",
     "adminScripts": "Скрипты",
     "instanceScripts": "Скрипты"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Боты",
+      "chat": "",
+      "commands": "",
+      "scripts": "Скрипты",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Приостановлено",
+      "newWhilePaused": "",
+      "pause": "Пауза",
+      "resume": "Возобновить"
+    }
   },
   "access": {
     "webdav": {

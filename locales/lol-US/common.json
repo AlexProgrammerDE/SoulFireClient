@@ -293,6 +293,9 @@
     "deleteInstance": "Deleet Instance",
     "controlsGroup": "Controlz",
     "overview": "Ovarview",
+    "events": "",
+    "logs": "LOGZ",
+    "console": "",
     "terminal": "Termenawl",
     "bots": "BOTZ",
     "audit-log": "Audit Log",
@@ -360,6 +363,8 @@
   "noInstancesFound": "No instancez founded",
   "pageName": {
     "terminal": "Termenawl",
+    "console": "",
+    "events": "",
     "logs": "LOGZ",
     "audit-log": "Audit Log",
     "bots": "BOTZ",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scriptz",
     "instanceScripts": "Scriptz"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "BOTZ",
+      "chat": "",
+      "commands": "",
+      "scripts": "Scriptz",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Pawzed",
+      "newWhilePaused": "",
+      "pause": "Pawse",
+      "resume": "Resoome"
+    }
   },
   "access": {
     "webdav": {
