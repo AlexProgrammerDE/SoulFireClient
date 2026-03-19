@@ -293,6 +293,9 @@
     "deleteInstance": "Eliminar instancia",
     "controlsGroup": "Controles",
     "overview": "Resumen",
+    "events": "",
+    "logs": "Registros",
+    "console": "",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Registro de auditoría",
@@ -360,6 +363,8 @@
   "noInstancesFound": "No se encontraron instancias",
   "pageName": {
     "terminal": "Terminal",
+    "console": "",
+    "events": "",
     "logs": "Registros",
     "audit-log": "Registro de auditoría",
     "bots": "Bots",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scripts",
     "instanceScripts": "Scripts"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Bots",
+      "chat": "",
+      "commands": "",
+      "scripts": "Scripts",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Pausado",
+      "newWhilePaused": "",
+      "pause": "Pausar",
+      "resume": "Reanudar"
+    }
   },
   "access": {
     "webdav": {

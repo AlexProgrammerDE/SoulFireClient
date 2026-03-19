@@ -293,6 +293,9 @@
     "deleteInstance": "Instantie verwijderen",
     "controlsGroup": "Bediening",
     "overview": "Overzicht",
+    "events": "",
+    "logs": "Logs",
+    "console": "",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Auditlogboek",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Geen instanties gevonden",
   "pageName": {
     "terminal": "Terminal",
+    "console": "",
+    "events": "",
     "logs": "Logs",
     "audit-log": "Auditlogboek",
     "bots": "Bots",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plug-ins",
     "adminScripts": "Scripts",
     "instanceScripts": "Scripts"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Bots",
+      "chat": "",
+      "commands": "",
+      "scripts": "Scripts",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Gepauzeerd",
+      "newWhilePaused": "",
+      "pause": "Pauzeren",
+      "resume": "Hervatten"
+    }
   },
   "access": {
     "webdav": {

@@ -293,6 +293,9 @@
     "deleteInstance": "Instansiyanı sil",
     "controlsGroup": "İdarəetmə",
     "overview": "İcmal",
+    "events": "",
+    "logs": "Jurnalları",
+    "console": "",
     "terminal": "Terminal",
     "bots": "Botlar",
     "audit-log": "Audit Log",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Instansiya tapılmadı",
   "pageName": {
     "terminal": "Terminal",
+    "console": "",
+    "events": "",
     "logs": "Jurnalları",
     "audit-log": "Audit Log",
     "bots": "Botlar",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Pluginlər",
     "adminScripts": "Skriptlər",
     "instanceScripts": "Skriptlər"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Botlar",
+      "chat": "",
+      "commands": "",
+      "scripts": "Skriptlər",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Dayandırılıb",
+      "newWhilePaused": "",
+      "pause": "Fasilə",
+      "resume": "Davam et"
+    }
   },
   "access": {
     "webdav": {

@@ -293,6 +293,9 @@
     "deleteInstance": "Örneği Sil",
     "controlsGroup": "Kontroller",
     "overview": "Genel Bakış",
+    "events": "",
+    "logs": "Kayıtlar",
+    "console": "",
     "terminal": "Terminal",
     "bots": "Botlar",
     "audit-log": "Denetim Günlüğü",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Örnek bulunamadı",
   "pageName": {
     "terminal": "Terminal",
+    "console": "",
+    "events": "",
     "logs": "Kayıtlar",
     "audit-log": "Denetim Günlüğü",
     "bots": "Botlar",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Eklentiler",
     "adminScripts": "Betikler",
     "instanceScripts": "Betikler"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Botlar",
+      "chat": "",
+      "commands": "",
+      "scripts": "Betikler",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Duraklatıldı",
+      "newWhilePaused": "",
+      "pause": "Duraklat",
+      "resume": "Devam et"
+    }
   },
   "access": {
     "webdav": {

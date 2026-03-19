@@ -293,6 +293,9 @@
     "deleteInstance": "Poista instanssi",
     "controlsGroup": "Ohjaimet",
     "overview": "Yleiskatsaus",
+    "events": "",
+    "logs": "Lokit",
+    "console": "",
     "terminal": "Terminaali",
     "bots": "Botit",
     "audit-log": "Audit-loki",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Yhtään instanssia ei löytynyt",
   "pageName": {
     "terminal": "Terminaali",
+    "console": "",
+    "events": "",
     "logs": "Lokit",
     "audit-log": "Audit-loki",
     "bots": "Botit",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Liitännäiset",
     "adminScripts": "Skriptit",
     "instanceScripts": "Skriptit"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Botit",
+      "chat": "",
+      "commands": "",
+      "scripts": "Skriptit",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Tauotettu",
+      "newWhilePaused": "",
+      "pause": "Tauota",
+      "resume": "Jatka"
+    }
   },
   "access": {
     "webdav": {

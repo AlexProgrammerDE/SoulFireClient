@@ -293,6 +293,9 @@
     "deleteInstance": "Видалити екземпляр",
     "controlsGroup": "Керування",
     "overview": "Огляд",
+    "events": "",
+    "logs": "Журнали відповідності діяльності або доступу користувачів",
+    "console": "",
     "terminal": "Термінал",
     "bots": "Боти",
     "audit-log": "Аудит-лог",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Екземпляри не знайдено",
   "pageName": {
     "terminal": "Термінал",
+    "console": "",
+    "events": "",
     "logs": "Журнали відповідності діяльності або доступу користувачів",
     "audit-log": "Аудит-лог",
     "bots": "Боти",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Плагіни",
     "adminScripts": "Скрипти",
     "instanceScripts": "Скрипти"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Боти",
+      "chat": "",
+      "commands": "",
+      "scripts": "Скрипти",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Призупинено",
+      "newWhilePaused": "",
+      "pause": "Призупинити",
+      "resume": "Відновити"
+    }
   },
   "access": {
     "webdav": {

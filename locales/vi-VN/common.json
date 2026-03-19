@@ -293,6 +293,9 @@
     "deleteInstance": "Xóa phiên bản",
     "controlsGroup": "Bảng điều khiển",
     "overview": "Tổng quan",
+    "events": "",
+    "logs": "Nhật ký",
+    "console": "",
     "terminal": "Terminal",
     "bots": "Bot",
     "audit-log": "Nhật ký kiểm toán",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Không tìm thấy phiên bản nào",
   "pageName": {
     "terminal": "Terminal",
+    "console": "",
+    "events": "",
     "logs": "Nhật ký",
     "audit-log": "Nhật ký kiểm toán",
     "bots": "Bot",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scripts",
     "instanceScripts": "Scripts"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Bot",
+      "chat": "",
+      "commands": "",
+      "scripts": "Scripts",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Đã tạm dừng",
+      "newWhilePaused": "",
+      "pause": "Tạm dừng",
+      "resume": "Tiếp tục"
+    }
   },
   "access": {
     "webdav": {

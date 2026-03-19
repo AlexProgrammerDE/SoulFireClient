@@ -293,6 +293,9 @@
     "deleteInstance": "Supprimer l'instance",
     "controlsGroup": "Contrôles",
     "overview": "Aperçu",
+    "events": "",
+    "logs": "Journaux",
+    "console": "Console",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Logs du serveur",
@@ -360,6 +363,8 @@
   "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
     "terminal": "Terminal",
+    "console": "Console",
+    "events": "",
     "logs": "Journaux",
     "audit-log": "Logs du serveur",
     "bots": "Bots",
@@ -375,6 +380,38 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scripts",
     "instanceScripts": "Scripts"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "Bots",
+      "chat": "",
+      "commands": "",
+      "scripts": "Scripts",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "Suspendu",
+      "newWhilePaused": "",
+      "pause": "Pauser",
+      "resume": "Reprendre"
+    }
   },
   "access": {
     "webdav": {

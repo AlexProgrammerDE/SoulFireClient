@@ -293,6 +293,9 @@
     "deleteInstance": "刪除實例",
     "controlsGroup": "控制項",
     "overview": "總覽",
+    "events": "",
+    "logs": "日誌",
+    "console": "",
     "terminal": "終端機",
     "bots": "機器人群組/機器人列表/機器人",
     "audit-log": "稽核日誌",
@@ -360,6 +363,8 @@
   "noInstancesFound": "未找到任何實例",
   "pageName": {
     "terminal": "終端機",
+    "console": "",
+    "events": "",
     "logs": "日誌",
     "audit-log": "稽核日誌",
     "bots": "機器人群組/機器人列表/機器人",
@@ -375,6 +380,38 @@
     "discoverPlugins": "插件",
     "adminScripts": "腳本",
     "instanceScripts": "腳本"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "機器人群組/機器人列表/機器人",
+      "chat": "",
+      "commands": "",
+      "scripts": "腳本",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "已暫停",
+      "newWhilePaused": "",
+      "pause": "暫停",
+      "resume": "繼續"
+    }
   },
   "access": {
     "webdav": {

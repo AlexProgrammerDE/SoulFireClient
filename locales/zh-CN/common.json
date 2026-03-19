@@ -293,6 +293,9 @@
     "deleteInstance": "删除实例",
     "controlsGroup": "控制",
     "overview": "概况",
+    "events": "",
+    "logs": "日志",
+    "console": "控制台",
     "terminal": "终端",
     "bots": "机器人",
     "audit-log": "审计日志",
@@ -360,6 +363,8 @@
   "noInstancesFound": "未找到实例",
   "pageName": {
     "terminal": "终端",
+    "console": "控制台",
+    "events": "",
     "logs": "日志",
     "audit-log": "审计日志",
     "bots": "机器人",
@@ -375,6 +380,38 @@
     "discoverPlugins": "插件",
     "adminScripts": "脚本",
     "instanceScripts": "脚本"
+  },
+  "events": {
+    "description": "",
+    "overviewTitle": "",
+    "overviewDescription": "",
+    "openLogs": "",
+    "openConsole": "",
+    "empty": "",
+    "searchPlaceholder": "",
+    "stats": {
+      "total": "",
+      "errors": "",
+      "bots": "",
+      "chat": ""
+    },
+    "filters": {
+      "all": "",
+      "errors": "",
+      "bots": "机器人",
+      "chat": "",
+      "commands": "",
+      "scripts": "脚本",
+      "messages": ""
+    },
+    "status": {
+      "live": "",
+      "reconnecting": "",
+      "paused": "已暂停",
+      "newWhilePaused": "",
+      "pause": "暂停",
+      "resume": "继续"
+    }
   },
   "access": {
     "webdav": {
