@@ -293,9 +293,9 @@
     "deleteInstance": "Instantie verwijderen",
     "controlsGroup": "Bediening",
     "overview": "Overzicht",
-    "events": "",
+    "events": "Gebeurtenissen",
     "logs": "Logs",
-    "console": "",
+    "console": "Console",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Auditlogboek",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Geen instanties gevonden",
   "pageName": {
     "terminal": "Terminal",
-    "console": "",
-    "events": "",
+    "console": "Console",
+    "events": "Live-gebeurtenissen",
     "logs": "Logs",
     "audit-log": "Auditlogboek",
     "bots": "Bots",
@@ -382,33 +382,33 @@
     "instanceScripts": "Scripts"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Gestructureerde live-activiteit voor deze instantie, zonder ruwe logger-ruis.",
+    "overviewTitle": "Live-gebeurtenissen",
+    "overviewDescription": "Recente activiteit bij bots, chat, commando's, scripts en fouten.",
+    "openLogs": "Logboeken openen",
+    "openConsole": "Console openen",
+    "empty": "Nog geen gebeurtenissen.",
+    "searchPlaceholder": "Gebeurtenissen zoeken...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Zichtbaar",
+      "errors": "Fouten",
+      "bots": "Botgebeurtenissen",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Alles",
+      "errors": "Fouten",
       "bots": "Bots",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Commando's",
       "scripts": "Scripts",
-      "messages": ""
+      "messages": "Berichten"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Live",
+      "reconnecting": "Opnieuw verbinden",
       "paused": "Gepauzeerd",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} nieuw terwijl gepauzeerd",
       "pause": "Pauzeren",
       "resume": "Hervatten"
     }

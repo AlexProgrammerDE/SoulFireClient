@@ -293,9 +293,9 @@
     "deleteInstance": "Scuttle Hull",
     "controlsGroup": "Controls o’ the ship",
     "overview": "Spyglass View",
-    "events": "",
+    "events": "Gatherin's",
     "logs": "Captain’s Logs",
-    "console": "",
+    "console": "Spyglass",
     "terminal": "Deck o' Terminals",
     "bots": "Crew",
     "audit-log": "Captain’s Chronicle",
@@ -363,8 +363,8 @@
   "noInstancesFound": "No hulls found drifting",
   "pageName": {
     "terminal": "Deck o' Terminals",
-    "console": "",
-    "events": "",
+    "console": "Spyglass",
+    "events": "Live Gatherin's",
     "logs": "Captain’s Logs",
     "audit-log": "Captain’s Chronicle",
     "bots": "Crew",
@@ -382,33 +382,33 @@
     "instanceScripts": "Script Scrolls"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Organized live shenanigans fer this here instance, wit'out th' bilgewater logger racket.",
+    "overviewTitle": "Live Gatherin's",
+    "overviewDescription": "Recent booty across bots, chat, commands, scripts, and failures, arrr.",
+    "openLogs": "Open th' Logs",
+    "openConsole": "Open th' Console",
+    "empty": "No events yet, matey.",
+    "searchPlaceholder": "Search fer events...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Visible, savvy?",
+      "errors": "Errors be here!",
+      "bots": "Bot Happenin's",
+      "chat": "Chatterin'"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "All hands",
+      "errors": "Errors be here!",
       "bots": "Crew",
-      "chat": "",
-      "commands": "",
+      "chat": "Chatterin'",
+      "commands": "Orders",
       "scripts": "Script Scrolls",
-      "messages": ""
+      "messages": "Messages in a bottle"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Live on deck",
+      "reconnecting": "Tryin' to reconnect, ye scallywag!",
       "paused": "Ship be idle",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} new shenanigans while paused, aye!",
       "pause": "Drop anchor",
       "resume": "Sail onward"
     }

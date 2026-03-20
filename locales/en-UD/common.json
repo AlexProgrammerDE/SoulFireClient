@@ -293,9 +293,9 @@
     "deleteInstance": "ǝɔuɐʇsᴉ ǝʇǝlǝpǝᗡ",
     "controlsGroup": "sdoɹʇuoↃ",
     "overview": "ʍǝɹʌǝᴚ ǝʌᴉǝʌɹƆ",
-    "events": "",
+    "events": "sʇuǝʌƎ",
     "logs": "sƃo˥",
-    "console": "",
+    "console": "ǝlɐlosuƆ",
     "terminal": "ןɐuᴉɯɹǝ┴",
     "bots": "sʇoԐ",
     "audit-log": "ƃo˥-ʇᴉp∩∀ ƃo˥-ʇᴉp∩∀",
@@ -363,8 +363,8 @@
   "noInstancesFound": "punoɟ sǝɔuɐʇsᴉ oN",
   "pageName": {
     "terminal": "ןɐuᴉɯɹǝ┴",
-    "console": "",
-    "events": "",
+    "console": "ǝlɐlosuƆ",
+    "events": "sʇuǝʌƎ ǝʌᴉꞁ",
     "logs": "sƃo˥",
     "audit-log": "ƃo˥-ʇᴉp∩∀ ƃo˥-ʇᴉp∩∀",
     "bots": "sʇoԐ",
@@ -382,33 +382,33 @@
     "instanceScripts": "sʇdᴉɹɔS"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": ".ǝsᴉoN ɹǝƃƃo˥ ʍɐɹ ʇnoɥʇᴉʇnɥʇᴉM 'ǝɔuɐʇsᴉu sᴉɥʇ ɹoɟ ʎʇᴉʌᴉʇɔɐ ǝʌᴉꞁ pǝɹnʇɔnɹʇs",
+    "overviewTitle": "sʇuǝʌƎ ǝʌᴉꞁ",
+    "overviewDescription": ".sǝɹnʇlᴉɐɟ puɐ sʇdᴉɹɔs ‘spuɐɯɯoɔ ‘sʇɐɥɔ ‘sʇoq ssɐɹɔɐ ʎʇᴉʌᴉʇɔɐ ʇuǝɔǝɹɐ",
+    "openLogs": "sƃo˥ uǝdo",
+    "openConsole": "ǝlǝlooɔ uǝdo",
+    "empty": ".ʇǝʎ ʇǝuǝʌǝ oN",
+    "searchPlaceholder": "...sʇuǝʌǝ ɥɔɹɐǝS",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "ǝlqᴉsᴉʌ",
+      "errors": "sɹoɹɹƎ",
+      "bots": "sʇuǝʌƎ ʇoԐ",
+      "chat": "ʇɐɥɔ"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "˥˥∀",
+      "errors": "sɹoɹɹƎ",
       "bots": "sʇoԐ",
-      "chat": "",
-      "commands": "",
+      "chat": "ʇɐɥɔ",
+      "commands": "spuɐɯɯoƆ",
       "scripts": "sʇdᴉɹɔS",
-      "messages": ""
+      "messages": "sǝƃɐssǝW"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "ǝʌᴉ˥",
+      "reconnecting": "ƃuᴉʇɔnǝuoɔǝᴚ",
       "paused": "pǝsnsɐԀ",
-      "newWhilePaused": "",
+      "newWhilePaused": "pǝsuɐns ǝlᴉɥʍ ʍǝu {{count}}",
       "pause": "ǝsnsɐԀ",
       "resume": "ǝɯnsǝᴚ"
     }

@@ -293,9 +293,9 @@
     "deleteInstance": "インスタンスを削除",
     "controlsGroup": "コントロール",
     "overview": "概要",
-    "events": "",
+    "events": "イベント",
     "logs": "ログ",
-    "console": "",
+    "console": "コンソール",
     "terminal": "ターミナル",
     "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
     "audit-log": "監査ログ",
@@ -363,8 +363,8 @@
   "noInstancesFound": "インスタンスが見つかりません",
   "pageName": {
     "terminal": "ターミナル",
-    "console": "",
-    "events": "",
+    "console": "コンソール",
+    "events": "ライブイベント",
     "logs": "ログ",
     "audit-log": "監査ログ",
     "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
@@ -382,33 +382,33 @@
     "instanceScripts": "スクリプト"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "ローログのノイズを省いた、このインスタンス用の構造化されたライブアクティビティです。",
+    "overviewTitle": "ライブイベント",
+    "overviewDescription": "ボット、チャット、コマンド、スクリプト、エラーに関する最近のアクティビティ。",
+    "openLogs": "ログを開く",
+    "openConsole": "コンソールを開く",
+    "empty": "まだイベントはありません。",
+    "searchPlaceholder": "イベントを検索...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "表示中",
+      "errors": "エラー",
+      "bots": "ボットイベント",
+      "chat": "チャット"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "すべて",
+      "errors": "エラー",
       "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
-      "chat": "",
-      "commands": "",
+      "chat": "チャット",
+      "commands": "コマンド",
       "scripts": "スクリプト",
-      "messages": ""
+      "messages": "メッセージ"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "ライブ",
+      "reconnecting": "再接続中",
       "paused": "一時停止中",
-      "newWhilePaused": "",
+      "newWhilePaused": "一時停止中に{{count}}件の新着",
       "pause": "一時停止",
       "resume": "再開"
     }

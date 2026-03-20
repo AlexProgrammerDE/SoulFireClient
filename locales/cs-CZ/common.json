@@ -293,9 +293,9 @@
     "deleteInstance": "Smazat instanci",
     "controlsGroup": "Ovládací prvky",
     "overview": "Přehled",
-    "events": "",
+    "events": "Události",
     "logs": "Logy",
-    "console": "",
+    "console": "Konzole",
     "terminal": "Terminál",
     "bots": "Boti",
     "audit-log": "Audit log",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Nebyly nalezeny žádné instance",
   "pageName": {
     "terminal": "Terminál",
-    "console": "",
-    "events": "",
+    "console": "Konzole",
+    "events": "Živé události",
     "logs": "Logy",
     "audit-log": "Audit log",
     "bots": "Boti",
@@ -382,33 +382,33 @@
     "instanceScripts": "Skripty"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Strukturovaná živá aktivita této instance bez rušivého šumu ze surového logu.",
+    "overviewTitle": "Živé události",
+    "overviewDescription": "Nedávná aktivita napříč boty, chatem, příkazy, skripty a chybami.",
+    "openLogs": "Otevřít logy",
+    "openConsole": "Otevřít konzoli",
+    "empty": "Zatím žádné události.",
+    "searchPlaceholder": "Hledat události...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Viditelné",
+      "errors": "Chyby",
+      "bots": "Události bota",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Vše",
+      "errors": "Chyby",
       "bots": "Boti",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Příkazy",
       "scripts": "Skripty",
-      "messages": ""
+      "messages": "Zprávy"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Živě",
+      "reconnecting": "Znovu se připojuje",
       "paused": "Pozastaveno",
-      "newWhilePaused": "",
+      "newWhilePaused": "{count, plural, one {# nové při pozastavení} few {# nové při pozastavení} many {# nových při pozastavení} other {# nových při pozastavení}}",
       "pause": "Pozastavit",
       "resume": "Pokračovat"
     }

@@ -293,9 +293,9 @@
     "deleteInstance": "Poista instanssi",
     "controlsGroup": "Ohjaimet",
     "overview": "Yleiskatsaus",
-    "events": "",
+    "events": "Tapahtumat",
     "logs": "Lokit",
-    "console": "",
+    "console": "Konsoli",
     "terminal": "Terminaali",
     "bots": "Botit",
     "audit-log": "Audit-loki",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Yhtään instanssia ei löytynyt",
   "pageName": {
     "terminal": "Terminaali",
-    "console": "",
-    "events": "",
+    "console": "Konsoli",
+    "events": "Live-tapahtumat",
     "logs": "Lokit",
     "audit-log": "Audit-loki",
     "bots": "Botit",
@@ -382,33 +382,33 @@
     "instanceScripts": "Skriptit"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Rakenteinen live-toiminta tälle instanssille ilman raakaa lokihälyä.",
+    "overviewTitle": "Live-tapahtumat",
+    "overviewDescription": "Viimeaikainen toiminta boteissa, chateissa, komennoissa, skripteissä ja virheissä.",
+    "openLogs": "Avaa lokit",
+    "openConsole": "Avaa konsoli",
+    "empty": "Ei tapahtumia vielä.",
+    "searchPlaceholder": "Etsi tapahtumia...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Näkyvissä",
+      "errors": "Virheet",
+      "bots": "Bot-tapahtumat",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Kaikki",
+      "errors": "Virheet",
       "bots": "Botit",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Komennot",
       "scripts": "Skriptit",
-      "messages": ""
+      "messages": "Viestit"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Live",
+      "reconnecting": "Yhdistetään uudelleen",
       "paused": "Tauotettu",
-      "newWhilePaused": "",
+      "newWhilePaused": "Keskeytyksen aikana {{count}} uutta",
       "pause": "Tauota",
       "resume": "Jatka"
     }

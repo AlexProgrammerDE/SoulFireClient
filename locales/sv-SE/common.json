@@ -293,9 +293,9 @@
     "deleteInstance": "Ta bort instans",
     "controlsGroup": "Kontroller",
     "overview": "Översikt",
-    "events": "",
+    "events": "Händelser",
     "logs": "Loggar",
-    "console": "",
+    "console": "Konsol",
     "terminal": "Terminal",
     "bots": "Bottar",
     "audit-log": "Granskningslogg",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Inga instanser hittades",
   "pageName": {
     "terminal": "Terminal",
-    "console": "",
-    "events": "",
+    "console": "Konsol",
+    "events": "Livehändelser",
     "logs": "Loggar",
     "audit-log": "Granskningslogg",
     "bots": "Bottar",
@@ -382,33 +382,33 @@
     "instanceScripts": "Skript"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Strukturerad liveaktivitet för denna instans, utan brus från rå loggning.",
+    "overviewTitle": "Livehändelser",
+    "overviewDescription": "Senaste aktivitet från bots, chatt, kommandon, skript och fel.",
+    "openLogs": "Öppna loggar",
+    "openConsole": "Öppna konsolen",
+    "empty": "Inga händelser ännu.",
+    "searchPlaceholder": "Sök händelser...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Synlig",
+      "errors": "Fel",
+      "bots": "Bot-händelser",
+      "chat": "Chatt"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Alla",
+      "errors": "Fel",
       "bots": "Bottar",
-      "chat": "",
-      "commands": "",
+      "chat": "Chatt",
+      "commands": "Kommandon",
       "scripts": "Skript",
-      "messages": ""
+      "messages": "Meddelanden"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Live",
+      "reconnecting": "Återansluter",
       "paused": "Pausad",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} nya medan pausad",
       "pause": "Pausa",
       "resume": "Återuppta"
     }

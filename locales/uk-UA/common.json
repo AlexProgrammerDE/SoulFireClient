@@ -293,9 +293,9 @@
     "deleteInstance": "Видалити екземпляр",
     "controlsGroup": "Керування",
     "overview": "Огляд",
-    "events": "",
+    "events": "Події",
     "logs": "Журнали відповідності діяльності або доступу користувачів",
-    "console": "",
+    "console": "Консоль",
     "terminal": "Термінал",
     "bots": "Боти",
     "audit-log": "Аудит-лог",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Екземпляри не знайдено",
   "pageName": {
     "terminal": "Термінал",
-    "console": "",
-    "events": "",
+    "console": "Консоль",
+    "events": "Живі події",
     "logs": "Журнали відповідності діяльності або доступу користувачів",
     "audit-log": "Аудит-лог",
     "bots": "Боти",
@@ -382,33 +382,33 @@
     "instanceScripts": "Скрипти"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Структурована жива активність для цього екземпляра без \"шуму\" сирого журналу.",
+    "overviewTitle": "Живі події",
+    "overviewDescription": "Остання активність у ботах, чаті, командах, скриптах та помилках.",
+    "openLogs": "Відкрити логи",
+    "openConsole": "Відкрити консоль",
+    "empty": "Ще немає подій.",
+    "searchPlaceholder": "Пошук подій...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Видимі",
+      "errors": "Помилки",
+      "bots": "Події бота",
+      "chat": "Чат"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Усі",
+      "errors": "Помилки",
       "bots": "Боти",
-      "chat": "",
-      "commands": "",
+      "chat": "Чат",
+      "commands": "Команди",
       "scripts": "Скрипти",
-      "messages": ""
+      "messages": "Повідомлення"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "У прямому ефірі",
+      "reconnecting": "Відновлення зʼєднання",
       "paused": "Призупинено",
-      "newWhilePaused": "",
+      "newWhilePaused": "{count, plural, one{# нова під час паузи} few{# нові під час паузи} many{# нових під час паузи} other{# нових під час паузи}}",
       "pause": "Призупинити",
       "resume": "Відновити"
     }

@@ -293,9 +293,9 @@
     "deleteInstance": "Eliminar instancia",
     "controlsGroup": "Controles",
     "overview": "Resumen",
-    "events": "",
+    "events": "Eventos",
     "logs": "Registros",
-    "console": "",
+    "console": "Consola",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Registro de auditoría",
@@ -363,8 +363,8 @@
   "noInstancesFound": "No se encontraron instancias",
   "pageName": {
     "terminal": "Terminal",
-    "console": "",
-    "events": "",
+    "console": "Consola",
+    "events": "Eventos en vivo",
     "logs": "Registros",
     "audit-log": "Registro de auditoría",
     "bots": "Bots",
@@ -382,33 +382,33 @@
     "instanceScripts": "Scripts"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Actividad en vivo estructurada para esta instancia, sin el ruido del registro sin procesar.",
+    "overviewTitle": "Eventos en vivo",
+    "overviewDescription": "Actividad reciente en bots, chat, comandos, scripts y errores.",
+    "openLogs": "Abrir registros",
+    "openConsole": "Abrir consola",
+    "empty": "Aún no hay eventos.",
+    "searchPlaceholder": "Buscar eventos...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Visible",
+      "errors": "Errores",
+      "bots": "Eventos de bot",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Todo",
+      "errors": "Errores",
       "bots": "Bots",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Comandos",
       "scripts": "Scripts",
-      "messages": ""
+      "messages": "Mensajes"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "En vivo",
+      "reconnecting": "Reconectando",
       "paused": "Pausado",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} nuevo mientras está en pausa",
       "pause": "Pausar",
       "resume": "Reanudar"
     }

@@ -293,9 +293,9 @@
     "deleteInstance": "ลบอินสแตนซ์",
     "controlsGroup": "ส่วนควบคุม",
     "overview": "ภาพรวม",
-    "events": "",
+    "events": "กิจกรรม​ต่าง ๆ​",
     "logs": "บันทึก",
-    "console": "",
+    "console": "คอนโซล",
     "terminal": "เทอร์มินัล",
     "bots": "บอท",
     "audit-log": "บันทึกตรวจสอบ",
@@ -363,8 +363,8 @@
   "noInstancesFound": "ไม่พบบัญชีอินสแตนซ์",
   "pageName": {
     "terminal": "เทอร์มินัล",
-    "console": "",
-    "events": "",
+    "console": "คอนโซล",
+    "events": "กิจกรรมสด",
     "logs": "บันทึก",
     "audit-log": "บันทึกตรวจสอบ",
     "bots": "บอท",
@@ -382,33 +382,33 @@
     "instanceScripts": "สคริปต์"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "กิจกรรมสดที่มีโครงสร้างสำหรับอินสแตนซ์นี้ โดยไม่มีเสียงรบกวนจากล็อกเกอร์ดิบ",
+    "overviewTitle": "กิจกรรมสด",
+    "overviewDescription": "กิจกรรมล่าสุดจากบอท แชท คำสั่ง สคริปต์ และข้อผิดพลาดต่าง ๆ.",
+    "openLogs": "เปิดบันทึกประวัติ",
+    "openConsole": "เปิดคอนโซล",
+    "empty": "ยังไม่มีเหตุการณ์",
+    "searchPlaceholder": "ค้นหาเหตุการณ์...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "แสดงผล",
+      "errors": "ข้อผิดพลาด",
+      "bots": "เหตุการณ์บอท",
+      "chat": "แชท"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "ทั้งหมด",
+      "errors": "ข้อผิดพลาด",
       "bots": "บอท",
-      "chat": "",
-      "commands": "",
+      "chat": "แชท",
+      "commands": "คำสั่ง",
       "scripts": "สคริปต์",
-      "messages": ""
+      "messages": "ข้อความ"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "ถ่ายทอดสด",
+      "reconnecting": "กำลังเชื่อมต่อใหม่",
       "paused": "หยุดชั่วคราว",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} รายการใหม่ขณะหยุดชั่วคราว",
       "pause": "หยุดชั่วคราว",
       "resume": "ดำเนินการต่อ"
     }

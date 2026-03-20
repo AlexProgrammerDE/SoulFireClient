@@ -293,9 +293,9 @@
     "deleteInstance": "Deleet Instance",
     "controlsGroup": "Controlz",
     "overview": "Ovarview",
-    "events": "",
+    "events": "Eevents",
     "logs": "LOGZ",
-    "console": "",
+    "console": "Consoelz",
     "terminal": "Termenawl",
     "bots": "BOTZ",
     "audit-log": "Audit Log",
@@ -363,8 +363,8 @@
   "noInstancesFound": "No instancez founded",
   "pageName": {
     "terminal": "Termenawl",
-    "console": "",
-    "events": "",
+    "console": "Consoelz",
+    "events": "Liv Eevents",
     "logs": "LOGZ",
     "audit-log": "Audit Log",
     "bots": "BOTZ",
@@ -382,33 +382,33 @@
     "instanceScripts": "Scriptz"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Organized liv aktivity 4 dis instanz, nawt random logger noiz. MEEWOW!",
+    "overviewTitle": "Liv Eevents",
+    "overviewDescription": "Recnt aktiviteh acros botz, chatz, commandz, scripz, an failz.",
+    "openLogs": "Opn Logz",
+    "openConsole": "Opn Consolez",
+    "empty": "No eevntz yetz.",
+    "searchPlaceholder": "Search eevntz...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Vizibul",
+      "errors": "Ewworz",
+      "bots": "Bot Eevntz",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "All teh thingz",
+      "errors": "Ewworz",
       "bots": "BOTZ",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Commandz",
       "scripts": "Scriptz",
-      "messages": ""
+      "messages": "Messagez"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Livez",
+      "reconnecting": "Reconnectin",
       "paused": "Pawzed",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} noo wile pawzed",
       "pause": "Pawse",
       "resume": "Resoome"
     }

@@ -293,9 +293,9 @@
     "deleteInstance": "Elimina istanza",
     "controlsGroup": "Controlli",
     "overview": "Panoramica",
-    "events": "",
+    "events": "Eventi",
     "logs": "Log",
-    "console": "",
+    "console": "Console",
     "terminal": "Terminale",
     "bots": "Bot",
     "audit-log": "Registro di audit",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Nessuna istanza trovata",
   "pageName": {
     "terminal": "Terminale",
-    "console": "",
-    "events": "",
+    "console": "Console",
+    "events": "Eventi live",
     "logs": "Log",
     "audit-log": "Registro di audit",
     "bots": "Bot",
@@ -382,33 +382,33 @@
     "instanceScripts": "Script"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Attività live strutturata per questa istanza, senza il rumore del logger grezzo.",
+    "overviewTitle": "Eventi live",
+    "overviewDescription": "Attività recente tra bot, chat, comandi, script ed errori.",
+    "openLogs": "Apri log",
+    "openConsole": "Apri console",
+    "empty": "Nessun evento ancora.",
+    "searchPlaceholder": "Cerca eventi...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Visibile",
+      "errors": "Errori",
+      "bots": "Eventi bot",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Tutti",
+      "errors": "Errori",
       "bots": "Bot",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Comandi",
       "scripts": "Script",
-      "messages": ""
+      "messages": "Messaggi"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Live",
+      "reconnecting": "Riconnessione in corso",
       "paused": "In pausa",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} nuovi mentre in pausa",
       "pause": "Pausa",
       "resume": "Riprendi"
     }

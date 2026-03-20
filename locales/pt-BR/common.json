@@ -293,7 +293,7 @@
     "deleteInstance": "Deletar Instancia",
     "controlsGroup": "Controles",
     "overview": "Visão geral",
-    "events": "",
+    "events": "Eventos",
     "logs": "Logs",
     "console": "Console",
     "terminal": "Terminal",
@@ -364,7 +364,7 @@
   "pageName": {
     "terminal": "Terminal",
     "console": "Console",
-    "events": "",
+    "events": "Eventos Ao Vivo",
     "logs": "Logs",
     "audit-log": "Registro de auditoria",
     "bots": "Bots",
@@ -382,33 +382,33 @@
     "instanceScripts": "Scripts"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Atividade ao vivo estruturada para esta instância, sem o ruído bruto do logger.",
+    "overviewTitle": "Eventos Ao Vivo",
+    "overviewDescription": "Atividade recente entre bots, chat, comandos, scripts e falhas.",
+    "openLogs": "Abrir Logs",
+    "openConsole": "Abrir Console",
+    "empty": "Nenhum evento ainda.",
+    "searchPlaceholder": "Pesquisar eventos...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Visível",
+      "errors": "Erros",
+      "bots": "Eventos de Bot",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Todos",
+      "errors": "Erros",
       "bots": "Bots",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Comandos",
       "scripts": "Scripts",
-      "messages": ""
+      "messages": "Mensagens"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Ao vivo",
+      "reconnecting": "Reconectando",
       "paused": "Pausado",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} novo enquanto pausado",
       "pause": "Pausar",
       "resume": "Continuar"
     }
