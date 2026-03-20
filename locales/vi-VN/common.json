@@ -293,9 +293,9 @@
     "deleteInstance": "Xóa phiên bản",
     "controlsGroup": "Bảng điều khiển",
     "overview": "Tổng quan",
-    "events": "",
+    "events": "Sự kiện",
     "logs": "Nhật ký",
-    "console": "",
+    "console": "Bảng điều khiển",
     "terminal": "Terminal",
     "bots": "Bot",
     "audit-log": "Nhật ký kiểm toán",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Không tìm thấy phiên bản nào",
   "pageName": {
     "terminal": "Terminal",
-    "console": "",
-    "events": "",
+    "console": "Bảng điều khiển",
+    "events": "Sự kiện trực tiếp",
     "logs": "Nhật ký",
     "audit-log": "Nhật ký kiểm toán",
     "bots": "Bot",
@@ -382,33 +382,33 @@
     "instanceScripts": "Scripts"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Hoạt động trực tiếp có cấu trúc của phiên bản này, không có tiếng ồn từ trình ghi log thô.",
+    "overviewTitle": "Sự kiện trực tiếp",
+    "overviewDescription": "Hoạt động gần đây trên các bot, trò chuyện, lệnh, script và lỗi.",
+    "openLogs": "Mở nhật ký",
+    "openConsole": "Mở bảng điều khiển",
+    "empty": "Chưa có sự kiện nào.",
+    "searchPlaceholder": "Tìm kiếm sự kiện...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Hiển thị",
+      "errors": "Lỗi",
+      "bots": "Sự kiện Bot",
+      "chat": "Trò chuyện"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Tất cả",
+      "errors": "Lỗi",
       "bots": "Bot",
-      "chat": "",
-      "commands": "",
+      "chat": "Trò chuyện",
+      "commands": "Lệnh",
       "scripts": "Scripts",
-      "messages": ""
+      "messages": "Tin nhắn"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Trực tiếp",
+      "reconnecting": "Đang kết nối lại",
       "paused": "Đã tạm dừng",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} mới khi đã tạm dừng",
       "pause": "Tạm dừng",
       "resume": "Tiếp tục"
     }

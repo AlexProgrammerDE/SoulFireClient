@@ -293,9 +293,9 @@
     "deleteInstance": "इंस्टेंस हटाएँ",
     "controlsGroup": "नियंत्रण",
     "overview": "अवलोकन",
-    "events": "",
+    "events": "इवेंट्स",
     "logs": "लॉग्स",
-    "console": "",
+    "console": "कंसोल",
     "terminal": "टर्मिनल",
     "bots": "बॉट्स",
     "audit-log": "ऑडिट लॉग",
@@ -363,8 +363,8 @@
   "noInstancesFound": "कोई इंस्टेंस नहीं मिला",
   "pageName": {
     "terminal": "टर्मिनल",
-    "console": "",
-    "events": "",
+    "console": "कंसोल",
+    "events": "लाइव इवेंट्स",
     "logs": "लॉग्स",
     "audit-log": "ऑडिट लॉग",
     "bots": "बॉट्स",
@@ -382,33 +382,33 @@
     "instanceScripts": "स्क्रिप्ट्स"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "इस इंस्टेंस के लिए संरचित लाइव गतिविधि, बिना कच्चे लॉगर शोर के।",
+    "overviewTitle": "लाइव इवेंट्स",
+    "overviewDescription": "बॉट्स, चैट, कमांड्स, स्क्रिप्ट्स और विफलताओं में हाल की गतिविधि।",
+    "openLogs": "लॉग्स खोलें",
+    "openConsole": "कंसोल खोलें",
+    "empty": "अभी तक कोई इवेंट नहीं हुआ है।",
+    "searchPlaceholder": "इवेंट्स खोजें...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "दृश्यमान",
+      "errors": "त्रुटियाँ",
+      "bots": "बॉट इवेंट्स",
+      "chat": "चैट"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "सभी",
+      "errors": "त्रुटियाँ",
       "bots": "बॉट्स",
-      "chat": "",
-      "commands": "",
+      "chat": "चैट",
+      "commands": "कमांड्स",
       "scripts": "स्क्रिप्ट्स",
-      "messages": ""
+      "messages": "संदेश"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "लाइव",
+      "reconnecting": "पुनः कनेक्ट हो रहा है",
       "paused": "रुका हुआ है",
-      "newWhilePaused": "",
+      "newWhilePaused": "रुके रहने पर {{count}} नया",
       "pause": "रोकें",
       "resume": "फिर से शुरू करें"
     }

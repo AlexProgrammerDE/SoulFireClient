@@ -293,7 +293,7 @@
     "deleteInstance": "Supprimer l'instance",
     "controlsGroup": "Contrôles",
     "overview": "Aperçu",
-    "events": "",
+    "events": "Événements",
     "logs": "Journaux",
     "console": "Console",
     "terminal": "Terminal",
@@ -364,7 +364,7 @@
   "pageName": {
     "terminal": "Terminal",
     "console": "Console",
-    "events": "",
+    "events": "Événements en direct",
     "logs": "Journaux",
     "audit-log": "Logs du serveur",
     "bots": "Bots",
@@ -382,33 +382,33 @@
     "instanceScripts": "Scripts"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Activité en direct structurée pour cette instance, sans le bruit du journal brut.",
+    "overviewTitle": "Événements en direct",
+    "overviewDescription": "Activité récente sur les bots, chats, commandes, scripts et échecs.",
+    "openLogs": "Ouvrir les journaux",
+    "openConsole": "Ouvrir la console",
+    "empty": "Aucun événement pour le moment.",
+    "searchPlaceholder": "Rechercher des événements...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Visible",
+      "errors": "Erreurs",
+      "bots": "Événements du bot",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Tout",
+      "errors": "Erreurs",
       "bots": "Bots",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Commandes",
       "scripts": "Scripts",
-      "messages": ""
+      "messages": "Messages"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "En direct",
+      "reconnecting": "Reconnexion en cours",
       "paused": "Suspendu",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} nouveaux pendant la pause",
       "pause": "Pauser",
       "resume": "Reprendre"
     }

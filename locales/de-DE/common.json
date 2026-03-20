@@ -293,9 +293,9 @@
     "deleteInstance": "Instanz löschen",
     "controlsGroup": "Steuerung",
     "overview": "Übersicht",
-    "events": "",
+    "events": "Ereignisse",
     "logs": "Protokolle",
-    "console": "",
+    "console": "Konsole",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Audit-Log",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Keine Instanzen gefunden",
   "pageName": {
     "terminal": "Terminal",
-    "console": "",
-    "events": "",
+    "console": "Konsole",
+    "events": "Live-Ereignisse",
     "logs": "Protokolle",
     "audit-log": "Audit-Log",
     "bots": "Bots",
@@ -382,33 +382,33 @@
     "instanceScripts": "Skripte"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Strukturierte Live-Aktivitäten für diese Instanz, ohne rohes Protokollrauschen.",
+    "overviewTitle": "Live-Ereignisse",
+    "overviewDescription": "Letzte Aktivität bei Bots, Chat, Befehlen, Skripten und Fehlern.",
+    "openLogs": "Logs öffnen",
+    "openConsole": "Konsole öffnen",
+    "empty": "Noch keine Ereignisse.",
+    "searchPlaceholder": "Ereignisse suchen...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Sichtbar",
+      "errors": "Fehler",
+      "bots": "Bot-Ereignisse",
+      "chat": "Chat"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Alle",
+      "errors": "Fehler",
       "bots": "Bots",
-      "chat": "",
-      "commands": "",
+      "chat": "Chat",
+      "commands": "Befehle",
       "scripts": "Skripte",
-      "messages": ""
+      "messages": "Nachrichten"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "Live",
+      "reconnecting": "Verbindung wird wiederhergestellt",
       "paused": "Pausiert",
-      "newWhilePaused": "",
+      "newWhilePaused": "{{count}} neu, während pausiert",
       "pause": "Pausieren",
       "resume": "Fortsetzen"
     }

@@ -293,9 +293,9 @@
     "deleteInstance": "Удалить экземпляр",
     "controlsGroup": "Управление",
     "overview": "Обзор",
-    "events": "",
+    "events": "События",
     "logs": "Логи",
-    "console": "",
+    "console": "Консоль",
     "terminal": "Терминал",
     "bots": "Боты",
     "audit-log": "Журнал аудита",
@@ -363,8 +363,8 @@
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
     "terminal": "Терминал",
-    "console": "",
-    "events": "",
+    "console": "Консоль",
+    "events": "Прямые события",
     "logs": "Логи",
     "audit-log": "Журнал аудита",
     "bots": "Боты",
@@ -382,33 +382,33 @@
     "instanceScripts": "Скрипты"
   },
   "events": {
-    "description": "",
-    "overviewTitle": "",
-    "overviewDescription": "",
-    "openLogs": "",
-    "openConsole": "",
-    "empty": "",
-    "searchPlaceholder": "",
+    "description": "Структурированная активность в реальном времени для этого инстанса без лишнего шума из логгера.",
+    "overviewTitle": "Прямые события",
+    "overviewDescription": "Недавняя активность среди ботов, чата, команд, скриптов и ошибок.",
+    "openLogs": "Открыть журналы",
+    "openConsole": "Открыть консоль",
+    "empty": "Событий пока нет.",
+    "searchPlaceholder": "Поиск событий...",
     "stats": {
-      "total": "",
-      "errors": "",
-      "bots": "",
-      "chat": ""
+      "total": "Видимо",
+      "errors": "Ошибки",
+      "bots": "События бота",
+      "chat": "Чат"
     },
     "filters": {
-      "all": "",
-      "errors": "",
+      "all": "Все",
+      "errors": "Ошибки",
       "bots": "Боты",
-      "chat": "",
-      "commands": "",
+      "chat": "Чат",
+      "commands": "Команды",
       "scripts": "Скрипты",
-      "messages": ""
+      "messages": "Сообщения"
     },
     "status": {
-      "live": "",
-      "reconnecting": "",
+      "live": "В реальном времени",
+      "reconnecting": "Переподключение",
       "paused": "Приостановлено",
-      "newWhilePaused": "",
+      "newWhilePaused": "{count, plural, one {# новое во время паузы} few {# новых во время паузы} many {# новых во время паузы} other {# новых во время паузы}}",
       "pause": "Пауза",
       "resume": "Возобновить"
     }
