@@ -40,17 +40,6 @@ import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics.ts
 import { useDiscordPresence } from "@/hooks/use-discord-presence.ts";
 import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
 
-const POINTER_LOCK_LAYER_SELECTOR = [
-  '[data-slot="dialog-overlay"]',
-  '[data-slot="dialog-content"]',
-  '[data-slot="drawer-overlay"]',
-  '[data-slot="drawer-content"]',
-  '[data-slot="select-content"]',
-  '[data-slot="dropdown-menu-content"]',
-  '[data-slot="dropdown-menu-sub-content"]',
-  '[data-slot="popover-content"]',
-].join(", ");
-
 async function getAvailableProfiles() {
   const profileDir = await resolve(
     await resolve(await appConfigDir(), "profile"),
@@ -125,44 +114,15 @@ function RootPending() {
 }
 
 function PointerReset() {
-  const _location = useLocation();
+  const location = useLocation();
 
+  // Avoid mobile pointer events issues
+  // When dropdowns were open when page is switched, sometimes the body still has pointer-events: none
+  // This will reset it to auto
   useEffect(() => {
-    let frame = 0;
-
-    const resetPointersIfStuck = () => {
-      if (getComputedStyle(document.body).pointerEvents !== "none") return;
-      if (document.querySelector(POINTER_LOCK_LAYER_SELECTOR)) return;
-
-      console.debug("Resetting stuck body pointer-events");
-      document.body.style.pointerEvents = "auto";
-    };
-
-    const scheduleReset = () => {
-      cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(resetPointersIfStuck);
-    };
-
-    scheduleReset();
-
-    const observer = new MutationObserver(scheduleReset);
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["data-state", "style"],
-      childList: true,
-      subtree: true,
-    });
-
-    window.addEventListener("focus", scheduleReset);
-    document.addEventListener("visibilitychange", scheduleReset);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-      window.removeEventListener("focus", scheduleReset);
-      document.removeEventListener("visibilitychange", scheduleReset);
-    };
-  }, []);
+    console.debug("Resetting pointers because switched to ", location.pathname);
+    document.body.style.pointerEvents = "auto";
+  }, [location.pathname]);
 
   return null;
 }
