@@ -5262,7 +5262,7 @@ dependencies = [
 
 [[package]]
 name = "soulfire"
-version = "2.6.2"
+version = "2.6.3"
 dependencies = [
  "async-std",
  "discord-presence",
