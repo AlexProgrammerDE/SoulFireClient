@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import ControlsMenu from "@/components/controls-menu.tsx";
-import { InstanceEventsPanel } from "@/components/instance-events.tsx";
 import {
   BandwidthChart,
   BotsOnlineChart,
@@ -19,11 +18,12 @@ import {
   TickDurationChart,
 } from "@/components/instance-metrics/metrics-charts.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InstancePermission } from "@/generated/soulfire/common.ts";
-import type { EventScope } from "@/generated/soulfire/events.ts";
 import { InstanceState } from "@/generated/soulfire/instance.ts";
+import type { LogScope } from "@/generated/soulfire/logs.ts";
 import { translateInstanceState } from "@/lib/types.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
@@ -83,12 +83,12 @@ function Overview() {
 }
 
 function Content() {
-  const { i18n, t } = useTranslation("common");
+  const { i18n } = useTranslation("common");
   const { instanceInfoQueryOptions, metricsQueryOptions } =
     Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: metricsData } = useSuspenseQuery(metricsQueryOptions);
-  const eventScope = useMemo<EventScope>(
+  const logScope = useMemo<LogScope>(
     () => ({
       scope: {
         oneofKind: "instance",
@@ -113,7 +113,6 @@ function Content() {
 
   return (
     <div className="flex h-full w-full grow flex-col gap-2">
-      <ControlsMenu />
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center gap-2">
           <h2 className="max-w-64 truncate text-xl font-semibold">
@@ -126,16 +125,9 @@ function Content() {
         {hasInstancePermission(
           instanceInfo,
           InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
-        ) && (
-          <InstanceEventsPanel
-            scope={eventScope}
-            instanceId={instanceInfo.id}
-            compact
-            title={t("events.overviewTitle")}
-            description={t("events.overviewDescription")}
-          />
-        )}
+        ) && <TerminalComponent scope={logScope} />}
       </div>
+      <ControlsMenu />
       {showMetrics && (
         <div className="flex flex-col gap-2">
           <MetricsSummaryCards data={metricsData} />

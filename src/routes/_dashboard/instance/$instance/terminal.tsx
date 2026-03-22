@@ -37,7 +37,7 @@ function Terminal() {
           content: t("breadcrumbs.controls"),
         },
       ]}
-      pageName={t("pageName.console")}
+      pageName={t("pageName.terminal")}
       loadingSkeleton={<TerminalSkeleton />}
     >
       <Content />
@@ -48,7 +48,7 @@ function Terminal() {
 function Content() {
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const personalLogScope = useMemo<LogScope>(
+  const logScope = useMemo<LogScope>(
     () => ({
       scope: {
         oneofKind: "personal",
@@ -71,7 +71,7 @@ function Content() {
 
   return (
     <div className="flex flex-col gap-2">
-      <TerminalComponent scope={personalLogScope} />
+      <TerminalComponent scope={logScope} />
       {hasInstancePermission(
         instanceInfo,
         InstancePermission.INSTANCE_COMMAND_EXECUTION,

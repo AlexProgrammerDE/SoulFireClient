@@ -26,8 +26,6 @@ import { Route as DashboardInstanceInstanceTerminalRouteImport } from './routes/
 import { Route as DashboardInstanceInstanceScriptsRouteImport } from './routes/_dashboard/instance/$instance/scripts'
 import { Route as DashboardInstanceInstanceProxiesRouteImport } from './routes/_dashboard/instance/$instance/proxies'
 import { Route as DashboardInstanceInstanceMetaRouteImport } from './routes/_dashboard/instance/$instance/meta'
-import { Route as DashboardInstanceInstanceLogsRouteImport } from './routes/_dashboard/instance/$instance/logs'
-import { Route as DashboardInstanceInstanceEventsRouteImport } from './routes/_dashboard/instance/$instance/events'
 import { Route as DashboardInstanceInstanceDiscoverRouteImport } from './routes/_dashboard/instance/$instance/discover'
 import { Route as DashboardInstanceInstanceBotsRouteImport } from './routes/_dashboard/instance/$instance/bots'
 import { Route as DashboardInstanceInstanceAuditLogRouteImport } from './routes/_dashboard/instance/$instance/audit-log'
@@ -128,18 +126,6 @@ const DashboardInstanceInstanceMetaRoute =
     path: '/meta',
     getParentRoute: () => DashboardInstanceInstanceRoute,
   } as any)
-const DashboardInstanceInstanceLogsRoute =
-  DashboardInstanceInstanceLogsRouteImport.update({
-    id: '/logs',
-    path: '/logs',
-    getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
-const DashboardInstanceInstanceEventsRoute =
-  DashboardInstanceInstanceEventsRouteImport.update({
-    id: '/events',
-    path: '/events',
-    getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
 const DashboardInstanceInstanceDiscoverRoute =
   DashboardInstanceInstanceDiscoverRouteImport.update({
     id: '/discover',
@@ -201,8 +187,6 @@ export interface FileRoutesByFullPath {
   '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
   '/instance/$instance/bots': typeof DashboardInstanceInstanceBotsRoute
   '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
-  '/instance/$instance/events': typeof DashboardInstanceInstanceEventsRoute
-  '/instance/$instance/logs': typeof DashboardInstanceInstanceLogsRoute
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
@@ -226,8 +210,6 @@ export interface FileRoutesByTo {
   '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
   '/instance/$instance/bots': typeof DashboardInstanceInstanceBotsRoute
   '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
-  '/instance/$instance/events': typeof DashboardInstanceInstanceEventsRoute
-  '/instance/$instance/logs': typeof DashboardInstanceInstanceLogsRoute
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
@@ -256,8 +238,6 @@ export interface FileRoutesById {
   '/_dashboard/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
   '/_dashboard/instance/$instance/bots': typeof DashboardInstanceInstanceBotsRoute
   '/_dashboard/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
-  '/_dashboard/instance/$instance/events': typeof DashboardInstanceInstanceEventsRoute
-  '/_dashboard/instance/$instance/logs': typeof DashboardInstanceInstanceLogsRoute
   '/_dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/_dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/_dashboard/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
@@ -286,8 +266,6 @@ export interface FileRouteTypes {
     | '/instance/$instance/audit-log'
     | '/instance/$instance/bots'
     | '/instance/$instance/discover'
-    | '/instance/$instance/events'
-    | '/instance/$instance/logs'
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
     | '/instance/$instance/scripts'
@@ -311,8 +289,6 @@ export interface FileRouteTypes {
     | '/instance/$instance/audit-log'
     | '/instance/$instance/bots'
     | '/instance/$instance/discover'
-    | '/instance/$instance/events'
-    | '/instance/$instance/logs'
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
     | '/instance/$instance/scripts'
@@ -340,8 +316,6 @@ export interface FileRouteTypes {
     | '/_dashboard/instance/$instance/audit-log'
     | '/_dashboard/instance/$instance/bots'
     | '/_dashboard/instance/$instance/discover'
-    | '/_dashboard/instance/$instance/events'
-    | '/_dashboard/instance/$instance/logs'
     | '/_dashboard/instance/$instance/meta'
     | '/_dashboard/instance/$instance/proxies'
     | '/_dashboard/instance/$instance/scripts'
@@ -483,20 +457,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInstanceInstanceMetaRouteImport
       parentRoute: typeof DashboardInstanceInstanceRoute
     }
-    '/_dashboard/instance/$instance/logs': {
-      id: '/_dashboard/instance/$instance/logs'
-      path: '/logs'
-      fullPath: '/instance/$instance/logs'
-      preLoaderRoute: typeof DashboardInstanceInstanceLogsRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/instance/$instance/events': {
-      id: '/_dashboard/instance/$instance/events'
-      path: '/events'
-      fullPath: '/instance/$instance/events'
-      preLoaderRoute: typeof DashboardInstanceInstanceEventsRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
     '/_dashboard/instance/$instance/discover': {
       id: '/_dashboard/instance/$instance/discover'
       path: '/discover'
@@ -598,8 +558,6 @@ interface DashboardInstanceInstanceRouteChildren {
   DashboardInstanceInstanceAuditLogRoute: typeof DashboardInstanceInstanceAuditLogRoute
   DashboardInstanceInstanceBotsRoute: typeof DashboardInstanceInstanceBotsRoute
   DashboardInstanceInstanceDiscoverRoute: typeof DashboardInstanceInstanceDiscoverRoute
-  DashboardInstanceInstanceEventsRoute: typeof DashboardInstanceInstanceEventsRoute
-  DashboardInstanceInstanceLogsRoute: typeof DashboardInstanceInstanceLogsRoute
   DashboardInstanceInstanceMetaRoute: typeof DashboardInstanceInstanceMetaRoute
   DashboardInstanceInstanceProxiesRoute: typeof DashboardInstanceInstanceProxiesRoute
   DashboardInstanceInstanceScriptsRoute: typeof DashboardInstanceInstanceScriptsRoute
@@ -619,8 +577,6 @@ const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChil
     DashboardInstanceInstanceBotsRoute: DashboardInstanceInstanceBotsRoute,
     DashboardInstanceInstanceDiscoverRoute:
       DashboardInstanceInstanceDiscoverRoute,
-    DashboardInstanceInstanceEventsRoute: DashboardInstanceInstanceEventsRoute,
-    DashboardInstanceInstanceLogsRoute: DashboardInstanceInstanceLogsRoute,
     DashboardInstanceInstanceMetaRoute: DashboardInstanceInstanceMetaRoute,
     DashboardInstanceInstanceProxiesRoute:
       DashboardInstanceInstanceProxiesRoute,

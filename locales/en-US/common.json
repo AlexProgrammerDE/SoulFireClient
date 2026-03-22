@@ -293,9 +293,6 @@
     "deleteInstance": "Delete Instance",
     "controlsGroup": "Controls",
     "overview": "Overview",
-    "events": "Events",
-    "logs": "Logs",
-    "console": "Console",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Audit Log",
@@ -363,8 +360,6 @@
   "noInstancesFound": "No instances found",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Console",
-    "events": "Live Events",
     "logs": "Logs",
     "audit-log": "Audit Log",
     "bots": "Bots",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scripts",
     "instanceScripts": "Scripts"
-  },
-  "events": {
-    "description": "Structured live activity for this instance, without raw logger noise.",
-    "overviewTitle": "Live Events",
-    "overviewDescription": "Recent activity across bots, chat, commands, scripts, and failures.",
-    "openLogs": "Open Logs",
-    "openConsole": "Open Console",
-    "empty": "No events yet.",
-    "searchPlaceholder": "Search events...",
-    "stats": {
-      "total": "Visible",
-      "errors": "Errors",
-      "bots": "Bot Events",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "All",
-      "errors": "Errors",
-      "bots": "Bots",
-      "chat": "Chat",
-      "commands": "Commands",
-      "scripts": "Scripts",
-      "messages": "Messages"
-    },
-    "status": {
-      "live": "Live",
-      "reconnecting": "Reconnecting",
-      "paused": "Paused",
-      "newWhilePaused": "{{count}} new while paused",
-      "pause": "Pause",
-      "resume": "Resume"
-    }
   },
   "access": {
     "webdav": {
