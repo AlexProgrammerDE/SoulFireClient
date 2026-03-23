@@ -293,9 +293,6 @@
     "deleteInstance": "ǝɔuɐʇsᴉ ǝʇǝlǝpǝᗡ",
     "controlsGroup": "sdoɹʇuoↃ",
     "overview": "ʍǝɹʌǝᴚ ǝʌᴉǝʌɹƆ",
-    "events": "sʇuǝʌƎ",
-    "logs": "sƃo˥",
-    "console": "ǝlɐlosuƆ",
     "terminal": "ןɐuᴉɯɹǝ┴",
     "bots": "sʇoԐ",
     "audit-log": "ƃo˥-ʇᴉp∩∀ ƃo˥-ʇᴉp∩∀",
@@ -363,8 +360,6 @@
   "noInstancesFound": "punoɟ sǝɔuɐʇsᴉ oN",
   "pageName": {
     "terminal": "ןɐuᴉɯɹǝ┴",
-    "console": "ǝlɐlosuƆ",
-    "events": "sʇuǝʌƎ ǝʌᴉꞁ",
     "logs": "sƃo˥",
     "audit-log": "ƃo˥-ʇᴉp∩∀ ƃo˥-ʇᴉp∩∀",
     "bots": "sʇoԐ",
@@ -380,38 +375,6 @@
     "discoverPlugins": "sƃuᴉƃnlԀ",
     "adminScripts": "sʇdᴉɹɔS",
     "instanceScripts": "sʇdᴉɹɔS"
-  },
-  "events": {
-    "description": ".ǝsᴉoN ɹǝƃƃo˥ ʍɐɹ ʇnoɥʇᴉʇnɥʇᴉM 'ǝɔuɐʇsᴉu sᴉɥʇ ɹoɟ ʎʇᴉʌᴉʇɔɐ ǝʌᴉꞁ pǝɹnʇɔnɹʇs",
-    "overviewTitle": "sʇuǝʌƎ ǝʌᴉꞁ",
-    "overviewDescription": ".sǝɹnʇlᴉɐɟ puɐ sʇdᴉɹɔs ‘spuɐɯɯoɔ ‘sʇɐɥɔ ‘sʇoq ssɐɹɔɐ ʎʇᴉʌᴉʇɔɐ ʇuǝɔǝɹɐ",
-    "openLogs": "sƃo˥ uǝdo",
-    "openConsole": "ǝlǝlooɔ uǝdo",
-    "empty": ".ʇǝʎ ʇǝuǝʌǝ oN",
-    "searchPlaceholder": "...sʇuǝʌǝ ɥɔɹɐǝS",
-    "stats": {
-      "total": "ǝlqᴉsᴉʌ",
-      "errors": "sɹoɹɹƎ",
-      "bots": "sʇuǝʌƎ ʇoԐ",
-      "chat": "ʇɐɥɔ"
-    },
-    "filters": {
-      "all": "˥˥∀",
-      "errors": "sɹoɹɹƎ",
-      "bots": "sʇoԐ",
-      "chat": "ʇɐɥɔ",
-      "commands": "spuɐɯɯoƆ",
-      "scripts": "sʇdᴉɹɔS",
-      "messages": "sǝƃɐssǝW"
-    },
-    "status": {
-      "live": "ǝʌᴉ˥",
-      "reconnecting": "ƃuᴉʇɔnǝuoɔǝᴚ",
-      "paused": "pǝsnsɐԀ",
-      "newWhilePaused": "pǝsuɐns ǝlᴉɥʍ ʍǝu {{count}}",
-      "pause": "ǝsnsɐԀ",
-      "resume": "ǝɯnsǝᴚ"
-    }
   },
   "access": {
     "webdav": {

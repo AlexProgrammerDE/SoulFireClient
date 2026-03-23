@@ -293,9 +293,6 @@
     "deleteInstance": "Örneği Sil",
     "controlsGroup": "Kontroller",
     "overview": "Genel Bakış",
-    "events": "Etkinlikler",
-    "logs": "Kayıtlar",
-    "console": "Konsol",
     "terminal": "Terminal",
     "bots": "Botlar",
     "audit-log": "Denetim Günlüğü",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Örnek bulunamadı",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Konsol",
-    "events": "Canlı Etkinlikler",
     "logs": "Kayıtlar",
     "audit-log": "Denetim Günlüğü",
     "bots": "Botlar",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Eklentiler",
     "adminScripts": "Betikler",
     "instanceScripts": "Betikler"
-  },
-  "events": {
-    "description": "Bu instance için yapılandırılmış canlı etkinlik, ham loglayıcı gürültüsü olmadan.",
-    "overviewTitle": "Canlı Etkinlikler",
-    "overviewDescription": "Botlar, sohbet, komutlar, betikler ve hatalar genelinde son etkinlikler.",
-    "openLogs": "Kayıtları Aç",
-    "openConsole": "Konsolu Aç",
-    "empty": "Henüz etkinlik yok.",
-    "searchPlaceholder": "Etkinliklerde ara...",
-    "stats": {
-      "total": "Görünen",
-      "errors": "Hatalar",
-      "bots": "Bot Etkinlikleri",
-      "chat": "Sohbet"
-    },
-    "filters": {
-      "all": "Tümü",
-      "errors": "Hatalar",
-      "bots": "Botlar",
-      "chat": "Sohbet",
-      "commands": "Komutlar",
-      "scripts": "Betikler",
-      "messages": "Mesajlar"
-    },
-    "status": {
-      "live": "Canlı",
-      "reconnecting": "Yeniden bağlanıyor",
-      "paused": "Duraklatıldı",
-      "newWhilePaused": "Duraklatıldığında {{count}} yeni",
-      "pause": "Duraklat",
-      "resume": "Devam et"
-    }
   },
   "access": {
     "webdav": {

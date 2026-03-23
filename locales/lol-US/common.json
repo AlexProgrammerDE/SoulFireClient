@@ -293,9 +293,6 @@
     "deleteInstance": "Deleet Instance",
     "controlsGroup": "Controlz",
     "overview": "Ovarview",
-    "events": "Eevents",
-    "logs": "LOGZ",
-    "console": "Consoelz",
     "terminal": "Termenawl",
     "bots": "BOTZ",
     "audit-log": "Audit Log",
@@ -363,8 +360,6 @@
   "noInstancesFound": "No instancez founded",
   "pageName": {
     "terminal": "Termenawl",
-    "console": "Consoelz",
-    "events": "Liv Eevents",
     "logs": "LOGZ",
     "audit-log": "Audit Log",
     "bots": "BOTZ",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scriptz",
     "instanceScripts": "Scriptz"
-  },
-  "events": {
-    "description": "Organized liv aktivity 4 dis instanz, nawt random logger noiz. MEEWOW!",
-    "overviewTitle": "Liv Eevents",
-    "overviewDescription": "Recnt aktiviteh acros botz, chatz, commandz, scripz, an failz.",
-    "openLogs": "Opn Logz",
-    "openConsole": "Opn Consolez",
-    "empty": "No eevntz yetz.",
-    "searchPlaceholder": "Search eevntz...",
-    "stats": {
-      "total": "Vizibul",
-      "errors": "Ewworz",
-      "bots": "Bot Eevntz",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "All teh thingz",
-      "errors": "Ewworz",
-      "bots": "BOTZ",
-      "chat": "Chat",
-      "commands": "Commandz",
-      "scripts": "Scriptz",
-      "messages": "Messagez"
-    },
-    "status": {
-      "live": "Livez",
-      "reconnecting": "Reconnectin",
-      "paused": "Pawzed",
-      "newWhilePaused": "{{count}} noo wile pawzed",
-      "pause": "Pawse",
-      "resume": "Resoome"
-    }
   },
   "access": {
     "webdav": {

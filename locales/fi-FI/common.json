@@ -293,9 +293,6 @@
     "deleteInstance": "Poista instanssi",
     "controlsGroup": "Ohjaimet",
     "overview": "Yleiskatsaus",
-    "events": "Tapahtumat",
-    "logs": "Lokit",
-    "console": "Konsoli",
     "terminal": "Terminaali",
     "bots": "Botit",
     "audit-log": "Audit-loki",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Yhtään instanssia ei löytynyt",
   "pageName": {
     "terminal": "Terminaali",
-    "console": "Konsoli",
-    "events": "Live-tapahtumat",
     "logs": "Lokit",
     "audit-log": "Audit-loki",
     "bots": "Botit",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Liitännäiset",
     "adminScripts": "Skriptit",
     "instanceScripts": "Skriptit"
-  },
-  "events": {
-    "description": "Rakenteinen live-toiminta tälle instanssille ilman raakaa lokihälyä.",
-    "overviewTitle": "Live-tapahtumat",
-    "overviewDescription": "Viimeaikainen toiminta boteissa, chateissa, komennoissa, skripteissä ja virheissä.",
-    "openLogs": "Avaa lokit",
-    "openConsole": "Avaa konsoli",
-    "empty": "Ei tapahtumia vielä.",
-    "searchPlaceholder": "Etsi tapahtumia...",
-    "stats": {
-      "total": "Näkyvissä",
-      "errors": "Virheet",
-      "bots": "Bot-tapahtumat",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "Kaikki",
-      "errors": "Virheet",
-      "bots": "Botit",
-      "chat": "Chat",
-      "commands": "Komennot",
-      "scripts": "Skriptit",
-      "messages": "Viestit"
-    },
-    "status": {
-      "live": "Live",
-      "reconnecting": "Yhdistetään uudelleen",
-      "paused": "Tauotettu",
-      "newWhilePaused": "Keskeytyksen aikana {{count}} uutta",
-      "pause": "Tauota",
-      "resume": "Jatka"
-    }
   },
   "access": {
     "webdav": {

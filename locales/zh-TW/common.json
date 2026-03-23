@@ -293,9 +293,6 @@
     "deleteInstance": "刪除實例",
     "controlsGroup": "控制項",
     "overview": "總覽",
-    "events": "事件活動",
-    "logs": "日誌",
-    "console": "主控台",
     "terminal": "終端機",
     "bots": "機器人群組/機器人列表/機器人",
     "audit-log": "稽核日誌",
@@ -363,8 +360,6 @@
   "noInstancesFound": "未找到任何實例",
   "pageName": {
     "terminal": "終端機",
-    "console": "主控台",
-    "events": "即時事件",
     "logs": "日誌",
     "audit-log": "稽核日誌",
     "bots": "機器人群組/機器人列表/機器人",
@@ -380,38 +375,6 @@
     "discoverPlugins": "插件",
     "adminScripts": "腳本",
     "instanceScripts": "腳本"
-  },
-  "events": {
-    "description": "本實例的結構化即時活動，無原始日誌噪音。",
-    "overviewTitle": "即時事件",
-    "overviewDescription": "涵蓋機器人、聊天、指令、腳本和失敗的最近活動。",
-    "openLogs": "打開日誌",
-    "openConsole": "打開主控台",
-    "empty": "尚無事件。",
-    "searchPlaceholder": "搜尋事件...",
-    "stats": {
-      "total": "可見",
-      "errors": "錯誤",
-      "bots": "機器人事件",
-      "chat": "聊天"
-    },
-    "filters": {
-      "all": "全部",
-      "errors": "錯誤",
-      "bots": "機器人群組/機器人列表/機器人",
-      "chat": "聊天",
-      "commands": "指令",
-      "scripts": "腳本",
-      "messages": "訊息"
-    },
-    "status": {
-      "live": "即時",
-      "reconnecting": "重新連線中",
-      "paused": "已暫停",
-      "newWhilePaused": "暫停時新增 {{count}} 則",
-      "pause": "暫停",
-      "resume": "繼續"
-    }
   },
   "access": {
     "webdav": {

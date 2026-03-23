@@ -293,9 +293,6 @@
     "deleteInstance": "Odstrániť inštanciu",
     "controlsGroup": "Ovládanie",
     "overview": "Prehľad",
-    "events": "Udalosti},{",
-    "logs": "Záznamy",
-    "console": "Konzola",
     "terminal": "Terminál",
     "bots": "Boti",
     "audit-log": "Audit log",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Neboli nájdené žiadne inštancie",
   "pageName": {
     "terminal": "Terminál",
-    "console": "Konzola",
-    "events": "Živé udalosti",
     "logs": "Záznamy",
     "audit-log": "Audit log",
     "bots": "Boti",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Doplnky",
     "adminScripts": "Skripty",
     "instanceScripts": "Skripty"
-  },
-  "events": {
-    "description": "Štruktúrovaná živá aktivita pre túto inštanciu, bez rušivého šumu z bežného logovania.",
-    "overviewTitle": "Živé udalosti",
-    "overviewDescription": "Nedávna aktivita naprieč botmi, chatom, príkazmi, skriptami a chybami.",
-    "openLogs": "Otvoriť záznamy",
-    "openConsole": "Otvoriť konzolu",
-    "empty": "Zatiaľ žiadne udalosti.",
-    "searchPlaceholder": "Hľadať udalosti...",
-    "stats": {
-      "total": "Viditeľné",
-      "errors": "Chyby",
-      "bots": "Udalosti bota",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "Všetko",
-      "errors": "Chyby",
-      "bots": "Boti",
-      "chat": "Chat",
-      "commands": "Príkazy",
-      "scripts": "Skripty",
-      "messages": "Správy"
-    },
-    "status": {
-      "live": "Naživo",
-      "reconnecting": "Znovu sa pripája",
-      "paused": "Pozastavené",
-      "newWhilePaused": "{count, plural, one {# nová počas pozastavenia} few {# nové počas pozastavenia} many {# nových počas pozastavenia} other {# nových počas pozastavenia}}",
-      "pause": "Pozastaviť",
-      "resume": "Pokračovať"
-    }
   },
   "access": {
     "webdav": {

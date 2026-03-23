@@ -293,9 +293,6 @@
     "deleteInstance": "Hapus Instansi",
     "controlsGroup": "Kontrol",
     "overview": "Ikhtisar",
-    "events": "Acara",
-    "logs": "Log",
-    "console": "Konsol",
     "terminal": "Terminal",
     "bots": "Bot",
     "audit-log": "Log Audit",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Tidak ada instansi ditemukan",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Konsol",
-    "events": "Acara Langsung",
     "logs": "Log",
     "audit-log": "Log Audit",
     "bots": "Bot",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Plugin",
     "adminScripts": "Skrip",
     "instanceScripts": "Skrip"
-  },
-  "events": {
-    "description": "Aktivitas langsung terstruktur untuk instance ini, tanpa kebisingan logger mentah.",
-    "overviewTitle": "Acara Langsung",
-    "overviewDescription": "Aktivitas terbaru di seluruh bot, chat, perintah, skrip, dan kegagalan.",
-    "openLogs": "Buka Log",
-    "openConsole": "Buka Konsol",
-    "empty": "Belum ada event.",
-    "searchPlaceholder": "Cari event...",
-    "stats": {
-      "total": "Terlihat",
-      "errors": "Kesalahan",
-      "bots": "Event Bot",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "Semua",
-      "errors": "Kesalahan",
-      "bots": "Bot",
-      "chat": "Chat",
-      "commands": "Perintah",
-      "scripts": "Skrip",
-      "messages": "Pesan"
-    },
-    "status": {
-      "live": "Langsung",
-      "reconnecting": "Menyambungkan ulang",
-      "paused": "Dijeda",
-      "newWhilePaused": "{{count}} baru saat dijeda",
-      "pause": "Jeda",
-      "resume": "Lanjutkan"
-    }
   },
   "access": {
     "webdav": {

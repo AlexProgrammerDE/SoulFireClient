@@ -293,9 +293,6 @@
     "deleteInstance": "Ta bort instans",
     "controlsGroup": "Kontroller",
     "overview": "Översikt",
-    "events": "Händelser",
-    "logs": "Loggar",
-    "console": "Konsol",
     "terminal": "Terminal",
     "bots": "Bottar",
     "audit-log": "Granskningslogg",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Inga instanser hittades",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Konsol",
-    "events": "Livehändelser",
     "logs": "Loggar",
     "audit-log": "Granskningslogg",
     "bots": "Bottar",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Skript",
     "instanceScripts": "Skript"
-  },
-  "events": {
-    "description": "Strukturerad liveaktivitet för denna instans, utan brus från rå loggning.",
-    "overviewTitle": "Livehändelser",
-    "overviewDescription": "Senaste aktivitet från bots, chatt, kommandon, skript och fel.",
-    "openLogs": "Öppna loggar",
-    "openConsole": "Öppna konsolen",
-    "empty": "Inga händelser ännu.",
-    "searchPlaceholder": "Sök händelser...",
-    "stats": {
-      "total": "Synlig",
-      "errors": "Fel",
-      "bots": "Bot-händelser",
-      "chat": "Chatt"
-    },
-    "filters": {
-      "all": "Alla",
-      "errors": "Fel",
-      "bots": "Bottar",
-      "chat": "Chatt",
-      "commands": "Kommandon",
-      "scripts": "Skript",
-      "messages": "Meddelanden"
-    },
-    "status": {
-      "live": "Live",
-      "reconnecting": "Återansluter",
-      "paused": "Pausad",
-      "newWhilePaused": "{{count}} nya medan pausad",
-      "pause": "Pausa",
-      "resume": "Återuppta"
-    }
   },
   "access": {
     "webdav": {
