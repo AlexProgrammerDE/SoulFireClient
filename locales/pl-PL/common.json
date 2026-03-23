@@ -293,9 +293,6 @@
     "deleteInstance": "Usuń instancję",
     "controlsGroup": "Sterowanie",
     "overview": "Przegląd",
-    "events": "Wydarzenia​​",
-    "logs": "Logi",
-    "console": "Konsola",
     "terminal": "Konsola",
     "bots": "Boty",
     "audit-log": "Dziennik zdarzeń",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
     "terminal": "Konsola",
-    "console": "Konsola",
-    "events": "Wydarzenia na żywo",
     "logs": "Logi",
     "audit-log": "Dziennik zdarzeń",
     "bots": "Boty",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Wtyczki",
     "adminScripts": "Skrypty",
     "instanceScripts": "Skrypty"
-  },
-  "events": {
-    "description": "Ustrukturyzowana aktywność na żywo dla tej instancji, bez szumu z surowych logów.",
-    "overviewTitle": "Wydarzenia na żywo",
-    "overviewDescription": "Ostatnia aktywność we wszystkich botach, czatach, komendach, skryptach i błędach.",
-    "openLogs": "Otwórz logi",
-    "openConsole": "Otwórz konsolę",
-    "empty": "Brak zdarzeń.",
-    "searchPlaceholder": "Szukaj zdarzeń...",
-    "stats": {
-      "total": "Widoczne",
-      "errors": "Błędy",
-      "bots": "Zdarzenia bota",
-      "chat": "Czat"
-    },
-    "filters": {
-      "all": "Wszystko",
-      "errors": "Błędy",
-      "bots": "Boty",
-      "chat": "Czat",
-      "commands": "Komendy",
-      "scripts": "Skrypty",
-      "messages": "Wiadomości"
-    },
-    "status": {
-      "live": "Na żywo",
-      "reconnecting": "Ponowne łączenie",
-      "paused": "Wstrzymana",
-      "newWhilePaused": "{count, plural, one {# nowa podczas pauzy} few {# nowe podczas pauzy} many {# nowych podczas pauzy} other {# nowych podczas pauzy}}",
-      "pause": "Wstrzymaj",
-      "resume": "Wznów"
-    }
   },
   "access": {
     "webdav": {

@@ -293,9 +293,6 @@
     "deleteInstance": "ลบอินสแตนซ์",
     "controlsGroup": "ส่วนควบคุม",
     "overview": "ภาพรวม",
-    "events": "กิจกรรม​ต่าง ๆ​",
-    "logs": "บันทึก",
-    "console": "คอนโซล",
     "terminal": "เทอร์มินัล",
     "bots": "บอท",
     "audit-log": "บันทึกตรวจสอบ",
@@ -363,8 +360,6 @@
   "noInstancesFound": "ไม่พบบัญชีอินสแตนซ์",
   "pageName": {
     "terminal": "เทอร์มินัล",
-    "console": "คอนโซล",
-    "events": "กิจกรรมสด",
     "logs": "บันทึก",
     "audit-log": "บันทึกตรวจสอบ",
     "bots": "บอท",
@@ -380,38 +375,6 @@
     "discoverPlugins": "ปลั๊กอิน",
     "adminScripts": "สคริปต์",
     "instanceScripts": "สคริปต์"
-  },
-  "events": {
-    "description": "กิจกรรมสดที่มีโครงสร้างสำหรับอินสแตนซ์นี้ โดยไม่มีเสียงรบกวนจากล็อกเกอร์ดิบ",
-    "overviewTitle": "กิจกรรมสด",
-    "overviewDescription": "กิจกรรมล่าสุดจากบอท แชท คำสั่ง สคริปต์ และข้อผิดพลาดต่าง ๆ.",
-    "openLogs": "เปิดบันทึกประวัติ",
-    "openConsole": "เปิดคอนโซล",
-    "empty": "ยังไม่มีเหตุการณ์",
-    "searchPlaceholder": "ค้นหาเหตุการณ์...",
-    "stats": {
-      "total": "แสดงผล",
-      "errors": "ข้อผิดพลาด",
-      "bots": "เหตุการณ์บอท",
-      "chat": "แชท"
-    },
-    "filters": {
-      "all": "ทั้งหมด",
-      "errors": "ข้อผิดพลาด",
-      "bots": "บอท",
-      "chat": "แชท",
-      "commands": "คำสั่ง",
-      "scripts": "สคริปต์",
-      "messages": "ข้อความ"
-    },
-    "status": {
-      "live": "ถ่ายทอดสด",
-      "reconnecting": "กำลังเชื่อมต่อใหม่",
-      "paused": "หยุดชั่วคราว",
-      "newWhilePaused": "{{count}} รายการใหม่ขณะหยุดชั่วคราว",
-      "pause": "หยุดชั่วคราว",
-      "resume": "ดำเนินการต่อ"
-    }
   },
   "access": {
     "webdav": {

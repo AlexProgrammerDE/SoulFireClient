@@ -293,9 +293,6 @@
     "deleteInstance": "Удалить экземпляр",
     "controlsGroup": "Управление",
     "overview": "Обзор",
-    "events": "События",
-    "logs": "Логи",
-    "console": "Консоль",
     "terminal": "Терминал",
     "bots": "Боты",
     "audit-log": "Журнал аудита",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
     "terminal": "Терминал",
-    "console": "Консоль",
-    "events": "Прямые события",
     "logs": "Логи",
     "audit-log": "Журнал аудита",
     "bots": "Боты",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Плагины",
     "adminScripts": "Скрипты",
     "instanceScripts": "Скрипты"
-  },
-  "events": {
-    "description": "Структурированная активность в реальном времени для этого инстанса без лишнего шума из логгера.",
-    "overviewTitle": "Прямые события",
-    "overviewDescription": "Недавняя активность среди ботов, чата, команд, скриптов и ошибок.",
-    "openLogs": "Открыть журналы",
-    "openConsole": "Открыть консоль",
-    "empty": "Событий пока нет.",
-    "searchPlaceholder": "Поиск событий...",
-    "stats": {
-      "total": "Видимо",
-      "errors": "Ошибки",
-      "bots": "События бота",
-      "chat": "Чат"
-    },
-    "filters": {
-      "all": "Все",
-      "errors": "Ошибки",
-      "bots": "Боты",
-      "chat": "Чат",
-      "commands": "Команды",
-      "scripts": "Скрипты",
-      "messages": "Сообщения"
-    },
-    "status": {
-      "live": "В реальном времени",
-      "reconnecting": "Переподключение",
-      "paused": "Приостановлено",
-      "newWhilePaused": "{count, plural, one {# новое во время паузы} few {# новых во время паузы} many {# новых во время паузы} other {# новых во время паузы}}",
-      "pause": "Пауза",
-      "resume": "Возобновить"
-    }
   },
   "access": {
     "webdav": {

@@ -293,9 +293,6 @@
     "deleteInstance": "Eliminar instancia",
     "controlsGroup": "Controles",
     "overview": "Resumen",
-    "events": "Eventos",
-    "logs": "Registros",
-    "console": "Consola",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Registro de auditoría",
@@ -363,8 +360,6 @@
   "noInstancesFound": "No se encontraron instancias",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Consola",
-    "events": "Eventos en vivo",
     "logs": "Registros",
     "audit-log": "Registro de auditoría",
     "bots": "Bots",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scripts",
     "instanceScripts": "Scripts"
-  },
-  "events": {
-    "description": "Actividad en vivo estructurada para esta instancia, sin el ruido del registro sin procesar.",
-    "overviewTitle": "Eventos en vivo",
-    "overviewDescription": "Actividad reciente en bots, chat, comandos, scripts y errores.",
-    "openLogs": "Abrir registros",
-    "openConsole": "Abrir consola",
-    "empty": "Aún no hay eventos.",
-    "searchPlaceholder": "Buscar eventos...",
-    "stats": {
-      "total": "Visible",
-      "errors": "Errores",
-      "bots": "Eventos de bot",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "Todo",
-      "errors": "Errores",
-      "bots": "Bots",
-      "chat": "Chat",
-      "commands": "Comandos",
-      "scripts": "Scripts",
-      "messages": "Mensajes"
-    },
-    "status": {
-      "live": "En vivo",
-      "reconnecting": "Reconectando",
-      "paused": "Pausado",
-      "newWhilePaused": "{{count}} nuevo mientras está en pausa",
-      "pause": "Pausar",
-      "resume": "Reanudar"
-    }
   },
   "access": {
     "webdav": {

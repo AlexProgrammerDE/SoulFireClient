@@ -293,9 +293,6 @@
     "deleteInstance": "Supprimer l'instance",
     "controlsGroup": "Contrôles",
     "overview": "Aperçu",
-    "events": "Événements",
-    "logs": "Journaux",
-    "console": "Console",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Logs du serveur",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Console",
-    "events": "Événements en direct",
     "logs": "Journaux",
     "audit-log": "Logs du serveur",
     "bots": "Bots",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Scripts",
     "instanceScripts": "Scripts"
-  },
-  "events": {
-    "description": "Activité en direct structurée pour cette instance, sans le bruit du journal brut.",
-    "overviewTitle": "Événements en direct",
-    "overviewDescription": "Activité récente sur les bots, chats, commandes, scripts et échecs.",
-    "openLogs": "Ouvrir les journaux",
-    "openConsole": "Ouvrir la console",
-    "empty": "Aucun événement pour le moment.",
-    "searchPlaceholder": "Rechercher des événements...",
-    "stats": {
-      "total": "Visible",
-      "errors": "Erreurs",
-      "bots": "Événements du bot",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "Tout",
-      "errors": "Erreurs",
-      "bots": "Bots",
-      "chat": "Chat",
-      "commands": "Commandes",
-      "scripts": "Scripts",
-      "messages": "Messages"
-    },
-    "status": {
-      "live": "En direct",
-      "reconnecting": "Reconnexion en cours",
-      "paused": "Suspendu",
-      "newWhilePaused": "{{count}} nouveaux pendant la pause",
-      "pause": "Pauser",
-      "resume": "Reprendre"
-    }
   },
   "access": {
     "webdav": {

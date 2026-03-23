@@ -293,9 +293,6 @@
     "deleteInstance": "인스턴스 삭제",
     "controlsGroup": "컨트롤",
     "overview": "개요",
-    "events": "이벤트",
-    "logs": "로그",
-    "console": "콘솔",
     "terminal": "터미널",
     "bots": "봇들",
     "audit-log": "감사 로그",
@@ -363,8 +360,6 @@
   "noInstancesFound": "인스턴스를 찾을 수 없습니다",
   "pageName": {
     "terminal": "터미널",
-    "console": "콘솔",
-    "events": "실시간 이벤트",
     "logs": "로그",
     "audit-log": "감사 로그",
     "bots": "봇들",
@@ -380,38 +375,6 @@
     "discoverPlugins": "플러그인",
     "adminScripts": "스크립트",
     "instanceScripts": "스크립트"
-  },
-  "events": {
-    "description": "이 인스턴스에 대한 구조화된 실시간 활동이며, 원시 로그 소음은 제외됩니다.",
-    "overviewTitle": "실시간 이벤트",
-    "overviewDescription": "봇, 채팅, 명령어, 스크립트 및 실패에 대한 최근 활동입니다.",
-    "openLogs": "로그 열기",
-    "openConsole": "콘솔 열기",
-    "empty": "이벤트가 아직 없습니다.",
-    "searchPlaceholder": "이벤트 검색...",
-    "stats": {
-      "total": "표시 중",
-      "errors": "오류",
-      "bots": "봇 이벤트",
-      "chat": "채팅"
-    },
-    "filters": {
-      "all": "전체",
-      "errors": "오류",
-      "bots": "봇들",
-      "chat": "채팅",
-      "commands": "명령어",
-      "scripts": "스크립트",
-      "messages": "메시지"
-    },
-    "status": {
-      "live": "실시간",
-      "reconnecting": "재연결 중",
-      "paused": "일시 정지됨",
-      "newWhilePaused": "일시정지 중 새로 발생: {{count}}개",
-      "pause": "일시 정지",
-      "resume": "다시 시작"
-    }
   },
   "access": {
     "webdav": {

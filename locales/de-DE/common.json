@@ -293,9 +293,6 @@
     "deleteInstance": "Instanz löschen",
     "controlsGroup": "Steuerung",
     "overview": "Übersicht",
-    "events": "Ereignisse",
-    "logs": "Protokolle",
-    "console": "Konsole",
     "terminal": "Terminal",
     "bots": "Bots",
     "audit-log": "Audit-Log",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Keine Instanzen gefunden",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Konsole",
-    "events": "Live-Ereignisse",
     "logs": "Protokolle",
     "audit-log": "Audit-Log",
     "bots": "Bots",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Plugins",
     "adminScripts": "Skripte",
     "instanceScripts": "Skripte"
-  },
-  "events": {
-    "description": "Strukturierte Live-Aktivitäten für diese Instanz, ohne rohes Protokollrauschen.",
-    "overviewTitle": "Live-Ereignisse",
-    "overviewDescription": "Letzte Aktivität bei Bots, Chat, Befehlen, Skripten und Fehlern.",
-    "openLogs": "Logs öffnen",
-    "openConsole": "Konsole öffnen",
-    "empty": "Noch keine Ereignisse.",
-    "searchPlaceholder": "Ereignisse suchen...",
-    "stats": {
-      "total": "Sichtbar",
-      "errors": "Fehler",
-      "bots": "Bot-Ereignisse",
-      "chat": "Chat"
-    },
-    "filters": {
-      "all": "Alle",
-      "errors": "Fehler",
-      "bots": "Bots",
-      "chat": "Chat",
-      "commands": "Befehle",
-      "scripts": "Skripte",
-      "messages": "Nachrichten"
-    },
-    "status": {
-      "live": "Live",
-      "reconnecting": "Verbindung wird wiederhergestellt",
-      "paused": "Pausiert",
-      "newWhilePaused": "{{count}} neu, während pausiert",
-      "pause": "Pausieren",
-      "resume": "Fortsetzen"
-    }
   },
   "access": {
     "webdav": {

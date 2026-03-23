@@ -293,9 +293,6 @@
     "deleteInstance": "删除实例",
     "controlsGroup": "控制",
     "overview": "概况",
-    "events": "事件管理",
-    "logs": "日志",
-    "console": "控制台",
     "terminal": "终端",
     "bots": "机器人",
     "audit-log": "审计日志",
@@ -363,8 +360,6 @@
   "noInstancesFound": "未找到实例",
   "pageName": {
     "terminal": "终端",
-    "console": "控制台",
-    "events": "实时事件",
     "logs": "日志",
     "audit-log": "审计日志",
     "bots": "机器人",
@@ -380,38 +375,6 @@
     "discoverPlugins": "插件",
     "adminScripts": "脚本",
     "instanceScripts": "脚本"
-  },
-  "events": {
-    "description": "为本实例提供结构化实时活动，无原始日志噪音。",
-    "overviewTitle": "实时事件",
-    "overviewDescription": "最近的活动涵盖了机器人、聊天、指令、脚本和失败事件。",
-    "openLogs": "打开日志",
-    "openConsole": "打开控制台",
-    "empty": "暂无事件。",
-    "searchPlaceholder": "搜索事件...",
-    "stats": {
-      "total": "可见",
-      "errors": "错误",
-      "bots": "机器人事件",
-      "chat": "聊天"
-    },
-    "filters": {
-      "all": "全部",
-      "errors": "错误",
-      "bots": "机器人",
-      "chat": "聊天",
-      "commands": "指令",
-      "scripts": "脚本",
-      "messages": "消息"
-    },
-    "status": {
-      "live": "实时",
-      "reconnecting": "正在重新连接",
-      "paused": "已暂停",
-      "newWhilePaused": "暂停时收到{{count}}条新消息",
-      "pause": "暂停",
-      "resume": "继续"
-    }
   },
   "access": {
     "webdav": {

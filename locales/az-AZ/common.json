@@ -293,9 +293,6 @@
     "deleteInstance": "Instansiyanı sil",
     "controlsGroup": "İdarəetmə",
     "overview": "İcmal",
-    "events": "Hadisələr",
-    "logs": "Jurnalları",
-    "console": "Konsol",
     "terminal": "Terminal",
     "bots": "Botlar",
     "audit-log": "Audit Log",
@@ -363,8 +360,6 @@
   "noInstancesFound": "Instansiya tapılmadı",
   "pageName": {
     "terminal": "Terminal",
-    "console": "Konsol",
-    "events": "Canlı Hadisələr",
     "logs": "Jurnalları",
     "audit-log": "Audit Log",
     "bots": "Botlar",
@@ -380,38 +375,6 @@
     "discoverPlugins": "Pluginlər",
     "adminScripts": "Skriptlər",
     "instanceScripts": "Skriptlər"
-  },
-  "events": {
-    "description": "Bu instansiya üçün strukturlaşdırılmış canlı fəaliyyət, xam qeydçi səs-küyü olmadan.",
-    "overviewTitle": "Canlı Hadisələr",
-    "overviewDescription": "Botlar, söhbət, komandalar, skriptlər və xətalar daxil olmaqla son aktivlik.",
-    "openLogs": "Jurnalları aç",
-    "openConsole": "Konsolu aç",
-    "empty": "Hələ heç bir hadisə yoxdur.",
-    "searchPlaceholder": "Hadisələrdə axtar...",
-    "stats": {
-      "total": "Görünənlər",
-      "errors": "Xətalar",
-      "bots": "Bot Hadisələri",
-      "chat": "Söhbət"
-    },
-    "filters": {
-      "all": "Hamısı",
-      "errors": "Xətalar",
-      "bots": "Botlar",
-      "chat": "Söhbət",
-      "commands": "Komandalar",
-      "scripts": "Skriptlər",
-      "messages": "Mesajlar"
-    },
-    "status": {
-      "live": "Canlı",
-      "reconnecting": "Yenidən qoşulur",
-      "paused": "Dayandırılıb",
-      "newWhilePaused": "Dayandırıldıqda {{count}} yeni",
-      "pause": "Fasilə",
-      "resume": "Davam et"
-    }
   },
   "access": {
     "webdav": {
