@@ -1,3 +1,4 @@
+import { create } from "@bufbuild/protobuf";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
@@ -21,9 +22,13 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { InstancePermission } from "@/generated/soulfire/common.ts";
-import { InstanceState } from "@/generated/soulfire/instance.ts";
-import type { LogScope } from "@/generated/soulfire/logs.ts";
+import { InstancePermission } from "@/generated/soulfire/common_pb.ts";
+import { InstanceState } from "@/generated/soulfire/instance_pb.ts";
+import {
+  InstanceLogScopeSchema,
+  type LogScope,
+  LogScopeSchema,
+} from "@/generated/soulfire/logs_pb.ts";
 import { translateInstanceState } from "@/lib/types.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
@@ -89,14 +94,15 @@ function Content() {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: metricsData } = useSuspenseQuery(metricsQueryOptions);
   const logScope = useMemo<LogScope>(
-    () => ({
-      scope: {
-        oneofKind: "instance",
-        instance: {
-          instanceId: instanceInfo.id,
+    () =>
+      create(LogScopeSchema, {
+        scope: {
+          case: "instance",
+          value: create(InstanceLogScopeSchema, {
+            instanceId: instanceInfo.id,
+          }),
         },
-      },
-    }),
+      }),
     [instanceInfo.id],
   );
 

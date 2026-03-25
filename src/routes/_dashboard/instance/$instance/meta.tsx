@@ -1,4 +1,5 @@
-import type { JsonValue } from "@protobuf-ts/runtime/build/types/json-typings";
+import { create, type JsonValue } from "@bufbuild/protobuf";
+import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import {
   useMutation,
@@ -19,13 +20,16 @@ import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { Value } from "@/generated/google/protobuf/struct.ts";
-import type { SettingsNamespace } from "@/generated/soulfire/common.ts";
+import type { Value } from "@/generated/google/protobuf/struct_pb.ts";
+import type { SettingsNamespace } from "@/generated/soulfire/common_pb.ts";
 import {
+  ComboSettingSchema,
   InstancePermission,
   StringSetting_InputType,
-} from "@/generated/soulfire/common.ts";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+  StringSettingSchema,
+} from "@/generated/soulfire/common_pb.ts";
+import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
+import { jsonToValue, valueToJson } from "@/lib/protobuf.ts";
 import {
   formatIconName,
   hasInstancePermission,
@@ -56,7 +60,7 @@ function convertProtoToEntries(metadata: SettingsNamespace[]): MetadataEntry[] {
         id: generateId(),
         namespace: namespace.namespace,
         key: entry.key,
-        value: JSON.stringify(Value.toJson(entry.value as Value)),
+        value: JSON.stringify(valueToJson(entry.value as Value)),
       });
     }
   }
@@ -187,8 +191,8 @@ function Content() {
       <div className="flex flex-col gap-2">
         <SettingTypeRenderer
           settingType={{
-            oneofKind: "string",
-            string: {
+            case: "string",
+            value: create(StringSettingSchema, {
               uiName: "Friendly Name",
               description:
                 "The name of the instance that will be displayed in the UI.",
@@ -199,15 +203,15 @@ function Content() {
               maxLength: 32,
               pattern: "[a-zA-Z0-9 ]+",
               disabled: !canEditMeta,
-            },
+            }),
           }}
           value={instanceInfo.friendlyName}
           changeCallback={setFriendlyNameMutation.mutate}
         />
         <SettingTypeRenderer
           settingType={{
-            oneofKind: "combo",
-            combo: {
+            case: "combo",
+            value: create(ComboSettingSchema, {
               uiName: "Icon",
               description:
                 "The icon of the instance that will be displayed in the UI.",
@@ -219,7 +223,7 @@ function Content() {
               })),
               def: "",
               disabled: !canEditMeta,
-            },
+            }),
           }}
           value={instanceInfo.icon}
           changeCallback={setIconMutation.mutate}
@@ -245,12 +249,12 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
       return;
     }
 
-    const instanceService = new InstanceServiceClient(transport);
+    const instanceService = createClient(InstanceService, transport);
     try {
       const result = await instanceService.getInstanceMetadata({
         instanceId,
       });
-      setEntries(convertProtoToEntries(result.response.metadata));
+      setEntries(convertProtoToEntries(result.metadata));
     } catch (e) {
       console.error("Failed to load instance metadata:", e);
       setEntries([]);
@@ -284,12 +288,12 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
       value: JsonValue;
     }) => {
       if (transport === null) return;
-      const instanceService = new InstanceServiceClient(transport);
+      const instanceService = createClient(InstanceService, transport);
       await instanceService.setInstanceMetadataEntry({
         instanceId,
         namespace: entry.namespace,
         key: entry.key,
-        value: Value.fromJson(entry.value),
+        value: jsonToValue(entry.value),
       });
     },
     onSuccess: () => {
@@ -314,7 +318,7 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
       value: JsonValue;
     }) => {
       if (transport === null) return;
-      const instanceService = new InstanceServiceClient(transport);
+      const instanceService = createClient(InstanceService, transport);
 
       if (
         entry.oldNamespace !== entry.namespace ||
@@ -331,7 +335,7 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
         instanceId,
         namespace: entry.namespace,
         key: entry.key,
-        value: Value.fromJson(entry.value),
+        value: jsonToValue(entry.value),
       });
     },
     onSuccess: () => {
@@ -349,7 +353,7 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
     scope: { id: `instance-metadata-${instanceId}` },
     mutationFn: async (entry: { namespace: string; key: string }) => {
       if (transport === null) return;
-      const instanceService = new InstanceServiceClient(transport);
+      const instanceService = createClient(InstanceService, transport);
       await instanceService.deleteInstanceMetadataEntry({
         instanceId,
         namespace: entry.namespace,

@@ -2,8 +2,8 @@ import type { QueryKey } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
 import { emit } from "@tauri-apps/api/event";
 import { useEffect } from "react";
-import { InstanceState } from "@/generated/soulfire/instance";
-import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics";
+import { InstanceState } from "@/generated/soulfire/instance_pb";
+import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics_pb";
 import type {
   CastMetricsSnapshot,
   CastMetricsUpdateMessage,

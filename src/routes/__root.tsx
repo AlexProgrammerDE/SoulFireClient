@@ -36,7 +36,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider.tsx";
 import { TailwindIndicator } from "@/components/tailwind-indicator.tsx";
 import { Toaster } from "@/components/ui/sonner.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics.ts";
+import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics_pb.ts";
 import { useDiscordPresence } from "@/hooks/use-discord-presence.ts";
 import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
 

@@ -1,11 +1,15 @@
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
+import { create } from "@bufbuild/protobuf";
+import { createClient, type Transport } from "@connectrpc/connect";
 import { type QueryClient, queryOptions } from "@tanstack/react-query";
-import type { GetServerMetricsResponse } from "@/generated/soulfire/metrics";
-import { MetricsServiceClient } from "@/generated/soulfire/metrics.client";
+import {
+  type GetServerMetricsResponse,
+  GetServerMetricsResponseSchema,
+  MetricsService,
+} from "@/generated/soulfire/metrics_pb";
 import { mergeSnapshots } from "@/lib/metrics-utils";
 
 export function serverMetricsQueryOptions(
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
 ) {
   const queryKey = ["server-metrics"] as const;
@@ -14,9 +18,9 @@ export function serverMetricsQueryOptions(
     queryKey,
     queryFn: async ({ signal }): Promise<GetServerMetricsResponse> => {
       if (!transport) {
-        return {
+        return create(GetServerMetricsResponseSchema, {
           snapshots: [],
-        };
+        });
       }
 
       const previous =
@@ -26,19 +30,19 @@ export function serverMetricsQueryOptions(
           ? previous.snapshots[previous.snapshots.length - 1].timestamp
           : undefined;
 
-      const client = new MetricsServiceClient(transport);
+      const client = createClient(MetricsService, transport);
       const result = await client.getServerMetrics(since ? { since } : {}, {
-        abort: signal,
+        signal: signal,
       });
-      const response = result.response;
+      const response = result;
 
       if (!previous || !since) {
         return response;
       }
 
-      return {
+      return create(GetServerMetricsResponseSchema, {
         snapshots: mergeSnapshots(previous.snapshots, response.snapshots),
-      };
+      });
     },
     refetchInterval: 3_000,
   });

@@ -19,7 +19,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import { GlobalPermission } from "@/generated/soulfire/common.ts";
+import { GlobalPermission } from "@/generated/soulfire/common_pb.ts";
 import { hasGlobalPermission } from "@/lib/utils.tsx";
 
 type NavLinks = {

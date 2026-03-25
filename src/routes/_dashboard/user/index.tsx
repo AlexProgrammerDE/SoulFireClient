@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import {
   useMutation,
   useQueryClient,
@@ -31,9 +32,9 @@ import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { GlobalPermission } from "@/generated/soulfire/common.ts";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
-import type { InstanceListResponse_Instance } from "@/generated/soulfire/instance.ts";
+import { GlobalPermission } from "@/generated/soulfire/common_pb.ts";
+import type { InstanceListResponse_Instance } from "@/generated/soulfire/instance_pb.ts";
+import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { translateInstanceState } from "@/lib/types.ts";
@@ -96,10 +97,10 @@ function Content() {
     mutationKey: ["instance", "delete"],
     mutationFn: async (instanceId: string) => {
       if (transport === null) return;
-      const instanceService = new InstanceServiceClient(transport);
+      const instanceService = createClient(InstanceService, transport);
       const promise = instanceService
         .deleteInstance({ id: instanceId })
-        .then((r) => r.response);
+        .then((r) => r);
       toast.promise(promise, {
         loading: t("instanceSidebar.deleteToast.loading"),
         success: t("instanceSidebar.deleteToast.success"),

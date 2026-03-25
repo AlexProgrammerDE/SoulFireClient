@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar.tsx";
-import { InstancePermission } from "@/generated/soulfire/common.ts";
+import { InstancePermission } from "@/generated/soulfire/common_pb.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
 type NavLink = {

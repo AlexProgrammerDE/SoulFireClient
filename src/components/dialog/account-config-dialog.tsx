@@ -1,4 +1,4 @@
-import type { JsonValue } from "@protobuf-ts/runtime";
+import type { JsonValue } from "@bufbuild/protobuf";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { Suspense, useEffect, useMemo, useState } from "react";
@@ -31,15 +31,16 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { Value } from "@/generated/google/protobuf/struct.ts";
+import type { Value } from "@/generated/google/protobuf/struct_pb.ts";
 import {
   type ServerPlugin,
   type SettingsDefinition,
   type SettingsEntryIdentifier,
   type SettingsPage,
   SettingsPageEntryScopeType,
-} from "@/generated/soulfire/common.ts";
+} from "@/generated/soulfire/common_pb.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
+import { valueToJson } from "@/lib/protobuf.ts";
 import type { BaseSettings, ProfileAccount } from "@/lib/types.ts";
 import { getSettingIdentifierKey } from "@/lib/utils.tsx";
 
@@ -87,7 +88,7 @@ function convertAccountConfigToSettings(
   for (const namespace of account.config) {
     const entries: Record<string, JsonValue> = {};
     for (const entry of namespace.entries) {
-      entries[entry.key] = Value.toJson(entry.value as Value);
+      entries[entry.key] = valueToJson(entry.value as Value);
     }
     settings[namespace.namespace] = entries;
   }

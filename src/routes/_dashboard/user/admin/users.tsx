@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import {
   useMutation,
   useQueryClient,
@@ -50,10 +51,10 @@ import { SFTimeAgo } from "@/components/sf-timeago.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
-import type { Timestamp } from "@/generated/google/protobuf/timestamp";
-import { UserRole } from "@/generated/soulfire/common.ts";
-import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
-import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
+import type { Timestamp } from "@/generated/google/protobuf/timestamp_pb";
+import { UserRole } from "@/generated/soulfire/common_pb.ts";
+import type { UserListResponse_User } from "@/generated/soulfire/user_pb.ts";
+import { UserService } from "@/generated/soulfire/user_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
@@ -288,11 +289,11 @@ function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
             return;
           }
 
-          const userService = new UserServiceClient(transport);
+          const userService = createClient(UserService, transport);
           const token = await userService.generateUserAPIToken({
             id: props.row.original.id,
           });
-          startImpersonation(token.response.token);
+          startImpersonation(token.token);
           await navigate({
             to: "/user",
             replace: true,
@@ -331,7 +332,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
         return;
       }
 
-      const userService = new UserServiceClient(transport);
+      const userService = createClient(UserService, transport);
       for (const u of user) {
         await userService.deleteUser({
           id: u.id,
@@ -351,7 +352,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
         return;
       }
 
-      const userService = new UserServiceClient(transport);
+      const userService = createClient(UserService, transport);
       for (const u of user) {
         await userService.invalidateSessions({
           id: u.id,
@@ -496,11 +497,11 @@ function Content() {
             onClick={() => {
               runAsync(async () => {
                 if (transport === null) return;
-                const userService = new UserServiceClient(transport);
+                const userService = createClient(UserService, transport);
                 const token = await userService.generateUserAPIToken({
                   id: contextMenu.data.id,
                 });
-                startImpersonation(token.response.token);
+                startImpersonation(token.token);
                 await navigate({
                   to: "/user",
                   replace: true,

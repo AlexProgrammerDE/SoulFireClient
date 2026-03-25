@@ -22,7 +22,7 @@ import {
 import type {
   GetServerMetricsResponse,
   ServerMetricsSnapshot,
-} from "@/generated/soulfire/metrics";
+} from "@/generated/soulfire/metrics_pb";
 import {
   downsampleTimeSeriesData,
   formatChartAxisTime,

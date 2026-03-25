@@ -1,4 +1,4 @@
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
+import type { Transport } from "@connectrpc/connect";
 import { createContext } from "react";
 
-export const TransportContext = createContext<RpcTransport | null>(null);
+export const TransportContext = createContext<Transport | null>(null);

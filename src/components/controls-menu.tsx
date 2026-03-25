@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import {
   useIsMutating,
   useMutation,
@@ -21,8 +22,10 @@ import {
   CredenzaHeader,
   CredenzaTitle,
 } from "@/components/ui/credenza.tsx";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
-import { InstanceState } from "@/generated/soulfire/instance.ts";
+import {
+  InstanceService,
+  InstanceState,
+} from "@/generated/soulfire/instance_pb.ts";
 import type { GenerateAccountsMode, ProfileAccount } from "@/lib/types.ts";
 import { applyGeneratedAccounts } from "@/lib/utils.tsx";
 
@@ -88,7 +91,7 @@ export default function ControlsMenu() {
       return Promise.resolve();
     }
 
-    const client = new InstanceServiceClient(transport);
+    const client = createClient(InstanceService, transport);
     const promise = client
       .changeInstanceState({
         id: instanceInfo.id,
@@ -177,7 +180,7 @@ export default function ControlsMenu() {
         return Promise.resolve() as never;
       }
 
-      const client = new InstanceServiceClient(transport);
+      const client = createClient(InstanceService, transport);
       const current = instanceInfo.state;
       const promise = client
         .changeInstanceState({
@@ -224,7 +227,7 @@ export default function ControlsMenu() {
         return Promise.resolve() as never;
       }
 
-      const client = new InstanceServiceClient(transport);
+      const client = createClient(InstanceService, transport);
       const promise = client
         .changeInstanceState({
           id: instanceInfo.id,

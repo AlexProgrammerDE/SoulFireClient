@@ -1,4 +1,5 @@
-import type { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
+import { create } from "@bufbuild/protobuf";
+import { createClient, type Transport } from "@connectrpc/connect";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
@@ -13,14 +14,16 @@ import { CreateInstanceProvider } from "@/components/dialog/create-instance-dial
 import { ErrorComponent } from "@/components/error-component.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { demoClientData } from "@/demo-data.ts";
-import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
-import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
-import { InstancePermission } from "@/generated/soulfire/common.ts";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import type { ClientDataResponse } from "@/generated/soulfire/client_pb.ts";
+import { ClientService } from "@/generated/soulfire/client_pb.ts";
+import { InstancePermission } from "@/generated/soulfire/common_pb.ts";
 import {
   type InstanceListResponse,
+  InstanceListResponseSchema,
+  InstancePermissionStateSchema,
+  InstanceService,
   InstanceState,
-} from "@/generated/soulfire/instance.ts";
+} from "@/generated/soulfire/instance_pb.ts";
 import { isTauri, smartEntries } from "@/lib/utils.tsx";
 import {
   createTransport,
@@ -37,7 +40,7 @@ export const Route = createFileRoute("/_dashboard")({
         queryFn: async (props): Promise<InstanceListResponse> => {
           const transport = createTransport();
           if (transport === null) {
-            return {
+            return create(InstanceListResponseSchema, {
               instances: [
                 {
                   id: "demo",
@@ -45,25 +48,26 @@ export const Route = createFileRoute("/_dashboard")({
                   icon: "pickaxe",
                   state: InstanceState.RUNNING,
                   instancePermissions: smartEntries(InstancePermission).map(
-                    (permission) => ({
-                      instancePermission: permission[1],
-                      granted: true,
-                    }),
+                    (permission) =>
+                      create(InstancePermissionStateSchema, {
+                        instancePermission: permission[1],
+                        granted: true,
+                      }),
                   ),
                 },
               ],
-            };
+            });
           }
 
-          const instanceService = new InstanceServiceClient(transport);
+          const instanceService = createClient(InstanceService, transport);
           const result = await instanceService.listInstances(
             {},
             {
-              abort: props.signal,
+              signal: props.signal,
             },
           );
 
-          return result.response;
+          return result;
         },
         refetchInterval: 3_000,
       });
@@ -80,16 +84,16 @@ export const Route = createFileRoute("/_dashboard")({
             return demoClientData;
           }
 
-          const clientService = new ClientServiceClient(transport);
+          const clientService = createClient(ClientService, transport);
           const result = await clientService.getClientData(
             {},
             {
-              abort: props.signal,
+              signal: props.signal,
             },
           );
 
-          // console.log(JSON.stringify(result.response))
-          return result.response;
+          // console.log(JSON.stringify(result))
+          return result;
         },
       });
       props.abortController.signal.addEventListener("abort", () => {
@@ -120,7 +124,7 @@ export const Route = createFileRoute("/_dashboard")({
   ):
     | {
         success: true;
-        transport: GrpcWebFetchTransport | null;
+        transport: Transport | null;
       }
     | {
         success: false;

@@ -27,7 +27,7 @@ import {
 import type {
   GetInstanceMetricsResponse,
   MetricsSnapshot,
-} from "@/generated/soulfire/metrics";
+} from "@/generated/soulfire/metrics_pb";
 import {
   downsampleTimeSeriesData,
   formatChartAxisTime,

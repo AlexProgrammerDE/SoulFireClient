@@ -1,4 +1,4 @@
-import type { JsonValue } from "@protobuf-ts/runtime";
+import type { JsonValue } from "@bufbuild/protobuf";
 import {
   useMutation,
   useQueryClient,
@@ -33,7 +33,7 @@ import type {
   ServerPlugin,
   SettingsDefinition,
   SettingsPage,
-} from "@/generated/soulfire/common.ts";
+} from "@/generated/soulfire/common_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import type { BaseSettings } from "@/lib/types.ts";

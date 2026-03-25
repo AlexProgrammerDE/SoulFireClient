@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import {
   useMutation,
@@ -49,10 +50,11 @@ import { Field, FieldLabel } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
-import type { ScriptInfo } from "@/generated/soulfire/script";
-import { ScriptServiceClient } from "@/generated/soulfire/script.client";
+import type { ScriptInfo } from "@/generated/soulfire/script_pb";
+import { ScriptService } from "@/generated/soulfire/script_pb";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
+import { observeServerStream } from "@/lib/protobuf.ts";
 import { scriptListQueryOptions } from "@/lib/script-service.ts";
 import { timestampToDate } from "@/lib/utils.tsx";
 
@@ -173,7 +175,7 @@ function Content() {
     mutationKey: ["script", "create", instanceId],
     mutationFn: async (value: z.infer<typeof createScriptSchema>) => {
       if (!transport) throw new Error("No transport available");
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.createScript({
         instanceId,
         name: value.name.trim() || tInstance("scripts.untitledScript"),
@@ -182,7 +184,7 @@ function Content() {
         edges: [],
         paused: false,
       });
-      return result.response;
+      return result;
     },
     onSuccess: (response) => {
       toast.success(tInstance("scripts.createSuccess"));
@@ -221,7 +223,7 @@ function Content() {
     mutationKey: ["script", "delete", instanceId],
     mutationFn: async (scriptId: string) => {
       if (!transport) throw new Error("No transport available");
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       await client.deleteScript({ instanceId, scriptId });
     },
     onSuccess: () => {
@@ -241,17 +243,15 @@ function Content() {
     mutationKey: ["script", "resume", instanceId],
     mutationFn: async (scriptId: string) => {
       if (!transport) throw new Error("No transport available");
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       // Resume the script - we don't need to track the stream here
       // since that's handled in the editor view
-      const { responses } = client.activateScript({
+      const responses = client.activateScript({
         instanceId,
         scriptId,
       });
       // Consume the stream in the background
-      responses.onMessage(() => {});
-      responses.onComplete(() => {});
-      responses.onError(() => {});
+      void observeServerStream(responses, {});
     },
     onSuccess: () => {
       toast.success(tInstance("scripts.resumeSuccess"));
@@ -270,7 +270,7 @@ function Content() {
     mutationKey: ["script", "pause", instanceId],
     mutationFn: async (scriptId: string) => {
       if (!transport) throw new Error("No transport available");
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       await client.deactivateScript({ instanceId, scriptId });
     },
     onSuccess: () => {

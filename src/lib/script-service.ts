@@ -1,19 +1,28 @@
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
+import { create } from "@bufbuild/protobuf";
+import { createClient, type Transport } from "@connectrpc/connect";
 import { queryOptions } from "@tanstack/react-query";
 import type { Edge, Node } from "@xyflow/react";
-import type { Value } from "@/generated/google/protobuf/struct";
+import type { Value } from "@/generated/google/protobuf/struct_pb";
+import {
+  ListValueSchema,
+  StructSchema,
+  ValueSchema,
+} from "@/generated/google/protobuf/struct_pb";
 import {
   EdgeType,
   type GetNodeTypesRequest,
   type GetNodeTypesResponse,
   type NodeTypeDefinition,
   PortType,
+  PositionSchema,
   type PortDefinition as ProtoPortDefinition,
   type ScriptData,
   type ScriptEdge,
+  ScriptEdgeSchema,
   type ScriptNode,
-} from "@/generated/soulfire/script";
-import { ScriptServiceClient } from "@/generated/soulfire/script.client";
+  ScriptNodeSchema,
+  ScriptService,
+} from "@/generated/soulfire/script_pb";
 
 export type {
   GetNodeTypesRequest,
@@ -31,7 +40,7 @@ export { EdgeType, PortType };
  * Query options for listing all scripts in an instance
  */
 export function scriptListQueryOptions(
-  transport: RpcTransport | null,
+  transport: Transport | null,
   instanceId: string,
 ) {
   return queryOptions({
@@ -40,12 +49,12 @@ export function scriptListQueryOptions(
       if (!transport) {
         return { scripts: [] };
       }
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.listScripts(
         { instanceId },
-        { abort: signal },
+        { signal: signal },
       );
-      return result.response;
+      return result;
     },
     refetchInterval: 10_000,
   });
@@ -55,7 +64,7 @@ export function scriptListQueryOptions(
  * Query options for getting a single script by ID
  */
 export function scriptQueryOptions(
-  transport: RpcTransport | null,
+  transport: Transport | null,
   instanceId: string,
   scriptId: string,
 ) {
@@ -65,12 +74,12 @@ export function scriptQueryOptions(
       if (!transport) {
         return null;
       }
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.getScript(
         { instanceId, scriptId },
-        { abort: signal },
+        { signal: signal },
       );
-      return result.response.script;
+      return result.script;
     },
     enabled: scriptId !== "new",
   });
@@ -80,7 +89,7 @@ export function scriptQueryOptions(
  * Query options for getting script execution status
  */
 export function scriptStatusQueryOptions(
-  transport: RpcTransport | null,
+  transport: Transport | null,
   instanceId: string,
   scriptId: string,
 ) {
@@ -90,12 +99,12 @@ export function scriptStatusQueryOptions(
       if (!transport) {
         return null;
       }
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.getScriptStatus(
         { instanceId, scriptId },
-        { abort: signal },
+        { signal: signal },
       );
-      return result.response.status;
+      return result.status;
     },
     enabled: scriptId !== "new",
     refetchInterval: 2_000,
@@ -107,7 +116,7 @@ export function scriptStatusQueryOptions(
  * Node types are cacheable - they only change between server versions.
  */
 export function nodeTypesQueryOptions(
-  transport: RpcTransport | null,
+  transport: Transport | null,
   options?: {
     category?: string;
     includeDeprecated?: boolean;
@@ -123,15 +132,15 @@ export function nodeTypesQueryOptions(
       if (!transport) {
         return { nodeTypes: [], categories: [], portTypeMetadata: [] };
       }
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.getNodeTypes(
         {
           category: options?.category,
           includeDeprecated: options?.includeDeprecated ?? false,
         },
-        { abort: signal },
+        { signal: signal },
       );
-      return result.response;
+      return result;
     },
     // Node types rarely change, so use a long stale time
     staleTime: 1000 * 60 * 60, // 1 hour
@@ -144,7 +153,7 @@ export function nodeTypesQueryOptions(
  * Registry data is cacheable - it only changes between server versions.
  */
 export function registryDataQueryOptions(
-  transport: RpcTransport | null,
+  transport: Transport | null,
   registry?: string,
 ) {
   return queryOptions({
@@ -153,12 +162,12 @@ export function registryDataQueryOptions(
       if (!transport) {
         return { blocks: [], entities: [], items: [], biomes: [] };
       }
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.getRegistryData(
         { registry },
-        { abort: signal },
+        { signal: signal },
       );
-      return result.response;
+      return result;
     },
     // Registry data rarely changes, so use a long stale time
     staleTime: 1000 * 60 * 60, // 1 hour
@@ -175,33 +184,44 @@ export function registryDataQueryOptions(
  */
 function toProtoValue(value: unknown): Value {
   if (value === null || value === undefined) {
-    return { kind: { oneofKind: "nullValue", nullValue: 0 } };
+    return create(ValueSchema, { kind: { case: "nullValue", value: 0 } });
   }
   if (typeof value === "boolean") {
-    return { kind: { oneofKind: "boolValue", boolValue: value } };
+    return create(ValueSchema, {
+      kind: { case: "boolValue", value },
+    });
   }
   if (typeof value === "number") {
-    return { kind: { oneofKind: "numberValue", numberValue: value } };
+    return create(ValueSchema, {
+      kind: { case: "numberValue", value },
+    });
   }
   if (typeof value === "string") {
-    return { kind: { oneofKind: "stringValue", stringValue: value } };
+    return create(ValueSchema, {
+      kind: { case: "stringValue", value },
+    });
   }
   if (Array.isArray(value)) {
-    return {
+    return create(ValueSchema, {
       kind: {
-        oneofKind: "listValue",
-        listValue: { values: value.map(toProtoValue) },
+        case: "listValue",
+        value: create(ListValueSchema, { values: value.map(toProtoValue) }),
       },
-    };
+    });
   }
   if (typeof value === "object") {
     const fields: { [key: string]: Value } = {};
     for (const [k, v] of Object.entries(value)) {
       fields[k] = toProtoValue(v);
     }
-    return { kind: { oneofKind: "structValue", structValue: { fields } } };
+    return create(ValueSchema, {
+      kind: {
+        case: "structValue",
+        value: create(StructSchema, { fields }),
+      },
+    });
   }
-  return { kind: { oneofKind: "nullValue", nullValue: 0 } };
+  return create(ValueSchema, { kind: { case: "nullValue", value: 0 } });
 }
 
 /**
@@ -209,20 +229,20 @@ function toProtoValue(value: unknown): Value {
  */
 function fromProtoValue(value: Value): unknown {
   if (!value.kind) return null;
-  switch (value.kind.oneofKind) {
+  switch (value.kind.case) {
     case "nullValue":
       return null;
     case "boolValue":
-      return value.kind.boolValue;
+      return value.kind.value;
     case "numberValue":
-      return value.kind.numberValue;
+      return value.kind.value;
     case "stringValue":
-      return value.kind.stringValue;
+      return value.kind.value;
     case "listValue":
-      return value.kind.listValue.values.map(fromProtoValue);
+      return value.kind.value.values.map(fromProtoValue);
     case "structValue": {
       const result: Record<string, unknown> = {};
-      for (const [k, v] of Object.entries(value.kind.structValue.fields)) {
+      for (const [k, v] of Object.entries(value.kind.value.fields)) {
         result[k] = fromProtoValue(v);
       }
       return result;
@@ -259,13 +279,13 @@ export function nodesToProto(nodes: Node[]): ScriptNode[] {
         data[key] = toProtoValue(value);
       }
     }
-    return {
+    return create(ScriptNodeSchema, {
       id: node.id,
       type: node.type ?? "unknown",
-      position: {
+      position: create(PositionSchema, {
         x: node.position.x,
         y: node.position.y,
-      },
+      }),
       data,
       muted: (nodeData?.muted as boolean) ?? false,
       collapsed: (nodeData?.collapsed as boolean) ?? false,
@@ -275,7 +295,7 @@ export function nodesToProto(nodes: Node[]): ScriptNode[] {
       width: node.width ?? node.measured?.width,
       height: node.height ?? node.measured?.height,
       resolvedType: nodeData?.resolvedType as PortType | undefined,
-    };
+    });
   });
 }
 
@@ -327,14 +347,14 @@ export function edgesToProto(edges: Edge[]): ScriptEdge[] {
       edge.type === "execution" ||
       (edge.data as { edgeType?: string })?.edgeType === "execution";
 
-    return {
+    return create(ScriptEdgeSchema, {
       id: edge.id,
       source: edge.source,
       sourceHandle: edge.sourceHandle ?? "",
       target: edge.target,
       targetHandle: edge.targetHandle ?? "",
       edgeType: isExecution ? EdgeType.EXECUTION : EdgeType.DATA,
-    };
+    });
   });
 }
 

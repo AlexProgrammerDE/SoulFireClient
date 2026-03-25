@@ -1,4 +1,5 @@
 import { useAptabase } from "@aptabase/react";
+import { createClient } from "@connectrpc/connect";
 import {
   useMutation,
   useQueryClient,
@@ -86,18 +87,19 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
-import type { SettingsPage } from "@/generated/soulfire/common";
+import type { SettingsPage } from "@/generated/soulfire/common_pb";
 import {
   AccountTypeCredentials,
   AccountTypeDeviceCode,
   MinecraftAccountProto_AccountTypeProto,
-} from "@/generated/soulfire/common.ts";
-import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
+} from "@/generated/soulfire/common_pb.ts";
+import { MCAuthService } from "@/generated/soulfire/mc-auth_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
+import { observeServerStream } from "@/lib/protobuf.ts";
 import {
   type GenerateAccountsMode,
   getEnumEntries,
@@ -110,7 +112,6 @@ import {
   addInstanceAccountsBatch,
   applyGeneratedAccounts,
   removeInstanceAccountsBatch,
-  runAsync,
   updateInstanceConfigEntry,
 } from "@/lib/utils.tsx";
 
@@ -463,7 +464,7 @@ function AddButton() {
         type: credentialType,
       });
 
-      const service = new MCAuthServiceClient(transport);
+      const service = createClient(MCAuthService, transport);
       const abortController = new AbortController();
       const loadingData: ExternalToast = {
         cancel: {
@@ -485,24 +486,24 @@ function AddButton() {
           failed,
         });
       const toastId = toast.loading(loadingReport(), loadingData);
-      const { responses } = service.loginCredentials(
+      const responses = service.loginCredentials(
         {
           instanceId: instanceInfo.id,
           service: credentialType,
           payload,
         },
         {
-          abort: abortController.signal,
+          signal: abortController.signal,
         },
       );
-      responses.onMessage((r) => {
-        runAsync(async () => {
+      void observeServerStream(responses, {
+        onMessage: async (r) => {
           const data = r.data;
-          switch (data.oneofKind) {
+          switch (data.case) {
             case "oneSuccess": {
               if (abortController.signal.aborted) return;
-              if (data.oneSuccess.account) {
-                accountsToAdd.push(data.oneSuccess.account);
+              if (data.value.account) {
+                accountsToAdd.push(data.value.account);
               }
               success++;
               toast.loading(loadingReport(), {
@@ -548,14 +549,14 @@ function AddButton() {
               break;
             }
           }
-        });
-      });
-      responses.onError((e) => {
-        console.error(e);
-        toast.error(t("account.listImportToast.error"), {
-          id: toastId,
-          cancel: undefined,
-        });
+        },
+        onError: (e) => {
+          console.error(e);
+          toast.error(t("account.listImportToast.error"), {
+            id: toastId,
+            cancel: undefined,
+          });
+        },
       });
     },
     [instanceInfo.id, addAccountsBatchMutation, t, transport, trackEvent],
@@ -580,7 +581,7 @@ function AddButton() {
         .split("\n")
         .map((t) => t.trim())
         .filter((t) => t.length > 0);
-      const service = new MCAuthServiceClient(transport);
+      const service = createClient(MCAuthService, transport);
 
       const abortController = new AbortController();
       const loadingData: ExternalToast = {
@@ -603,27 +604,27 @@ function AddButton() {
           failed,
         });
       const toastId = toast.loading(loadingReport(), loadingData);
-      const { responses } = service.loginCredentials(
+      const responses = service.loginCredentials(
         {
           instanceId: instanceInfo.id,
           service: accountTypeCredentialsSelected,
           payload: textSplit,
         },
         {
-          abort: abortController.signal,
+          signal: abortController.signal,
         },
       );
-      responses.onMessage((r) => {
-        runAsync(async () => {
+      void observeServerStream(responses, {
+        onMessage: async (r) => {
           const data = r.data;
-          switch (data.oneofKind) {
+          switch (data.case) {
             case "oneSuccess": {
               if (abortController.signal.aborted) {
                 return;
               }
 
-              if (data.oneSuccess.account) {
-                accountsToAdd.push(data.oneSuccess.account);
+              if (data.value.account) {
+                accountsToAdd.push(data.value.account);
               }
               success++;
               toast.loading(loadingReport(), {
@@ -679,14 +680,14 @@ function AddButton() {
               break;
             }
           }
-        });
-      });
-      responses.onError((e) => {
-        console.error(e);
-        toast.error(t("account.listImportToast.error"), {
-          id: toastId,
-          cancel: undefined,
-        });
+        },
+        onError: (e) => {
+          console.error(e);
+          toast.error(t("account.listImportToast.error"), {
+            id: toastId,
+            cancel: undefined,
+          });
+        },
       });
     },
     [
@@ -705,37 +706,39 @@ function AddButton() {
       }
 
       const abortController = new AbortController();
-      const service = new MCAuthServiceClient(transport);
+      const service = createClient(MCAuthService, transport);
       toast.promise(
         (async () => {
           const promise = new Promise<ProfileAccount>((resolve, reject) => {
             try {
-              const { responses } = service.loginDeviceCode(
+              const responses = service.loginDeviceCode(
                 {
                   instanceId: instanceInfo.id,
                   service: type,
                 },
                 {
-                  abort: abortController.signal,
+                  signal: abortController.signal,
                 },
               );
-              responses.onMessage((message) => {
-                if (message.data.oneofKind === "account") {
+              void observeServerStream(responses, {
+                onMessage: (message) => {
+                  if (message.data.case === "account") {
+                    setDeviceCodeData(null);
+                    resolve(message.data.value);
+                  } else if (message.data.case === "deviceCode") {
+                    setDeviceCodeData({
+                      userCode: message.data.value.userCode,
+                      verificationUri: message.data.value.verificationUri,
+                      directVerificationUri:
+                        message.data.value.directVerificationUri,
+                    });
+                  }
+                },
+                onError: (e) => {
+                  console.error(e);
                   setDeviceCodeData(null);
-                  resolve(message.data.account);
-                } else if (message.data.oneofKind === "deviceCode") {
-                  setDeviceCodeData({
-                    userCode: message.data.deviceCode.userCode,
-                    verificationUri: message.data.deviceCode.verificationUri,
-                    directVerificationUri:
-                      message.data.deviceCode.directVerificationUri,
-                  });
-                }
-              });
-              responses.onError((e) => {
-                console.error(e);
-                setDeviceCodeData(null);
-                reject(new Error(t("account.unknownError")));
+                  reject(new Error(t("account.unknownError")));
+                },
               });
             } catch (e) {
               setDeviceCodeData(null);

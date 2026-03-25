@@ -1,14 +1,24 @@
+import { create } from "@bufbuild/protobuf";
+import { createClient } from "@connectrpc/connect";
 import { queryOptions } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   demoServerSettings,
   demoServerSettingsDefinitions,
 } from "@/demo-data.ts";
-import { UserRole } from "@/generated/soulfire/common.ts";
-import { ServerServiceClient } from "@/generated/soulfire/server.client.ts";
-import type { ServerConfig } from "@/generated/soulfire/server.ts";
-import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
-import type { UserListResponse } from "@/generated/soulfire/user.ts";
+import { UserRole } from "@/generated/soulfire/common_pb.ts";
+import {
+  type ServerConfig,
+  ServerConfigSchema,
+  ServerInfoResponseSchema,
+  ServerService,
+} from "@/generated/soulfire/server_pb.ts";
+import {
+  type UserListResponse,
+  UserListResponse_UserSchema,
+  UserListResponseSchema,
+  UserService,
+} from "@/generated/soulfire/user_pb.ts";
 import { serverMetricsQueryOptions } from "@/lib/server-metrics-query.ts";
 import {
   convertFromServerProto,
@@ -23,32 +33,33 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
       queryFn: async (props): Promise<ServerInfoQueryData> => {
         const transport = createTransport();
         if (transport === null) {
-          const serverConfig: ServerConfig = {
+          const serverConfig: ServerConfig = create(ServerConfigSchema, {
             settings: [],
-          };
+          });
           return {
+            ...create(ServerInfoResponseSchema, {
+              config: serverConfig,
+              settingsDefinitions: demoServerSettingsDefinitions,
+              serverSettings: demoServerSettings,
+              plugins: [],
+            }),
             config: serverConfig,
             profile: convertFromServerProto(serverConfig),
-            settingsDefinitions: demoServerSettingsDefinitions,
-            serverSettings: demoServerSettings,
-            plugins: [],
           };
         }
 
-        const serverService = new ServerServiceClient(transport);
+        const serverService = createClient(ServerService, transport);
         const result = await serverService.getServerInfo(
           {},
           {
-            abort: props.signal,
+            signal: props.signal,
           },
         );
 
-        // console.log(JSON.stringify(result.response.serverSettings))
+        // console.log(JSON.stringify(result.serverSettings))
         return {
-          ...result.response,
-          profile: convertFromServerProto(
-            result.response.config as ServerConfig,
-          ),
+          ...result,
+          profile: convertFromServerProto(result.config as ServerConfig),
         };
       },
       refetchInterval: 3_000,
@@ -58,27 +69,27 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
       queryFn: async (props): Promise<UserListResponse> => {
         const transport = createTransport();
         if (transport === null) {
-          return {
+          return create(UserListResponseSchema, {
             users: [
-              {
+              create(UserListResponse_UserSchema, {
                 id: "root",
                 username: "root",
                 email: "root@soulfiremc.com",
                 role: UserRole.ADMIN,
-              },
+              }),
             ],
-          };
+          });
         }
 
-        const userService = new UserServiceClient(transport);
+        const userService = createClient(UserService, transport);
         const result = await userService.listUsers(
           {},
           {
-            abort: props.signal,
+            signal: props.signal,
           },
         );
 
-        return result.response;
+        return result;
       },
       refetchInterval: 3_000,
     });

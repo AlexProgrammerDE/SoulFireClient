@@ -1,3 +1,4 @@
+import { create } from "@bufbuild/protobuf";
 import { Settings2 } from "lucide-react";
 import { useCallback, useEffect, useId, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import type { ScriptQuotas } from "@/generated/soulfire/script";
+import {
+  type ScriptQuotas,
+  ScriptQuotasSchema,
+} from "@/generated/soulfire/script_pb";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 
 function bigintToInput(value: bigint | undefined): string {
@@ -73,7 +77,7 @@ export function QuotasDialog() {
     if (!hasAnyValue) {
       setQuotas(undefined);
     } else {
-      const newQuotas: ScriptQuotas = {
+      const newQuotas: ScriptQuotas = create(ScriptQuotasSchema, {
         disableTimeouts,
         ...(parsedMaxExecutionCount !== undefined && {
           maxExecutionCount: parsedMaxExecutionCount,
@@ -87,7 +91,7 @@ export function QuotasDialog() {
         ...(parsedMaxStateStoreEntries !== undefined && {
           maxStateStoreEntries: parsedMaxStateStoreEntries,
         }),
-      };
+      });
       setQuotas(newQuotas);
     }
     setOpen(false);

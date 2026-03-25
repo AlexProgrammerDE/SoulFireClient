@@ -1,11 +1,16 @@
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
+import { create } from "@bufbuild/protobuf";
+import { createClient, type Transport } from "@connectrpc/connect";
 import { type QueryClient, queryOptions } from "@tanstack/react-query";
-import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics";
-import { MetricsServiceClient } from "@/generated/soulfire/metrics.client";
+import {
+  type GetInstanceMetricsResponse,
+  GetInstanceMetricsResponseSchema,
+  MetricsDistributionsSchema,
+  MetricsService,
+} from "@/generated/soulfire/metrics_pb";
 import { mergeSnapshots } from "@/lib/metrics-utils";
 
 export function instanceMetricsQueryOptions(
-  transport: RpcTransport | null,
+  transport: Transport | null,
   instanceId: string,
   queryClient: QueryClient,
 ) {
@@ -15,16 +20,16 @@ export function instanceMetricsQueryOptions(
     queryKey,
     queryFn: async ({ signal }): Promise<GetInstanceMetricsResponse> => {
       if (!transport) {
-        return {
+        return create(GetInstanceMetricsResponseSchema, {
           snapshots: [],
-          distributions: {
+          distributions: create(MetricsDistributionsSchema, {
             healthHistogram: [],
             foodHistogram: [],
             dimensionCounts: {},
             gameModeCounts: {},
             botPositions: [],
-          },
-        };
+          }),
+        });
       }
 
       const previous =
@@ -34,7 +39,7 @@ export function instanceMetricsQueryOptions(
           ? previous.snapshots[previous.snapshots.length - 1].timestamp
           : undefined;
 
-      const client = new MetricsServiceClient(transport);
+      const client = createClient(MetricsService, transport);
       const result = await client.getInstanceMetrics(
         since
           ? {
@@ -42,18 +47,18 @@ export function instanceMetricsQueryOptions(
               since,
             }
           : { instanceId },
-        { abort: signal },
+        { signal: signal },
       );
-      const response = result.response;
+      const response = result;
 
       if (!previous || !since) {
         return response;
       }
 
-      return {
+      return create(GetInstanceMetricsResponseSchema, {
         snapshots: mergeSnapshots(previous.snapshots, response.snapshots),
         distributions: response.distributions ?? previous.distributions,
-      };
+      });
     },
     refetchInterval: 3_000,
   });

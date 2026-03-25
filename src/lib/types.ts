@@ -1,21 +1,28 @@
-import type { JsonValue } from "@protobuf-ts/runtime/build/types/json-typings";
+import { create, type JsonValue } from "@bufbuild/protobuf";
 import type { i18n } from "i18next";
-import { Value } from "@/generated/google/protobuf/struct.ts";
-import type {
-  MinecraftAccountProto,
-  MinecraftAccountProto_AccountTypeProto,
-  ProxyProto_Type,
-  SettingsNamespace,
-} from "@/generated/soulfire/common.ts";
+import type { Value } from "@/generated/google/protobuf/struct_pb.ts";
+import {
+  type MinecraftAccountProto,
+  type MinecraftAccountProto_AccountTypeProto,
+  MinecraftAccountProtoSchema,
+  type ProxyProto,
+  type ProxyProto_Type,
+  ProxyProtoSchema,
+  type SettingsNamespace,
+  SettingsNamespace_SettingsEntrySchema,
+  SettingsNamespaceSchema,
+} from "@/generated/soulfire/common_pb.ts";
 import {
   type InstanceConfig,
+  InstanceConfigSchema,
   type InstanceInfo,
   InstanceState,
-} from "@/generated/soulfire/instance.ts";
+} from "@/generated/soulfire/instance_pb.ts";
 import type {
   ServerConfig,
   ServerInfoResponse,
-} from "@/generated/soulfire/server.ts";
+} from "@/generated/soulfire/server_pb.ts";
+import { jsonToValue, valueToJson } from "@/lib/protobuf.ts";
 
 export type SFServerType = "integrated" | "dedicated";
 
@@ -95,19 +102,40 @@ export type ProfileProxy = {
   password?: string;
 };
 
+export function toSettingsNamespace(
+  namespace: string,
+  entries: Record<string, JsonValue>,
+): SettingsNamespace {
+  return create(SettingsNamespaceSchema, {
+    namespace,
+    entries: Object.entries(entries).map(([key, value]) =>
+      create(SettingsNamespace_SettingsEntrySchema, {
+        key,
+        value: jsonToValue(value),
+      }),
+    ),
+  });
+}
+
+export function toMinecraftAccountProto(
+  account: ProfileAccount,
+): MinecraftAccountProto {
+  return create(MinecraftAccountProtoSchema, account);
+}
+
+export function toProxyProto(proxy: ProfileProxy): ProxyProto {
+  return create(ProxyProtoSchema, proxy);
+}
+
 export function convertToInstanceProto(data: ProfileRoot): InstanceConfig {
-  return {
-    settings: Object.entries(data.settings).map(([key, value]) => ({
-      namespace: key,
-      entries: Object.entries(value).map(([key, value]) => ({
-        key: key,
-        value: Value.fromJson(value),
-      })),
-    })),
-    accounts: data.accounts,
-    proxies: data.proxies,
+  return create(InstanceConfigSchema, {
+    settings: Object.entries(data.settings).map(([key, value]) =>
+      toSettingsNamespace(key, value),
+    ),
+    accounts: data.accounts.map(toMinecraftAccountProto),
+    proxies: data.proxies.map(toProxyProto),
     persistentMetadata: [],
-  };
+  });
 }
 
 export function convertFromInstanceProto(data?: InstanceConfig): ProfileRoot {
@@ -123,7 +151,7 @@ export function convertFromInstanceProto(data?: InstanceConfig): ProfileRoot {
   for (const namespace of data.settings) {
     const entries: Record<string, JsonValue> = {};
     for (const entry of namespace.entries) {
-      entries[entry.key] = Value.toJson(entry.value as Value);
+      entries[entry.key] = valueToJson(entry.value as Value);
     }
     settings[namespace.namespace] = entries;
   }
@@ -140,7 +168,7 @@ export function convertFromServerProto(data: ServerConfig): BaseSettings {
   for (const namespace of data.settings) {
     const entries: Record<string, JsonValue> = {};
     for (const entry of namespace.entries) {
-      entries[entry.key] = Value.toJson(entry.value as Value);
+      entries[entry.key] = valueToJson(entry.value as Value);
     }
     settings[namespace.namespace] = entries;
   }

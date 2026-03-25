@@ -1,3 +1,5 @@
+import { create } from "@bufbuild/protobuf";
+import { createClient } from "@connectrpc/connect";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -22,13 +24,14 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { SFTimeAgo } from "@/components/sf-timeago.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
-import type { Timestamp } from "@/generated/google/protobuf/timestamp";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import type { Timestamp } from "@/generated/google/protobuf/timestamp_pb";
 import {
   type InstanceAuditLogResponse,
   type InstanceAuditLogResponse_AuditLogEntry,
   InstanceAuditLogResponse_AuditLogEntryType,
-} from "@/generated/soulfire/instance.ts";
+  InstanceAuditLogResponseSchema,
+  InstanceService,
+} from "@/generated/soulfire/instance_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
@@ -53,22 +56,22 @@ export const Route = createFileRoute(
       queryFn: async (props): Promise<InstanceAuditLogResponse> => {
         const transport = createTransport();
         if (transport === null) {
-          return {
+          return create(InstanceAuditLogResponseSchema, {
             entry: [],
-          };
+          });
         }
 
-        const instanceService = new InstanceServiceClient(transport);
+        const instanceService = createClient(InstanceService, transport);
         const result = await instanceService.getAuditLog(
           {
             id: instance,
           },
           {
-            abort: props.signal,
+            signal: props.signal,
           },
         );
 
-        return result.response;
+        return result;
       },
       refetchInterval: 3_000,
     });

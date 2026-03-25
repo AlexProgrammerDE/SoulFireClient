@@ -1,4 +1,4 @@
-import type { JsonValue } from "@protobuf-ts/runtime/build/types/json-typings";
+import { create, type JsonValue } from "@bufbuild/protobuf";
 import {
   useMutation,
   useQueryClient,
@@ -20,7 +20,8 @@ import { UserAvatar } from "@/components/user-avatar.tsx";
 import {
   GlobalPermission,
   StringSetting_InputType,
-} from "@/generated/soulfire/common.ts";
+  StringSettingSchema,
+} from "@/generated/soulfire/common_pb.ts";
 import {
   hasGlobalPermission,
   setSelfEmail,
@@ -152,8 +153,8 @@ function Content() {
         </div>
         <SettingTypeRenderer
           settingType={{
-            oneofKind: "string",
-            string: {
+            case: "string",
+            value: create(StringSettingSchema, {
               uiName: t("userSettings.username.uiName"),
               description: t("userSettings.username.description"),
               def: "",
@@ -166,15 +167,15 @@ function Content() {
                 clientInfo,
                 GlobalPermission.UPDATE_SELF_USERNAME,
               ),
-            },
+            }),
           }}
           value={clientInfo.username}
           changeCallback={setUsernameMutation.mutate}
         />
         <SettingTypeRenderer
           settingType={{
-            oneofKind: "string",
-            string: {
+            case: "string",
+            value: create(StringSettingSchema, {
               uiName: t("userSettings.email.uiName"),
               description: t("userSettings.email.description"),
               def: "",
@@ -187,7 +188,7 @@ function Content() {
                 clientInfo,
                 GlobalPermission.UPDATE_SELF_EMAIL,
               ),
-            },
+            }),
           }}
           value={clientInfo.email}
           changeCallback={setEmailMutation.mutate}

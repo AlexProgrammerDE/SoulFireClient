@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import {
   type KeyboardEventHandler,
   use,
@@ -11,11 +12,11 @@ import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { CommandServiceClient } from "@/generated/soulfire/command.client.ts";
 import type {
   CommandCompletion,
   CommandScope,
-} from "@/generated/soulfire/command.ts";
+} from "@/generated/soulfire/command_pb.ts";
+import { CommandService } from "@/generated/soulfire/command_pb.ts";
 
 type CompletionState = {
   baseText: string;
@@ -120,8 +121,8 @@ export default function CommandInput(props: { scope: CommandScope }) {
         return;
       }
 
-      const commandService = new CommandServiceClient(transport);
-      const { response } = await commandService.tabCompleteCommand({
+      const commandService = createClient(CommandService, transport);
+      const response = await commandService.tabCompleteCommand({
         scope: props.scope,
         command: text,
         cursor,
@@ -155,7 +156,8 @@ export default function CommandInput(props: { scope: CommandScope }) {
       completionState.baseText !== text ||
       completionState.cursor !== cursor
     ) {
-      const { response } = await new CommandServiceClient(
+      const response = await createClient(
+        CommandService,
         transport,
       ).tabCompleteCommand({
         scope: props.scope,
@@ -458,7 +460,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
       });
       setHistoryIndex(-1);
 
-      const commandService = new CommandServiceClient(transport);
+      const commandService = createClient(CommandService, transport);
       void commandService.executeCommand({
         scope: props.scope,
         command: currentVal,

@@ -1,3 +1,5 @@
+import { create } from "@bufbuild/protobuf";
+import { createClient } from "@connectrpc/connect";
 import { queryOptions } from "@tanstack/react-query";
 import { CatchBoundary, createFileRoute, Outlet } from "@tanstack/react-router";
 import { ErrorComponent } from "@/components/error-component.tsx";
@@ -8,16 +10,22 @@ import {
   demoInstanceSettings,
   demoInstanceSettingsDefinitions,
 } from "@/demo-data.ts";
+import { TimestampSchema } from "@/generated/google/protobuf/timestamp_pb.ts";
 import {
   InstancePermission,
   MinecraftAccountProto_AccountTypeProto,
+  MinecraftAccountProto_OfflineJavaDataSchema,
   ProxyProto_Type,
-} from "@/generated/soulfire/common.ts";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+  ProxyProtoSchema,
+} from "@/generated/soulfire/common_pb.ts";
 import {
   type InstanceConfig,
+  InstanceConfigSchema,
+  InstanceInfoSchema,
+  InstancePermissionStateSchema,
+  InstanceService,
   InstanceState,
-} from "@/generated/soulfire/instance.ts";
+} from "@/generated/soulfire/instance_pb.ts";
 import { useCastBroadcast } from "@/hooks/use-cast-broadcast.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
 import { instanceMetricsQueryOptions } from "@/lib/metrics-query.ts";
@@ -36,7 +44,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
       queryFn: async (props): Promise<InstanceInfoQueryData> => {
         const transport = createTransport();
         if (transport === null) {
-          const instanceConfig: InstanceConfig = {
+          const instanceConfig: InstanceConfig = create(InstanceConfigSchema, {
             settings: [],
             accounts: [
               {
@@ -44,54 +52,61 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
                 profileId: "607d30e7-115b-3838-914a-e4229c2b985d",
                 lastKnownName: "Pistonmaster",
                 accountData: {
-                  oneofKind: "offlineJavaData",
-                  offlineJavaData: {},
+                  case: "offlineJavaData",
+                  value: create(
+                    MinecraftAccountProto_OfflineJavaDataSchema,
+                    {},
+                  ),
                 },
                 config: [],
                 persistentMetadata: [],
               },
             ],
             proxies: [
-              {
+              create(ProxyProtoSchema, {
                 type: ProxyProto_Type.HTTP,
                 address: "127.0.0.1:8080",
                 username: "admin",
                 password: "admin",
-              },
-              {
+              }),
+              create(ProxyProtoSchema, {
                 type: ProxyProto_Type.SOCKS4,
                 address: "127.0.0.1:8081",
                 username: "admin",
-              },
-              {
+              }),
+              create(ProxyProtoSchema, {
                 type: ProxyProto_Type.SOCKS5,
                 address: "127.0.0.1:8082",
                 username: "admin",
                 password: "admin",
-              },
+              }),
             ],
             persistentMetadata: [],
-          };
-          return {
-            id: instance,
-            profile: convertFromInstanceProto(instanceConfig),
+          });
+          const instanceInfo = create(InstanceInfoSchema, {
             friendlyName: "Demo",
             icon: "pickaxe",
             instancePermissions: smartEntries(InstancePermission).map(
-              (permission) => ({
-                instancePermission: permission[1],
-                granted: true,
-              }),
+              (permission) =>
+                create(InstancePermissionStateSchema, {
+                  instancePermission: permission[1],
+                  granted: true,
+                }),
             ),
             config: instanceConfig,
             settingsDefinitions: demoInstanceSettingsDefinitions,
             instanceSettings: demoInstanceSettings,
             plugins: [],
             state: InstanceState.RUNNING,
-            lastModified: {
+            lastModified: create(TimestampSchema, {
               seconds: 0n,
               nanos: 0,
-            },
+            }),
+          });
+          return {
+            id: instance,
+            profile: convertFromInstanceProto(instanceConfig),
+            ...instanceInfo,
           };
         }
 
@@ -101,18 +116,18 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
           instance,
         ]);
 
-        const instanceService = new InstanceServiceClient(transport);
+        const instanceService = createClient(InstanceService, transport);
         const result = await instanceService.getInstanceInfo(
           {
             id: instance,
             ifModifiedSince: previousData?.lastModified,
           },
           {
-            abort: props.signal,
+            signal: props.signal,
           },
         );
 
-        if (result.response.result.oneofKind === "notModified") {
+        if (result.result.case === "notModified") {
           // Return previous data if not modified
           if (previousData) {
             return previousData;
@@ -120,11 +135,11 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
           throw new Error("No cached data available");
         }
 
-        if (result.response.result.oneofKind !== "info") {
+        if (result.result.case !== "info") {
           throw new Error("Unexpected response type");
         }
 
-        const info = result.response.result.info;
+        const info = result.result.value;
         return {
           id: instance,
           profile: convertFromInstanceProto(info.config),

@@ -1,4 +1,5 @@
 import { useAptabase } from "@aptabase/react";
+import { createClient } from "@connectrpc/connect";
 import {
   useMutation,
   useQueryClient,
@@ -70,14 +71,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import type { SettingsPage } from "@/generated/soulfire/common";
-import { ProxyProto_Type } from "@/generated/soulfire/common.ts";
-import { ProxyCheckServiceClient } from "@/generated/soulfire/proxy-check.client.ts";
+import type { SettingsPage } from "@/generated/soulfire/common_pb";
+import { ProxyProto_Type } from "@/generated/soulfire/common_pb.ts";
+import { ProxyCheckService } from "@/generated/soulfire/proxy-check_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n.ts";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
+import { observeServerStream } from "@/lib/protobuf.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
@@ -614,20 +616,20 @@ function AddButton() {
         failed,
       });
     const toastId = toast.loading(loadingReport(), loadingData);
-    const service = new ProxyCheckServiceClient(transport);
-    const { responses } = service.check(
+    const service = createClient(ProxyCheckService, transport);
+    const responses = service.check(
       {
         instanceId: instanceInfo.id,
         proxy: proxiesToCheck,
       },
       {
-        abort: abortController.signal,
+        signal: abortController.signal,
       },
     );
-    responses.onMessage((r) => {
-      runAsync(async () => {
+    void observeServerStream(responses, {
+      onMessage: async (r) => {
         const data = r.data;
-        switch (data.oneofKind) {
+        switch (data.case) {
           case "end": {
             toast.success(
               t("proxy.checkToast.success", {
@@ -645,11 +647,11 @@ function AddButton() {
               return;
             }
 
-            if (data.single.valid) {
+            if (data.value.valid) {
               success++;
             } else {
               failed++;
-              const proxyToRemove = data.single.proxy;
+              const proxyToRemove = data.value.proxy;
               if (proxyToRemove) {
                 await removeProxiesBatchMutation([proxyToRemove.address]);
               }
@@ -662,14 +664,14 @@ function AddButton() {
             break;
           }
         }
-      });
-    });
-    responses.onError((e) => {
-      console.error(e);
-      toast.error(t("proxy.checkToast.error"), {
-        id: toastId,
-        cancel: undefined,
-      });
+      },
+      onError: (e) => {
+        console.error(e);
+        toast.error(t("proxy.checkToast.error"), {
+          id: toastId,
+          cancel: undefined,
+        });
+      },
     });
   }, [
     transport,
@@ -881,20 +883,20 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         failed,
       });
     const toastId = toast.loading(loadingReport(), loadingData);
-    const service = new ProxyCheckServiceClient(transport);
-    const { responses } = service.check(
+    const service = createClient(ProxyCheckService, transport);
+    const responses = service.check(
       {
         instanceId: instanceInfo.id,
         proxy: selectedRows,
       },
       {
-        abort: abortController.signal,
+        signal: abortController.signal,
       },
     );
-    responses.onMessage((r) => {
-      runAsync(async () => {
+    void observeServerStream(responses, {
+      onMessage: async (r) => {
         const data = r.data;
-        switch (data.oneofKind) {
+        switch (data.case) {
           case "end": {
             toast.success(
               t("proxy.checkToast.success", {
@@ -912,12 +914,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               return;
             }
 
-            if (data.single.valid) {
+            if (data.value.valid) {
               success++;
             } else {
               failed++;
               // Remove the invalid proxy by address
-              const proxyToRemove = data.single.proxy;
+              const proxyToRemove = data.value.proxy;
               if (proxyToRemove) {
                 await removeProxiesBatchMutation([proxyToRemove.address]);
               }
@@ -930,14 +932,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             break;
           }
         }
-      });
-    });
-    responses.onError((e) => {
-      console.error(e);
-      toast.error(t("proxy.checkToast.error"), {
-        id: toastId,
-        cancel: undefined,
-      });
+      },
+      onError: (e) => {
+        console.error(e);
+        toast.error(t("proxy.checkToast.error"), {
+          id: toastId,
+          cancel: undefined,
+        });
+      },
     });
   }, [
     transport,

@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import {
   useMutation,
   useQueryClient,
@@ -48,8 +49,8 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import {
   GlobalPermission,
   InstancePermission,
-} from "@/generated/soulfire/common.ts";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+} from "@/generated/soulfire/common_pb.ts";
+import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
 import { formatShortcut } from "@/lib/platform.ts";
 import { type ProfileRoot, translateInstanceState } from "@/lib/types.ts";
 import {
@@ -474,12 +475,12 @@ function DeleteInstanceButton() {
         return;
       }
 
-      const instanceService = new InstanceServiceClient(transport);
+      const instanceService = createClient(InstanceService, transport);
       const promise = instanceService
         .deleteInstance({
           id: instanceId,
         })
-        .then((r) => r.response);
+        .then((r) => r);
       toast.promise(promise, {
         loading: t("instanceSidebar.deleteToast.loading"),
         success: t("instanceSidebar.deleteToast.success"),

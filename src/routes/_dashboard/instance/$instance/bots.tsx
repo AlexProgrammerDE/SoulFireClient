@@ -1,3 +1,5 @@
+import { create } from "@bufbuild/protobuf";
+import { createClient } from "@connectrpc/connect";
 import {
   infiniteQueryOptions,
   queryOptions,
@@ -36,12 +38,15 @@ import {
 } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type {
   BotListEntry,
   BotListResponse,
-} from "@/generated/soulfire/bot.ts";
-import { MinecraftAccountProto_AccountTypeProto } from "@/generated/soulfire/common.ts";
+} from "@/generated/soulfire/bot_pb.ts";
+import {
+  BotListResponseSchema,
+  BotService,
+} from "@/generated/soulfire/bot_pb.ts";
+import { MinecraftAccountProto_AccountTypeProto } from "@/generated/soulfire/common_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { simpleSearchValidateSearch } from "@/lib/parsers.ts";
@@ -63,14 +68,14 @@ export const Route = createFileRoute("/_dashboard/instance/$instance/bots")({
       queryFn: async (queryProps): Promise<BotListResponse> => {
         const transport = createTransport();
         if (transport === null) {
-          return { bots: [] };
+          return create(BotListResponseSchema, { bots: [] });
         }
-        const botService = new BotServiceClient(transport);
+        const botService = createClient(BotService, transport);
         const result = await botService.getBotList(
           { instanceId: instance },
-          { abort: queryProps.signal },
+          { signal: queryProps.signal },
         );
-        return result.response;
+        return result;
       },
       refetchInterval: 3_000,
     });

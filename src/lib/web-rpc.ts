@@ -1,6 +1,11 @@
-import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
-import { AuthType, createClient, type WebDAVClient } from "webdav";
-import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
+import type { Interceptor, Transport } from "@connectrpc/connect";
+import { createGrpcWebTransport } from "@connectrpc/connect-web";
+import {
+  AuthType,
+  createClient as createWebDAV,
+  type WebDAVClient,
+} from "webdav";
+import type { ClientDataResponse } from "@/generated/soulfire/client_pb.ts";
 import i18n from "@/lib/i18n.ts";
 import type { SFServerType } from "@/lib/types.ts";
 import { isDemo } from "@/lib/utils.tsx";
@@ -56,7 +61,7 @@ export function createWebDAVClient(
   if (!address) {
     throw new Error("WebDAV address not available");
   }
-  return createClient(address, {
+  return createWebDAV(address, {
     authType: AuthType.Password,
     username: "ignored",
     password: token,
@@ -85,7 +90,7 @@ export const isImpersonating = () => {
   );
 };
 
-export const createTransport = () => {
+export const createTransport = (): Transport | null => {
   if (isDemo()) {
     return null;
   }
@@ -104,16 +109,19 @@ export const createTransport = () => {
     token = impersonationToken;
   }
 
-  return new GrpcWebFetchTransport({
+  const authInterceptor: Interceptor = (next) => (request) => {
+    request.header.set("Authorization", `Bearer ${token}`);
+    return next(request);
+  };
+
+  return createGrpcWebTransport({
     baseUrl: address,
-    meta: {
-      Authorization: `Bearer ${token}`,
-    },
+    interceptors: [authInterceptor],
   });
 };
 
-export const createAddressOnlyTransport = (address: string) => {
-  return new GrpcWebFetchTransport({
+export const createAddressOnlyTransport = (address: string): Transport => {
+  return createGrpcWebTransport({
     baseUrl: address,
   });
 };

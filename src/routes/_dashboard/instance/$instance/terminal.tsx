@@ -1,3 +1,4 @@
+import { create } from "@bufbuild/protobuf";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
@@ -6,9 +7,17 @@ import CommandInput from "@/components/command-input.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import type { CommandScope } from "@/generated/soulfire/command.ts";
-import { InstancePermission } from "@/generated/soulfire/common.ts";
-import type { LogScope } from "@/generated/soulfire/logs.ts";
+import {
+  type CommandScope,
+  CommandScopeSchema,
+  InstanceCommandScopeSchema,
+} from "@/generated/soulfire/command_pb.ts";
+import { InstancePermission } from "@/generated/soulfire/common_pb.ts";
+import {
+  InstanceLogScopeSchema,
+  type LogScope,
+  LogScopeSchema,
+} from "@/generated/soulfire/logs_pb.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/terminal")(
@@ -49,23 +58,27 @@ function Content() {
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const logScope = useMemo<LogScope>(
-    () => ({
-      scope: {
-        oneofKind: "personal",
-        personal: {},
-      },
-    }),
-    [],
+    () =>
+      create(LogScopeSchema, {
+        scope: {
+          case: "instance",
+          value: create(InstanceLogScopeSchema, {
+            instanceId: instanceInfo.id,
+          }),
+        },
+      }),
+    [instanceInfo.id],
   );
   const commandScope = useMemo<CommandScope>(
-    () => ({
-      scope: {
-        oneofKind: "instance",
-        instance: {
-          instanceId: instanceInfo.id,
+    () =>
+      create(CommandScopeSchema, {
+        scope: {
+          case: "instance",
+          value: create(InstanceCommandScopeSchema, {
+            instanceId: instanceInfo.id,
+          }),
         },
-      },
-    }),
+      }),
     [instanceInfo.id],
   );
 

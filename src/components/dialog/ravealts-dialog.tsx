@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select.tsx";
-import type { AccountTypeCredentials } from "@/generated/soulfire/common.ts";
+import type { AccountTypeCredentials } from "@/generated/soulfire/common_pb.ts";
 import {
   fetchKeyInfo,
   fetchStock,

@@ -1,4 +1,4 @@
-import { AccountTypeCredentials } from "@/generated/soulfire/common.ts";
+import { AccountTypeCredentials } from "@/generated/soulfire/common_pb.ts";
 
 const RAVEALTS_BASE_URL = "https://api.ravealts.com";
 const LOCAL_STORAGE_RAVEALTS_API_KEY = "ravealts-api-key";

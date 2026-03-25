@@ -1,4 +1,5 @@
 import { useAptabase } from "@aptabase/react";
+import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
@@ -28,8 +29,8 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
-import { InstancePermission } from "@/generated/soulfire/common.ts";
-import { DownloadServiceClient } from "@/generated/soulfire/download.client.ts";
+import { InstancePermission } from "@/generated/soulfire/common_pb.ts";
+import { DownloadService } from "@/generated/soulfire/download_pb.ts";
 import { hasInstancePermission, isTauri, runAsync } from "@/lib/utils.tsx";
 
 export type TextInput = {
@@ -93,8 +94,8 @@ function UrlDialog(props: ImportDialogProps) {
           return;
         }
 
-        const service = new DownloadServiceClient(transport);
-        const { response } = await service.download({
+        const service = createClient(DownloadService, transport);
+        const response = await service.download({
           instanceId: instanceInfo.id,
           uri: value.url,
           headers: [],

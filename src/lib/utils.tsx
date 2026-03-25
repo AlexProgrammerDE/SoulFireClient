@@ -1,5 +1,5 @@
-import type { JsonValue } from "@protobuf-ts/runtime";
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
+import { create, type JsonValue } from "@bufbuild/protobuf";
+import { createClient, type Transport } from "@connectrpc/connect";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import { type ClassValue, clsx } from "clsx";
@@ -8,11 +8,10 @@ import * as Flags from "country-flag-icons/react/3x2";
 import { sha256 } from "js-sha256";
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
-import { Value } from "@/generated/google/protobuf/struct.ts";
-import type { Timestamp } from "@/generated/google/protobuf/timestamp.ts";
-import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
-import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
-import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
+import type { Timestamp } from "@/generated/google/protobuf/timestamp_pb.ts";
+import { BotService } from "@/generated/soulfire/bot_pb.ts";
+import type { ClientDataResponse } from "@/generated/soulfire/client_pb.ts";
+import { ClientService } from "@/generated/soulfire/client_pb.ts";
 import type {
   GlobalPermission,
   InstancePermission,
@@ -20,14 +19,19 @@ import type {
   ProxyProto,
   SettingsDefinition,
   SettingsEntryIdentifier,
-} from "@/generated/soulfire/common.ts";
-import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+} from "@/generated/soulfire/common_pb.ts";
+import { SettingsNamespace_SettingsEntrySchema } from "@/generated/soulfire/common_pb.ts";
 import type {
   InstanceInfo,
   InstanceListResponse,
   InstanceListResponse_Instance,
-} from "@/generated/soulfire/instance.ts";
-import { ServerServiceClient } from "@/generated/soulfire/server.client.ts";
+} from "@/generated/soulfire/instance_pb.ts";
+import {
+  InstanceListResponseSchema,
+  InstanceService,
+} from "@/generated/soulfire/instance_pb.ts";
+import { ServerService } from "@/generated/soulfire/server_pb.ts";
+import { jsonToValue } from "@/lib/protobuf.ts";
 import {
   type BaseSettings,
   convertToInstanceProto,
@@ -37,6 +41,9 @@ import {
   type ProfileProxy,
   type ProfileRoot,
   type ServerInfoQueryData,
+  toMinecraftAccountProto,
+  toProxyProto,
+  toSettingsNamespace,
 } from "@/lib/types.ts";
 
 export const ROOT_USER_ID = "00000000-0000-0000-0000-000000000000";
@@ -244,34 +251,29 @@ export function getSettingValue(
     return null;
   }
 
-  switch (definition?.type.oneofKind) {
+  switch (definition?.type.case) {
     case "string": {
-      return getEntryValue(namespace, key, config, definition.type.string.def);
+      return getEntryValue(namespace, key, config, definition.type.value.def);
     }
     case "int": {
-      return getEntryValue(namespace, key, config, definition.type.int.def);
+      return getEntryValue(namespace, key, config, definition.type.value.def);
     }
     case "bool": {
-      return getEntryValue(namespace, key, config, definition.type.bool.def);
+      return getEntryValue(namespace, key, config, definition.type.value.def);
     }
     case "double": {
-      return getEntryValue(namespace, key, config, definition.type.double.def);
+      return getEntryValue(namespace, key, config, definition.type.value.def);
     }
     case "combo": {
-      return getEntryValue(namespace, key, config, definition.type.combo.def);
+      return getEntryValue(namespace, key, config, definition.type.value.def);
     }
     case "stringList": {
-      return getEntryValue(
-        namespace,
-        key,
-        config,
-        definition.type.stringList.def,
-      );
+      return getEntryValue(namespace, key, config, definition.type.value.def);
     }
     case "minMax": {
       return getEntryValue(namespace, key, config, {
-        min: definition.type.minMax.minEntry?.def ?? null,
-        max: definition.type.minMax.maxEntry?.def ?? null,
+        min: definition.type.value.minEntry?.def ?? null,
+        max: definition.type.value.maxEntry?.def ?? null,
       });
     }
     default: {
@@ -289,7 +291,7 @@ export async function setInstanceIcon(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
   instanceListQueryKey: QueryKey,
@@ -328,27 +330,25 @@ export async function setInstanceIcon(
         return;
       }
 
-      return {
-        instances: old.instances.map((item) => {
-          if (item.id === instanceInfo.id) {
-            return {
-              ...item,
-              icon: icon,
-            };
-          }
-
-          return item;
-        }),
-      };
+      return create(InstanceListResponseSchema, {
+        instances: old.instances.map((item) =>
+          item.id === instanceInfo.id
+            ? {
+                ...item,
+                icon,
+              }
+            : item,
+        ),
+      });
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.updateInstanceMeta({
     id: instanceInfo.id,
     meta: {
-      oneofKind: "icon",
-      icon: icon,
+      case: "icon",
+      value: icon,
     },
   });
 }
@@ -358,7 +358,7 @@ export async function setInstanceFriendlyName(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
   instanceListQueryKey: QueryKey,
@@ -397,27 +397,25 @@ export async function setInstanceFriendlyName(
         return;
       }
 
-      return {
-        instances: old.instances.map((item) => {
-          if (item.id === instanceInfo.id) {
-            return {
-              ...item,
-              friendlyName: friendlyName,
-            };
-          }
-
-          return item;
-        }),
-      };
+      return create(InstanceListResponseSchema, {
+        instances: old.instances.map((item) =>
+          item.id === instanceInfo.id
+            ? {
+                ...item,
+                friendlyName,
+              }
+            : item,
+        ),
+      });
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.updateInstanceMeta({
     id: instanceInfo.id,
     meta: {
-      oneofKind: "friendlyName",
-      friendlyName: friendlyName,
+      case: "friendlyName",
+      value: friendlyName,
     },
   });
 }
@@ -428,7 +426,7 @@ export async function setInstanceConfigFull(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -456,7 +454,7 @@ export async function setInstanceConfigFull(
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.updateInstanceConfig({
     id: instanceInfo.id,
     config: targetProfile,
@@ -471,7 +469,7 @@ export async function updateInstanceConfigEntry(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -497,12 +495,12 @@ export async function updateInstanceConfigEntry(
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.updateInstanceConfigEntry({
     id: instanceInfo.id,
     namespace: namespace,
     key: key,
-    value: Value.fromJson(value),
+    value: jsonToValue(value),
   });
 }
 
@@ -511,7 +509,7 @@ export async function updateServerConfigEntry(
   namespace: string,
   key: string,
   value: JsonValue,
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   serverInfoQueryKey: QueryKey,
 ) {
@@ -534,11 +532,11 @@ export async function updateServerConfigEntry(
     };
   });
 
-  const serverService = new ServerServiceClient(transport);
+  const serverService = createClient(ServerService, transport);
   await serverService.updateServerConfigEntry({
     namespace: namespace,
     key: key,
-    value: Value.fromJson(value),
+    value: jsonToValue(value),
   });
 }
 
@@ -549,7 +547,7 @@ export async function updateBotConfigEntry(
   value: JsonValue,
   instanceId: string,
   botId: string,
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -585,19 +583,24 @@ export async function updateBotConfigEntry(
         const entries = [...newSettings[namespaceIndex].entries];
         const entryIndex = entries.findIndex((e) => e.key === key);
         if (entryIndex >= 0) {
-          entries[entryIndex] = { key, value: Value.fromJson(value) };
+          entries[entryIndex] = create(SettingsNamespace_SettingsEntrySchema, {
+            key,
+            value: jsonToValue(value),
+          });
         } else {
-          entries.push({ key, value: Value.fromJson(value) });
+          entries.push(
+            create(SettingsNamespace_SettingsEntrySchema, {
+              key,
+              value: jsonToValue(value),
+            }),
+          );
         }
         newSettings[namespaceIndex] = {
           ...newSettings[namespaceIndex],
           entries,
         };
       } else {
-        newSettings.push({
-          namespace,
-          entries: [{ key, value: Value.fromJson(value) }],
-        });
+        newSettings.push(toSettingsNamespace(namespace, { [key]: value }));
       }
 
       const newAccounts = [...old.profile.accounts];
@@ -616,13 +619,13 @@ export async function updateBotConfigEntry(
     },
   );
 
-  const botService = new BotServiceClient(transport);
+  const botService = createClient(BotService, transport);
   await botService.updateBotConfigEntry({
     instanceId: instanceId,
     botId: botId,
     namespace: namespace,
     key: key,
-    value: Value.fromJson(value),
+    value: jsonToValue(value),
   });
 }
 
@@ -632,7 +635,7 @@ export async function addInstanceAccount(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -640,7 +643,7 @@ export async function addInstanceAccount(
     return;
   }
 
-  const accountProto: MinecraftAccountProto = account;
+  const accountProto: MinecraftAccountProto = toMinecraftAccountProto(account);
 
   await queryClient.cancelQueries({
     queryKey: instanceInfoQueryKey,
@@ -663,7 +666,7 @@ export async function addInstanceAccount(
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.addInstanceAccount({
     id: instanceInfo.id,
     account: accountProto,
@@ -676,7 +679,7 @@ export async function addInstanceAccountsBatch(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -684,7 +687,9 @@ export async function addInstanceAccountsBatch(
     return;
   }
 
-  const accountProtos: MinecraftAccountProto[] = accounts;
+  const accountProtos: MinecraftAccountProto[] = accounts.map(
+    toMinecraftAccountProto,
+  );
 
   await queryClient.cancelQueries({
     queryKey: instanceInfoQueryKey,
@@ -707,7 +712,7 @@ export async function addInstanceAccountsBatch(
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.addInstanceAccountsBatch({
     id: instanceInfo.id,
     accounts: accountProtos,
@@ -719,7 +724,7 @@ export async function removeInstanceAccountsBatch(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -752,7 +757,7 @@ export async function removeInstanceAccountsBatch(
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.removeInstanceAccountsBatch({
     id: instanceInfo.id,
     profileIds: profileIds,
@@ -766,7 +771,7 @@ export async function applyGeneratedAccounts(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -835,7 +840,7 @@ export async function addInstanceProxiesBatch(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -843,7 +848,7 @@ export async function addInstanceProxiesBatch(
     return;
   }
 
-  const proxyProtos: ProxyProto[] = proxies;
+  const proxyProtos: ProxyProto[] = proxies.map(toProxyProto);
 
   await queryClient.cancelQueries({
     queryKey: instanceInfoQueryKey,
@@ -866,7 +871,7 @@ export async function addInstanceProxiesBatch(
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.addInstanceProxiesBatch({
     id: instanceInfo.id,
     proxies: proxyProtos,
@@ -878,7 +883,7 @@ export async function removeInstanceProxiesBatch(
   instanceInfo: {
     id: string;
   },
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
 ) {
@@ -911,7 +916,7 @@ export async function removeInstanceProxiesBatch(
     },
   );
 
-  const instanceService = new InstanceServiceClient(transport);
+  const instanceService = createClient(InstanceService, transport);
   await instanceService.removeInstanceProxiesBatch({
     id: instanceInfo.id,
     addresses: addresses,
@@ -920,7 +925,7 @@ export async function removeInstanceProxiesBatch(
 
 export async function setSelfUsername(
   username: string,
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   clientDataQueryKey: QueryKey,
 ) {
@@ -943,7 +948,7 @@ export async function setSelfUsername(
     };
   });
 
-  const clientService = new ClientServiceClient(transport);
+  const clientService = createClient(ClientService, transport);
   await clientService.updateSelfUsername({
     username: username,
   });
@@ -951,7 +956,7 @@ export async function setSelfUsername(
 
 export async function setSelfEmail(
   email: string,
-  transport: RpcTransport | null,
+  transport: Transport | null,
   queryClient: QueryClient,
   clientDataQueryKey: QueryKey,
 ) {
@@ -974,7 +979,7 @@ export async function setSelfEmail(
     };
   });
 
-  const clientService = new ClientServiceClient(transport);
+  const clientService = createClient(ClientService, transport);
   await clientService.updateSelfEmail({
     email: email,
   });

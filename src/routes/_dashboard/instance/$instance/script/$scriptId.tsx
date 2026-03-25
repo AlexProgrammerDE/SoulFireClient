@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import {
   useMutation,
   useQueryClient,
@@ -41,10 +42,13 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
-import { DiagnosticSeverity } from "@/generated/soulfire/script";
-import { ScriptServiceClient } from "@/generated/soulfire/script.client";
+import { LogsService } from "@/generated/soulfire/logs_pb.ts";
+import {
+  DiagnosticSeverity,
+  ScriptService,
+} from "@/generated/soulfire/script_pb";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
+import { observeServerStream } from "@/lib/protobuf.ts";
 import {
   edgesToProto,
   nodesToProto,
@@ -210,22 +214,22 @@ function ScriptEditorContent() {
     if (scriptId === "new" || !transport || isDemo()) return;
 
     const abortController = new AbortController();
-    const logsService = new LogsServiceClient(transport);
+    const logsService = createClient(LogsService, transport);
     void logsService
       .getPrevious(
         {
           scope: {
             scope: {
-              oneofKind: "instanceScript",
-              instanceScript: { instanceId, scriptId },
+              case: "instanceScript",
+              value: { instanceId, scriptId },
             },
           },
           count: 300,
         },
-        { abort: abortController.signal },
+        { signal: abortController.signal },
       )
       .then((call) => {
-        const entries: LogEntry[] = call.response.messages.map((msg) => {
+        const entries: LogEntry[] = call.messages.map((msg) => {
           const rawLevel = msg.level?.toLowerCase();
           const level: LogEntry["level"] =
             rawLevel === "info"
@@ -272,13 +276,13 @@ function ScriptEditorContent() {
     }
     validationTimeoutRef.current = setTimeout(async () => {
       try {
-        const client = new ScriptServiceClient(transport);
+        const client = createClient(ScriptService, transport);
         const result = await client.validateScript({
           instanceId,
           nodes: nodesToProto(nodes),
           edges: edgesToProto(edges),
         });
-        const diagnostics = result.response.diagnostics.map((d) => ({
+        const diagnostics = result.diagnostics.map((d) => ({
           nodeId: d.nodeId,
           edgeId: d.edgeId,
           message: d.message,
@@ -306,7 +310,7 @@ function ScriptEditorContent() {
       if (!transport) throw new Error("No transport available");
       // Read fresh from the store to avoid stale closure issues
       const scriptData = getScriptData();
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.createScript({
         instanceId,
         name: scriptData.name || tInstance("scripts.untitledScript"),
@@ -316,7 +320,7 @@ function ScriptEditorContent() {
         paused: scriptData.paused,
         quotas: scriptData.quotas,
       });
-      return result.response;
+      return result;
     },
     onSuccess: (response) => {
       setDirty(false);
@@ -347,7 +351,7 @@ function ScriptEditorContent() {
       if (!transport) throw new Error("No transport available");
       // Read fresh from the store to avoid stale closure issues
       const scriptData = getScriptData();
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       const result = await client.updateScript({
         instanceId,
         scriptId,
@@ -361,7 +365,7 @@ function ScriptEditorContent() {
         quotas: scriptData.quotas,
         updateQuotas: true,
       });
-      return result.response;
+      return result;
     },
     onSuccess: () => {
       setDirty(false);
@@ -426,147 +430,151 @@ function ScriptEditorContent() {
     ]);
 
     try {
-      const client = new ScriptServiceClient(transport);
-      const { responses } = client.activateScript(
+      const client = createClient(ScriptService, transport);
+      const responses = client.activateScript(
         { instanceId, scriptId },
-        { abort: abortController.signal },
+        { signal: abortController.signal },
       );
       useScriptEditorStore.setState({ paused: false });
       void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
 
-      responses.onMessage((event) => {
-        if (event.event.oneofKind === "scriptStarted") {
-          setLogs((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              timestamp: new Date(),
-              level: "info",
-              nodeId: null,
-              message: tInstance("scripts.activated"),
-            },
-          ]);
-          toast.success(tInstance("scripts.activateSuccess"));
-        } else if (event.event.oneofKind === "nodeStarted") {
-          const nodeId = event.event.nodeStarted.nodeId;
-          setActiveNode(nodeId);
-          setLogs((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              timestamp: new Date(),
-              level: "debug",
-              nodeId,
-              message: tInstance("scripts.nodeStarted", { nodeId }),
-            },
-          ]);
-        } else if (event.event.oneofKind === "nodeCompleted") {
-          const nodeId = event.event.nodeCompleted.nodeId;
-          const execTimeNanos = event.event.nodeCompleted.executionTimeNanos;
-          if (execTimeNanos > 0n) {
-            addNodeExecutionTime(nodeId, Number(execTimeNanos) / 1_000_000);
+      void observeServerStream(responses, {
+        onMessage: (event) => {
+          if (event.event.case === "scriptStarted") {
+            setLogs((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                timestamp: new Date(),
+                level: "info",
+                nodeId: null,
+                message: tInstance("scripts.activated"),
+              },
+            ]);
+            toast.success(tInstance("scripts.activateSuccess"));
+          } else if (event.event.case === "nodeStarted") {
+            const nodeId = event.event.value.nodeId;
+            setActiveNode(nodeId);
+            setLogs((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                timestamp: new Date(),
+                level: "debug",
+                nodeId,
+                message: tInstance("scripts.nodeStarted", { nodeId }),
+              },
+            ]);
+          } else if (event.event.case === "nodeCompleted") {
+            const nodeId = event.event.value.nodeId;
+            const execTimeNanos = event.event.value.executionTimeNanos;
+            if (execTimeNanos > 0n) {
+              addNodeExecutionTime(nodeId, Number(execTimeNanos) / 1_000_000);
+            }
+            setLogs((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                timestamp: new Date(),
+                level: "debug",
+                nodeId,
+                message: tInstance("scripts.nodeCompleted", { nodeId }),
+              },
+            ]);
+          } else if (event.event.case === "executionStats") {
+            const { nodeCount, maxCount } = event.event.value;
+            setExecutionStats({
+              nodeCount: Number(nodeCount),
+              maxCount: Number(maxCount),
+            });
+            setLogs((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                timestamp: new Date(),
+                level: "info",
+                nodeId: null,
+                message: `Execution stats: ${nodeCount}/${maxCount} nodes executed`,
+              },
+            ]);
+          } else if (event.event.case === "nodeError") {
+            const { nodeId, errorMessage } = event.event.value;
+            setLogs((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                timestamp: new Date(),
+                level: "error",
+                nodeId,
+                message: tInstance("scripts.nodeError", {
+                  error: errorMessage,
+                }),
+              },
+            ]);
+          } else if (event.event.case === "scriptLog") {
+            const { nodeId, level, message } = event.event.value;
+            const normalizedLevel = (level?.toLowerCase() || "info") as
+              | "debug"
+              | "info"
+              | "warn"
+              | "error";
+            setLogs((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                timestamp: new Date(),
+                level: normalizedLevel,
+                nodeId: nodeId ?? null,
+                message,
+              },
+            ]);
+          } else if (event.event.case === "scriptCompleted") {
+            const success = event.event.value.success;
+            setActive(false);
+            setActiveNode(null);
+            setLogs((prev) => [
+              ...prev,
+              {
+                id: crypto.randomUUID(),
+                timestamp: new Date(),
+                level: success ? "info" : "warn",
+                nodeId: null,
+                message: success
+                  ? tInstance("scripts.executionCompletedSuccess")
+                  : tInstance("scripts.deactivated"),
+              },
+            ]);
+            if (success) {
+              toast.success(tInstance("scripts.executionCompleted"));
+            }
           }
-          setLogs((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              timestamp: new Date(),
-              level: "debug",
-              nodeId,
-              message: tInstance("scripts.nodeCompleted", { nodeId }),
-            },
-          ]);
-        } else if (event.event.oneofKind === "executionStats") {
-          const { nodeCount, maxCount } = event.event.executionStats;
-          setExecutionStats({
-            nodeCount: Number(nodeCount),
-            maxCount: Number(maxCount),
-          });
-          setLogs((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              timestamp: new Date(),
-              level: "info",
-              nodeId: null,
-              message: `Execution stats: ${nodeCount}/${maxCount} nodes executed`,
-            },
-          ]);
-        } else if (event.event.oneofKind === "nodeError") {
-          const { nodeId, errorMessage } = event.event.nodeError;
+        },
+        onError: (error) => {
+          if (abortController.signal.aborted) return;
+          console.error("Script execution error:", error);
+          setActive(false);
+          setActiveNode(null);
+          const message =
+            error instanceof Error ? error.message : String(error);
           setLogs((prev) => [
             ...prev,
             {
               id: crypto.randomUUID(),
               timestamp: new Date(),
               level: "error",
-              nodeId,
-              message: tInstance("scripts.nodeError", { error: errorMessage }),
+              nodeId: null,
+              message: tInstance("scripts.executionError", {
+                error: message,
+              }),
             },
           ]);
-        } else if (event.event.oneofKind === "scriptLog") {
-          const { nodeId, level, message } = event.event.scriptLog;
-          const normalizedLevel = (level?.toLowerCase() || "info") as
-            | "debug"
-            | "info"
-            | "warn"
-            | "error";
-          setLogs((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              timestamp: new Date(),
-              level: normalizedLevel,
-              nodeId: nodeId ?? null,
-              message,
-            },
-          ]);
-        } else if (event.event.oneofKind === "scriptCompleted") {
-          const success = event.event.scriptCompleted.success;
+          toast.error(tInstance("scripts.executionFailed"));
+        },
+        onComplete: () => {
+          if (abortController.signal.aborted) return;
           setActive(false);
           setActiveNode(null);
-          setLogs((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              timestamp: new Date(),
-              level: success ? "info" : "warn",
-              nodeId: null,
-              message: success
-                ? tInstance("scripts.executionCompletedSuccess")
-                : tInstance("scripts.deactivated"),
-            },
-          ]);
-          if (success) {
-            toast.success(tInstance("scripts.executionCompleted"));
-          }
-        }
-      });
-
-      responses.onError((error) => {
-        if (abortController.signal.aborted) return;
-        console.error("Script execution error:", error);
-        setActive(false);
-        setActiveNode(null);
-        setLogs((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            timestamp: new Date(),
-            level: "error",
-            nodeId: null,
-            message: tInstance("scripts.executionError", {
-              error: error.message,
-            }),
-          },
-        ]);
-        toast.error(tInstance("scripts.executionFailed"));
-      });
-
-      responses.onComplete(() => {
-        if (abortController.signal.aborted) return;
-        setActive(false);
-        setActiveNode(null);
+        },
       });
     } catch (error) {
       if (abortController.signal.aborted) return;
@@ -597,7 +605,7 @@ function ScriptEditorContent() {
     if (!transport || scriptId === "new") return;
 
     try {
-      const client = new ScriptServiceClient(transport);
+      const client = createClient(ScriptService, transport);
       await client.deactivateScript({ instanceId, scriptId });
       setActive(false);
       setActiveNode(null);

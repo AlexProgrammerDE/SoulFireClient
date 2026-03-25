@@ -1,4 +1,5 @@
 import { flavorEntries } from "@catppuccin/palette";
+import { createClient } from "@connectrpc/connect";
 import { stripAnsi } from "fancy-ansi";
 import { AnsiHtml } from "fancy-ansi/react";
 import { ClipboardIcon, CloudUploadIcon } from "lucide-react";
@@ -13,9 +14,10 @@ import React, {
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { TerminalThemeContext } from "@/components/providers/terminal-theme-context.tsx";
-import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
-import type { LogScope, LogString } from "@/generated/soulfire/logs.ts";
+import type { LogScope, LogString } from "@/generated/soulfire/logs_pb.ts";
+import { LogsService } from "@/generated/soulfire/logs_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
+import { observeServerStream } from "@/lib/protobuf.ts";
 import { cn, isDemo, timestampToDate, uploadToMcLogs } from "@/lib/utils.tsx";
 import { TransportContext } from "./providers/transport-context.tsx";
 import { Button } from "./ui/button.tsx";
@@ -159,7 +161,12 @@ function fnv1aHash(str: string): string {
   return (hash >>> 0).toString(16);
 }
 
-function convertLine(message: LogString): TerminalLine {
+type LogLineSource = Pick<LogString, "id" | "message" | "personal"> &
+  Partial<
+    Omit<LogString, "$typeName" | "$unknown" | "id" | "message" | "personal">
+  >;
+
+function convertLine(message: LogLineSource): TerminalLine {
   return {
     ...message,
     lines: message.message.split("\n").length,
@@ -190,7 +197,7 @@ function deduplicateConsecutive<T>(
   }, []);
 }
 
-type TerminalLine = LogString & {
+type TerminalLine = LogLineSource & {
   lines: number;
   hash: string;
 };
@@ -265,7 +272,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
     }
 
     const abortController = new AbortController();
-    const logsService = new LogsServiceClient(transport);
+    const logsService = createClient(LogsService, transport);
     void logsService
       .getPrevious(
         {
@@ -274,11 +281,11 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
           count: 300,
         },
         {
-          abort: abortController.signal,
+          signal: abortController.signal,
         },
       )
       .then((call) => {
-        if (call.response.messages.length === 0) {
+        if (call.messages.length === 0) {
           setEntries((prev) => [
             ...prev,
             convertLine({
@@ -289,7 +296,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
           ]);
         }
 
-        for (const message of call.response.messages) {
+        for (const message of call.messages) {
           setEntries((prev) => {
             return deduplicateConsecutive(
               limitLength([...prev, convertLine(message)]),
@@ -314,59 +321,61 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
       }
 
       console.info("Connecting to logs service");
-      const logsService = new LogsServiceClient(transport);
-      const { responses } = logsService.subscribe(
+      const logsService = createClient(LogsService, transport);
+      const responses = logsService.subscribe(
         {
           scope: props.scope,
         },
         {
-          abort: abortController.signal,
+          signal: abortController.signal,
         },
       );
 
-      responses.onError((error) => {
-        if (abortController.signal.aborted) {
-          return;
-        }
-
-        console.error(error);
-        setTimeout(() => {
+      void observeServerStream(responses, {
+        onError: (error) => {
           if (abortController.signal.aborted) {
             return;
           }
 
-          connect();
-        }, 3_000);
-      });
-      responses.onComplete(() => {
-        if (abortController.signal.aborted) {
-          return;
-        }
+          console.error(error);
+          setTimeout(() => {
+            if (abortController.signal.aborted) {
+              return;
+            }
 
-        console.error("Stream completed");
-        setTimeout(() => {
+            connect();
+          }, 3_000);
+        },
+        onComplete: () => {
           if (abortController.signal.aborted) {
             return;
           }
 
-          connect();
-        }, 1000);
-      });
-      responses.onMessage((response) => {
-        const message = response.message;
-        if (message === undefined) {
-          return;
-        }
+          console.error("Stream completed");
+          setTimeout(() => {
+            if (abortController.signal.aborted) {
+              return;
+            }
 
-        setEntries((prev) => {
-          return deduplicateConsecutive(
-            limitLength([
-              ...prev.filter((entry) => entry.id !== "empty"),
-              convertLine(message),
-            ]),
-            (element) => element.hash,
-          );
-        });
+            connect();
+          }, 1000);
+        },
+        onMessage: (response) => {
+          const message = response.message;
+          if (message === undefined) {
+            return;
+          }
+
+          setEntries((prev) => {
+            return deduplicateConsecutive(
+              limitLength([
+                ...prev.filter((entry) => entry.id !== "empty"),
+                convertLine(message),
+              ]),
+              (element) => element.hash,
+            );
+          });
+        },
       });
     }
 

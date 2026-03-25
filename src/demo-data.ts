@@ -1,12 +1,12 @@
-import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
+import type { ClientDataResponse } from "@/generated/soulfire/client_pb.ts";
 import {
   GlobalPermission,
   type SettingsDefinition,
   type SettingsPage,
-} from "@/generated/soulfire/common.ts";
+} from "@/generated/soulfire/common_pb.ts";
 import { smartEntries } from "@/lib/utils.tsx";
 
-export const demoClientData: ClientDataResponse = {
+export const demoClientData = {
   id: "00000000-0000-0000-0000-000000000000",
   username: "root",
   role: 0,
@@ -25,9 +25,9 @@ export const demoClientData: ClientDataResponse = {
     publicMcpAddress: "https://demo.soulfiremc.com/mcp",
     minecraftVersion: "1.21.11",
   },
-};
+} as ClientDataResponse;
 
-export const demoInstanceSettings: SettingsPage[] = [
+export const demoInstanceSettings = [
   {
     id: "bot",
     pageName: "Bot Settings",
@@ -116,13 +116,13 @@ export const demoInstanceSettings: SettingsPage[] = [
     owningPluginId: "disconnect-logger",
     enabledIdentifier: { namespace: "disconnect-logger", key: "enabled" },
   },
-];
-export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
+] as SettingsPage[];
+export const demoInstanceSettingsDefinitions = [
   {
     scope: 1,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "Address",
         description: "Address to connect to",
         def: "127.0.0.1:25565",
@@ -139,8 +139,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Amount",
         description: "Amount of bots to connect",
         def: 1,
@@ -157,8 +157,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "minMax",
-      minMax: {
+      case: "minMax",
+      value: {
         min: 0,
         max: 2147483647,
         step: 1,
@@ -183,8 +183,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "combo",
-      combo: {
+      case: "combo",
+      value: {
         uiName: "Protocol Version",
         description: "Minecraft protocol version to use",
         options: [
@@ -783,8 +783,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Read Timeout",
         description: "Read timeout in seconds",
         def: 30,
@@ -801,8 +801,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Write Timeout",
         description: "Write timeout in seconds",
         def: 0,
@@ -819,8 +819,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Connect Timeout",
         description: "Connect timeout in seconds",
         def: 30,
@@ -837,8 +837,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Resolve SRV",
         description: "Try to resolve SRV records from the address",
         def: true,
@@ -850,8 +850,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Concurrent Connects",
         description: "Max amount of bots attempting to connect at once",
         def: 1,
@@ -868,8 +868,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Restore on Reboot",
         description:
           "Whether the attack should be restored after a reboot of the SoulFire machine.\nIf turned off, the attack will not be restored after a reboot.",
@@ -882,8 +882,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Ignore Packet Handling Errors",
         description:
           'Sometimes a bot fails to process a packet. When that happens it disconnects due to "packet errors".\nWhen this option is turned on, SoulFire will ignore errors during the packet handling process and keep bots connected.\nThis might cause bots to have inconsistent world state though, so it could be detected by the server.',
@@ -896,8 +896,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Shuffle accounts",
         description:
           "Should the accounts order be random when connecting bots?",
@@ -910,8 +910,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Use proxies for account auth",
         description:
           "Should the imported proxies be used to authenticate accounts? (Contact Microsoft login, input credentials, etc.)\nOtherwise the SF server will authenticate accounts directly.",
@@ -924,8 +924,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Account import concurrency",
         description:
           "For credentials-like auth, how many accounts should be imported at once?",
@@ -943,8 +943,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Bots per proxy",
         description: "Amount of bots that can be on a single proxy",
         def: -1,
@@ -961,8 +961,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Shuffle proxies",
         description: "Should the proxy order be random when connecting bots?",
         def: false,
@@ -974,8 +974,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "Proxy check address",
         description:
           "What Minecraft server address to use to check if a proxy is working",
@@ -993,8 +993,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Proxy check concurrency",
         description: "Amount of proxies to check at the same time",
         def: 10,
@@ -1011,8 +1011,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Proxy check timeout",
         description:
           "How long to wait for a proxy check response before considering it failed (seconds)",
@@ -1030,8 +1030,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "API Base URL",
         description:
           "API server base URL, can also be changed to other providers",
@@ -1049,8 +1049,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "API Key",
         description: "API key or none if using a custom provider",
         def: "",
@@ -1067,8 +1067,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "API Request Timeout",
         description: "API request timeout (seconds)",
         def: 60,
@@ -1085,8 +1085,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "API Max Retries",
         description: "API request max retries",
         def: 5,
@@ -1103,8 +1103,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Allow Breaking Undiggable",
         description:
           "Allow the bot to attempt breaking blocks that are normally undiggable (like bedrock)",
@@ -1117,8 +1117,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Avoid Diagonal Squeeze",
         description:
           "Prevent the bot from squeezing through diagonal gaps between blocks",
@@ -1131,8 +1131,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Avoid Harmful Entities",
         description:
           "Add a penalty to paths that go near harmful entities like hostile mobs",
@@ -1145,8 +1145,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Max Enemy Penalty",
         description:
           "Maximum cost penalty applied when pathfinding near hostile entities",
@@ -1164,8 +1164,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Break Block Penalty",
         description:
           "Cost penalty for breaking a block during pathfinding (higher values discourage breaking)",
@@ -1183,8 +1183,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Place Block Penalty",
         description:
           "Cost penalty for placing a block during pathfinding (higher values discourage placing)",
@@ -1202,8 +1202,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Expire Timeout",
         description: "Maximum time in seconds before pathfinding gives up",
         def: 180,
@@ -1220,8 +1220,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 2,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Disable Pruning",
         description:
           "Disable periodic pruning of the pathfinding search space (may use more memory)",
@@ -1234,8 +1234,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Log chat to terminal",
         description: "Log all received chat messages to the terminal",
         def: true,
@@ -1247,8 +1247,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Additionally log death messages to terminal",
         description: "Log all death messages to the terminal",
         def: true,
@@ -1260,8 +1260,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Deduplicate amount",
         description:
           "How often should the same message be logged before it will not be logged again? (within 5 seconds)",
@@ -1279,8 +1279,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Log disconnects to terminal",
         description: "Log all bot disconnects to the terminal",
         def: true,
@@ -1292,8 +1292,8 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 1,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "Deduplicate amount",
         description:
           "How often should the same disconnect message be logged before it will not be logged again? (within 5 seconds)",
@@ -1308,9 +1308,9 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
     },
     id: { namespace: "disconnect-logger", key: "deduplicate-amount" },
   },
-];
+] as SettingsDefinition[];
 
-export const demoServerSettings: SettingsPage[] = [
+export const demoServerSettings = [
   {
     id: "server",
     pageName: "Server Settings",
@@ -1346,13 +1346,13 @@ export const demoServerSettings: SettingsPage[] = [
     ],
     iconId: "triangle-alert",
   },
-];
-export const demoServerSettingsDefinitions: SettingsDefinition[] = [
+] as SettingsPage[];
+export const demoServerSettingsDefinitions = [
   {
     scope: 0,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "Public address",
         description:
           "The address clients on the internet use to connect to this SoulFire instance.\nUsed for links in E-Mails and WebDAV.",
@@ -1370,8 +1370,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Allow creating instances",
         description: "Allow (non-admin) users to create instances.",
         def: true,
@@ -1383,8 +1383,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Allow updating self username",
         description: "Allow (non-admin) users to change their username.",
         def: true,
@@ -1396,8 +1396,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Allow updating self email",
         description: "Allow (non-admin) users to change their email.",
         def: true,
@@ -1409,8 +1409,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Allow deleting instances",
         description: "Allow the owner of an instance to delete it.",
         def: true,
@@ -1422,8 +1422,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Allow changing instance meta",
         description:
           "Allow the owner of an instance to change meta like instance name and icon.",
@@ -1436,8 +1436,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Allow instance scripts",
         description:
           "Allow users of instances to create custom instance-level scripts.",
@@ -1450,8 +1450,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "combo",
-      combo: {
+      case: "combo",
+      value: {
         uiName: "Email Type",
         description: "How emails should be delivered.",
         options: [
@@ -1472,8 +1472,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "SMTP Host",
         description: "SMTP server host to use for sending emails.",
         def: "smtp.gmail.com",
@@ -1490,8 +1490,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "int",
-      int: {
+      case: "int",
+      value: {
         uiName: "SMTP Port",
         description: "SMTP server port to use for sending emails.",
         def: 587,
@@ -1508,8 +1508,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "SMTP Username",
         description: "Username to use for SMTP authentication.",
         def: "",
@@ -1526,8 +1526,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "SMTP Password",
         description: "Password to use for SMTP authentication.",
         def: "",
@@ -1544,8 +1544,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "combo",
-      combo: {
+      case: "combo",
+      value: {
         uiName: "SMTP Type",
         description: "Type of encryption to use for SMTP.",
         options: [
@@ -1577,8 +1577,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "string",
-      string: {
+      case: "string",
+      value: {
         uiName: "SMTP From",
         description: "Email address to use as sender for emails.",
         def: "soulfire@gmail.com",
@@ -1595,8 +1595,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "SoulFire debug",
         description: "Enable SoulFire debug logging",
         def: false,
@@ -1608,8 +1608,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Minecraft debug",
         description: "Enable Minecraft debug logging",
         def: false,
@@ -1621,8 +1621,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Netty debug",
         description: "Enable Netty debug logging",
         def: false,
@@ -1634,8 +1634,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "gRPC debug",
         description: "Enable gRPC debug logging",
         def: false,
@@ -1647,8 +1647,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Hibernate debug",
         description: "Enable Hibernate debug logging",
         def: false,
@@ -1660,8 +1660,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Via debug",
         description: "Enable Via* debug logging",
         def: false,
@@ -1673,8 +1673,8 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
   {
     scope: 0,
     type: {
-      oneofKind: "bool",
-      bool: {
+      case: "bool",
+      value: {
         uiName: "Other debug",
         description: "Enable other debug logging",
         def: false,
@@ -1683,4 +1683,4 @@ export const demoServerSettingsDefinitions: SettingsDefinition[] = [
     },
     id: { namespace: "dev", key: "other-debug" },
   },
-];
+] as SettingsDefinition[];

@@ -5,7 +5,8 @@ import {
   type NodeTypeDefinition as ProtoNodeTypeDefinition,
   type PortDefinition as ProtoPortDefinition,
   PortType as ProtoPortType,
-} from "@/generated/soulfire/script";
+  type TypeDescriptor as ProtoTypeDescriptor,
+} from "@/generated/soulfire/script_pb";
 
 export type PortType =
   | "execution"
@@ -337,19 +338,16 @@ export function protoPortTypeToLocal(protoType: ProtoPortType): PortType {
  * Convert proto TypeDescriptor to local TypeDescriptor
  */
 export function protoTypeDescriptorToLocal(
-  proto: { kind: { oneofKind: string } & Record<string, unknown> } | undefined,
+  proto: ProtoTypeDescriptor | undefined,
 ): TypeDescriptor | undefined {
   if (!proto?.kind) return undefined;
 
   const kind = proto.kind;
-  if (kind.oneofKind === "simple") {
-    return simpleType(protoPortTypeToLocal(kind.simple as ProtoPortType));
+  if (kind.case === "simple") {
+    return simpleType(protoPortTypeToLocal(kind.value as ProtoPortType));
   }
-  if (kind.oneofKind === "parameterized") {
-    const p = kind.parameterized as {
-      base: ProtoPortType;
-      params: Array<{ kind: { oneofKind: string } & Record<string, unknown> }>;
-    };
+  if (kind.case === "parameterized") {
+    const p = kind.value;
     return {
       kind: "parameterized",
       base: protoPortTypeToLocal(p.base),
@@ -358,8 +356,8 @@ export function protoTypeDescriptorToLocal(
         .filter((td): td is TypeDescriptor => td !== undefined),
     };
   }
-  if (kind.oneofKind === "typeVariable") {
-    return typeVar(kind.typeVariable as string);
+  if (kind.case === "typeVariable") {
+    return typeVar(kind.value as string);
   }
 
   return undefined;
@@ -387,11 +385,7 @@ export function protoPortToLocal(proto: ProtoPortDefinition): PortDefinition {
         : undefined,
     inferTypeFrom: proto.inferTypeFrom || undefined,
     typeDescriptor: proto.typeDescriptor
-      ? protoTypeDescriptorToLocal(
-          proto.typeDescriptor as {
-            kind: { oneofKind: string } & Record<string, unknown>;
-          },
-        )
+      ? protoTypeDescriptorToLocal(proto.typeDescriptor)
       : undefined,
   };
 }

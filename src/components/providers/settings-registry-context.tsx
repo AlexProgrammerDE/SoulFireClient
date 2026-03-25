@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo } from "react";
 import type {
   SettingsDefinition,
   SettingsEntryIdentifier,
-} from "@/generated/soulfire/common.ts";
+} from "@/generated/soulfire/common_pb.ts";
 
 export type SettingsRegistry = {
   definitions: SettingsDefinition[];

@@ -1,4 +1,5 @@
 import { useAptabase } from "@aptabase/react";
+import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
@@ -22,9 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select.tsx";
-import { UserRole } from "@/generated/soulfire/common.ts";
-import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
-import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
+import { UserRole } from "@/generated/soulfire/common_pb.ts";
+import type { UserListResponse_User } from "@/generated/soulfire/user_pb.ts";
+import { UserService } from "@/generated/soulfire/user_pb.ts";
 import { getEnumEntries } from "@/lib/types.ts";
 import { TransportContext } from "../providers/transport-context.tsx";
 import {
@@ -87,24 +88,20 @@ export function ManageUserDialog({
         role: values.role,
       });
 
-      const userService = new UserServiceClient(transport);
-      const promise =
+      const userService = createClient(UserService, transport);
+      const promise: Promise<unknown> =
         props.mode === "add"
-          ? userService
-              .createUser({
-                username: values.username,
-                email: values.email,
-                role: values.role,
-              })
-              .then((r) => r.response)
-          : userService
-              .updateUser({
-                id: props.user.id,
-                username: values.username,
-                email: values.email,
-                role: values.role,
-              })
-              .then((r) => r.response);
+          ? userService.createUser({
+              username: values.username,
+              email: values.email,
+              role: values.role,
+            })
+          : userService.updateUser({
+              id: props.user.id,
+              username: values.username,
+              email: values.email,
+              role: values.role,
+            });
       toast.promise(promise, {
         loading:
           props.mode === "add"

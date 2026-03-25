@@ -1,3 +1,5 @@
+import { create } from "@bufbuild/protobuf";
+import { createClient } from "@connectrpc/connect";
 import {
   queryOptions,
   useMutation,
@@ -61,33 +63,44 @@ import {
 } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
-import type {
-  BookPage,
-  BotContainerButtonClickRequest,
-  BotInfoResponse,
-  BotInventoryClickRequest,
-  BotInventoryStateResponse,
-  BotLiveState,
-  BotMouseClickRequest,
-  BotSetContainerTextRequest,
-  ContainerButton,
-  ContainerTextInput,
-  InventorySlot,
-  SlotRegion,
-} from "@/generated/soulfire/bot.ts";
 import {
+  type BookPage,
+  type BotContainerButtonClickRequest,
+  BotContainerButtonClickRequestSchema,
+  type BotInfoResponse,
+  BotInfoResponseSchema,
+  type BotInventoryClickRequest,
+  BotInventoryClickRequestSchema,
+  type BotInventoryStateResponse,
+  type BotLiveState,
+  type BotMouseClickRequest,
+  BotMouseClickRequestSchema,
+  BotService,
+  type BotSetContainerTextRequest,
+  BotSetContainerTextRequestSchema,
   ClickType,
+  type ContainerButton,
+  type ContainerTextInput,
   GameMode,
+  type InventorySlot,
   MouseButton,
+  type SlotRegion,
   SlotRegionType,
-} from "@/generated/soulfire/bot.ts";
-import type { CommandScope } from "@/generated/soulfire/command.ts";
+} from "@/generated/soulfire/bot_pb.ts";
+import {
+  BotCommandScopeSchema,
+  type CommandScope,
+  CommandScopeSchema,
+} from "@/generated/soulfire/command_pb.ts";
 import {
   InstancePermission,
   MinecraftAccountProto_AccountTypeProto,
-} from "@/generated/soulfire/common.ts";
-import type { LogScope } from "@/generated/soulfire/logs.ts";
+} from "@/generated/soulfire/common_pb.ts";
+import {
+  BotLogScopeSchema,
+  type LogScope,
+  LogScopeSchema,
+} from "@/generated/soulfire/logs_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import {
@@ -109,14 +122,14 @@ export const Route = createFileRoute(
       queryFn: async (queryProps): Promise<BotInfoResponse> => {
         const transport = createTransport();
         if (transport === null) {
-          return {};
+          return create(BotInfoResponseSchema, {});
         }
-        const botService = new BotServiceClient(transport);
+        const botService = createClient(BotService, transport);
         const result = await botService.getBotInfo(
           { instanceId: instance, botId },
-          { abort: queryProps.signal },
+          { signal: queryProps.signal },
         );
-        return result.response;
+        return result;
       },
       refetchInterval: 1_000, // Faster polling for live data
     });
@@ -279,25 +292,30 @@ function BotDetailContent({
   const TypeIcon = accountTypeToIcon(typeKey);
 
   const logScope = useMemo<LogScope>(
-    () => ({
-      scope: {
-        oneofKind: "personal",
-        personal: {},
-      },
-    }),
-    [],
+    () =>
+      create(LogScopeSchema, {
+        scope: {
+          case: "bot",
+          value: create(BotLogScopeSchema, {
+            instanceId,
+            botId: account.profileId,
+          }),
+        },
+      }),
+    [instanceId, account.profileId],
   );
 
   const commandScope = useMemo<CommandScope>(
-    () => ({
-      scope: {
-        oneofKind: "bot",
-        bot: {
-          instanceId,
-          botId: account.profileId,
+    () =>
+      create(CommandScopeSchema, {
+        scope: {
+          case: "bot",
+          value: create(BotCommandScopeSchema, {
+            instanceId,
+            botId: account.profileId,
+          }),
         },
-      },
-    }),
+      }),
     [instanceId, account.profileId],
   );
 
@@ -765,7 +783,7 @@ function BotPovPanel({
         return;
       }
 
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       const result = await botService.renderBotPov({
         instanceId,
         botId,
@@ -773,7 +791,7 @@ function BotPovPanel({
         height: 480,
       });
 
-      setPovImage(result.response.imageBase64);
+      setPovImage(result.imageBase64);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to render POV");
       // Stop auto-refresh on error
@@ -1098,12 +1116,12 @@ function BotInventoryPanel({
         if (!isOnline) return null;
         const transport = createTransport();
         if (transport === null) return null;
-        const botService = new BotServiceClient(transport);
+        const botService = createClient(BotService, transport);
         const result = await botService.getInventoryState({
           instanceId,
           botId,
         });
-        return result.response;
+        return result;
       },
       refetchInterval: 1_000,
     }),
@@ -1118,7 +1136,7 @@ function BotInventoryPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.clickInventorySlot(request);
     },
     onSuccess: () => {
@@ -1135,7 +1153,7 @@ function BotInventoryPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.closeContainer({ instanceId, botId });
     },
     onSuccess: () => {
@@ -1152,7 +1170,7 @@ function BotInventoryPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.clickContainerButton(request);
     },
     onSuccess: () => {
@@ -1169,7 +1187,7 @@ function BotInventoryPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.setContainerText(request);
     },
     onSuccess: () => {
@@ -1186,7 +1204,7 @@ function BotInventoryPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.setHotbarSlot({ instanceId, botId, slot });
     },
     onSuccess: () => {
@@ -1196,49 +1214,57 @@ function BotInventoryPanel({
 
   const handleSetText = useCallback(
     (fieldId: string, text: string) => {
-      setTextMutation.mutate({
-        instanceId,
-        botId,
-        fieldId,
-        text,
-      });
+      setTextMutation.mutate(
+        create(BotSetContainerTextRequestSchema, {
+          instanceId,
+          botId,
+          fieldId,
+          text,
+        }),
+      );
     },
     [setTextMutation, instanceId, botId],
   );
 
   const handleButtonClick = useCallback(
     (buttonId: number) => {
-      buttonClickMutation.mutate({
-        instanceId,
-        botId,
-        buttonId,
-      });
+      buttonClickMutation.mutate(
+        create(BotContainerButtonClickRequestSchema, {
+          instanceId,
+          botId,
+          buttonId,
+        }),
+      );
     },
     [buttonClickMutation, instanceId, botId],
   );
 
   const handleSlotClick = useCallback(
     (slotIndex: number, clickType: ClickType) => {
-      clickMutation.mutate({
-        instanceId,
-        botId,
-        slot: slotIndex,
-        clickType,
-        hotbarSlot: 0,
-      });
+      clickMutation.mutate(
+        create(BotInventoryClickRequestSchema, {
+          instanceId,
+          botId,
+          slot: slotIndex,
+          clickType,
+          hotbarSlot: 0,
+        }),
+      );
     },
     [clickMutation, instanceId, botId],
   );
 
   const handleDropOutside = useCallback(
     (dropAll: boolean) => {
-      clickMutation.mutate({
-        instanceId,
-        botId,
-        slot: -999, // Outside slot for dropping
-        clickType: dropAll ? ClickType.LEFT_CLICK : ClickType.RIGHT_CLICK,
-        hotbarSlot: 0,
-      });
+      clickMutation.mutate(
+        create(BotInventoryClickRequestSchema, {
+          instanceId,
+          botId,
+          slot: -999, // Outside slot for dropping
+          clickType: dropAll ? ClickType.LEFT_CLICK : ClickType.RIGHT_CLICK,
+          hotbarSlot: 0,
+        }),
+      );
     },
     [clickMutation, instanceId, botId],
   );
@@ -1617,25 +1643,29 @@ function BotActionsPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.mouseClick(request);
     },
   });
 
   const handleLeftClick = useCallback(() => {
-    clickMutation.mutate({
-      instanceId,
-      botId,
-      button: MouseButton.LEFT_BUTTON,
-    });
+    clickMutation.mutate(
+      create(BotMouseClickRequestSchema, {
+        instanceId,
+        botId,
+        button: MouseButton.LEFT_BUTTON,
+      }),
+    );
   }, [clickMutation, instanceId, botId]);
 
   const handleRightClick = useCallback(() => {
-    clickMutation.mutate({
-      instanceId,
-      botId,
-      button: MouseButton.RIGHT_BUTTON,
-    });
+    clickMutation.mutate(
+      create(BotMouseClickRequestSchema, {
+        instanceId,
+        botId,
+        button: MouseButton.RIGHT_BUTTON,
+      }),
+    );
   }, [clickMutation, instanceId, botId]);
 
   return (
@@ -1715,7 +1745,7 @@ function BotMovementPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.setMovementState({
         instanceId,
         botId,
@@ -1733,7 +1763,7 @@ function BotMovementPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.resetMovement({ instanceId, botId });
     },
     onSuccess: () => {
@@ -1758,7 +1788,7 @@ function BotMovementPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.setRotation({
         instanceId,
         botId,
@@ -1979,12 +2009,12 @@ function BotDialogPanel({
       if (transport === null) {
         return { dialog: undefined };
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       const result = await botService.getDialog(
         { instanceId, botId },
-        { abort: queryProps.signal },
+        { signal: queryProps.signal },
       );
-      return result.response;
+      return result;
     },
     refetchInterval: 2_000, // Poll for dialog updates
     enabled: isOnline,
@@ -2001,7 +2031,7 @@ function BotDialogPanel({
       if (transport === null) {
         throw new Error("Not connected");
       }
-      const botService = new BotServiceClient(transport);
+      const botService = createClient(BotService, transport);
       return botService.closeDialog({ instanceId, botId });
     },
     onSuccess: () => {

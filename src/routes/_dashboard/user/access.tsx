@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import {
@@ -24,7 +25,7 @@ import {
 } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
+import { ClientService } from "@/generated/soulfire/client_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
 export const Route = createFileRoute("/_dashboard/user/access")({
@@ -170,11 +171,11 @@ function Content() {
                 return;
               }
 
-              const clientService = new ClientServiceClient(transport);
+              const clientService = createClient(ClientService, transport);
               toast.promise(
                 clientService.generateWebDAVToken({}).then((response) => {
-                  setWebDavToken(response.response.token);
-                  copyToClipboard(response.response.token);
+                  setWebDavToken(response.token);
+                  copyToClipboard(response.token);
                 }),
                 {
                   loading: t("access.token.generating"),
@@ -264,11 +265,11 @@ function Content() {
                 return;
               }
 
-              const clientService = new ClientServiceClient(transport);
+              const clientService = createClient(ClientService, transport);
               toast.promise(
                 clientService.generateAPIToken({}).then((response) => {
-                  setApiToken(response.response.token);
-                  copyToClipboard(response.response.token);
+                  setApiToken(response.token);
+                  copyToClipboard(response.token);
                 }),
                 {
                   loading: t("access.token.generating"),

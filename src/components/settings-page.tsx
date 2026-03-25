@@ -1,4 +1,4 @@
-import type { JsonValue } from "@protobuf-ts/runtime";
+import type { JsonValue } from "@bufbuild/protobuf";
 import {
   useMutation,
   useQueryClient,
@@ -58,7 +58,7 @@ import {
   type StringListSetting,
   type StringSetting,
   StringSetting_InputType,
-} from "@/generated/soulfire/common.ts";
+} from "@/generated/soulfire/common_pb.ts";
 import { useCachedState } from "@/hooks/use-cached-state.ts";
 import { useLocaleNumberFormat } from "@/hooks/use-locale-number-format.tsx";
 import type { BaseSettings } from "@/lib/types.ts";
@@ -566,16 +566,16 @@ export function SettingTypeRenderer(props: {
     return null;
   }
 
-  switch (props.settingType.oneofKind) {
+  switch (props.settingType.case) {
     case "string": {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.settingType.string.uiName}
-            description={props.settingType.string.description}
+            title={props.settingType.value.uiName}
+            description={props.settingType.value.description}
           />
           <StringComponent
-            setting={props.settingType.string}
+            setting={props.settingType.value}
             value={props.value as string}
             changeCallback={props.changeCallback}
           />
@@ -586,11 +586,11 @@ export function SettingTypeRenderer(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.settingType.int.uiName}
-            description={props.settingType.int.description}
+            title={props.settingType.value.uiName}
+            description={props.settingType.value.description}
           />
           <IntComponent
-            setting={props.settingType.int}
+            setting={props.settingType.value}
             value={props.value as number}
             changeCallback={props.changeCallback}
           />
@@ -601,11 +601,11 @@ export function SettingTypeRenderer(props: {
       return (
         <div className="flex max-w-xl flex-row gap-1">
           <BoolComponent
-            setting={props.settingType.bool}
+            setting={props.settingType.value}
             value={props.value as boolean}
             changeCallback={props.changeCallback}
-            title={props.settingType.bool.uiName}
-            description={props.settingType.bool.description}
+            title={props.settingType.value.uiName}
+            description={props.settingType.value.description}
           />
         </div>
       );
@@ -614,11 +614,11 @@ export function SettingTypeRenderer(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.settingType.double.uiName}
-            description={props.settingType.double.description}
+            title={props.settingType.value.uiName}
+            description={props.settingType.value.description}
           />
           <DoubleComponent
-            setting={props.settingType.double}
+            setting={props.settingType.value}
             value={props.value as number}
             changeCallback={props.changeCallback}
           />
@@ -629,11 +629,11 @@ export function SettingTypeRenderer(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.settingType.combo.uiName}
-            description={props.settingType.combo.description}
+            title={props.settingType.value.uiName}
+            description={props.settingType.value.description}
           />
           <ComboComponent
-            setting={props.settingType.combo}
+            setting={props.settingType.value}
             value={props.value as string}
             changeCallback={props.changeCallback}
           />
@@ -644,11 +644,11 @@ export function SettingTypeRenderer(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.settingType.stringList.uiName}
-            description={props.settingType.stringList.description}
+            title={props.settingType.value.uiName}
+            description={props.settingType.value.description}
           />
           <StringListComponent
-            setting={props.settingType.stringList}
+            setting={props.settingType.value}
             value={props.value as string[]}
             changeCallback={props.changeCallback}
           />
@@ -664,12 +664,12 @@ export function SettingTypeRenderer(props: {
         <>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.settingType.minMax.minEntry?.uiName}
-              description={props.settingType.minMax.minEntry?.description}
+              title={props.settingType.value.minEntry?.uiName}
+              description={props.settingType.value.minEntry?.description}
             />
             <MinMaxComponent
-              setting={props.settingType.minMax}
-              entry={props.settingType.minMax.minEntry as MinMaxSetting_Entry}
+              setting={props.settingType.value}
+              entry={props.settingType.value.minEntry as MinMaxSetting_Entry}
               value={castValue.min}
               changeCallback={(v) => {
                 props.changeCallback({
@@ -681,12 +681,12 @@ export function SettingTypeRenderer(props: {
           </div>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.settingType.minMax.maxEntry?.uiName}
-              description={props.settingType.minMax.maxEntry?.description}
+              title={props.settingType.value.maxEntry?.uiName}
+              description={props.settingType.value.maxEntry?.description}
             />
             <MinMaxComponent
-              setting={props.settingType.minMax}
-              entry={props.settingType.minMax.maxEntry as MinMaxSetting_Entry}
+              setting={props.settingType.value}
+              entry={props.settingType.value.maxEntry as MinMaxSetting_Entry}
               value={castValue.max}
               changeCallback={(v) => {
                 props.changeCallback({

@@ -1,3 +1,4 @@
+import { create } from "@bufbuild/protobuf";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo } from "react";
@@ -6,9 +7,17 @@ import CommandInput from "@/components/command-input.tsx";
 import UserPageLayout from "@/components/nav/user/user-page-layout";
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import type { CommandScope } from "@/generated/soulfire/command.ts";
-import { GlobalPermission } from "@/generated/soulfire/common.ts";
-import type { LogScope } from "@/generated/soulfire/logs.ts";
+import {
+  type CommandScope,
+  CommandScopeSchema,
+  GlobalCommandScopeSchema,
+} from "@/generated/soulfire/command_pb.ts";
+import { GlobalPermission } from "@/generated/soulfire/common_pb.ts";
+import {
+  GlobalLogScopeSchema,
+  type LogScope,
+  LogScopeSchema,
+} from "@/generated/soulfire/logs_pb.ts";
 import { hasGlobalPermission } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/user/admin/terminal")({
@@ -48,21 +57,23 @@ function Content() {
   const { clientDataQueryOptions } = Route.useRouteContext();
   const { data: clientData } = useSuspenseQuery(clientDataQueryOptions);
   const logScope = useMemo<LogScope>(
-    () => ({
-      scope: {
-        oneofKind: "personal",
-        personal: {},
-      },
-    }),
+    () =>
+      create(LogScopeSchema, {
+        scope: {
+          case: "global",
+          value: create(GlobalLogScopeSchema, {}),
+        },
+      }),
     [],
   );
   const commandScope = useMemo<CommandScope>(
-    () => ({
-      scope: {
-        oneofKind: "global",
-        global: {},
-      },
-    }),
+    () =>
+      create(CommandScopeSchema, {
+        scope: {
+          case: "global",
+          value: create(GlobalCommandScopeSchema, {}),
+        },
+      }),
     [],
   );
 

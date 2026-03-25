@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { invoke } from "@tauri-apps/api/core";
@@ -67,8 +68,10 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Scroller } from "@/components/ui/scroller.tsx";
-import { LoginServiceClient } from "@/generated/soulfire/login.client.ts";
-import { NextAuthFlowResponse_Failure_Reason } from "@/generated/soulfire/login.ts";
+import {
+  LoginService,
+  NextAuthFlowResponse_Failure_Reason,
+} from "@/generated/soulfire/login_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { getEnumKeyByValue, type SFServerType } from "@/lib/types.ts";
 import {
@@ -1019,7 +1022,8 @@ function EmailForm({
     onSubmit: async ({ value }) => {
       const address = value.address.trim();
       const email = value.email.trim();
-      const loginService = new LoginServiceClient(
+      const loginService = createClient(
+        LoginService,
         createAddressOnlyTransport(address),
       );
       toast.promise(
@@ -1030,7 +1034,7 @@ function EmailForm({
           .then((response) => {
             setAuthFlowData({
               email: email,
-              flowToken: response.response.authFlowToken,
+              flowToken: response.authFlowToken,
               address: address,
             });
             setLoginType("EMAIL_CODE");
@@ -1323,27 +1327,28 @@ function EmailCodeMenu(props: {
 
     setInputDisabled(true);
     toast.promise(
-      new LoginServiceClient(
+      createClient(
+        LoginService,
         createAddressOnlyTransport(props.authFlowData.address),
       )
         .emailCode({
           code: code,
           authFlowToken: props.authFlowData.flowToken,
         })
-        .then(({ response }) => {
-          if (response.next.oneofKind === "success") {
+        .then((response) => {
+          if (response.next.case === "success") {
             void props.redirectWithCredentials(
               "dedicated",
               props.authFlowData.address,
-              response.next.success.token,
+              response.next.value.token,
             );
-          } else if (response.next.oneofKind === "failure") {
+          } else if (response.next.case === "failure") {
             setInputDisabled(false);
             setCodeValue("");
             throw new Error(
               getEnumKeyByValue(
                 NextAuthFlowResponse_Failure_Reason,
-                response.next.failure.reason,
+                response.next.value.reason,
               ),
             );
           } else {

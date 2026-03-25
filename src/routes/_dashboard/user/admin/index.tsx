@@ -21,12 +21,12 @@ import {
   type CustomTooltipProps,
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserRole } from "@/generated/soulfire/common.ts";
+import { UserRole } from "@/generated/soulfire/common_pb.ts";
 import {
   type InstanceListResponse,
   InstanceState,
-} from "@/generated/soulfire/instance.ts";
-import type { UserListResponse } from "@/generated/soulfire/user.ts";
+} from "@/generated/soulfire/instance_pb.ts";
+import type { UserListResponse } from "@/generated/soulfire/user_pb.ts";
 
 export const Route = createFileRoute("/_dashboard/user/admin/")({
   component: OverviewPage,

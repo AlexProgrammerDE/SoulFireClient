@@ -1,3 +1,4 @@
+import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
@@ -31,8 +32,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select.tsx";
-import { AccountTypeCredentials } from "@/generated/soulfire/common.ts";
-import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
+import { AccountTypeCredentials } from "@/generated/soulfire/common_pb.ts";
+import { MCAuthService } from "@/generated/soulfire/mc-auth_pb.ts";
+import { observeServerStream } from "@/lib/protobuf.ts";
 import type { GenerateAccountsMode, ProfileAccount } from "@/lib/types.ts";
 import { runAsync } from "@/lib/utils.tsx";
 
@@ -93,7 +95,7 @@ export default function GenerateAccountsDialog({
       return;
     }
 
-    const service = new MCAuthServiceClient(transport);
+    const service = createClient(MCAuthService, transport);
 
     const abortController = new AbortController();
     const loadingData: ExternalToast = {
@@ -118,79 +120,83 @@ export default function GenerateAccountsDialog({
       });
     const toastId = toast.loading(loadingReport(), loadingData);
 
-    const { responses } = service.loginCredentials(
+    const responses = service.loginCredentials(
       {
         instanceId: instanceInfo.id,
         service: AccountTypeCredentials.OFFLINE,
         payload: usernames,
       },
       {
-        abort: abortController.signal,
+        signal: abortController.signal,
       },
     );
 
-    responses.onMessage((r) => {
-      runAsync(async () => {
-        const data = r.data;
-        switch (data.oneofKind) {
-          case "oneSuccess": {
-            if (abortController.signal.aborted) {
-              return;
-            }
+    void observeServerStream(responses, {
+      onMessage: (r) => {
+        runAsync(async () => {
+          const data = r.data;
+          switch (data.case) {
+            case "oneSuccess": {
+              if (abortController.signal.aborted) {
+                return;
+              }
 
-            if (data.oneSuccess.account) {
-              accountsToAdd.push(data.oneSuccess.account);
-            }
-            success++;
-            toast.loading(loadingReport(), {
-              id: toastId,
-              ...loadingData,
-            });
-            break;
-          }
-          case "oneFailure": {
-            if (abortController.signal.aborted) {
-              return;
-            }
-
-            failed++;
-            toast.loading(loadingReport(), {
-              id: toastId,
-              ...loadingData,
-            });
-            break;
-          }
-          case "end": {
-            setIsGenerating(false);
-
-            if (accountsToAdd.length === 0) {
-              toast.error(t("account.generate.allFailed"), {
+              if (data.value.account) {
+                accountsToAdd.push(data.value.account);
+              }
+              success++;
+              toast.loading(loadingReport(), {
                 id: toastId,
-                cancel: undefined,
+                ...loadingData,
               });
-            } else {
-              onGenerate(accountsToAdd, value.mode);
-              onOpenChange(false);
-              toast.success(
-                t("account.generate.success", { count: accountsToAdd.length }),
-                {
+              break;
+            }
+            case "oneFailure": {
+              if (abortController.signal.aborted) {
+                return;
+              }
+
+              failed++;
+              toast.loading(loadingReport(), {
+                id: toastId,
+                ...loadingData,
+              });
+              break;
+            }
+            case "end": {
+              setIsGenerating(false);
+
+              if (accountsToAdd.length === 0) {
+                toast.error(t("account.generate.allFailed"), {
                   id: toastId,
                   cancel: undefined,
-                },
-              );
+                });
+              } else {
+                onGenerate(accountsToAdd, value.mode);
+                onOpenChange(false);
+                toast.success(
+                  t("account.generate.success", {
+                    count: accountsToAdd.length,
+                  }),
+                  {
+                    id: toastId,
+                    cancel: undefined,
+                  },
+                );
+              }
+              break;
             }
-            break;
           }
-        }
-      });
-    });
-    responses.onError((e) => {
-      console.error(e);
-      setIsGenerating(false);
-      toast.error(t("account.generate.error"), {
-        id: toastId,
-        cancel: undefined,
-      });
+        });
+      },
+      onError: (e) => {
+        console.error(e);
+        setIsGenerating(false);
+        toast.error(t("account.generate.error"), {
+          id: toastId,
+          cancel: undefined,
+        });
+      },
     });
   };
 
