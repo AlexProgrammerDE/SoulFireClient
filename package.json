@@ -137,6 +137,7 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "@biomejs/biome",
+      "@bufbuild/buf",
       "@swc/core",
       "@tailwindcss/oxide",
       "core-js",
