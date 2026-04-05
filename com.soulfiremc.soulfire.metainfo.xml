@@ -54,6 +54,9 @@
   </screenshots>
 
   <releases>
+    <release version="2.7.0" date="2026-04-05">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/2.7.0</url>
+    </release>
     <release version="2.6.3" date="2026-03-22">
       <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/2.6.3</url>
     </release>
