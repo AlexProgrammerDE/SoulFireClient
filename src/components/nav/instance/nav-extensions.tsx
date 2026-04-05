@@ -39,7 +39,7 @@ type NavLinks = {
   pluginList?: boolean;
 }[];
 
-export function NavPlugins() {
+export function NavExtensions() {
   const { t } = useTranslation("common");
   const sidebar = useSidebar();
   const instanceInfoQueryOptions = useRouteContext({
@@ -114,7 +114,9 @@ export function NavPlugins() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{t("instanceSidebar.pluginsGroup")}</SidebarGroupLabel>
+      <SidebarGroupLabel>
+        {t("instanceSidebar.extensionsGroup")}
+      </SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) =>
           item.pluginList ? (

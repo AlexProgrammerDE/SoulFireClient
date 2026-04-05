@@ -51,8 +51,8 @@ function Discover() {
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: "plugins",
-          content: t("breadcrumbs.plugins"),
+          id: "extensions",
+          content: t("breadcrumbs.extensions"),
         },
       ]}
       pageName={t("pageName.discoverPlugins")}

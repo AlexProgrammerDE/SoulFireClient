@@ -78,8 +78,8 @@ function Content() {
       extraCrumbs={[
         plugin
           ? {
-              id: "plugin",
-              content: t("breadcrumbs.plugins"),
+              id: "extensions",
+              content: t("breadcrumbs.extensions"),
             }
           : {
               id: "settings",

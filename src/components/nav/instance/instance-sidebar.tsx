@@ -2,7 +2,7 @@ import type * as React from "react";
 import { Suspense } from "react";
 import { InstanceSwitcher } from "@/components/nav/instance/instance-switcher.tsx";
 import { NavControls } from "@/components/nav/instance/nav-controls.tsx";
-import { NavPlugins } from "@/components/nav/instance/nav-plugins";
+import { NavExtensions } from "@/components/nav/instance/nav-extensions.tsx";
 import { NavSettings } from "@/components/nav/instance/nav-settings.tsx";
 import { NavAccount } from "@/components/nav/nav-account.tsx";
 import { NavDefaultSkeleton } from "@/components/nav/nav-default-skeleton.tsx";
@@ -27,7 +27,7 @@ export function InstanceSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <Suspense fallback={<NavDefaultSkeleton />}>
             <NavControls />
             <NavSettings />
-            <NavPlugins />
+            <NavExtensions />
           </Suspense>
           <NavSecondary className="mt-auto" />
         </SidebarContent>
