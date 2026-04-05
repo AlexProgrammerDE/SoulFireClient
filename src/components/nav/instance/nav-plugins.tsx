@@ -5,12 +5,7 @@ import {
   useParams,
   useRouteContext,
 } from "@tanstack/react-router";
-import {
-  BlocksIcon,
-  ChevronRightIcon,
-  ScrollTextIcon,
-  TelescopeIcon,
-} from "lucide-react";
+import { BlocksIcon, ChevronRightIcon, ScrollTextIcon } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
@@ -27,6 +22,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -70,14 +66,6 @@ export function NavPlugins() {
   const navLinks: NavLinks = [
     {
       title: t("instanceSidebar.discoverPlugins"),
-      icon: TelescopeIcon,
-      linkProps: {
-        to: "/instance/$instance/discover",
-        params: { instance: instanceInfo.id },
-      },
-    },
-    {
-      title: t("instanceSidebar.pluginSettings"),
       icon: BlocksIcon,
       linkProps: {
         to: "/instance/$instance/discover",
@@ -138,6 +126,18 @@ export function NavPlugins() {
               key={item.title}
             >
               <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip={item.title}>
+                  <Link
+                    activeOptions={{ exact: true }}
+                    activeProps={{
+                      "data-active": true,
+                    }}
+                    {...item.linkProps}
+                  >
+                    <item.icon className="size-4" />
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
                 <CollapsibleTrigger
                   onClick={(e) => {
                     // When sidebar closed, open sidebar and make sure collapsible is expanded
@@ -151,11 +151,10 @@ export function NavPlugins() {
                   }}
                   asChild
                 >
-                  <SidebarMenuButton tooltip={item.title}>
-                    <item.icon className="size-4" />
-                    <span>{item.title}</span>
-                    <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
+                  <SidebarMenuAction className="data-[state=open]:rotate-90">
+                    <ChevronRightIcon />
+                    <span className="sr-only">Toggle</span>
+                  </SidebarMenuAction>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
