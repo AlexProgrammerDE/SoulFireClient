@@ -297,8 +297,7 @@
     "bots": "Crew",
     "audit-log": "Captain’s Chronicle",
     "settingsGroup": "Chart Room",
-    "pluginsGroup": "Pirate Add-ons",
-    "pluginSettings": "Plugin Shimmy",
+    "extensionsGroup": "",
     "botSettings": "Bot Shimmy",
     "accountSettings": "Matey Account",
     "metaSettings": "Fleet Chartin'",
@@ -354,7 +353,7 @@
     "admin": "Admiral",
     "settings": "Chart Room",
     "controls": "Controls o’ the ship",
-    "plugins": "Pirate Add-ons",
+    "extensions": "",
     "bots": "Crew"
   },
   "noInstancesFound": "No hulls found drifting",

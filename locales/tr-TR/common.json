@@ -297,8 +297,7 @@
     "bots": "Botlar",
     "audit-log": "Denetim Günlüğü",
     "settingsGroup": "Ayarlar",
-    "pluginsGroup": "Eklentiler",
-    "pluginSettings": "Eklenti Ayarları",
+    "extensionsGroup": "",
     "botSettings": "Bot Ayarları",
     "accountSettings": "Hesap Ayarları",
     "metaSettings": "Örnek Ayarları",
@@ -354,7 +353,7 @@
     "admin": "Yönetici",
     "settings": "Ayarlar",
     "controls": "Kontroller",
-    "plugins": "Eklentiler",
+    "extensions": "",
     "bots": "Botlar"
   },
   "noInstancesFound": "Örnek bulunamadı",

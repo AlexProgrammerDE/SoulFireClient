@@ -297,8 +297,7 @@
     "bots": "sʇoԐ",
     "audit-log": "ƃo˥-ʇᴉp∩∀ ƃo˥-ʇᴉp∩∀",
     "settingsGroup": "sƃuᴉʇʇǝS",
-    "pluginsGroup": "sƃuᴉƃnlԀ",
-    "pluginSettings": "sƃuᴉʇʇǝS uᴉƃılԀ",
+    "extensionsGroup": "",
     "botSettings": "sƃuᴉʇʇǝS ʇoԐ",
     "accountSettings": "sƃuᴉʇʇǝS ʇunoɔɔ∀",
     "metaSettings": "sƃuᴉʇʇǝS ǝɔuɐʇsᴉ",
@@ -354,7 +353,7 @@
     "admin": "uᴉɯp∀",
     "settings": "sƃuᴉʇʇǝS",
     "controls": "sdoɹʇuoↃ",
-    "plugins": "sƃuᴉƃnlԀ",
+    "extensions": "",
     "bots": "sʇoԐ"
   },
   "noInstancesFound": "punoɟ sǝɔuɐʇsᴉ oN",

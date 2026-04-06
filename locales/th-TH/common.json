@@ -297,8 +297,7 @@
     "bots": "บอท",
     "audit-log": "บันทึกตรวจสอบ",
     "settingsGroup": "การตั้งค่า",
-    "pluginsGroup": "ปลั๊กอิน",
-    "pluginSettings": "ตั้งค่าปลั๊กอิน",
+    "extensionsGroup": "",
     "botSettings": "ตั้งค่าบอท",
     "accountSettings": "ตั้งค่าบัญชีผู้ใช้",
     "metaSettings": "ตั้งค่าอินสแตนซ์",
@@ -354,7 +353,7 @@
     "admin": "แอดมิน",
     "settings": "การตั้งค่า",
     "controls": "ส่วนควบคุม",
-    "plugins": "ปลั๊กอิน",
+    "extensions": "",
     "bots": "บอท"
   },
   "noInstancesFound": "ไม่พบบัญชีอินสแตนซ์",

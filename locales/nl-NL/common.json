@@ -297,8 +297,7 @@
     "bots": "Bots",
     "audit-log": "Auditlogboek",
     "settingsGroup": "Instellingen",
-    "pluginsGroup": "Plug-ins",
-    "pluginSettings": "Plug-in instellingen",
+    "extensionsGroup": "",
     "botSettings": "Bot instellingen",
     "accountSettings": "Account instellingen",
     "metaSettings": "Instellingen van instantie",
@@ -354,7 +353,7 @@
     "admin": "Beheerder",
     "settings": "Instellingen",
     "controls": "Bediening",
-    "plugins": "Plug-ins",
+    "extensions": "",
     "bots": "Bots"
   },
   "noInstancesFound": "Geen instanties gevonden",

@@ -297,8 +297,7 @@
     "bots": "机器人",
     "audit-log": "审计日志",
     "settingsGroup": "设置",
-    "pluginsGroup": "插件",
-    "pluginSettings": "插件设置",
+    "extensionsGroup": "",
     "botSettings": "机器人设置",
     "accountSettings": "帐户设置",
     "metaSettings": "实例设置",
@@ -354,7 +353,7 @@
     "admin": "管理员",
     "settings": "设置",
     "controls": "控制",
-    "plugins": "插件",
+    "extensions": "",
     "bots": "机器人"
   },
   "noInstancesFound": "未找到实例",
