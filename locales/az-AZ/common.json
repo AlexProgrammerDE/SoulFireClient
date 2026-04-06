@@ -297,8 +297,7 @@
     "bots": "Botlar",
     "audit-log": "Audit Log",
     "settingsGroup": "Ayarlar",
-    "pluginsGroup": "Pluginlər",
-    "pluginSettings": "Plugin ayarları",
+    "extensionsGroup": "",
     "botSettings": "Bot ayarları",
     "accountSettings": "Hesab ayarları",
     "metaSettings": "İnstan ayarları",
@@ -354,7 +353,7 @@
     "admin": "Admin",
     "settings": "Ayarlar",
     "controls": "İdarəetmə",
-    "plugins": "Pluginlər",
+    "extensions": "",
     "bots": "Botlar"
   },
   "noInstancesFound": "Instansiya tapılmadı",

@@ -297,8 +297,7 @@
     "bots": "Bottar",
     "audit-log": "Granskningslogg",
     "settingsGroup": "Inställningar",
-    "pluginsGroup": "Plugins",
-    "pluginSettings": "Plugin-inställningar",
+    "extensionsGroup": "",
     "botSettings": "Bot-inställningar",
     "accountSettings": "Kontoinställningar",
     "metaSettings": "Instansinställningar",
@@ -354,7 +353,7 @@
     "admin": "Admin",
     "settings": "Inställningar",
     "controls": "Kontroller",
-    "plugins": "Plugins",
+    "extensions": "",
     "bots": "Bottar"
   },
   "noInstancesFound": "Inga instanser hittades",

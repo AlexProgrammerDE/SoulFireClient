@@ -297,8 +297,7 @@
     "bots": "봇들",
     "audit-log": "감사 로그",
     "settingsGroup": "설정",
-    "pluginsGroup": "플러그인",
-    "pluginSettings": "플러그인 설정",
+    "extensionsGroup": "",
     "botSettings": "봇 설정",
     "accountSettings": "계정 설정",
     "metaSettings": "인스턴스 설정",
@@ -354,7 +353,7 @@
     "admin": "관리자",
     "settings": "설정",
     "controls": "컨트롤",
-    "plugins": "플러그인",
+    "extensions": "",
     "bots": "봇들"
   },
   "noInstancesFound": "인스턴스를 찾을 수 없습니다",

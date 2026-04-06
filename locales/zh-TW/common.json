@@ -297,8 +297,7 @@
     "bots": "機器人群組/機器人列表/機器人",
     "audit-log": "稽核日誌",
     "settingsGroup": "設定",
-    "pluginsGroup": "插件",
-    "pluginSettings": "插件設定",
+    "extensionsGroup": "",
     "botSettings": "Bot 設定",
     "accountSettings": "帳戶設定",
     "metaSettings": "實例設定",
@@ -354,7 +353,7 @@
     "admin": "管理員",
     "settings": "設定",
     "controls": "控制項",
-    "plugins": "插件",
+    "extensions": "",
     "bots": "機器人群組/機器人列表/機器人"
   },
   "noInstancesFound": "未找到任何實例",

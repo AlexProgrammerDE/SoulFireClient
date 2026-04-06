@@ -297,8 +297,7 @@
     "bots": "Botit",
     "audit-log": "Audit-loki",
     "settingsGroup": "Asetukset",
-    "pluginsGroup": "Liitännäiset",
-    "pluginSettings": "Plugin-asetukset",
+    "extensionsGroup": "",
     "botSettings": "Botti-asetukset",
     "accountSettings": "Tilin asetukset",
     "metaSettings": "Instanssin asetukset",
@@ -354,7 +353,7 @@
     "admin": "Ylläpitäjä",
     "settings": "Asetukset",
     "controls": "Ohjaimet",
-    "plugins": "Liitännäiset",
+    "extensions": "",
     "bots": "Botit"
   },
   "noInstancesFound": "Yhtään instanssia ei löytynyt",

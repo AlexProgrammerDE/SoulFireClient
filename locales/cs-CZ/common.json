@@ -297,8 +297,7 @@
     "bots": "Boti",
     "audit-log": "Audit log",
     "settingsGroup": "Nastavení",
-    "pluginsGroup": "Pluginy",
-    "pluginSettings": "Nastavení pluginů",
+    "extensionsGroup": "",
     "botSettings": "Nastavení bota",
     "accountSettings": "Nastavení účtu",
     "metaSettings": "Nastavení instance",
@@ -354,7 +353,7 @@
     "admin": "Admin",
     "settings": "Nastavení",
     "controls": "Ovládací prvky",
-    "plugins": "Pluginy",
+    "extensions": "",
     "bots": "Boti"
   },
   "noInstancesFound": "Nebyly nalezeny žádné instance",

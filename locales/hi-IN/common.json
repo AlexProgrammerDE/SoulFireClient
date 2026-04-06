@@ -297,8 +297,7 @@
     "bots": "बॉट्स",
     "audit-log": "ऑडिट लॉग",
     "settingsGroup": "सेटिंग्स",
-    "pluginsGroup": "प्लगइन्स",
-    "pluginSettings": "प्लगइन सेटिंग्स",
+    "extensionsGroup": "",
     "botSettings": "बॉट सेटिंग्स",
     "accountSettings": "अकाउंट सेटिंग्स",
     "metaSettings": "इंस्टेंस सेटिंग्स",
@@ -354,7 +353,7 @@
     "admin": "प्रशासक",
     "settings": "सेटिंग्स",
     "controls": "नियंत्रण",
-    "plugins": "प्लगइन्स",
+    "extensions": "",
     "bots": "बॉट्स"
   },
   "noInstancesFound": "कोई इंस्टेंस नहीं मिला",

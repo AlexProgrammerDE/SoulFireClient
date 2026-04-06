@@ -297,8 +297,7 @@
     "bots": "BOTZ",
     "audit-log": "Audit Log",
     "settingsGroup": "Settingz",
-    "pluginsGroup": "Plugins",
-    "pluginSettings": "Plugin Settingz",
+    "extensionsGroup": "",
     "botSettings": "Bot Settingz",
     "accountSettings": "Account Settingz",
     "metaSettings": "Instance Settingz",
@@ -354,7 +353,7 @@
     "admin": "Admin",
     "settings": "Settingz",
     "controls": "Controlz",
-    "plugins": "Plugins",
+    "extensions": "",
     "bots": "BOTZ"
   },
   "noInstancesFound": "No instancez founded",

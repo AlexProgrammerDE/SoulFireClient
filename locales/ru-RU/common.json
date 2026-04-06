@@ -297,8 +297,7 @@
     "bots": "Боты",
     "audit-log": "Журнал аудита",
     "settingsGroup": "Настройки",
-    "pluginsGroup": "Плагины",
-    "pluginSettings": "Настройки плагинов",
+    "extensionsGroup": "",
     "botSettings": "Настройки ботов",
     "accountSettings": "Настройки аккаунтов",
     "metaSettings": "Настройки экземпляра",
@@ -354,7 +353,7 @@
     "admin": "Администратор",
     "settings": "Настройки",
     "controls": "Управление",
-    "plugins": "Плагины",
+    "extensions": "",
     "bots": "Боты"
   },
   "noInstancesFound": "Экземпляры не найдены",

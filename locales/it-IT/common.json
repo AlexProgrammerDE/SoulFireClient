@@ -297,8 +297,7 @@
     "bots": "Bot",
     "audit-log": "Registro di audit",
     "settingsGroup": "Impostazioni",
-    "pluginsGroup": "Plugin",
-    "pluginSettings": "Impostazioni plugin",
+    "extensionsGroup": "",
     "botSettings": "Impostazioni bot",
     "accountSettings": "Impostazioni account",
     "metaSettings": "Impostazioni istanza",
@@ -354,7 +353,7 @@
     "admin": "Admin",
     "settings": "Impostazioni",
     "controls": "Controlli",
-    "plugins": "Plugin",
+    "extensions": "",
     "bots": "Bot"
   },
   "noInstancesFound": "Nessuna istanza trovata",

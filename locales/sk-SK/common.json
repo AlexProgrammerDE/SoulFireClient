@@ -297,8 +297,7 @@
     "bots": "Boti",
     "audit-log": "Audit log",
     "settingsGroup": "Nastavenia",
-    "pluginsGroup": "Doplnky",
-    "pluginSettings": "Nastavenia doplnkov",
+    "extensionsGroup": "",
     "botSettings": "Nastavenia bota",
     "accountSettings": "Nastavenia účtu",
     "metaSettings": "Nastavenia inštancie",
@@ -354,7 +353,7 @@
     "admin": "Admin",
     "settings": "Nastavenia",
     "controls": "Ovládanie",
-    "plugins": "Doplnky",
+    "extensions": "",
     "bots": "Boti"
   },
   "noInstancesFound": "Neboli nájdené žiadne inštancie",

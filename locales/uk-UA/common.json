@@ -297,8 +297,7 @@
     "bots": "Боти",
     "audit-log": "Аудит-лог",
     "settingsGroup": "Налаштування",
-    "pluginsGroup": "Плагіни",
-    "pluginSettings": "Налаштування плагінів",
+    "extensionsGroup": "",
     "botSettings": "Налаштування бота",
     "accountSettings": "Налаштування акаунта",
     "metaSettings": "Налаштування екземпляра",
@@ -354,7 +353,7 @@
     "admin": "Адмін",
     "settings": "Налаштування",
     "controls": "Керування",
-    "plugins": "Плагіни",
+    "extensions": "",
     "bots": "Боти"
   },
   "noInstancesFound": "Екземпляри не знайдено",
