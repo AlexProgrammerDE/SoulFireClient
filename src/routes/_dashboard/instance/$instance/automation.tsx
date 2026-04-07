@@ -24,7 +24,7 @@ import {
   WaypointsIcon,
 } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -38,6 +38,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import {
@@ -67,7 +68,7 @@ import {
   type AutomationTeamState,
   AutomationTeamStateSchema,
 } from "@/generated/soulfire/automation_pb.ts";
-import { timestampToDate } from "@/lib/utils.tsx";
+import { cn, timestampToDate } from "@/lib/utils.tsx";
 import { createTransport } from "@/lib/web-rpc.ts";
 
 const presetOptions = [
@@ -201,6 +202,8 @@ type BotSettingsPatch = {
   retreatFoodThreshold?: number;
 };
 
+const NO_CHANGE = "__no_change__";
+
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/automation",
 )({
@@ -330,6 +333,16 @@ function Content() {
   const [quotaInputs, setQuotaInputs] = useState<Record<string, string>>(() =>
     createQuotaInputState(teamSettings),
   );
+  const [botSearch, setBotSearch] = useState("");
+  const deferredBotSearch = useDeferredValue(botSearch);
+  const [botRoleFilter, setBotRoleFilter] = useState("all");
+  const [botStatusFilter, setBotStatusFilter] = useState("all");
+  const [botDimensionFilter, setBotDimensionFilter] = useState("all");
+  const [selectedBots, setSelectedBots] = useState<Record<string, boolean>>({});
+  const [bulkEnabledInput, setBulkEnabledInput] = useState(NO_CHANGE);
+  const [bulkDeathRecoveryInput, setBulkDeathRecoveryInput] =
+    useState(NO_CHANGE);
+  const [bulkRoleOverrideInput, setBulkRoleOverrideInput] = useState(NO_CHANGE);
   const transport = createTransport();
   const isReadOnlyDemo = transport === null;
   const hasAutomationSettingsPage = instanceInfo.instanceSettings.some(
@@ -350,6 +363,17 @@ function Content() {
     teamSettings.targetEnderPearls,
     teamSettings,
   ]);
+
+  useEffect(() => {
+    setSelectedBots((current) => {
+      const visibleBotIds = new Set(teamState.bots.map((bot) => bot.botId));
+      return Object.fromEntries(
+        Object.entries(current).filter(
+          ([botId, selected]) => selected && visibleBotIds.has(botId),
+        ),
+      );
+    });
+  }, [teamState.bots]);
 
   const invalidateAutomation = async () => {
     await Promise.all([
@@ -527,11 +551,11 @@ function Content() {
   const botActionMutation = useMutation({
     mutationFn: async (
       action:
-        | { kind: "pause"; botId: string; accountName: string }
-        | { kind: "resume"; botId: string; accountName: string }
-        | { kind: "stop"; botId: string; accountName: string }
-        | { kind: "reset-memory"; botId: string; accountName: string }
-        | { kind: "release-claims"; botId: string; accountName: string },
+        | { kind: "pause"; botIds: string[]; label: string }
+        | { kind: "resume"; botIds: string[]; label: string }
+        | { kind: "stop"; botIds: string[]; label: string }
+        | { kind: "reset-memory"; botIds: string[]; label: string }
+        | { kind: "release-claims"; botIds: string[]; label: string },
     ) => {
       const activeTransport = createTransport();
       if (activeTransport === null) {
@@ -546,33 +570,33 @@ function Content() {
         case "pause":
           return automationService.pauseAutomation({
             instanceId: instanceInfo.id,
-            botIds: [action.botId],
+            botIds: action.botIds,
           });
         case "resume":
           return automationService.resumeAutomation({
             instanceId: instanceInfo.id,
-            botIds: [action.botId],
+            botIds: action.botIds,
           });
         case "stop":
           return automationService.stopAutomation({
             instanceId: instanceInfo.id,
-            botIds: [action.botId],
+            botIds: action.botIds,
           });
         case "reset-memory":
           return automationService.resetAutomationMemory({
             instanceId: instanceInfo.id,
-            botIds: [action.botId],
+            botIds: action.botIds,
           });
         case "release-claims":
           return automationService.releaseAutomationBotClaims({
             instanceId: instanceInfo.id,
-            botIds: [action.botId],
+            botIds: action.botIds,
           });
       }
     },
     onSuccess: async (_, action) => {
       await invalidateAutomation();
-      toast.success(`${action.accountName}: ${action.kind.replace("-", " ")}.`);
+      toast.success(`${action.label}: ${action.kind.replace("-", " ")}.`);
     },
     onError: (error) => {
       toast.error("Bot automation action failed.", {
@@ -583,8 +607,8 @@ function Content() {
 
   const botSettingsMutation = useMutation({
     mutationFn: async (action: {
-      botId: string;
-      accountName: string;
+      botIds: string[];
+      label: string;
       patch: BotSettingsPatch;
     }) => {
       const activeTransport = createTransport();
@@ -598,13 +622,13 @@ function Content() {
       );
       return automationService.updateAutomationBotSettings({
         instanceId: instanceInfo.id,
-        botIds: [action.botId],
+        botIds: action.botIds,
         ...action.patch,
       });
     },
     onSuccess: async (_, action) => {
       await invalidateAutomation();
-      toast.success(`${action.accountName}: automation settings updated.`);
+      toast.success(`${action.label}: automation settings updated.`);
     },
     onError: (error) => {
       toast.error("Failed to update automation settings.", {
@@ -659,6 +683,72 @@ function Content() {
       }),
     [teamSettings, teamState.quotas],
   );
+
+  const botDimensionOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          teamState.bots.map((bot) =>
+            normalizeBotDimension(bot.dimension || "unknown"),
+          ),
+        ),
+      ).sort(),
+    [teamState.bots],
+  );
+
+  const filteredBots = useMemo(() => {
+    const normalizedSearch = deferredBotSearch.trim().toLowerCase();
+    return teamState.bots.filter((bot) => {
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        bot.accountName.toLowerCase().includes(normalizedSearch) ||
+        bot.statusSummary.toLowerCase().includes(normalizedSearch) ||
+        (bot.currentAction ?? "").toLowerCase().includes(normalizedSearch) ||
+        (bot.dimension ?? "").toLowerCase().includes(normalizedSearch);
+      const matchesRole =
+        botRoleFilter === "all" || String(bot.teamRole) === botRoleFilter;
+      const matchesStatus =
+        botStatusFilter === "all" ||
+        (botStatusFilter === "paused" ? bot.paused : !bot.paused);
+      const matchesDimension =
+        botDimensionFilter === "all" ||
+        normalizeBotDimension(bot.dimension || "unknown") ===
+          botDimensionFilter;
+      return matchesSearch && matchesRole && matchesStatus && matchesDimension;
+    });
+  }, [
+    botDimensionFilter,
+    botRoleFilter,
+    botStatusFilter,
+    deferredBotSearch,
+    teamState.bots,
+  ]);
+
+  const filteredBotIds = useMemo(
+    () => filteredBots.map((bot) => bot.botId),
+    [filteredBots],
+  );
+  const selectedBotIds = useMemo(
+    () =>
+      teamState.bots
+        .filter((bot) => selectedBots[bot.botId] === true)
+        .map((bot) => bot.botId),
+    [selectedBots, teamState.bots],
+  );
+  const bulkSettingsPatch = useMemo(() => {
+    const patch: BotSettingsPatch = {};
+    if (bulkEnabledInput !== NO_CHANGE) {
+      patch.enabled = bulkEnabledInput === "enabled";
+    }
+    if (bulkDeathRecoveryInput !== NO_CHANGE) {
+      patch.allowDeathRecovery = bulkDeathRecoveryInput === "enabled";
+    }
+    if (bulkRoleOverrideInput !== NO_CHANGE) {
+      patch.roleOverride = Number(bulkRoleOverrideInput) as AutomationTeamRole;
+    }
+    return patch;
+  }, [bulkDeathRecoveryInput, bulkEnabledInput, bulkRoleOverrideInput]);
+  const hasBulkSettingsPatch = Object.keys(bulkSettingsPatch).length > 0;
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4 py-4">
@@ -1054,58 +1144,329 @@ function Content() {
 
       <div className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
         <Card>
-          <CardHeader>
+          <CardHeader className="space-y-4">
             <CardTitle>Bot Runtime</CardTitle>
             <CardDescription>
-              Per-bot status, queue visibility, and quick interventions.
+              Per-bot status, queue visibility, filtered team views, and bulk
+              interventions.
             </CardDescription>
+            <div className="grid gap-3 lg:grid-cols-4">
+              <div className="grid gap-2 lg:col-span-2">
+                <p className="text-sm font-medium">Search Bots</p>
+                <Input
+                  value={botSearch}
+                  onChange={(event) => setBotSearch(event.target.value)}
+                  placeholder="Search by name, action, status, or dimension"
+                />
+              </div>
+              <SettingSelect
+                label="Role Filter"
+                value={botRoleFilter}
+                options={[
+                  { value: "all", label: "All Roles" },
+                  ...roleOverrideOptions
+                    .filter(
+                      (option) =>
+                        option.value !== AutomationTeamRole.UNSPECIFIED,
+                    )
+                    .map((option) => ({
+                      value: String(option.value),
+                      label: option.label,
+                    })),
+                ]}
+                disabled={false}
+                onValueChange={setBotRoleFilter}
+              />
+              <SettingSelect
+                label="Status Filter"
+                value={botStatusFilter}
+                options={[
+                  { value: "all", label: "All Statuses" },
+                  { value: "live", label: "Live" },
+                  { value: "paused", label: "Paused" },
+                ]}
+                disabled={false}
+                onValueChange={setBotStatusFilter}
+              />
+            </div>
+            <div className="grid gap-3 lg:grid-cols-[1fr_auto]">
+              <SettingSelect
+                label="Dimension Filter"
+                value={botDimensionFilter}
+                options={[
+                  { value: "all", label: "All Dimensions" },
+                  ...botDimensionOptions.map((dimension) => ({
+                    value: dimension,
+                    label: dimensionLabel(dimension),
+                  })),
+                ]}
+                disabled={false}
+                onValueChange={setBotDimensionFilter}
+              />
+              <div className="flex flex-wrap items-end gap-2">
+                <Badge variant="outline">{filteredBots.length} visible</Badge>
+                <Badge variant="secondary">
+                  {selectedBotIds.length} selected
+                </Badge>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={filteredBotIds.length === 0}
+                  onClick={() =>
+                    setSelectedBots((current) => ({
+                      ...current,
+                      ...Object.fromEntries(
+                        filteredBotIds.map((botId) => [botId, true]),
+                      ),
+                    }))
+                  }
+                >
+                  Select Visible
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={selectedBotIds.length === 0}
+                  onClick={() => setSelectedBots({})}
+                >
+                  Clear Selection
+                </Button>
+              </div>
+            </div>
+            {selectedBotIds.length > 0 && (
+              <div className="grid gap-4 rounded-lg border bg-muted/35 px-4 py-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <p className="text-sm font-medium">Bulk Controls</p>
+                    <p className="text-muted-foreground text-xs">
+                      Apply interventions or a light settings patch to the
+                      current selection.
+                    </p>
+                  </div>
+                  <Badge variant="secondary">
+                    {selectedBotIds.length} bot
+                    {selectedBotIds.length === 1 ? "" : "s"}
+                  </Badge>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={isReadOnlyDemo || botActionMutation.isPending}
+                    onClick={() =>
+                      botActionMutation.mutate({
+                        kind: "pause",
+                        botIds: selectedBotIds,
+                        label: formatBotSelectionLabel(selectedBotIds.length),
+                      })
+                    }
+                  >
+                    <PauseIcon className="size-4" />
+                    Pause Selected
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={isReadOnlyDemo || botActionMutation.isPending}
+                    onClick={() =>
+                      botActionMutation.mutate({
+                        kind: "resume",
+                        botIds: selectedBotIds,
+                        label: formatBotSelectionLabel(selectedBotIds.length),
+                      })
+                    }
+                  >
+                    <PlayIcon className="size-4" />
+                    Resume Selected
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={isReadOnlyDemo || botActionMutation.isPending}
+                    onClick={() =>
+                      botActionMutation.mutate({
+                        kind: "stop",
+                        botIds: selectedBotIds,
+                        label: formatBotSelectionLabel(selectedBotIds.length),
+                      })
+                    }
+                  >
+                    <StopCircleIcon className="size-4" />
+                    Stop Selected
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={isReadOnlyDemo || botActionMutation.isPending}
+                    onClick={() =>
+                      botActionMutation.mutate({
+                        kind: "reset-memory",
+                        botIds: selectedBotIds,
+                        label: formatBotSelectionLabel(selectedBotIds.length),
+                      })
+                    }
+                  >
+                    <RotateCcwIcon className="size-4" />
+                    Reset Memory
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={isReadOnlyDemo || botActionMutation.isPending}
+                    onClick={() =>
+                      botActionMutation.mutate({
+                        kind: "release-claims",
+                        botIds: selectedBotIds,
+                        label: formatBotSelectionLabel(selectedBotIds.length),
+                      })
+                    }
+                  >
+                    <WaypointsIcon className="size-4" />
+                    Release Claims
+                  </Button>
+                </div>
+                <div className="grid gap-3 lg:grid-cols-3">
+                  <SettingSelect
+                    label="Automation Enabled"
+                    value={bulkEnabledInput}
+                    options={[
+                      { value: NO_CHANGE, label: "No Change" },
+                      { value: "enabled", label: "Enable" },
+                      { value: "disabled", label: "Disable" },
+                    ]}
+                    disabled={isReadOnlyDemo || botSettingsMutation.isPending}
+                    onValueChange={setBulkEnabledInput}
+                  />
+                  <SettingSelect
+                    label="Death Recovery"
+                    value={bulkDeathRecoveryInput}
+                    options={[
+                      { value: NO_CHANGE, label: "No Change" },
+                      { value: "enabled", label: "Enable" },
+                      { value: "disabled", label: "Disable" },
+                    ]}
+                    disabled={isReadOnlyDemo || botSettingsMutation.isPending}
+                    onValueChange={setBulkDeathRecoveryInput}
+                  />
+                  <SettingSelect
+                    label="Role Override"
+                    value={bulkRoleOverrideInput}
+                    options={[
+                      { value: NO_CHANGE, label: "No Change" },
+                      ...roleOverrideOptions.map((option) => ({
+                        value: String(option.value),
+                        label: option.label,
+                      })),
+                    ]}
+                    disabled={isReadOnlyDemo || botSettingsMutation.isPending}
+                    onValueChange={setBulkRoleOverrideInput}
+                  />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={
+                      isReadOnlyDemo ||
+                      botSettingsMutation.isPending ||
+                      !hasBulkSettingsPatch
+                    }
+                    onClick={() =>
+                      botSettingsMutation.mutate({
+                        botIds: selectedBotIds,
+                        label: formatBotSelectionLabel(selectedBotIds.length),
+                        patch: bulkSettingsPatch,
+                      })
+                    }
+                  >
+                    Apply To Selected
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    disabled={
+                      bulkEnabledInput === NO_CHANGE &&
+                      bulkDeathRecoveryInput === NO_CHANGE &&
+                      bulkRoleOverrideInput === NO_CHANGE
+                    }
+                    onClick={() => {
+                      setBulkEnabledInput(NO_CHANGE);
+                      setBulkDeathRecoveryInput(NO_CHANGE);
+                      setBulkRoleOverrideInput(NO_CHANGE);
+                    }}
+                  >
+                    Reset Bulk Draft
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardHeader>
           <CardContent className="grid gap-4 md:grid-cols-2">
-            {teamState.bots.map((bot) => (
-              <BotRuntimeCard
-                key={bot.botId}
-                bot={bot}
-                disabled={isReadOnlyDemo}
-                pending={
-                  botActionMutation.isPending || botSettingsMutation.isPending
-                }
-                onPauseResume={() =>
-                  botActionMutation.mutate({
-                    kind: bot.paused ? "resume" : "pause",
-                    botId: bot.botId,
-                    accountName: bot.accountName,
-                  })
-                }
-                onStop={() =>
-                  botActionMutation.mutate({
-                    kind: "stop",
-                    botId: bot.botId,
-                    accountName: bot.accountName,
-                  })
-                }
-                onResetMemory={() =>
-                  botActionMutation.mutate({
-                    kind: "reset-memory",
-                    botId: bot.botId,
-                    accountName: bot.accountName,
-                  })
-                }
-                onReleaseClaims={() =>
-                  botActionMutation.mutate({
-                    kind: "release-claims",
-                    botId: bot.botId,
-                    accountName: bot.accountName,
-                  })
-                }
-                onUpdateSettings={(patch) =>
-                  botSettingsMutation.mutate({
-                    botId: bot.botId,
-                    accountName: bot.accountName,
-                    patch,
-                  })
-                }
-              />
-            ))}
+            {filteredBots.length === 0 ? (
+              <div className="text-muted-foreground rounded-lg border border-dashed px-4 py-8 text-sm md:col-span-2">
+                No bots match the current filters.
+              </div>
+            ) : (
+              filteredBots.map((bot) => (
+                <BotRuntimeCard
+                  key={bot.botId}
+                  bot={bot}
+                  selected={selectedBots[bot.botId] === true}
+                  disabled={isReadOnlyDemo}
+                  pending={
+                    botActionMutation.isPending || botSettingsMutation.isPending
+                  }
+                  onSelectedChange={(checked) =>
+                    setSelectedBots((current) => {
+                      if (!checked) {
+                        const next = { ...current };
+                        delete next[bot.botId];
+                        return next;
+                      }
+                      return {
+                        ...current,
+                        [bot.botId]: true,
+                      };
+                    })
+                  }
+                  onPauseResume={() =>
+                    botActionMutation.mutate({
+                      kind: bot.paused ? "resume" : "pause",
+                      botIds: [bot.botId],
+                      label: bot.accountName,
+                    })
+                  }
+                  onStop={() =>
+                    botActionMutation.mutate({
+                      kind: "stop",
+                      botIds: [bot.botId],
+                      label: bot.accountName,
+                    })
+                  }
+                  onResetMemory={() =>
+                    botActionMutation.mutate({
+                      kind: "reset-memory",
+                      botIds: [bot.botId],
+                      label: bot.accountName,
+                    })
+                  }
+                  onReleaseClaims={() =>
+                    botActionMutation.mutate({
+                      kind: "release-claims",
+                      botIds: [bot.botId],
+                      label: bot.accountName,
+                    })
+                  }
+                  onUpdateSettings={(patch) =>
+                    botSettingsMutation.mutate({
+                      botIds: [bot.botId],
+                      label: bot.accountName,
+                      patch,
+                    })
+                  }
+                />
+              ))
+            )}
           </CardContent>
         </Card>
 
@@ -1272,8 +1633,10 @@ function SettingSelect(props: {
 
 function BotRuntimeCard(props: {
   bot: AutomationBotState;
+  selected: boolean;
   disabled: boolean;
   pending: boolean;
+  onSelectedChange: (checked: boolean) => void;
   onPauseResume: () => void;
   onStop: () => void;
   onResetMemory: () => void;
@@ -1306,16 +1669,30 @@ function BotRuntimeCard(props: {
   ]);
 
   return (
-    <Card className="h-full">
+    <Card
+      className={cn(
+        "h-full",
+        props.selected && "border-primary/50 ring-primary/20 ring-1",
+      )}
+    >
       <CardHeader className="space-y-3">
         <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <CardTitle className="truncate text-lg">
-              {props.bot.accountName}
-            </CardTitle>
-            <CardDescription className="truncate">
-              {props.bot.statusSummary}
-            </CardDescription>
+          <div className="flex min-w-0 items-start gap-3">
+            <Checkbox
+              checked={props.selected}
+              disabled={props.pending}
+              onCheckedChange={(checked) =>
+                props.onSelectedChange(checked === true)
+              }
+            />
+            <div className="min-w-0">
+              <CardTitle className="truncate text-lg">
+                {props.bot.accountName}
+              </CardTitle>
+              <CardDescription className="truncate">
+                {props.bot.statusSummary}
+              </CardDescription>
+            </div>
           </div>
           <div className="flex flex-wrap justify-end gap-2">
             <Badge variant="outline">{goalModeLabel(props.bot.goalMode)}</Badge>
@@ -1686,6 +2063,21 @@ function isValidBotSettingInput(
   max: number,
 ): boolean {
   return isValidQuotaInput(value, min, max);
+}
+
+function normalizeBotDimension(dimension: string): string {
+  return dimension.replace("minecraft:", "");
+}
+
+function dimensionLabel(dimension: string): string {
+  return dimension
+    .split("_")
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ");
+}
+
+function formatBotSelectionLabel(count: number): string {
+  return `${count} selected bot${count === 1 ? "" : "s"}`;
 }
 
 function goalModeLabel(mode: AutomationGoalMode): string {
