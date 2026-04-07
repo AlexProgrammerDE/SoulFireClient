@@ -205,6 +205,21 @@ type BotSettingsPatch = {
   retreatFoodThreshold?: number;
 };
 
+type BotAttentionSeverity = "ok" | "warning" | "critical";
+
+type BotAttentionStatus = {
+  severity: BotAttentionSeverity;
+  label: string;
+  summary: string;
+  reasons: string[];
+  operatorHint: string;
+};
+
+type BotAttentionEntry = {
+  bot: AutomationBotState;
+  attention: BotAttentionStatus;
+};
+
 const NO_CHANGE = "__no_change__";
 
 export const Route = createFileRoute(
@@ -341,6 +356,7 @@ function Content() {
   const [botRoleFilter, setBotRoleFilter] = useState("all");
   const [botStatusFilter, setBotStatusFilter] = useState("all");
   const [botDimensionFilter, setBotDimensionFilter] = useState("all");
+  const [botAttentionFilter, setBotAttentionFilter] = useState("all");
   const [selectedBots, setSelectedBots] = useState<Record<string, boolean>>({});
   const [bulkEnabledInput, setBulkEnabledInput] = useState(NO_CHANGE);
   const [bulkDeathRecoveryInput, setBulkDeathRecoveryInput] =
@@ -722,10 +738,45 @@ function Content() {
       ).sort(),
     [teamState.bots],
   );
+  const botAttentionEntries = useMemo(() => {
+    const nowMs = Date.now();
+    return teamState.bots
+      .map((bot) => ({
+        bot,
+        attention: describeBotAttention(bot, nowMs),
+      }))
+      .sort(compareBotAttentionEntries);
+  }, [teamState.bots]);
+  const botAttentionById = useMemo(
+    () =>
+      new Map(
+        botAttentionEntries.map((entry) => [entry.bot.botId, entry.attention]),
+      ),
+    [botAttentionEntries],
+  );
+  const attentionCounts = useMemo(
+    () =>
+      botAttentionEntries.reduce(
+        (counts, entry) => {
+          if (entry.attention.severity === "critical") {
+            counts.critical += 1;
+          } else if (entry.attention.severity === "warning") {
+            counts.warning += 1;
+          } else {
+            counts.healthy += 1;
+          }
+          return counts;
+        },
+        { critical: 0, warning: 0, healthy: 0 },
+      ),
+    [botAttentionEntries],
+  );
 
   const filteredBots = useMemo(() => {
     const normalizedSearch = deferredBotSearch.trim().toLowerCase();
     return teamState.bots.filter((bot) => {
+      const attention =
+        botAttentionById.get(bot.botId) ?? createHealthyBotAttention();
       const matchesSearch =
         normalizedSearch.length === 0 ||
         bot.accountName.toLowerCase().includes(normalizedSearch) ||
@@ -741,9 +792,20 @@ function Content() {
         botDimensionFilter === "all" ||
         normalizeBotDimension(bot.dimension || "unknown") ===
           botDimensionFilter;
-      return matchesSearch && matchesRole && matchesStatus && matchesDimension;
+      const matchesAttention =
+        botAttentionFilter === "all" ||
+        matchesBotAttentionFilter(attention, botAttentionFilter);
+      return (
+        matchesSearch &&
+        matchesRole &&
+        matchesStatus &&
+        matchesDimension &&
+        matchesAttention
+      );
     });
   }, [
+    botAttentionById,
+    botAttentionFilter,
     botDimensionFilter,
     botRoleFilter,
     botStatusFilter,
@@ -840,7 +902,7 @@ function Content() {
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4 py-4">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         <StatCard
           title="Objective"
           value={objectiveLabel(teamState.objective)}
@@ -864,6 +926,12 @@ function Content() {
           value={teamSettings.sharedEndEntry ? "Throttled" : "Open"}
           description={`Max ${teamSettings.maxEndBots} bot${teamSettings.maxEndBots === 1 ? "" : "s"} in End`}
           icon={RouteIcon}
+        />
+        <StatCard
+          title="Needs Attention"
+          value={String(attentionCounts.critical + attentionCounts.warning)}
+          description={`${attentionCounts.critical} critical / ${attentionCounts.warning} warning`}
+          icon={ShieldAlertIcon}
         />
       </div>
 
@@ -1238,7 +1306,7 @@ function Content() {
               Per-bot status, queue visibility, filtered team views, and bulk
               interventions.
             </CardDescription>
-            <div className="grid gap-3 lg:grid-cols-4">
+            <div className="grid gap-3 lg:grid-cols-5">
               <div className="grid gap-2 lg:col-span-2">
                 <p className="text-sm font-medium">Search Bots</p>
                 <Input
@@ -1275,6 +1343,18 @@ function Content() {
                 ]}
                 disabled={false}
                 onValueChange={setBotStatusFilter}
+              />
+              <SettingSelect
+                label="Attention Filter"
+                value={botAttentionFilter}
+                options={[
+                  { value: "all", label: "All Health" },
+                  { value: "attention", label: "Needs Attention" },
+                  { value: "critical", label: "Critical" },
+                  { value: "healthy", label: "Healthy" },
+                ]}
+                disabled={false}
+                onValueChange={setBotAttentionFilter}
               />
             </div>
             <div className="grid gap-3 lg:grid-cols-[1fr_auto]">
@@ -1499,6 +1579,10 @@ function Content() {
                 <BotRuntimeCard
                   key={bot.botId}
                   bot={bot}
+                  attention={
+                    botAttentionById.get(bot.botId) ??
+                    createHealthyBotAttention()
+                  }
                   selected={selectedBots[bot.botId] === true}
                   disabled={isReadOnlyDemo}
                   pending={
@@ -1560,6 +1644,20 @@ function Content() {
         </Card>
 
         <div className="grid gap-4">
+          <RunHealthCard
+            entries={botAttentionEntries}
+            criticalCount={attentionCounts.critical}
+            warningCount={attentionCounts.warning}
+            healthyCount={attentionCounts.healthy}
+            onInspectMemory={setMemoryBotId}
+            onSelectBot={(botId) =>
+              setSelectedBots((current) => ({
+                ...current,
+                [botId]: true,
+              }))
+            }
+          />
+
           <MemoryInspectorCard
             bots={teamState.bots}
             selectedBotId={memoryBotId}
@@ -1756,6 +1854,7 @@ function SettingSelect(props: {
 
 function BotRuntimeCard(props: {
   bot: AutomationBotState;
+  attention: BotAttentionStatus;
   selected: boolean;
   disabled: boolean;
   pending: boolean;
@@ -1822,6 +1921,12 @@ function BotRuntimeCard(props: {
             <Badge variant="outline">{goalModeLabel(props.bot.goalMode)}</Badge>
             <Badge variant={props.bot.paused ? "secondary" : "outline"}>
               {props.bot.paused ? "Paused" : "Live"}
+            </Badge>
+            <Badge
+              variant="outline"
+              className={attentionBadgeClassName(props.attention.severity)}
+            >
+              {props.attention.label}
             </Badge>
           </div>
         </div>
@@ -1897,6 +2002,35 @@ function BotRuntimeCard(props: {
               ))}
             </div>
           )}
+        </div>
+
+        <div className="space-y-3 rounded-lg border px-3 py-3">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Run Health</p>
+              <p className="text-muted-foreground text-xs">
+                Derived diagnostics from progress age, timeouts, deaths,
+                recoveries, and queued work.
+              </p>
+            </div>
+            <Badge
+              variant="outline"
+              className={attentionBadgeClassName(props.attention.severity)}
+            >
+              {props.attention.label}
+            </Badge>
+          </div>
+          <p className="text-sm font-medium">{props.attention.summary}</p>
+          <div className="flex flex-wrap gap-2">
+            {props.attention.reasons.map((reason) => (
+              <Badge key={reason} variant="secondary" className="text-left">
+                {reason}
+              </Badge>
+            ))}
+          </div>
+          <p className="text-muted-foreground text-xs">
+            Operator hint: {props.attention.operatorHint}
+          </p>
         </div>
 
         <div className="space-y-3 rounded-lg border px-3 py-3">
@@ -2089,6 +2223,113 @@ function CoordinationCard(props: {
           </ScrollArea>
         ) : (
           <p className="text-muted-foreground text-sm">{props.emptyState}</p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function RunHealthCard(props: {
+  entries: BotAttentionEntry[];
+  criticalCount: number;
+  warningCount: number;
+  healthyCount: number;
+  onInspectMemory: (botId: string) => void;
+  onSelectBot: (botId: string) => void;
+}) {
+  const attentionEntries = props.entries.filter(
+    (entry) => entry.attention.severity !== "ok",
+  );
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Run Health</CardTitle>
+        <CardDescription>
+          First operator-facing stuck-bot diagnostics derived from current
+          runtime snapshots.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid gap-3 sm:grid-cols-3">
+          <InfoRow
+            label="Critical Bots"
+            value={String(props.criticalCount)}
+            icon={ShieldAlertIcon}
+          />
+          <InfoRow
+            label="Warning Bots"
+            value={String(props.warningCount)}
+            icon={RefreshCcwIcon}
+          />
+          <InfoRow
+            label="Healthy Bots"
+            value={String(props.healthyCount)}
+            icon={PlayIcon}
+          />
+        </div>
+        {attentionEntries.length === 0 ? (
+          <p className="text-muted-foreground text-sm">
+            No bots currently look stalled or degraded from the available
+            runtime signals.
+          </p>
+        ) : (
+          <ScrollArea className="h-72 pr-3">
+            <div className="space-y-3">
+              {attentionEntries.map((entry) => (
+                <div
+                  key={entry.bot.botId}
+                  className="space-y-2 rounded-lg border px-3 py-3"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                      <p className="text-sm font-medium">
+                        {entry.bot.accountName}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {entry.attention.summary}
+                      </p>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className={attentionBadgeClassName(
+                        entry.attention.severity,
+                      )}
+                    >
+                      {entry.attention.label}
+                    </Badge>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {entry.attention.reasons.map((reason) => (
+                      <Badge key={reason} variant="secondary">
+                        {reason}
+                      </Badge>
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground text-xs">
+                    Operator hint: {entry.attention.operatorHint}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => props.onInspectMemory(entry.bot.botId)}
+                    >
+                      <BrainCircuitIcon className="size-4" />
+                      Inspect Memory
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => props.onSelectBot(entry.bot.botId)}
+                    >
+                      Select Bot
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
         )}
       </CardContent>
     </Card>
@@ -2545,6 +2786,207 @@ function formatBotSelectionLabel(count: number): string {
   return `${count} selected bot${count === 1 ? "" : "s"}`;
 }
 
+function createHealthyBotAttention(): BotAttentionStatus {
+  return {
+    severity: "ok",
+    label: "Healthy",
+    summary: "Recent progress looks healthy.",
+    reasons: ["Recent progress is within expected bounds."],
+    operatorHint: "No intervention is suggested right now.",
+  };
+}
+
+function describeBotAttention(
+  bot: AutomationBotState,
+  nowMs: number,
+): BotAttentionStatus {
+  const reasons: string[] = [];
+  let severity: BotAttentionSeverity = "ok";
+  const lastProgressAtMs = bot.lastProgressAt
+    ? timestampToDate(bot.lastProgressAt).getTime()
+    : null;
+  const staleSeconds =
+    lastProgressAtMs === null
+      ? null
+      : Math.max(0, Math.floor((nowMs - lastProgressAtMs) / 1000));
+
+  const promote = (next: BotAttentionSeverity, reason: string) => {
+    if (severityRank(next) > severityRank(severity)) {
+      severity = next;
+    }
+    reasons.push(reason);
+  };
+
+  if (bot.paused) {
+    promote("warning", "Paused by operator.");
+  }
+  if (bot.goalMode === AutomationGoalMode.IDLE && !bot.paused) {
+    promote("warning", "No active automation goal.");
+  }
+  if (staleSeconds !== null && staleSeconds >= 180) {
+    promote(
+      "critical",
+      `No progress for ${formatDurationSeconds(staleSeconds)}.`,
+    );
+  } else if (staleSeconds !== null && staleSeconds >= 75) {
+    promote(
+      "warning",
+      `No progress for ${formatDurationSeconds(staleSeconds)}.`,
+    );
+  }
+  if (bot.timeoutCount >= 3) {
+    promote("critical", `${bot.timeoutCount} timeouts recorded.`);
+  } else if (bot.timeoutCount >= 2) {
+    promote("warning", `${bot.timeoutCount} timeouts recorded.`);
+  }
+  if (bot.deathCount >= 3) {
+    promote("critical", `${bot.deathCount} deaths recorded.`);
+  } else if (bot.deathCount >= 2) {
+    promote("warning", `${bot.deathCount} deaths recorded.`);
+  }
+  if (!bot.currentAction && bot.queuedTargets.length > 0) {
+    promote(
+      "warning",
+      `Queue has ${bot.queuedTargets.length} pending target${bot.queuedTargets.length === 1 ? "" : "s"} but no active action.`,
+    );
+  }
+  if (
+    bot.recoveryCount >= 3 &&
+    severityRank(severity) < severityRank("critical")
+  ) {
+    promote("warning", `${bot.recoveryCount} recoveries attempted.`);
+  }
+  if (bot.lastRecoveryReason && (severity !== "ok" || bot.recoveryCount >= 3)) {
+    reasons.push(`Last recovery: ${bot.lastRecoveryReason}.`);
+  }
+
+  if (reasons.length === 0) {
+    return createHealthyBotAttention();
+  }
+
+  return {
+    severity,
+    label: attentionLabel(bot, severity, staleSeconds),
+    summary: reasons[0] ?? "Needs attention.",
+    reasons,
+    operatorHint: attentionOperatorHint(bot, severity, staleSeconds),
+  };
+}
+
+function severityRank(severity: BotAttentionSeverity): number {
+  switch (severity) {
+    case "critical":
+      return 2;
+    case "warning":
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+function compareBotAttentionEntries(
+  left: BotAttentionEntry,
+  right: BotAttentionEntry,
+): number {
+  const severityDelta =
+    severityRank(right.attention.severity) -
+    severityRank(left.attention.severity);
+  if (severityDelta !== 0) {
+    return severityDelta;
+  }
+  return left.bot.accountName.localeCompare(right.bot.accountName);
+}
+
+function matchesBotAttentionFilter(
+  attention: BotAttentionStatus,
+  filter: string,
+): boolean {
+  switch (filter) {
+    case "attention":
+      return attention.severity !== "ok";
+    case "critical":
+      return attention.severity === "critical";
+    case "healthy":
+      return attention.severity === "ok";
+    default:
+      return true;
+  }
+}
+
+function attentionBadgeClassName(severity: BotAttentionSeverity): string {
+  switch (severity) {
+    case "critical":
+      return "border-red-300 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-200";
+    case "warning":
+      return "border-amber-300 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200";
+    default:
+      return "border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-200";
+  }
+}
+
+function attentionLabel(
+  bot: AutomationBotState,
+  severity: BotAttentionSeverity,
+  staleSeconds: number | null,
+): string {
+  switch (severity) {
+    case "critical":
+      return "Critical";
+    case "warning":
+      if (bot.paused) {
+        return "Paused";
+      }
+      if (staleSeconds !== null && staleSeconds >= 75) {
+        return "Stalled";
+      }
+      return "Warning";
+    default:
+      return "Healthy";
+  }
+}
+
+function attentionOperatorHint(
+  bot: AutomationBotState,
+  severity: BotAttentionSeverity,
+  staleSeconds: number | null,
+): string {
+  if (bot.paused) {
+    return "Resume only if the pause was intentional and the team is ready for this bot again.";
+  }
+  if (bot.goalMode === AutomationGoalMode.IDLE) {
+    return "Start beat or acquire automation before expecting further progress.";
+  }
+  if (severity === "critical" && (staleSeconds ?? 0) >= 180) {
+    return "Inspect memory, release claims, or reset memory if the bot is looping on stale world state.";
+  }
+  if (severity === "critical" && bot.timeoutCount >= 3) {
+    return "This bot is repeatedly timing out; inspect memory first and consider pausing it if the team is thrashing.";
+  }
+  if (severity === "critical" && bot.deathCount >= 3) {
+    return "Repeated deaths suggest bad local conditions; pause or retune this bot before it burns more shared resources.";
+  }
+  if (!bot.currentAction && bot.queuedTargets.length > 0) {
+    return "Queued work exists without an active action; inspect memory and claim state for missing context.";
+  }
+  return "Inspect the bot memory snapshot before forcing broader team-wide interventions.";
+}
+
+function formatDurationSeconds(totalSeconds: number): string {
+  if (totalSeconds < 60) {
+    return `${totalSeconds}s`;
+  }
+
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (minutes < 60) {
+    return `${minutes}m ${seconds}s`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return `${hours}h ${remainingMinutes}m`;
+}
+
 function goalModeLabel(mode: AutomationGoalMode): string {
   switch (mode) {
     case AutomationGoalMode.ACQUIRE:
@@ -2743,7 +3185,7 @@ function createDemoAutomationTeamState(
         instanceId,
         botId: "22222222-2222-2222-2222-222222222222",
         accountName: "FortressScout",
-        statusSummary: "probing fortress perimeter",
+        statusSummary: "stalled near fortress perimeter",
         goalMode: AutomationGoalMode.BEAT,
         teamRole: AutomationTeamRole.NETHER_RUNNER,
         teamObjective: AutomationTeamObjective.STRONGHOLD_HUNT,
@@ -2752,11 +3194,11 @@ function createDemoAutomationTeamState(
         dimension: "minecraft:the_nether",
         position: { x: -132, y: 68, z: 244 },
         deathCount: 1,
-        timeoutCount: 2,
-        recoveryCount: 2,
+        timeoutCount: 3,
+        recoveryCount: 3,
         lastRecoveryReason: "recovering death drops",
         lastProgressAt: create(TimestampSchema, {
-          seconds: BigInt(Math.floor(now.getTime() / 1000) - 45),
+          seconds: BigInt(Math.floor(now.getTime() / 1000) - 205),
           nanos: 0,
         }),
         settings: {
