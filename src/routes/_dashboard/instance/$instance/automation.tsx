@@ -56,6 +56,7 @@ import {
   type AutomationCoordinationState,
   AutomationCoordinationStateSchema,
   AutomationGoalMode,
+  type AutomationInstanceSettings,
   AutomationInstanceSettingsSchema,
   AutomationPreset,
   AutomationRolePolicy,
@@ -95,6 +96,53 @@ const roleOverrideOptions = [
   { value: AutomationTeamRole.NETHER_RUNNER, label: "Nether Runner" },
   { value: AutomationTeamRole.STRONGHOLD_SCOUT, label: "Stronghold Scout" },
   { value: AutomationTeamRole.END_SUPPORT, label: "End Support" },
+] as const;
+
+const quotaOverrideConfigs = [
+  {
+    requirementKey: "item:minecraft:blaze_rod",
+    alias: "blaze_rod",
+    label: "Blaze Rod",
+    min: 0,
+    max: 64,
+    readSetting: (settings: AutomationInstanceSettings) =>
+      settings.targetBlazeRods,
+  },
+  {
+    requirementKey: "item:minecraft:ender_pearl",
+    alias: "ender_pearl",
+    label: "Ender Pearl",
+    min: 0,
+    max: 64,
+    readSetting: (settings: AutomationInstanceSettings) =>
+      settings.targetEnderPearls,
+  },
+  {
+    requirementKey: "item:minecraft:ender_eye",
+    alias: "ender_eye",
+    label: "Ender Eye",
+    min: 0,
+    max: 64,
+    readSetting: (settings: AutomationInstanceSettings) =>
+      settings.targetEnderEyes,
+  },
+  {
+    requirementKey: "item:minecraft:arrow",
+    alias: "arrow",
+    label: "Arrow",
+    min: 0,
+    max: 512,
+    readSetting: (settings: AutomationInstanceSettings) =>
+      settings.targetArrows,
+  },
+  {
+    requirementKey: "group:any_bed",
+    alias: "bed",
+    label: "Any Bed",
+    min: 0,
+    max: 64,
+    readSetting: (settings: AutomationInstanceSettings) => settings.targetBeds,
+  },
 ] as const;
 
 export const Route = createFileRoute(
@@ -223,6 +271,9 @@ function Content() {
   const [maxEndBotsInput, setMaxEndBotsInput] = useState(
     String(teamSettings.maxEndBots),
   );
+  const [quotaInputs, setQuotaInputs] = useState<Record<string, string>>(() =>
+    createQuotaInputState(teamSettings),
+  );
   const transport = createTransport();
   const isReadOnlyDemo = transport === null;
   const hasAutomationSettingsPage = instanceInfo.instanceSettings.some(
@@ -232,6 +283,17 @@ function Content() {
   useEffect(() => {
     setMaxEndBotsInput(String(teamSettings.maxEndBots));
   }, [teamSettings.maxEndBots]);
+
+  useEffect(() => {
+    setQuotaInputs(createQuotaInputState(teamSettings));
+  }, [
+    teamSettings.targetArrows,
+    teamSettings.targetBeds,
+    teamSettings.targetBlazeRods,
+    teamSettings.targetEnderEyes,
+    teamSettings.targetEnderPearls,
+    teamSettings,
+  ]);
 
   const invalidateAutomation = async () => {
     await Promise.all([
@@ -319,6 +381,11 @@ function Content() {
         | { kind: "shared-claims"; enabled: boolean }
         | { kind: "shared-end-entry"; enabled: boolean }
         | { kind: "max-end-bots"; maxEndBots: number }
+        | {
+            kind: "quota-override";
+            requirementKey: string;
+            targetCount: number;
+          }
         | { kind: "objective"; objective: AutomationTeamObjective },
     ) => {
       const activeTransport = createTransport();
@@ -366,6 +433,12 @@ function Content() {
             instanceId: instanceInfo.id,
             maxEndBots: action.maxEndBots,
           });
+        case "quota-override":
+          return automationService.setAutomationQuotaOverride({
+            instanceId: instanceInfo.id,
+            requirementKey: action.requirementKey,
+            targetCount: action.targetCount,
+          });
         case "objective":
           return automationService.setAutomationObjectiveOverride({
             instanceId: instanceInfo.id,
@@ -377,6 +450,15 @@ function Content() {
       await invalidateAutomation();
       if (action.kind === "preset") {
         toast.success(`Applied ${presetLabel(action.preset)} preset.`);
+        return;
+      }
+      if (action.kind === "quota-override") {
+        const quotaConfig = quotaOverrideConfig(action.requirementKey);
+        toast.success(
+          action.targetCount === 0
+            ? `Restored ${quotaConfig.label} quota to auto.`
+            : `Set ${quotaConfig.label} quota to ${action.targetCount}.`,
+        );
       }
     },
     onError: (error) => {
@@ -506,13 +588,22 @@ function Content() {
 
   const quotaCards = useMemo(
     () =>
-      teamState.quotas.map((quota) => ({
-        key: quota.requirementKey,
-        label: quota.displayName,
-        current: quota.currentCount,
-        target: quota.targetCount,
-      })),
-    [teamState.quotas],
+      quotaOverrideConfigs.map((config) => {
+        const liveQuota = teamState.quotas.find(
+          (quota) => quota.requirementKey === config.requirementKey,
+        );
+        return {
+          key: config.requirementKey,
+          alias: config.alias,
+          label: config.label,
+          min: config.min,
+          max: config.max,
+          current: liveQuota?.currentCount ?? 0,
+          target: liveQuota?.targetCount ?? 0,
+          configuredTarget: config.readSetting(teamSettings),
+        };
+      }),
+    [teamSettings, teamState.quotas],
   );
 
   return (
@@ -659,7 +750,9 @@ function Content() {
                 <CardHeader>
                   <CardTitle className="text-base">Team Quotas</CardTitle>
                   <CardDescription>
-                    Live shared progression counts from the coordinator.
+                    Live shared progression counts plus direct override
+                    controls. Use `0` to restore automatic team-size-based
+                    targets.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-3">
@@ -673,12 +766,84 @@ function Content() {
                           {quota.label}
                         </p>
                         <p className="text-muted-foreground text-xs">
-                          {quota.key}
+                          {quota.alias}
                         </p>
                       </div>
-                      <Badge variant="outline">
-                        {quota.current}/{quota.target}
-                      </Badge>
+                      <div className="flex flex-wrap items-center justify-end gap-2">
+                        <Badge variant="outline">
+                          {quota.current}/{quota.target}
+                        </Badge>
+                        <Badge variant="secondary">
+                          {quota.configuredTarget === 0
+                            ? "Auto"
+                            : `Override ${quota.configuredTarget}`}
+                        </Badge>
+                        <Input
+                          className="w-20"
+                          type="number"
+                          min={quota.min}
+                          max={quota.max}
+                          value={
+                            quotaInputs[quota.key] ??
+                            String(quota.configuredTarget)
+                          }
+                          disabled={
+                            isReadOnlyDemo || teamSettingMutation.isPending
+                          }
+                          onChange={(event) =>
+                            setQuotaInputs((current) => ({
+                              ...current,
+                              [quota.key]: event.target.value,
+                            }))
+                          }
+                        />
+                        <Button
+                          variant="outline"
+                          disabled={
+                            isReadOnlyDemo ||
+                            teamSettingMutation.isPending ||
+                            !isValidQuotaInput(
+                              quotaInputs[quota.key] ??
+                                String(quota.configuredTarget),
+                              quota.min,
+                              quota.max,
+                            ) ||
+                            Number(
+                              quotaInputs[quota.key] ??
+                                String(quota.configuredTarget),
+                            ) === quota.configuredTarget
+                          }
+                          onClick={() =>
+                            teamSettingMutation.mutate({
+                              kind: "quota-override",
+                              requirementKey: quota.key,
+                              targetCount: Number(
+                                quotaInputs[quota.key] ??
+                                  String(quota.configuredTarget),
+                              ),
+                            })
+                          }
+                        >
+                          Apply
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          disabled={
+                            isReadOnlyDemo ||
+                            teamSettingMutation.isPending ||
+                            quota.configuredTarget === 0
+                          }
+                          onClick={() =>
+                            teamSettingMutation.mutate({
+                              kind: "quota-override",
+                              requirementKey: quota.key,
+                              targetCount: 0,
+                            })
+                          }
+                        >
+                          Auto
+                        </Button>
+                      </div>
                     </div>
                   ))}
                 </CardContent>
@@ -1278,6 +1443,36 @@ function InfoRow(props: {
   );
 }
 
+function createQuotaInputState(
+  settings: AutomationInstanceSettings,
+): Record<string, string> {
+  return Object.fromEntries(
+    quotaOverrideConfigs.map((config) => [
+      config.requirementKey,
+      String(config.readSetting(settings)),
+    ]),
+  );
+}
+
+function quotaOverrideConfig(requirementKey: string) {
+  const config = quotaOverrideConfigs.find(
+    (entry) => entry.requirementKey === requirementKey,
+  );
+  if (config === undefined) {
+    throw new Error(`Unknown quota override target: ${requirementKey}`);
+  }
+  return config;
+}
+
+function isValidQuotaInput(value: string, min: number, max: number): boolean {
+  if (value.trim().length === 0) {
+    return false;
+  }
+
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed >= min && parsed <= max;
+}
+
 function goalModeLabel(mode: AutomationGoalMode): string {
   switch (mode) {
     case AutomationGoalMode.ACQUIRE:
@@ -1362,6 +1557,11 @@ function createDemoAutomationTeamState(
       sharedStructureIntel: true,
       sharedTargetClaims: true,
       objectiveOverride: AutomationTeamObjective.UNSPECIFIED,
+      targetBlazeRods: 0,
+      targetEnderPearls: 0,
+      targetEnderEyes: 0,
+      targetArrows: 0,
+      targetBeds: 0,
     },
     objective: AutomationTeamObjective.STRONGHOLD_HUNT,
     activeBots: 3,
@@ -1517,6 +1717,11 @@ function createDemoAutomationCoordinationState(
       sharedStructureIntel: true,
       sharedTargetClaims: true,
       objectiveOverride: AutomationTeamObjective.UNSPECIFIED,
+      targetBlazeRods: 0,
+      targetEnderPearls: 0,
+      targetEnderEyes: 0,
+      targetArrows: 0,
+      targetBeds: 0,
     },
     objective: AutomationTeamObjective.STRONGHOLD_HUNT,
     activeBots: 3,
