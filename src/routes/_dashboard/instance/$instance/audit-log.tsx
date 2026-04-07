@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
+  BotIcon,
   ClipboardCopyIcon,
   PlayIcon,
   SquareIcon,
@@ -112,6 +113,16 @@ const logTypeToIcon = (
 ) =>
   mapUnionToValue(type, (key) => {
     switch (key) {
+      case "AUTOMATION_START":
+      case "AUTOMATION_PAUSE":
+      case "AUTOMATION_RESUME":
+      case "AUTOMATION_STOP":
+      case "AUTOMATION_UPDATE_SETTINGS":
+      case "AUTOMATION_APPLY_PRESET":
+      case "AUTOMATION_RESET_MEMORY":
+      case "AUTOMATION_RESET_COORDINATION":
+      case "AUTOMATION_RELEASE_CLAIMS":
+        return BotIcon;
       case "EXECUTE_COMMAND":
         return SquareTerminalIcon;
       case "START_SESSION":
