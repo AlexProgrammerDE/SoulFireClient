@@ -4,3 +4,6 @@ modules:
 lint:
   use:
     - DEFAULT
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc/grpc
