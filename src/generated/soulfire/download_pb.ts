@@ -13,6 +13,9 @@ import {
   messageDesc,
   serviceDesc,
 } from "@bufbuild/protobuf/codegenv2";
+import { file_google_api_annotations } from "../google/api/annotations_pb";
+import { file_google_api_field_behavior } from "../google/api/field_behavior_pb";
+import { file_soulfire_api_docs } from "./api_docs_pb";
 import type { ProxyProto } from "./common_pb";
 import { file_soulfire_common } from "./common_pb";
 
@@ -22,8 +25,13 @@ import { file_soulfire_common } from "./common_pb";
 export const file_soulfire_download: GenFile =
   /*@__PURE__*/
   fileDesc(
-    "Chdzb3VsZmlyZS9kb3dubG9hZC5wcm90bxILc291bGZpcmUudjEiKAoKSGVhZGVyUGFpchILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAkilAEKD0Rvd25sb2FkUmVxdWVzdBITCgtpbnN0YW5jZV9pZBgBIAEoCRILCgN1cmkYAiABKAkSKAoHaGVhZGVycxgDIAMoCzIXLnNvdWxmaXJlLnYxLkhlYWRlclBhaXISKwoFcHJveHkYBCABKAsyFy5zb3VsZmlyZS52MS5Qcm94eVByb3RvSACIAQFCCAoGX3Byb3h5Il8KEERvd25sb2FkUmVzcG9uc2USDAoEZGF0YRgBIAEoDBIoCgdoZWFkZXJzGAIgAygLMhcuc291bGZpcmUudjEuSGVhZGVyUGFpchITCgtzdGF0dXNfY29kZRgDIAEoBTJcCg9Eb3dubG9hZFNlcnZpY2USSQoIRG93bmxvYWQSHC5zb3VsZmlyZS52MS5Eb3dubG9hZFJlcXVlc3QaHS5zb3VsZmlyZS52MS5Eb3dubG9hZFJlc3BvbnNlIgBCIQodY29tLnNvdWxmaXJlbWMuZ3JwYy5nZW5lcmF0ZWRQAWIGcHJvdG8z",
-    [file_soulfire_common],
+    "Chdzb3VsZmlyZS9kb3dubG9hZC5wcm90bxILc291bGZpcmUudjEiKAoKSGVhZGVyUGFpchILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAkisQEKD0Rvd25sb2FkUmVxdWVzdBIiCgtpbnN0YW5jZV9pZBgBIAEoCUIN4EEC0vMYBgoEdXVpZBIZCgN1cmkYAiABKAlCDOBBAtLzGAUKA3VyaRIoCgdoZWFkZXJzGAMgAygLMhcuc291bGZpcmUudjEuSGVhZGVyUGFpchIrCgVwcm94eRgEIAEoCzIXLnNvdWxmaXJlLnYxLlByb3h5UHJvdG9IAIgBAUIICgZfcHJveHkiXwoQRG93bmxvYWRSZXNwb25zZRIMCgRkYXRhGAEgASgMEigKB2hlYWRlcnMYAiADKAsyFy5zb3VsZmlyZS52MS5IZWFkZXJQYWlyEhMKC3N0YXR1c19jb2RlGAMgASgFMvoBCg9Eb3dubG9hZFNlcnZpY2US5gEKCERvd25sb2FkEhwuc291bGZpcmUudjEuRG93bmxvYWRSZXF1ZXN0Gh0uc291bGZpcmUudjEuRG93bmxvYWRSZXNwb25zZSKcAcrzGGIKDERvd25sb2FkIFVSTBoMRE9XTkxPQURfVVJMIghpbnN0YW5jZTo6RmV0Y2hlcyByZW1vdGUgY29udGVudCB0aHJvdWdoIHRoZSBzZXJ2ZXIncyBuZXR3b3JrIHN0YWNrLoLT5JMCMDoBKiIrL3YxL2luc3RhbmNlcy97aW5zdGFuY2VfaWR9L2Rvd25sb2FkczpmZXRjaEIhCh1jb20uc291bGZpcmVtYy5ncnBjLmdlbmVyYXRlZFABYgZwcm90bzM",
+    [
+      file_soulfire_common,
+      file_soulfire_api_docs,
+      file_google_api_annotations,
+      file_google_api_field_behavior,
+    ],
   );
 
 /**

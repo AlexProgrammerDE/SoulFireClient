@@ -4,3 +4,4 @@ plugins:
     out: src/generated
     opt:
       - target=ts
+    include_imports: true

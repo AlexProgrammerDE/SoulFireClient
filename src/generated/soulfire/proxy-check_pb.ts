@@ -13,6 +13,8 @@ import {
   messageDesc,
   serviceDesc,
 } from "@bufbuild/protobuf/codegenv2";
+import { file_google_api_field_behavior } from "../google/api/field_behavior_pb";
+import { file_soulfire_api_docs } from "./api_docs_pb";
 import type { ProxyProto } from "./common_pb";
 import { file_soulfire_common } from "./common_pb";
 
@@ -22,8 +24,12 @@ import { file_soulfire_common } from "./common_pb";
 export const file_soulfire_proxy_check: GenFile =
   /*@__PURE__*/
   fileDesc(
-    "Chpzb3VsZmlyZS9wcm94eS1jaGVjay5wcm90bxILc291bGZpcmUudjEiUAoRUHJveHlDaGVja1JlcXVlc3QSEwoLaW5zdGFuY2VfaWQYASABKAkSJgoFcHJveHkYAiADKAsyFy5zb3VsZmlyZS52MS5Qcm94eVByb3RvInMKGFByb3h5Q2hlY2tSZXNwb25zZVNpbmdsZRImCgVwcm94eRgBIAEoCzIXLnNvdWxmaXJlLnYxLlByb3h5UHJvdG8SDQoFdmFsaWQYAiABKAgSDwoHbGF0ZW5jeRgDIAEoBRIPCgdyZWFsX2lwGAQgASgJIg8KDVByb3h5Q2hlY2tFbmQigAEKElByb3h5Q2hlY2tSZXNwb25zZRI3CgZzaW5nbGUYBCABKAsyJS5zb3VsZmlyZS52MS5Qcm94eUNoZWNrUmVzcG9uc2VTaW5nbGVIABIpCgNlbmQYBSABKAsyGi5zb3VsZmlyZS52MS5Qcm94eUNoZWNrRW5kSABCBgoEZGF0YTJhChFQcm94eUNoZWNrU2VydmljZRJMCgVDaGVjaxIeLnNvdWxmaXJlLnYxLlByb3h5Q2hlY2tSZXF1ZXN0Gh8uc291bGZpcmUudjEuUHJveHlDaGVja1Jlc3BvbnNlIgAwAUIhCh1jb20uc291bGZpcmVtYy5ncnBjLmdlbmVyYXRlZFABYgZwcm90bzM",
-    [file_soulfire_common],
+    "Chpzb3VsZmlyZS9wcm94eS1jaGVjay5wcm90bxILc291bGZpcmUudjEiVQoRUHJveHlDaGVja1JlcXVlc3QSGAoLaW5zdGFuY2VfaWQYASABKAlCA+BBAhImCgVwcm94eRgCIAMoCzIXLnNvdWxmaXJlLnYxLlByb3h5UHJvdG8icwoYUHJveHlDaGVja1Jlc3BvbnNlU2luZ2xlEiYKBXByb3h5GAEgASgLMhcuc291bGZpcmUudjEuUHJveHlQcm90bxINCgV2YWxpZBgCIAEoCBIPCgdsYXRlbmN5GAMgASgFEg8KB3JlYWxfaXAYBCABKAkiDwoNUHJveHlDaGVja0VuZCKAAQoSUHJveHlDaGVja1Jlc3BvbnNlEjcKBnNpbmdsZRgEIAEoCzIlLnNvdWxmaXJlLnYxLlByb3h5Q2hlY2tSZXNwb25zZVNpbmdsZUgAEikKA2VuZBgFIAEoCzIaLnNvdWxmaXJlLnYxLlByb3h5Q2hlY2tFbmRIAEIGCgRkYXRhMtMBChFQcm94eUNoZWNrU2VydmljZRK9AQoFQ2hlY2sSHi5zb3VsZmlyZS52MS5Qcm94eUNoZWNrUmVxdWVzdBofLnNvdWxmaXJlLnYxLlByb3h5Q2hlY2tSZXNwb25zZSJxyvMYbQoNQ2hlY2sgcHJveGllcxoLQ0hFQ0tfUFJPWFkiCGluc3RhbmNlMhBTZXJ2ZXIgc3RyZWFtaW5nOjNTdHJlYW1zIHByb3h5LWNoZWNrIHJlc3VsdHMgYXMgZWFjaCBwcm94eSBmaW5pc2hlcy4wAUIhCh1jb20uc291bGZpcmVtYy5ncnBjLmdlbmVyYXRlZFABYgZwcm90bzM",
+    [
+      file_soulfire_common,
+      file_soulfire_api_docs,
+      file_google_api_field_behavior,
+    ],
   );
 
 /**
