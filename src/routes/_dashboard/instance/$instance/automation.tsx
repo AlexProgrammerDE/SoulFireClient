@@ -56,6 +56,7 @@ import {
   type AutomationBotSettings,
   AutomationBotSettingsSchema,
   type AutomationBotState,
+  type AutomationCoordinationClaim,
   type AutomationCoordinationState,
   AutomationCoordinationStateSchema,
   AutomationGoalMode,
@@ -220,6 +221,33 @@ type BotAttentionEntry = {
   attention: BotAttentionStatus;
 };
 
+type CoordinationClaimKind =
+  | "block"
+  | "entity"
+  | "explore"
+  | "explore3d"
+  | "other";
+
+type CoordinationClaimInsight = {
+  claim: AutomationCoordinationClaim;
+  kind: CoordinationClaimKind;
+  kindLabel: string;
+  purpose: string;
+  purposeLabel: string;
+  ownerBot: AutomationBotState | undefined;
+  expiresInSeconds: number | null;
+  expiringSoon: boolean;
+  searchText: string;
+};
+
+type BotClaimSummary = {
+  ownedClaims: CoordinationClaimInsight[];
+  totalOwnedClaims: number;
+  expiringSoonCount: number;
+  breakdown: string;
+  note: string;
+};
+
 const NO_CHANGE = "__no_change__";
 
 export const Route = createFileRoute(
@@ -357,6 +385,11 @@ function Content() {
   const [botStatusFilter, setBotStatusFilter] = useState("all");
   const [botDimensionFilter, setBotDimensionFilter] = useState("all");
   const [botAttentionFilter, setBotAttentionFilter] = useState("all");
+  const [claimSearch, setClaimSearch] = useState("");
+  const deferredClaimSearch = useDeferredValue(claimSearch);
+  const [claimOwnerFilter, setClaimOwnerFilter] = useState("all");
+  const [claimTypeFilter, setClaimTypeFilter] = useState("all");
+  const [claimFocusBotId, setClaimFocusBotId] = useState("");
   const [selectedBots, setSelectedBots] = useState<Record<string, boolean>>({});
   const [bulkEnabledInput, setBulkEnabledInput] = useState(NO_CHANGE);
   const [bulkDeathRecoveryInput, setBulkDeathRecoveryInput] =
@@ -401,6 +434,9 @@ function Content() {
       if (memoryBotId.length > 0) {
         setMemoryBotId("");
       }
+      if (claimFocusBotId.length > 0) {
+        setClaimFocusBotId("");
+      }
       return;
     }
 
@@ -413,7 +449,13 @@ function Content() {
         setMemoryBotId(firstBot.botId);
       }
     }
-  }, [memoryBotId, teamState.bots]);
+    if (
+      claimFocusBotId.length > 0 &&
+      !teamState.bots.some((bot) => bot.botId === claimFocusBotId)
+    ) {
+      setClaimFocusBotId("");
+    }
+  }, [claimFocusBotId, memoryBotId, teamState.bots]);
 
   const invalidateAutomation = async () => {
     await Promise.all([
@@ -771,6 +813,97 @@ function Content() {
       ),
     [botAttentionEntries],
   );
+  const botById = useMemo(
+    () => new Map(teamState.bots.map((bot) => [bot.botId, bot])),
+    [teamState.bots],
+  );
+  const claimInsights = useMemo(() => {
+    const nowMs = Date.now();
+    return coordinationState.claims
+      .map((claim) => describeCoordinationClaim(claim, botById, nowMs))
+      .sort(compareCoordinationClaimInsights);
+  }, [botById, coordinationState.claims]);
+  const claimOwnerOptions = useMemo(
+    () =>
+      claimInsights
+        .map((insight) => ({
+          value: insight.claim.ownerBotId,
+          label:
+            insight.ownerBot?.accountName ?? insight.claim.ownerAccountName,
+        }))
+        .filter(
+          (option, index, options) =>
+            option.value.length > 0 &&
+            options.findIndex((entry) => entry.value === option.value) ===
+              index,
+        )
+        .sort((left, right) => left.label.localeCompare(right.label)),
+    [claimInsights],
+  );
+  const filteredClaimInsights = useMemo(() => {
+    const normalizedSearch = deferredClaimSearch.trim().toLowerCase();
+    return claimInsights.filter((insight) => {
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        insight.searchText.includes(normalizedSearch);
+      const matchesOwner =
+        claimOwnerFilter === "all" ||
+        insight.claim.ownerBotId === claimOwnerFilter;
+      const matchesType =
+        claimTypeFilter === "all" || insight.kind === claimTypeFilter;
+      const matchesFocus =
+        claimFocusBotId.length === 0 ||
+        insight.claim.ownerBotId === claimFocusBotId;
+      return matchesSearch && matchesOwner && matchesType && matchesFocus;
+    });
+  }, [
+    claimFocusBotId,
+    claimInsights,
+    claimOwnerFilter,
+    claimTypeFilter,
+    deferredClaimSearch,
+  ]);
+  const claimCounts = useMemo(
+    () =>
+      claimInsights.reduce(
+        (counts, insight) => {
+          counts.total += 1;
+          counts[insight.kind] += 1;
+          if (insight.expiringSoon) {
+            counts.expiringSoon += 1;
+          }
+          return counts;
+        },
+        {
+          total: 0,
+          block: 0,
+          entity: 0,
+          explore: 0,
+          explore3d: 0,
+          other: 0,
+          expiringSoon: 0,
+        },
+      ),
+    [claimInsights],
+  );
+  const botClaimSummaryById = useMemo(
+    () =>
+      new Map(
+        teamState.bots.map((bot) => [
+          bot.botId,
+          summarizeBotClaims(
+            bot,
+            claimInsights.filter(
+              (insight) => insight.claim.ownerBotId === bot.botId,
+            ),
+            botAttentionById.get(bot.botId) ?? createHealthyBotAttention(),
+          ),
+        ]),
+      ),
+    [botAttentionById, claimInsights, teamState.bots],
+  );
+  const focusedClaimBot =
+    claimFocusBotId.length === 0 ? undefined : botById.get(claimFocusBotId);
 
   const filteredBots = useMemo(() => {
     const normalizedSearch = deferredBotSearch.trim().toLowerCase();
@@ -1583,6 +1716,15 @@ function Content() {
                     botAttentionById.get(bot.botId) ??
                     createHealthyBotAttention()
                   }
+                  claimSummary={
+                    botClaimSummaryById.get(bot.botId) ??
+                    summarizeBotClaims(
+                      bot,
+                      [],
+                      botAttentionById.get(bot.botId) ??
+                        createHealthyBotAttention(),
+                    )
+                  }
                   selected={selectedBots[bot.botId] === true}
                   disabled={isReadOnlyDemo}
                   pending={
@@ -1630,6 +1772,7 @@ function Content() {
                     })
                   }
                   onInspectMemory={() => setMemoryBotId(bot.botId)}
+                  onFocusClaims={() => setClaimFocusBotId(bot.botId)}
                   onUpdateSettings={(patch) =>
                     botSettingsMutation.mutate({
                       botIds: [bot.botId],
@@ -1650,11 +1793,47 @@ function Content() {
             warningCount={attentionCounts.warning}
             healthyCount={attentionCounts.healthy}
             onInspectMemory={setMemoryBotId}
+            onFocusClaims={setClaimFocusBotId}
             onSelectBot={(botId) =>
               setSelectedBots((current) => ({
                 ...current,
                 [botId]: true,
               }))
+            }
+          />
+
+          <ClaimExplorerCard
+            claimSearch={claimSearch}
+            ownerFilter={claimOwnerFilter}
+            typeFilter={claimTypeFilter}
+            ownerOptions={claimOwnerOptions}
+            insights={filteredClaimInsights}
+            counts={claimCounts}
+            focusedBot={focusedClaimBot}
+            isPending={claimMutation.isPending || botActionMutation.isPending}
+            isReadOnlyDemo={isReadOnlyDemo}
+            onClaimSearchChange={setClaimSearch}
+            onOwnerFilterChange={setClaimOwnerFilter}
+            onTypeFilterChange={setClaimTypeFilter}
+            onClearFocus={() => setClaimFocusBotId("")}
+            onFocusOwner={setClaimFocusBotId}
+            onInspectOwnerMemory={(botId) => {
+              setClaimFocusBotId(botId);
+              setMemoryBotId(botId);
+            }}
+            onSelectOwner={(botId) =>
+              setSelectedBots((current) => ({
+                ...current,
+                [botId]: true,
+              }))
+            }
+            onReleaseClaim={(claimKey) => claimMutation.mutate(claimKey)}
+            onReleaseOwnerClaims={(botId, accountName) =>
+              botActionMutation.mutate({
+                kind: "release-claims",
+                botIds: [botId],
+                label: accountName,
+              })
             }
           />
 
@@ -1691,43 +1870,6 @@ function Content() {
               });
             }}
           />
-
-          <CoordinationCard
-            title="Shared Claims"
-            description="Exact team reservations that can be released from the dashboard."
-            emptyState="No active claims."
-          >
-            {coordinationState.claims.map((claim) => (
-              <div
-                key={claim.key}
-                className="flex items-start justify-between gap-3 rounded-lg border px-3 py-2"
-              >
-                <div className="min-w-0 space-y-1">
-                  <p className="truncate text-sm font-medium">{claim.key}</p>
-                  <p className="text-muted-foreground text-xs">
-                    Owner {claim.ownerAccountName}
-                  </p>
-                  <p className="text-muted-foreground text-xs">
-                    Target {formatPosition(claim.target)}
-                  </p>
-                  {claim.expiresAt && (
-                    <p className="text-muted-foreground text-xs">
-                      Expires{" "}
-                      <SFTimeAgo date={timestampToDate(claim.expiresAt)} />
-                    </p>
-                  )}
-                </div>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  disabled={isReadOnlyDemo || claimMutation.isPending}
-                  onClick={() => claimMutation.mutate(claim.key)}
-                >
-                  Release
-                </Button>
-              </div>
-            ))}
-          </CoordinationCard>
 
           <CoordinationCard
             title="Shared Structure Intel"
@@ -1855,6 +1997,7 @@ function SettingSelect(props: {
 function BotRuntimeCard(props: {
   bot: AutomationBotState;
   attention: BotAttentionStatus;
+  claimSummary: BotClaimSummary;
   selected: boolean;
   disabled: boolean;
   pending: boolean;
@@ -1864,6 +2007,7 @@ function BotRuntimeCard(props: {
   onResetMemory: () => void;
   onReleaseClaims: () => void;
   onInspectMemory: () => void;
+  onFocusClaims: () => void;
   onUpdateSettings: (patch: BotSettingsPatch) => void;
 }) {
   const botSettings =
@@ -2031,6 +2175,47 @@ function BotRuntimeCard(props: {
           <p className="text-muted-foreground text-xs">
             Operator hint: {props.attention.operatorHint}
           </p>
+        </div>
+
+        <div className="space-y-3 rounded-lg border px-3 py-3">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Claim Footprint</p>
+              <p className="text-muted-foreground text-xs">
+                Shared coordinator reservations currently owned by this bot.
+              </p>
+            </div>
+            <Badge variant="outline">
+              {props.claimSummary.totalOwnedClaims} claim
+              {props.claimSummary.totalOwnedClaims === 1 ? "" : "s"}
+            </Badge>
+          </div>
+          <p className="text-sm font-medium">{props.claimSummary.breakdown}</p>
+          <p className="text-muted-foreground text-xs">
+            {props.claimSummary.note}
+          </p>
+          {props.claimSummary.ownedClaims.length === 0 ? (
+            <Badge variant="secondary">No active claims</Badge>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {props.claimSummary.ownedClaims.slice(0, 4).map((insight) => (
+                <Badge key={insight.claim.key} variant="secondary">
+                  {insight.kindLabel}: {insight.purposeLabel}
+                </Badge>
+              ))}
+              {props.claimSummary.ownedClaims.length > 4 ? (
+                <Badge variant="secondary">
+                  +{props.claimSummary.ownedClaims.length - 4} more
+                </Badge>
+              ) : null}
+            </div>
+          )}
+          <div className="flex flex-wrap gap-2">
+            <Button size="sm" variant="ghost" onClick={props.onFocusClaims}>
+              <WaypointsIcon className="size-4" />
+              View Claims
+            </Button>
+          </div>
         </div>
 
         <div className="space-y-3 rounded-lg border px-3 py-3">
@@ -2235,6 +2420,7 @@ function RunHealthCard(props: {
   warningCount: number;
   healthyCount: number;
   onInspectMemory: (botId: string) => void;
+  onFocusClaims: (botId: string) => void;
   onSelectBot: (botId: string) => void;
 }) {
   const attentionEntries = props.entries.filter(
@@ -2320,6 +2506,14 @@ function RunHealthCard(props: {
                     </Button>
                     <Button
                       size="sm"
+                      variant="outline"
+                      onClick={() => props.onFocusClaims(entry.bot.botId)}
+                    >
+                      <WaypointsIcon className="size-4" />
+                      Claims
+                    </Button>
+                    <Button
+                      size="sm"
                       variant="ghost"
                       onClick={() => props.onSelectBot(entry.bot.botId)}
                     >
@@ -2328,6 +2522,229 @@ function RunHealthCard(props: {
                   </div>
                 </div>
               ))}
+            </div>
+          </ScrollArea>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function ClaimExplorerCard(props: {
+  claimSearch: string;
+  ownerFilter: string;
+  typeFilter: string;
+  ownerOptions: { value: string; label: string }[];
+  insights: CoordinationClaimInsight[];
+  counts: {
+    total: number;
+    block: number;
+    entity: number;
+    explore: number;
+    explore3d: number;
+    other: number;
+    expiringSoon: number;
+  };
+  focusedBot: AutomationBotState | undefined;
+  isPending: boolean;
+  isReadOnlyDemo: boolean;
+  onClaimSearchChange: (value: string) => void;
+  onOwnerFilterChange: (value: string) => void;
+  onTypeFilterChange: (value: string) => void;
+  onClearFocus: () => void;
+  onFocusOwner: (botId: string) => void;
+  onInspectOwnerMemory: (botId: string) => void;
+  onSelectOwner: (botId: string) => void;
+  onReleaseClaim: (claimKey: string) => void;
+  onReleaseOwnerClaims: (botId: string, accountName: string) => void;
+}) {
+  const focusedBot = props.focusedBot;
+
+  return (
+    <Card>
+      <CardHeader className="space-y-4">
+        <div className="space-y-1">
+          <CardTitle>Claim Explorer</CardTitle>
+          <CardDescription>
+            Filter coordinator reservations by owner or claim type instead of
+            reading a flat claim dump.
+          </CardDescription>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="secondary">{props.counts.total} total</Badge>
+          <Badge variant="secondary">{props.counts.block} block</Badge>
+          <Badge variant="secondary">{props.counts.entity} entity</Badge>
+          <Badge variant="secondary">
+            {props.counts.explore + props.counts.explore3d} explore
+          </Badge>
+          <Badge variant="secondary">
+            {props.counts.expiringSoon} expiring soon
+          </Badge>
+        </div>
+        {focusedBot ? (
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2">
+            <div className="space-y-1">
+              <p className="text-sm font-medium">
+                Focused on {focusedBot.accountName}
+              </p>
+              <p className="text-muted-foreground text-xs">
+                Showing only claims owned by this bot until focus is cleared.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => props.onInspectOwnerMemory(focusedBot.botId)}
+              >
+                <BrainCircuitIcon className="size-4" />
+                Inspect Memory
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={props.isReadOnlyDemo || props.isPending}
+                onClick={() =>
+                  props.onReleaseOwnerClaims(
+                    focusedBot.botId,
+                    focusedBot.accountName,
+                  )
+                }
+              >
+                <WaypointsIcon className="size-4" />
+                Release Owner Claims
+              </Button>
+              <Button size="sm" variant="ghost" onClick={props.onClearFocus}>
+                Clear Focus
+              </Button>
+            </div>
+          </div>
+        ) : null}
+        <div className="grid gap-3">
+          <Input
+            value={props.claimSearch}
+            placeholder="Search claim key, purpose, owner, or target"
+            onChange={(event) => props.onClaimSearchChange(event.target.value)}
+          />
+          <div className="grid gap-3 md:grid-cols-2">
+            <SettingSelect
+              label="Owner Filter"
+              value={props.ownerFilter}
+              options={[
+                { value: "all", label: "All Owners" },
+                ...props.ownerOptions,
+              ]}
+              disabled={false}
+              onValueChange={props.onOwnerFilterChange}
+            />
+            <SettingSelect
+              label="Type Filter"
+              value={props.typeFilter}
+              options={[
+                { value: "all", label: "All Claim Types" },
+                { value: "block", label: "Block" },
+                { value: "entity", label: "Entity" },
+                { value: "explore", label: "Explore" },
+                { value: "explore3d", label: "Explore 3D" },
+                { value: "other", label: "Other" },
+              ]}
+              disabled={false}
+              onValueChange={props.onTypeFilterChange}
+            />
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {props.insights.length === 0 ? (
+          <p className="text-muted-foreground text-sm">
+            {focusedBot
+              ? `${focusedBot.accountName} does not currently own any claims matching the active filters.`
+              : "No claims match the current filters."}
+          </p>
+        ) : (
+          <ScrollArea className="h-80 pr-3">
+            <div className="space-y-3">
+              {props.insights.map((insight) => {
+                const ownerBot = insight.ownerBot;
+                return (
+                  <div
+                    key={insight.claim.key}
+                    className="space-y-3 rounded-lg border px-3 py-3"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div className="min-w-0 space-y-1">
+                        <div className="flex flex-wrap gap-2">
+                          <Badge variant="outline">{insight.kindLabel}</Badge>
+                          <Badge
+                            variant="outline"
+                            className={
+                              insight.expiringSoon
+                                ? attentionBadgeClassName("warning")
+                                : undefined
+                            }
+                          >
+                            {claimExpiryLabel(insight.expiresInSeconds)}
+                          </Badge>
+                        </div>
+                        <p className="truncate text-sm font-medium">
+                          {insight.purposeLabel}
+                        </p>
+                        <p className="text-muted-foreground text-xs">
+                          {insight.claim.key}
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        disabled={props.isReadOnlyDemo || props.isPending}
+                        onClick={() => props.onReleaseClaim(insight.claim.key)}
+                      >
+                        Release
+                      </Button>
+                    </div>
+                    <div className="grid gap-2 text-xs sm:grid-cols-2">
+                      <p className="text-muted-foreground">
+                        Owner{" "}
+                        {ownerBot?.accountName ??
+                          insight.claim.ownerAccountName}
+                      </p>
+                      <p className="text-muted-foreground">
+                        Target {formatPosition(insight.claim.target)}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {ownerBot ? (
+                        <>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() =>
+                              props.onInspectOwnerMemory(ownerBot.botId)
+                            }
+                          >
+                            <BrainCircuitIcon className="size-4" />
+                            Inspect Owner Memory
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => props.onSelectOwner(ownerBot.botId)}
+                          >
+                            Select Owner
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => props.onFocusOwner(ownerBot.botId)}
+                          >
+                            Focus Owner
+                          </Button>
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </ScrollArea>
         )}
@@ -2987,6 +3404,151 @@ function formatDurationSeconds(totalSeconds: number): string {
   return `${hours}h ${remainingMinutes}m`;
 }
 
+function describeCoordinationClaim(
+  claim: AutomationCoordinationClaim,
+  botById: Map<string, AutomationBotState>,
+  nowMs: number,
+): CoordinationClaimInsight {
+  const parts = claim.key.split(":");
+  const kind = parseCoordinationClaimKind(parts[0] ?? "");
+  const purpose =
+    kind === "explore" || kind === "explore3d"
+      ? (parts[2] ?? "")
+      : (parts[1] ?? "");
+  const expiresInSeconds = claim.expiresAt
+    ? Math.floor((timestampToDate(claim.expiresAt).getTime() - nowMs) / 1000)
+    : null;
+  const ownerBot = botById.get(claim.ownerBotId);
+  return {
+    claim,
+    kind,
+    kindLabel: coordinationClaimKindLabel(kind),
+    purpose,
+    purposeLabel: formatClaimPurposeLabel(purpose),
+    ownerBot,
+    expiresInSeconds,
+    expiringSoon:
+      expiresInSeconds !== null &&
+      expiresInSeconds >= 0 &&
+      expiresInSeconds <= 15,
+    searchText: [
+      claim.key,
+      claim.ownerAccountName,
+      ownerBot?.accountName ?? "",
+      formatPosition(claim.target),
+      formatClaimPurposeLabel(purpose),
+      coordinationClaimKindLabel(kind),
+    ]
+      .join(" ")
+      .toLowerCase(),
+  };
+}
+
+function parseCoordinationClaimKind(raw: string): CoordinationClaimKind {
+  switch (raw) {
+    case "block":
+    case "entity":
+    case "explore":
+    case "explore3d":
+      return raw;
+    default:
+      return "other";
+  }
+}
+
+function coordinationClaimKindLabel(kind: CoordinationClaimKind): string {
+  switch (kind) {
+    case "block":
+      return "Block";
+    case "entity":
+      return "Entity";
+    case "explore":
+      return "Explore";
+    case "explore3d":
+      return "Explore 3D";
+    default:
+      return "Other";
+  }
+}
+
+function formatClaimPurposeLabel(purpose: string): string {
+  if (purpose.trim().length === 0) {
+    return "General";
+  }
+
+  return purpose
+    .split(/[-_]/)
+    .filter((segment) => segment.length > 0)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ");
+}
+
+function compareCoordinationClaimInsights(
+  left: CoordinationClaimInsight,
+  right: CoordinationClaimInsight,
+): number {
+  const expiryDelta =
+    (left.expiresInSeconds ?? Number.MAX_SAFE_INTEGER) -
+    (right.expiresInSeconds ?? Number.MAX_SAFE_INTEGER);
+  if (expiryDelta !== 0) {
+    return expiryDelta;
+  }
+  return left.claim.key.localeCompare(right.claim.key);
+}
+
+function summarizeBotClaims(
+  _bot: AutomationBotState,
+  ownedClaims: CoordinationClaimInsight[],
+  attention: BotAttentionStatus,
+): BotClaimSummary {
+  if (ownedClaims.length === 0) {
+    return {
+      ownedClaims,
+      totalOwnedClaims: 0,
+      expiringSoonCount: 0,
+      breakdown: "No active coordinator reservations.",
+      note:
+        attention.severity === "ok"
+          ? "This bot is progressing without holding any shared claims right now."
+          : "This bot is degraded without holding shared claims, so investigate memory, planner state, or teammate reservations next.",
+    };
+  }
+
+  const byKind = ownedClaims.reduce<Record<string, number>>((counts, claim) => {
+    counts[claim.kindLabel] = (counts[claim.kindLabel] ?? 0) + 1;
+    return counts;
+  }, {});
+  const breakdown = Object.entries(byKind)
+    .map(([label, count]) => `${count} ${label.toLowerCase()}`)
+    .join(", ");
+  const expiringSoonCount = ownedClaims.filter(
+    (claim) => claim.expiringSoon,
+  ).length;
+
+  return {
+    ownedClaims,
+    totalOwnedClaims: ownedClaims.length,
+    expiringSoonCount,
+    breakdown: `${ownedClaims.length} active claim${ownedClaims.length === 1 ? "" : "s"}: ${breakdown}.`,
+    note:
+      expiringSoonCount > 0
+        ? `${expiringSoonCount} claim${expiringSoonCount === 1 ? "" : "s"} expires soon, so ownership may reshuffle without manual intervention.`
+        : attention.severity === "ok"
+          ? "This bot currently owns shared work reservations."
+          : "This bot is degraded while still holding shared claims; focus them before broader resets so the team does not thrash.",
+  };
+}
+
+function claimExpiryLabel(expiresInSeconds: number | null): string {
+  if (expiresInSeconds === null) {
+    return "No expiry";
+  }
+  if (expiresInSeconds < 0) {
+    return "Expired";
+  }
+  return `Expires in ${formatDurationSeconds(expiresInSeconds)}`;
+}
+
 function goalModeLabel(mode: AutomationGoalMode): string {
   switch (mode) {
     case AutomationGoalMode.ACQUIRE:
@@ -3276,7 +3838,7 @@ function createDemoAutomationCoordinationState(
     objective: AutomationTeamObjective.STRONGHOLD_HUNT,
     activeBots: 3,
     sharedBlockCount: 7,
-    claimCount: 2,
+    claimCount: 3,
     eyeSampleCount: 2,
     sharedCounts: [
       {
@@ -3338,6 +3900,15 @@ function createDemoAutomationCoordinationState(
         target: { x: -191.5, y: 80, z: 288.5 },
         expiresAt: create(TimestampSchema, {
           seconds: BigInt(Math.floor(now.getTime() / 1000) + 40),
+          nanos: 0,
+        }),
+      },
+      {
+        key: "entity:blaze:7d83543f-5f51-4f0b-97d4-49c31b187d77",
+        ownerBotId: "22222222-2222-2222-2222-222222222222",
+        ownerAccountName: "FortressScout",
+        expiresAt: create(TimestampSchema, {
+          seconds: BigInt(Math.floor(now.getTime() / 1000) + 12),
           nanos: 0,
         }),
       },
