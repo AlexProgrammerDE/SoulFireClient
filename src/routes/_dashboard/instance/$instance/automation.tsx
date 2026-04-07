@@ -317,22 +317,22 @@ export const Route = createFileRoute(
 
 function AutomationDashboardSkeleton() {
   return (
-    <div className="container flex h-full w-full grow flex-col gap-4 py-4">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
-          <Skeleton key={index} className="h-28 w-full rounded-xl" />
-        ))}
+    <div className="container flex h-full w-full grow flex-col gap-5 py-4">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.8fr)]">
+        <Skeleton className="h-56 w-full rounded-lg" />
+        <Skeleton className="h-72 w-full rounded-lg" />
       </div>
-      <div className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
-        <Skeleton className="h-80 w-full rounded-xl" />
-        <Skeleton className="h-80 w-full rounded-xl" />
-      </div>
-      <div className="grid gap-4 lg:grid-cols-2">
-        {Array.from({ length: 4 }).map((_, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
-          <Skeleton key={index} className="h-64 w-full rounded-xl" />
-        ))}
+      <Skeleton className="h-[34rem] w-full rounded-lg" />
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+        <div className="grid gap-5">
+          <Skeleton className="h-80 w-full rounded-lg" />
+          <Skeleton className="h-96 w-full rounded-lg" />
+        </div>
+        <div className="grid gap-5">
+          <Skeleton className="h-[28rem] w-full rounded-lg" />
+          <Skeleton className="h-80 w-full rounded-lg" />
+          <Skeleton className="h-64 w-full rounded-lg" />
+        </div>
       </div>
     </div>
   );
@@ -1058,116 +1058,118 @@ function Content() {
   });
 
   return (
-    <div className="container flex h-full w-full grow flex-col gap-4 py-4">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <StatCard
-          title="Objective"
-          value={objectiveLabel(teamState.objective)}
-          description={`Preset ${presetLabel(teamSettings.preset)}`}
-          icon={CrosshairIcon}
-        />
-        <StatCard
-          title="Active Bots"
-          value={String(teamState.activeBots)}
-          description={`${teamState.bots.length} runtime snapshots`}
-          icon={BotMessageSquareIcon}
-        />
-        <StatCard
-          title="Shared Claims"
-          value={String(coordinationState.claimCount)}
-          description={`${coordinationState.sharedBlockCount} shared blocks tracked`}
-          icon={WaypointsIcon}
-        />
-        <StatCard
-          title="End Entry"
-          value={teamSettings.sharedEndEntry ? "Throttled" : "Open"}
-          description={`Max ${teamSettings.maxEndBots} bot${teamSettings.maxEndBots === 1 ? "" : "s"} in End`}
-          icon={RouteIcon}
-        />
-        <StatCard
-          title="Needs Attention"
-          value={String(attentionCounts.critical + attentionCounts.warning)}
-          description={`${attentionCounts.critical} critical / ${attentionCounts.warning} warning`}
-          icon={ShieldAlertIcon}
-        />
-      </div>
-
-      <div className="grid gap-4 xl:grid-cols-[1.45fr_1fr]">
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Controls</CardTitle>
-            <CardDescription>
-              Direct operator controls for the current automation run.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-6">
-            <div className="flex flex-wrap gap-2">
-              <Button
-                disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                onClick={() => teamActionMutation.mutate({ kind: "beat" })}
-              >
-                <PlayIcon className="size-4" />
-                Start Beat
-              </Button>
-              <Button
-                variant="outline"
-                disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                onClick={() => teamActionMutation.mutate({ kind: "pause" })}
-              >
-                <PauseIcon className="size-4" />
-                Pause All
-              </Button>
-              <Button
-                variant="outline"
-                disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                onClick={() => teamActionMutation.mutate({ kind: "resume" })}
-              >
-                <PlayIcon className="size-4" />
-                Resume All
-              </Button>
-              <Button
-                variant="outline"
-                disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                onClick={() => teamActionMutation.mutate({ kind: "stop" })}
-              >
-                <StopCircleIcon className="size-4" />
-                Stop All
-              </Button>
-              <Button
-                variant="outline"
-                disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                onClick={() =>
-                  teamActionMutation.mutate({ kind: "reset-coordination" })
-                }
-              >
-                <RotateCcwIcon className="size-4" />
-                Reset Coordination
-              </Button>
-              {hasAutomationSettingsPage && (
-                <Button asChild variant="ghost">
-                  <Link
-                    to="/instance/$instance/settings/$pageId"
-                    params={{
-                      instance: instanceInfo.id,
-                      pageId: "automation",
-                    }}
-                  >
-                    <Settings2Icon className="size-4" />
-                    Open Settings
-                  </Link>
-                </Button>
-              )}
+    <div className="container flex h-full w-full grow flex-col gap-5 py-4">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.8fr)]">
+        <Card size="sm" className="rounded-lg">
+          <CardHeader className="gap-4">
+            <div className="space-y-1">
+              <CardTitle>Automation Run</CardTitle>
+              <CardDescription>
+                Current objective and immediate controls.
+              </CardDescription>
             </div>
-
-            <div className="grid gap-4 lg:grid-cols-[1.1fr_1fr]">
-              <Card className="bg-muted/35">
-                <CardHeader>
-                  <CardTitle className="text-base">Acquire Target</CardTitle>
-                  <CardDescription>
-                    Start a focused resource run without leaving the dashboard.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="grid gap-3 sm:grid-cols-[1fr_120px_auto]">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+              <OverviewMetric
+                label="Objective"
+                value={objectiveLabel(teamState.objective)}
+                detail={`Preset ${presetLabel(teamSettings.preset)}`}
+              />
+              <OverviewMetric
+                label="Active Bots"
+                value={String(teamState.activeBots)}
+                detail={`${teamState.bots.length} runtime snapshots`}
+              />
+              <OverviewMetric
+                label="Shared Claims"
+                value={String(coordinationState.claimCount)}
+                detail={`${coordinationState.sharedBlockCount} shared blocks tracked`}
+              />
+              <OverviewMetric
+                label="End Entry"
+                value={teamSettings.sharedEndEntry ? "Throttled" : "Open"}
+                detail={`Max ${teamSettings.maxEndBots} bot${teamSettings.maxEndBots === 1 ? "" : "s"} in End`}
+              />
+              <OverviewMetric
+                label="Needs Attention"
+                value={String(
+                  attentionCounts.critical + attentionCounts.warning,
+                )}
+                detail={`${attentionCounts.critical} critical / ${attentionCounts.warning} warning`}
+              />
+            </div>
+          </CardHeader>
+          <CardContent className="grid gap-4 border-t pt-4 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="grid gap-4">
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                  onClick={() => teamActionMutation.mutate({ kind: "beat" })}
+                >
+                  <PlayIcon className="size-4" />
+                  Start Beat
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                  onClick={() => teamActionMutation.mutate({ kind: "pause" })}
+                >
+                  <PauseIcon className="size-4" />
+                  Pause All
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                  onClick={() => teamActionMutation.mutate({ kind: "resume" })}
+                >
+                  <PlayIcon className="size-4" />
+                  Resume All
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                  onClick={() => teamActionMutation.mutate({ kind: "stop" })}
+                >
+                  <StopCircleIcon className="size-4" />
+                  Stop All
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                  onClick={() =>
+                    teamActionMutation.mutate({ kind: "reset-coordination" })
+                  }
+                >
+                  <RotateCcwIcon className="size-4" />
+                  Reset Coordination
+                </Button>
+                {hasAutomationSettingsPage && (
+                  <Button asChild size="sm" variant="ghost">
+                    <Link
+                      to="/instance/$instance/settings/$pageId"
+                      params={{
+                        instance: instanceInfo.id,
+                        pageId: "automation",
+                      }}
+                    >
+                      <Settings2Icon className="size-4" />
+                      Open Settings
+                    </Link>
+                  </Button>
+                )}
+              </div>
+              <div className="rounded-md border px-4 py-4">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Acquire Target</p>
+                  <p className="text-muted-foreground text-xs">
+                    Start a focused resource run.
+                  </p>
+                </div>
+                <div className="mt-3 grid gap-2 sm:grid-cols-[1fr_96px_auto]">
                   <Input
                     value={acquireTarget}
                     onChange={(event) => setAcquireTarget(event.target.value)}
@@ -1182,6 +1184,7 @@ function Content() {
                     disabled={isReadOnlyDemo || teamActionMutation.isPending}
                   />
                   <Button
+                    size="sm"
                     disabled={
                       isReadOnlyDemo ||
                       teamActionMutation.isPending ||
@@ -1200,228 +1203,127 @@ function Content() {
                     <PackageIcon className="size-4" />
                     Start
                   </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-muted/35">
-                <CardHeader>
-                  <CardTitle className="text-base">Team Quotas</CardTitle>
-                  <CardDescription>
-                    Live shared progression counts plus direct override
-                    controls. Use `0` to restore automatic team-size-based
-                    targets.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="grid gap-3">
-                  {quotaCards.map((quota) => (
-                    <div
-                      key={quota.key}
-                      className="flex items-center justify-between gap-4 rounded-lg border px-3 py-2"
-                    >
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-medium">
-                          {quota.label}
-                        </p>
-                        <p className="text-muted-foreground text-xs">
-                          {quota.alias}
-                        </p>
-                      </div>
-                      <div className="flex flex-wrap items-center justify-end gap-2">
-                        <Badge variant="outline">
-                          {quota.current}/{quota.target}
-                        </Badge>
-                        <Badge variant="secondary">
-                          {quota.configuredTarget === 0
-                            ? "Auto"
-                            : `Override ${quota.configuredTarget}`}
-                        </Badge>
-                        <Input
-                          className="w-20"
-                          type="number"
-                          min={quota.min}
-                          max={quota.max}
-                          value={
-                            quotaInputs[quota.key] ??
-                            String(quota.configuredTarget)
-                          }
-                          disabled={
-                            isReadOnlyDemo || teamSettingMutation.isPending
-                          }
-                          onChange={(event) =>
-                            setQuotaInputs((current) => ({
-                              ...current,
-                              [quota.key]: event.target.value,
-                            }))
-                          }
-                        />
-                        <Button
-                          variant="outline"
-                          disabled={
-                            isReadOnlyDemo ||
-                            teamSettingMutation.isPending ||
-                            !isValidQuotaInput(
-                              quotaInputs[quota.key] ??
-                                String(quota.configuredTarget),
-                              quota.min,
-                              quota.max,
-                            ) ||
-                            Number(
-                              quotaInputs[quota.key] ??
-                                String(quota.configuredTarget),
-                            ) === quota.configuredTarget
-                          }
-                          onClick={() =>
-                            teamSettingMutation.mutate({
-                              kind: "quota-override",
-                              requirementKey: quota.key,
-                              targetCount: Number(
-                                quotaInputs[quota.key] ??
-                                  String(quota.configuredTarget),
-                              ),
-                            })
-                          }
-                        >
-                          Apply
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          disabled={
-                            isReadOnlyDemo ||
-                            teamSettingMutation.isPending ||
-                            quota.configuredTarget === 0
-                          }
-                          onClick={() =>
-                            teamSettingMutation.mutate({
-                              kind: "quota-override",
-                              requirementKey: quota.key,
-                              targetCount: 0,
-                            })
-                          }
-                        >
-                          Auto
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Team Settings</CardTitle>
+        <Card size="sm" className="rounded-lg">
+          <CardHeader className="space-y-1">
+            <CardTitle>Team Coordination</CardTitle>
             <CardDescription>
-              Dedicated automation controls layered on top of the generic
-              settings page.
+              Run-wide policy and sharing rules.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <SettingSelect
-              label="Preset"
-              value={String(teamSettings.preset)}
-              options={presetOptions.map((option) => ({
-                value: String(option.value),
-                label: option.label,
-              }))}
-              disabled={isReadOnlyDemo || teamSettingMutation.isPending}
-              onValueChange={(value) =>
-                teamSettingMutation.mutate({
-                  kind: "preset",
-                  preset: Number(value) as AutomationPreset,
-                })
-              }
-            />
-            <SettingSelect
-              label="Role Policy"
-              value={String(teamSettings.rolePolicy)}
-              options={rolePolicyOptions.map((option) => ({
-                value: String(option.value),
-                label: option.label,
-              }))}
-              disabled={isReadOnlyDemo || teamSettingMutation.isPending}
-              onValueChange={(value) =>
-                teamSettingMutation.mutate({
-                  kind: "role-policy",
-                  rolePolicy: Number(value) as AutomationRolePolicy,
-                })
-              }
-            />
-            <SettingSelect
-              label="Objective Override"
-              value={String(teamSettings.objectiveOverride)}
-              options={objectiveOptions.map((option) => ({
-                value: String(option.value),
-                label: option.label,
-              }))}
-              disabled={isReadOnlyDemo || teamSettingMutation.isPending}
-              onValueChange={(value) =>
-                teamSettingMutation.mutate({
-                  kind: "objective",
-                  objective: Number(value) as AutomationTeamObjective,
-                })
-              }
-            />
-            <SettingToggle
-              label="Team Collaboration"
-              description="Share roles, claims, and team-wide progression."
-              checked={teamSettings.teamCollaboration}
-              disabled={isReadOnlyDemo || teamSettingMutation.isPending}
-              onCheckedChange={(checked) =>
-                teamSettingMutation.mutate({
-                  kind: "collaboration",
-                  enabled: checked,
-                })
-              }
-            />
-            <SettingToggle
-              label="Shared Structures"
-              description="Reuse fortress, portal, and stronghold intelligence."
-              checked={teamSettings.sharedStructureIntel}
-              disabled={isReadOnlyDemo || teamSettingMutation.isPending}
-              onCheckedChange={(checked) =>
-                teamSettingMutation.mutate({
-                  kind: "shared-structures",
-                  enabled: checked,
-                })
-              }
-            />
-            <SettingToggle
-              label="Shared Claims"
-              description="Reserve targets so bots avoid duplicated work."
-              checked={teamSettings.sharedTargetClaims}
-              disabled={isReadOnlyDemo || teamSettingMutation.isPending}
-              onCheckedChange={(checked) =>
-                teamSettingMutation.mutate({
-                  kind: "shared-claims",
-                  enabled: checked,
-                })
-              }
-            />
-            <SettingToggle
-              label="Shared End Entry"
-              description="Throttle how many bots enter the End at once."
-              checked={teamSettings.sharedEndEntry}
-              disabled={isReadOnlyDemo || teamSettingMutation.isPending}
-              onCheckedChange={(checked) =>
-                teamSettingMutation.mutate({
-                  kind: "shared-end-entry",
-                  enabled: checked,
-                })
-              }
-            />
-            <div className="grid gap-2">
-              <div className="flex items-center justify-between gap-3">
-                <div>
+          <CardContent className="space-y-4">
+            <div className="grid gap-3">
+              <SettingSelect
+                label="Preset"
+                value={String(teamSettings.preset)}
+                options={presetOptions.map((option) => ({
+                  value: String(option.value),
+                  label: option.label,
+                }))}
+                disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                onValueChange={(value) =>
+                  teamSettingMutation.mutate({
+                    kind: "preset",
+                    preset: Number(value) as AutomationPreset,
+                  })
+                }
+              />
+              <SettingSelect
+                label="Role Policy"
+                value={String(teamSettings.rolePolicy)}
+                options={rolePolicyOptions.map((option) => ({
+                  value: String(option.value),
+                  label: option.label,
+                }))}
+                disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                onValueChange={(value) =>
+                  teamSettingMutation.mutate({
+                    kind: "role-policy",
+                    rolePolicy: Number(value) as AutomationRolePolicy,
+                  })
+                }
+              />
+              <SettingSelect
+                label="Objective Override"
+                value={String(teamSettings.objectiveOverride)}
+                options={objectiveOptions.map((option) => ({
+                  value: String(option.value),
+                  label: option.label,
+                }))}
+                disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                onValueChange={(value) =>
+                  teamSettingMutation.mutate({
+                    kind: "objective",
+                    objective: Number(value) as AutomationTeamObjective,
+                  })
+                }
+              />
+            </div>
+
+            <div className="grid gap-3 border-t pt-4">
+              <SettingToggle
+                label="Team Collaboration"
+                description="Share roles, claims, and progression."
+                checked={teamSettings.teamCollaboration}
+                disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                onCheckedChange={(checked) =>
+                  teamSettingMutation.mutate({
+                    kind: "collaboration",
+                    enabled: checked,
+                  })
+                }
+              />
+              <SettingToggle
+                label="Shared Structures"
+                description="Reuse portal, fortress, and stronghold intel."
+                checked={teamSettings.sharedStructureIntel}
+                disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                onCheckedChange={(checked) =>
+                  teamSettingMutation.mutate({
+                    kind: "shared-structures",
+                    enabled: checked,
+                  })
+                }
+              />
+              <SettingToggle
+                label="Shared Claims"
+                description="Reserve targets to avoid duplicated work."
+                checked={teamSettings.sharedTargetClaims}
+                disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                onCheckedChange={(checked) =>
+                  teamSettingMutation.mutate({
+                    kind: "shared-claims",
+                    enabled: checked,
+                  })
+                }
+              />
+              <SettingToggle
+                label="Shared End Entry"
+                description="Throttle how many bots enter the End."
+                checked={teamSettings.sharedEndEntry}
+                disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                onCheckedChange={(checked) =>
+                  teamSettingMutation.mutate({
+                    kind: "shared-end-entry",
+                    enabled: checked,
+                  })
+                }
+              />
+              <div className="grid gap-2 rounded-md border px-3 py-3">
+                <div className="space-y-1">
                   <p className="text-sm font-medium">Max End Bots</p>
                   <p className="text-muted-foreground text-xs">
-                    Applies when shared End entry is enabled.
+                    Used when shared End entry is enabled.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Input
-                    className="w-20"
+                    className="h-8 w-20"
                     type="number"
                     min={1}
                     max={32}
@@ -1430,6 +1332,7 @@ function Content() {
                     onChange={(event) => setMaxEndBotsInput(event.target.value)}
                   />
                   <Button
+                    size="sm"
                     variant="outline"
                     disabled={
                       isReadOnlyDemo ||
@@ -1455,280 +1358,284 @@ function Content() {
         </Card>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
-        <Card>
-          <CardHeader className="space-y-4">
-            <CardTitle>Bot Runtime</CardTitle>
-            <CardDescription>
-              Per-bot status, queue visibility, filtered team views, and bulk
-              interventions.
-            </CardDescription>
-            <div className="grid gap-3 lg:grid-cols-5">
-              <div className="grid gap-2 lg:col-span-2">
-                <p className="text-sm font-medium">Search Bots</p>
-                <Input
-                  value={botSearch}
-                  onChange={(event) => setBotSearch(event.target.value)}
-                  placeholder="Search by name, action, status, or dimension"
-                />
+      <Card size="sm" className="rounded-lg">
+        <CardHeader className="gap-4">
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+            <div className="space-y-1">
+              <CardTitle>Bot Runtime</CardTitle>
+              <CardDescription>
+                Live bot state, filters, and direct operator actions.
+              </CardDescription>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <div className="rounded-md border px-2.5 py-1.5 text-xs text-muted-foreground">
+                {filteredBots.length} visible
               </div>
-              <SettingSelect
-                label="Role Filter"
-                value={botRoleFilter}
-                options={[
-                  { value: "all", label: "All Roles" },
-                  ...roleOverrideOptions
-                    .filter(
-                      (option) =>
-                        option.value !== AutomationTeamRole.UNSPECIFIED,
-                    )
-                    .map((option) => ({
+              <div className="rounded-md border px-2.5 py-1.5 text-xs text-muted-foreground">
+                {selectedBotIds.length} selected
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={filteredBotIds.length === 0}
+                onClick={() =>
+                  setSelectedBots((current) => ({
+                    ...current,
+                    ...Object.fromEntries(
+                      filteredBotIds.map((botId) => [botId, true]),
+                    ),
+                  }))
+                }
+              >
+                Select Visible
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={selectedBotIds.length === 0}
+                onClick={() => setSelectedBots({})}
+              >
+                Clear Selection
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-[minmax(220px,1.35fr)_repeat(4,minmax(0,0.8fr))]">
+            <div className="grid gap-2 xl:col-span-2 2xl:col-span-1">
+              <p className="text-sm font-medium">Search</p>
+              <Input
+                value={botSearch}
+                onChange={(event) => setBotSearch(event.target.value)}
+                placeholder="Search by name, action, status, or dimension"
+              />
+            </div>
+            <SettingSelect
+              label="Role"
+              value={botRoleFilter}
+              options={[
+                { value: "all", label: "All Roles" },
+                ...roleOverrideOptions
+                  .filter(
+                    (option) => option.value !== AutomationTeamRole.UNSPECIFIED,
+                  )
+                  .map((option) => ({
+                    value: String(option.value),
+                    label: option.label,
+                  })),
+              ]}
+              disabled={false}
+              onValueChange={setBotRoleFilter}
+            />
+            <SettingSelect
+              label="Status"
+              value={botStatusFilter}
+              options={[
+                { value: "all", label: "All Statuses" },
+                { value: "live", label: "Live" },
+                { value: "paused", label: "Paused" },
+              ]}
+              disabled={false}
+              onValueChange={setBotStatusFilter}
+            />
+            <SettingSelect
+              label="Health"
+              value={botAttentionFilter}
+              options={[
+                { value: "all", label: "All Health" },
+                { value: "attention", label: "Needs Attention" },
+                { value: "critical", label: "Critical" },
+                { value: "healthy", label: "Healthy" },
+              ]}
+              disabled={false}
+              onValueChange={setBotAttentionFilter}
+            />
+            <SettingSelect
+              label="Dimension"
+              value={botDimensionFilter}
+              options={[
+                { value: "all", label: "All Dimensions" },
+                ...botDimensionOptions.map((dimension) => ({
+                  value: dimension,
+                  label: dimensionLabel(dimension),
+                })),
+              ]}
+              disabled={false}
+              onValueChange={setBotDimensionFilter}
+            />
+          </div>
+
+          {selectedBotIds.length > 0 && (
+            <div className="grid gap-4 rounded-md border px-4 py-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Bulk Controls</p>
+                  <p className="text-muted-foreground text-xs">
+                    Apply actions or a light settings patch to the current
+                    selection.
+                  </p>
+                </div>
+                <div className="rounded-md border px-2.5 py-1.5 text-xs text-muted-foreground">
+                  {selectedBotIds.length} bot
+                  {selectedBotIds.length === 1 ? "" : "s"}
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || botActionMutation.isPending}
+                  onClick={() =>
+                    botActionMutation.mutate({
+                      kind: "pause",
+                      botIds: selectedBotIds,
+                      label: formatBotSelectionLabel(selectedBotIds.length),
+                    })
+                  }
+                >
+                  <PauseIcon className="size-4" />
+                  Pause Selected
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || botActionMutation.isPending}
+                  onClick={() =>
+                    botActionMutation.mutate({
+                      kind: "resume",
+                      botIds: selectedBotIds,
+                      label: formatBotSelectionLabel(selectedBotIds.length),
+                    })
+                  }
+                >
+                  <PlayIcon className="size-4" />
+                  Resume Selected
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || botActionMutation.isPending}
+                  onClick={() =>
+                    botActionMutation.mutate({
+                      kind: "stop",
+                      botIds: selectedBotIds,
+                      label: formatBotSelectionLabel(selectedBotIds.length),
+                    })
+                  }
+                >
+                  <StopCircleIcon className="size-4" />
+                  Stop Selected
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || botActionMutation.isPending}
+                  onClick={() =>
+                    botActionMutation.mutate({
+                      kind: "reset-memory",
+                      botIds: selectedBotIds,
+                      label: formatBotSelectionLabel(selectedBotIds.length),
+                    })
+                  }
+                >
+                  <RotateCcwIcon className="size-4" />
+                  Reset Memory
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={isReadOnlyDemo || botActionMutation.isPending}
+                  onClick={() =>
+                    botActionMutation.mutate({
+                      kind: "release-claims",
+                      botIds: selectedBotIds,
+                      label: formatBotSelectionLabel(selectedBotIds.length),
+                    })
+                  }
+                >
+                  <WaypointsIcon className="size-4" />
+                  Release Claims
+                </Button>
+              </div>
+              <div className="grid gap-3 lg:grid-cols-3">
+                <SettingSelect
+                  label="Automation Enabled"
+                  value={bulkEnabledInput}
+                  options={[
+                    { value: NO_CHANGE, label: "No Change" },
+                    { value: "enabled", label: "Enable" },
+                    { value: "disabled", label: "Disable" },
+                  ]}
+                  disabled={isReadOnlyDemo || botSettingsMutation.isPending}
+                  onValueChange={setBulkEnabledInput}
+                />
+                <SettingSelect
+                  label="Death Recovery"
+                  value={bulkDeathRecoveryInput}
+                  options={[
+                    { value: NO_CHANGE, label: "No Change" },
+                    { value: "enabled", label: "Enable" },
+                    { value: "disabled", label: "Disable" },
+                  ]}
+                  disabled={isReadOnlyDemo || botSettingsMutation.isPending}
+                  onValueChange={setBulkDeathRecoveryInput}
+                />
+                <SettingSelect
+                  label="Role Override"
+                  value={bulkRoleOverrideInput}
+                  options={[
+                    { value: NO_CHANGE, label: "No Change" },
+                    ...roleOverrideOptions.map((option) => ({
                       value: String(option.value),
                       label: option.label,
                     })),
-                ]}
-                disabled={false}
-                onValueChange={setBotRoleFilter}
-              />
-              <SettingSelect
-                label="Status Filter"
-                value={botStatusFilter}
-                options={[
-                  { value: "all", label: "All Statuses" },
-                  { value: "live", label: "Live" },
-                  { value: "paused", label: "Paused" },
-                ]}
-                disabled={false}
-                onValueChange={setBotStatusFilter}
-              />
-              <SettingSelect
-                label="Attention Filter"
-                value={botAttentionFilter}
-                options={[
-                  { value: "all", label: "All Health" },
-                  { value: "attention", label: "Needs Attention" },
-                  { value: "critical", label: "Critical" },
-                  { value: "healthy", label: "Healthy" },
-                ]}
-                disabled={false}
-                onValueChange={setBotAttentionFilter}
-              />
-            </div>
-            <div className="grid gap-3 lg:grid-cols-[1fr_auto]">
-              <SettingSelect
-                label="Dimension Filter"
-                value={botDimensionFilter}
-                options={[
-                  { value: "all", label: "All Dimensions" },
-                  ...botDimensionOptions.map((dimension) => ({
-                    value: dimension,
-                    label: dimensionLabel(dimension),
-                  })),
-                ]}
-                disabled={false}
-                onValueChange={setBotDimensionFilter}
-              />
-              <div className="flex flex-wrap items-end gap-2">
-                <Badge variant="outline">{filteredBots.length} visible</Badge>
-                <Badge variant="secondary">
-                  {selectedBotIds.length} selected
-                </Badge>
+                  ]}
+                  disabled={isReadOnlyDemo || botSettingsMutation.isPending}
+                  onValueChange={setBulkRoleOverrideInput}
+                />
+              </div>
+              <div className="flex flex-wrap gap-2">
                 <Button
-                  variant="outline"
                   size="sm"
-                  disabled={filteredBotIds.length === 0}
+                  variant="outline"
+                  disabled={
+                    isReadOnlyDemo ||
+                    botSettingsMutation.isPending ||
+                    !hasBulkSettingsPatch
+                  }
                   onClick={() =>
-                    setSelectedBots((current) => ({
-                      ...current,
-                      ...Object.fromEntries(
-                        filteredBotIds.map((botId) => [botId, true]),
-                      ),
-                    }))
+                    botSettingsMutation.mutate({
+                      botIds: selectedBotIds,
+                      label: formatBotSelectionLabel(selectedBotIds.length),
+                      patch: bulkSettingsPatch,
+                    })
                   }
                 >
-                  Select Visible
+                  Apply To Selected
                 </Button>
                 <Button
-                  variant="ghost"
                   size="sm"
-                  disabled={selectedBotIds.length === 0}
-                  onClick={() => setSelectedBots({})}
+                  variant="ghost"
+                  disabled={
+                    bulkEnabledInput === NO_CHANGE &&
+                    bulkDeathRecoveryInput === NO_CHANGE &&
+                    bulkRoleOverrideInput === NO_CHANGE
+                  }
+                  onClick={() => {
+                    setBulkEnabledInput(NO_CHANGE);
+                    setBulkDeathRecoveryInput(NO_CHANGE);
+                    setBulkRoleOverrideInput(NO_CHANGE);
+                  }}
                 >
-                  Clear Selection
+                  Reset Bulk Draft
                 </Button>
               </div>
             </div>
-            {selectedBotIds.length > 0 && (
-              <div className="grid gap-4 rounded-lg border bg-muted/35 px-4 py-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div>
-                    <p className="text-sm font-medium">Bulk Controls</p>
-                    <p className="text-muted-foreground text-xs">
-                      Apply interventions or a light settings patch to the
-                      current selection.
-                    </p>
-                  </div>
-                  <Badge variant="secondary">
-                    {selectedBotIds.length} bot
-                    {selectedBotIds.length === 1 ? "" : "s"}
-                  </Badge>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || botActionMutation.isPending}
-                    onClick={() =>
-                      botActionMutation.mutate({
-                        kind: "pause",
-                        botIds: selectedBotIds,
-                        label: formatBotSelectionLabel(selectedBotIds.length),
-                      })
-                    }
-                  >
-                    <PauseIcon className="size-4" />
-                    Pause Selected
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || botActionMutation.isPending}
-                    onClick={() =>
-                      botActionMutation.mutate({
-                        kind: "resume",
-                        botIds: selectedBotIds,
-                        label: formatBotSelectionLabel(selectedBotIds.length),
-                      })
-                    }
-                  >
-                    <PlayIcon className="size-4" />
-                    Resume Selected
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || botActionMutation.isPending}
-                    onClick={() =>
-                      botActionMutation.mutate({
-                        kind: "stop",
-                        botIds: selectedBotIds,
-                        label: formatBotSelectionLabel(selectedBotIds.length),
-                      })
-                    }
-                  >
-                    <StopCircleIcon className="size-4" />
-                    Stop Selected
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || botActionMutation.isPending}
-                    onClick={() =>
-                      botActionMutation.mutate({
-                        kind: "reset-memory",
-                        botIds: selectedBotIds,
-                        label: formatBotSelectionLabel(selectedBotIds.length),
-                      })
-                    }
-                  >
-                    <RotateCcwIcon className="size-4" />
-                    Reset Memory
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || botActionMutation.isPending}
-                    onClick={() =>
-                      botActionMutation.mutate({
-                        kind: "release-claims",
-                        botIds: selectedBotIds,
-                        label: formatBotSelectionLabel(selectedBotIds.length),
-                      })
-                    }
-                  >
-                    <WaypointsIcon className="size-4" />
-                    Release Claims
-                  </Button>
-                </div>
-                <div className="grid gap-3 lg:grid-cols-3">
-                  <SettingSelect
-                    label="Automation Enabled"
-                    value={bulkEnabledInput}
-                    options={[
-                      { value: NO_CHANGE, label: "No Change" },
-                      { value: "enabled", label: "Enable" },
-                      { value: "disabled", label: "Disable" },
-                    ]}
-                    disabled={isReadOnlyDemo || botSettingsMutation.isPending}
-                    onValueChange={setBulkEnabledInput}
-                  />
-                  <SettingSelect
-                    label="Death Recovery"
-                    value={bulkDeathRecoveryInput}
-                    options={[
-                      { value: NO_CHANGE, label: "No Change" },
-                      { value: "enabled", label: "Enable" },
-                      { value: "disabled", label: "Disable" },
-                    ]}
-                    disabled={isReadOnlyDemo || botSettingsMutation.isPending}
-                    onValueChange={setBulkDeathRecoveryInput}
-                  />
-                  <SettingSelect
-                    label="Role Override"
-                    value={bulkRoleOverrideInput}
-                    options={[
-                      { value: NO_CHANGE, label: "No Change" },
-                      ...roleOverrideOptions.map((option) => ({
-                        value: String(option.value),
-                        label: option.label,
-                      })),
-                    ]}
-                    disabled={isReadOnlyDemo || botSettingsMutation.isPending}
-                    onValueChange={setBulkRoleOverrideInput}
-                  />
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    disabled={
-                      isReadOnlyDemo ||
-                      botSettingsMutation.isPending ||
-                      !hasBulkSettingsPatch
-                    }
-                    onClick={() =>
-                      botSettingsMutation.mutate({
-                        botIds: selectedBotIds,
-                        label: formatBotSelectionLabel(selectedBotIds.length),
-                        patch: bulkSettingsPatch,
-                      })
-                    }
-                  >
-                    Apply To Selected
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    disabled={
-                      bulkEnabledInput === NO_CHANGE &&
-                      bulkDeathRecoveryInput === NO_CHANGE &&
-                      bulkRoleOverrideInput === NO_CHANGE
-                    }
-                    onClick={() => {
-                      setBulkEnabledInput(NO_CHANGE);
-                      setBulkDeathRecoveryInput(NO_CHANGE);
-                      setBulkRoleOverrideInput(NO_CHANGE);
-                    }}
-                  >
-                    Reset Bulk Draft
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
+          )}
+
+          <div className="grid gap-4 xl:grid-cols-2">
             {filteredBots.length === 0 ? (
-              <div className="text-muted-foreground rounded-lg border border-dashed px-4 py-8 text-sm md:col-span-2">
+              <div className="text-muted-foreground rounded-md border border-dashed px-4 py-8 text-sm xl:col-span-2">
                 No bots match the current filters.
               </div>
             ) : (
@@ -1807,10 +1714,12 @@ function Content() {
                 />
               ))
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </CardContent>
+      </Card>
 
-        <div className="grid gap-4">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+        <div className="grid gap-5">
           <RunHealthCard
             entries={botAttentionEntries}
             criticalCount={attentionCounts.critical}
@@ -1886,6 +1795,112 @@ function Content() {
               })
             }
           />
+        </div>
+
+        <div className="grid gap-5">
+          <Card size="sm" className="rounded-lg">
+            <CardHeader>
+              <CardTitle>Shared Targets</CardTitle>
+              <CardDescription>
+                Team quotas and manual overrides.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-3">
+              {quotaCards.map((quota) => (
+                <div
+                  key={quota.key}
+                  className="grid gap-3 rounded-md border px-3 py-3"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium">
+                        {quota.label}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {quota.alias}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium">
+                        {quota.current}/{quota.target}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {quota.configuredTarget === 0
+                          ? "Auto"
+                          : `Manual ${quota.configuredTarget}`}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-[96px_auto_auto]">
+                    <Input
+                      className="h-8 w-full"
+                      type="number"
+                      min={quota.min}
+                      max={quota.max}
+                      value={
+                        quotaInputs[quota.key] ?? String(quota.configuredTarget)
+                      }
+                      disabled={isReadOnlyDemo || teamSettingMutation.isPending}
+                      onChange={(event) =>
+                        setQuotaInputs((current) => ({
+                          ...current,
+                          [quota.key]: event.target.value,
+                        }))
+                      }
+                    />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={
+                        isReadOnlyDemo ||
+                        teamSettingMutation.isPending ||
+                        !isValidQuotaInput(
+                          quotaInputs[quota.key] ??
+                            String(quota.configuredTarget),
+                          quota.min,
+                          quota.max,
+                        ) ||
+                        Number(
+                          quotaInputs[quota.key] ??
+                            String(quota.configuredTarget),
+                        ) === quota.configuredTarget
+                      }
+                      onClick={() =>
+                        teamSettingMutation.mutate({
+                          kind: "quota-override",
+                          requirementKey: quota.key,
+                          targetCount: Number(
+                            quotaInputs[quota.key] ??
+                              String(quota.configuredTarget),
+                          ),
+                        })
+                      }
+                    >
+                      Apply
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      disabled={
+                        isReadOnlyDemo ||
+                        teamSettingMutation.isPending ||
+                        quota.configuredTarget === 0
+                      }
+                      onClick={() =>
+                        teamSettingMutation.mutate({
+                          kind: "quota-override",
+                          requirementKey: quota.key,
+                          targetCount: 0,
+                        })
+                      }
+                    >
+                      Auto
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
 
           <MemoryInspectorCard
             bots={teamState.bots}
@@ -1923,13 +1938,13 @@ function Content() {
 
           <CoordinationCard
             title="Shared Structure Intel"
-            description="Recent shared blocks that the coordinator can reuse."
+            description="Recent shared blocks the coordinator can reuse."
             emptyState="No shared block hints yet."
           >
             {coordinationState.sharedBlocks.map((block) => (
               <div
                 key={`${block.dimension}:${block.x}:${block.y}:${block.z}:${block.blockId}`}
-                className="space-y-1 rounded-lg border px-3 py-2"
+                className="space-y-1 rounded-md border px-3 py-2"
               >
                 <p className="truncate text-sm font-medium">{block.blockId}</p>
                 <p className="text-muted-foreground text-xs">
@@ -1950,7 +1965,7 @@ function Content() {
             {coordinationState.eyeSamples.map((sample) => (
               <div
                 key={`${sample.botId}:${sample.recordedAt?.seconds ?? "0"}`}
-                className="space-y-1 rounded-lg border px-3 py-2"
+                className="space-y-1 rounded-md border px-3 py-2"
               >
                 <p className="truncate text-sm font-medium">
                   {sample.accountName}
@@ -1970,25 +1985,17 @@ function Content() {
   );
 }
 
-function StatCard(props: {
-  title: string;
+function OverviewMetric(props: {
+  label: string;
   value: string;
-  description: string;
-  icon: ComponentType<{ className?: string }>;
+  detail: string;
 }) {
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-start justify-between space-y-0">
-        <div className="space-y-1">
-          <CardDescription>{props.title}</CardDescription>
-          <CardTitle className="text-2xl">{props.value}</CardTitle>
-        </div>
-        <props.icon className="text-muted-foreground size-5" />
-      </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground text-sm">{props.description}</p>
-      </CardContent>
-    </Card>
+    <div className="grid gap-1 rounded-md border px-4 py-3">
+      <p className="text-muted-foreground text-xs">{props.label}</p>
+      <p className="text-sm font-medium">{props.value}</p>
+      <p className="text-muted-foreground text-xs">{props.detail}</p>
+    </div>
   );
 }
 
@@ -2000,7 +2007,7 @@ function SettingToggle(props: {
   onCheckedChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 rounded-lg border px-3 py-3">
+    <div className="flex items-start justify-between gap-4 rounded-md border px-3 py-3">
       <div className="space-y-1">
         <p className="text-sm font-medium">{props.label}</p>
         <p className="text-muted-foreground text-xs">{props.description}</p>
@@ -2087,10 +2094,8 @@ function BotRuntimeCard(props: {
 
   return (
     <Card
-      className={cn(
-        "h-full",
-        props.selected && "border-primary/50 ring-primary/20 ring-1",
-      )}
+      size="sm"
+      className={cn("h-full rounded-lg", props.selected && "border-primary/50")}
     >
       <CardHeader className="space-y-3">
         <div className="flex items-start justify-between gap-3">
@@ -2172,7 +2177,7 @@ function BotRuntimeCard(props: {
         </div>
 
         {props.bot.target && (
-          <div className="rounded-lg border px-3 py-2">
+          <div className="rounded-md border px-3 py-2">
             <p className="text-muted-foreground text-xs">Current Target</p>
             <p className="text-sm font-medium">
               {props.bot.target.displayName} x{props.bot.target.count}
@@ -2198,82 +2203,84 @@ function BotRuntimeCard(props: {
           )}
         </div>
 
-        <div className="space-y-3 rounded-lg border px-3 py-3">
-          <div className="flex flex-wrap items-start justify-between gap-2">
-            <div className="space-y-1">
-              <p className="text-sm font-medium">Run Health</p>
-              <p className="text-muted-foreground text-xs">
-                Derived diagnostics from progress age, timeouts, deaths,
-                recoveries, and queued work.
-              </p>
-            </div>
-            <Badge
-              variant="outline"
-              className={attentionBadgeClassName(props.attention.severity)}
-            >
-              {props.attention.label}
-            </Badge>
-          </div>
-          <p className="text-sm font-medium">{props.attention.summary}</p>
-          <div className="flex flex-wrap gap-2">
-            {props.attention.reasons.map((reason) => (
-              <Badge key={reason} variant="secondary" className="text-left">
-                {reason}
+        <div className="grid gap-4 border-t pt-4 xl:grid-cols-2">
+          <section className="space-y-3">
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Run Health</p>
+                <p className="text-muted-foreground text-xs">
+                  Derived from progress age, failures, and queued work.
+                </p>
+              </div>
+              <Badge
+                variant="outline"
+                className={attentionBadgeClassName(props.attention.severity)}
+              >
+                {props.attention.label}
               </Badge>
-            ))}
-          </div>
-          <p className="text-muted-foreground text-xs">
-            Operator hint: {props.attention.operatorHint}
-          </p>
-        </div>
-
-        <div className="space-y-3 rounded-lg border px-3 py-3">
-          <div className="flex flex-wrap items-start justify-between gap-2">
-            <div className="space-y-1">
-              <p className="text-sm font-medium">Claim Footprint</p>
-              <p className="text-muted-foreground text-xs">
-                Shared coordinator reservations currently owned by this bot.
-              </p>
             </div>
-            <Badge variant="outline">
-              {props.claimSummary.totalOwnedClaims} claim
-              {props.claimSummary.totalOwnedClaims === 1 ? "" : "s"}
-            </Badge>
-          </div>
-          <p className="text-sm font-medium">{props.claimSummary.breakdown}</p>
-          <p className="text-muted-foreground text-xs">
-            {props.claimSummary.note}
-          </p>
-          {props.claimSummary.ownedClaims.length === 0 ? (
-            <Badge variant="secondary">No active claims</Badge>
-          ) : (
+            <p className="text-sm font-medium">{props.attention.summary}</p>
             <div className="flex flex-wrap gap-2">
-              {props.claimSummary.ownedClaims.slice(0, 4).map((insight) => (
-                <Badge key={insight.claim.key} variant="secondary">
-                  {insight.kindLabel}: {insight.purposeLabel}
+              {props.attention.reasons.map((reason) => (
+                <Badge key={reason} variant="outline" className="text-left">
+                  {reason}
                 </Badge>
               ))}
-              {props.claimSummary.ownedClaims.length > 4 ? (
-                <Badge variant="secondary">
-                  +{props.claimSummary.ownedClaims.length - 4} more
-                </Badge>
-              ) : null}
             </div>
-          )}
-          <div className="flex flex-wrap gap-2">
-            <Button size="sm" variant="ghost" onClick={props.onFocusClaims}>
-              <WaypointsIcon className="size-4" />
-              View Claims
-            </Button>
-          </div>
+            <p className="text-muted-foreground text-xs">
+              {props.attention.operatorHint}
+            </p>
+          </section>
+
+          <section className="space-y-3">
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Claim Footprint</p>
+                <p className="text-muted-foreground text-xs">
+                  Shared coordinator reservations owned by this bot.
+                </p>
+              </div>
+              <div className="rounded-md border px-2.5 py-1.5 text-xs text-muted-foreground">
+                {props.claimSummary.totalOwnedClaims} claim
+                {props.claimSummary.totalOwnedClaims === 1 ? "" : "s"}
+              </div>
+            </div>
+            <p className="text-sm font-medium">
+              {props.claimSummary.breakdown}
+            </p>
+            <p className="text-muted-foreground text-xs">
+              {props.claimSummary.note}
+            </p>
+            {props.claimSummary.ownedClaims.length === 0 ? (
+              <p className="text-muted-foreground text-sm">No active claims.</p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {props.claimSummary.ownedClaims.slice(0, 4).map((insight) => (
+                  <Badge key={insight.claim.key} variant="outline">
+                    {insight.kindLabel}: {insight.purposeLabel}
+                  </Badge>
+                ))}
+                {props.claimSummary.ownedClaims.length > 4 ? (
+                  <Badge variant="outline">
+                    +{props.claimSummary.ownedClaims.length - 4} more
+                  </Badge>
+                ) : null}
+              </div>
+            )}
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant="ghost" onClick={props.onFocusClaims}>
+                <WaypointsIcon className="size-4" />
+                View Claims
+              </Button>
+            </div>
+          </section>
         </div>
 
-        <div className="space-y-3 rounded-lg border px-3 py-3">
+        <div className="grid gap-3 border-t pt-4">
           <div className="space-y-1">
             <p className="text-sm font-medium">Automation Tuning</p>
             <p className="text-muted-foreground text-xs">
-              Persisted bot-level settings with inline defaults, ranges, and
-              role control.
+              Bot-level safety, scanning, and role controls.
             </p>
           </div>
           <SettingToggle
@@ -2362,7 +2369,7 @@ function BotRuntimeCard(props: {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 border-t pt-4">
           <Button
             size="sm"
             variant="outline"
@@ -2419,7 +2426,7 @@ function BotRuntimeCard(props: {
           </Button>
         </div>
 
-        <div className="text-muted-foreground text-xs">
+        <div className="text-muted-foreground border-t pt-4 text-xs">
           Last progress{" "}
           {props.bot.lastProgressAt ? (
             <SFTimeAgo date={timestampToDate(props.bot.lastProgressAt)} />
@@ -2446,7 +2453,7 @@ function CoordinationCard(props: {
     : props.children !== null && props.children !== undefined;
 
   return (
-    <Card>
+    <Card size="sm" className="rounded-lg">
       <CardHeader>
         <CardTitle>{props.title}</CardTitle>
         <CardDescription>{props.description}</CardDescription>
@@ -2486,7 +2493,7 @@ function RunHealthCard(props: {
   );
 
   return (
-    <Card>
+    <Card size="sm" className="rounded-lg">
       <CardHeader>
         <CardTitle>Run Health</CardTitle>
         <CardDescription>
@@ -2512,7 +2519,7 @@ function RunHealthCard(props: {
             icon={PlayIcon}
           />
         </div>
-        <div className="space-y-3 rounded-lg border px-3 py-3">
+        <div className="space-y-3 rounded-md border px-3 py-3">
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div className="space-y-1">
               <p className="text-sm font-medium">Health Actions</p>
@@ -2583,7 +2590,7 @@ function RunHealthCard(props: {
               {attentionEntries.map((entry) => (
                 <div
                   key={entry.bot.botId}
-                  className="space-y-2 rounded-lg border px-3 py-3"
+                  className="space-y-2 rounded-md border px-3 py-3"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
@@ -2679,7 +2686,7 @@ function ClaimExplorerCard(props: {
   const focusedBot = props.focusedBot;
 
   return (
-    <Card>
+    <Card size="sm" className="rounded-lg">
       <CardHeader className="space-y-4">
         <div className="space-y-1">
           <CardTitle>Claim Explorer</CardTitle>
@@ -2700,7 +2707,7 @@ function ClaimExplorerCard(props: {
           </Badge>
         </div>
         {focusedBot ? (
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-md border px-3 py-2">
             <div className="space-y-1">
               <p className="text-sm font-medium">
                 Focused on {focusedBot.accountName}
@@ -2787,7 +2794,7 @@ function ClaimExplorerCard(props: {
                 return (
                   <div
                     key={insight.claim.key}
-                    className="space-y-3 rounded-lg border px-3 py-3"
+                    className="space-y-3 rounded-md border px-3 py-3"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div className="min-w-0 space-y-1">
@@ -2891,7 +2898,7 @@ function MemoryInspectorCard(props: {
   const memoryState = props.memoryState;
 
   return (
-    <Card>
+    <Card size="sm" className="rounded-lg">
       <CardHeader className="space-y-4">
         <div>
           <CardTitle>Memory Browser</CardTitle>
@@ -2977,14 +2984,14 @@ function MemoryInspectorCard(props: {
             No automation bots are available for memory inspection.
           </p>
         ) : props.errorMessage ? (
-          <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-3 text-sm">
+          <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-3 text-sm">
             <p className="font-medium">Memory snapshot failed.</p>
             <p className="text-muted-foreground mt-1">{props.errorMessage}</p>
           </div>
         ) : props.isLoading || memoryState === undefined ? (
           <div className="grid gap-3">
-            <Skeleton className="h-20 w-full rounded-xl" />
-            <Skeleton className="h-64 w-full rounded-xl" />
+            <Skeleton className="h-20 w-full rounded-lg" />
+            <Skeleton className="h-64 w-full rounded-lg" />
           </div>
         ) : (
           <>
@@ -3036,7 +3043,7 @@ function MemoryInspectorCard(props: {
                   {memoryState.blocks.map((block) => (
                     <div
                       key={`${block.x}:${block.y}:${block.z}:${block.blockId}`}
-                      className="space-y-1 rounded-lg border px-3 py-2"
+                      className="space-y-1 rounded-md border px-3 py-2"
                     >
                       <p className="truncate text-sm font-medium">
                         {formatNamespacedId(block.blockId)}
@@ -3061,7 +3068,7 @@ function MemoryInspectorCard(props: {
                   {memoryState.containers.map((container) => (
                     <div
                       key={`${container.x}:${container.y}:${container.z}:${container.blockId}`}
-                      className="space-y-1 rounded-lg border px-3 py-2"
+                      className="space-y-1 rounded-md border px-3 py-2"
                     >
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="truncate text-sm font-medium">
@@ -3098,7 +3105,7 @@ function MemoryInspectorCard(props: {
                   {memoryState.entities.map((entity) => (
                     <div
                       key={entity.entityId}
-                      className="space-y-1 rounded-lg border px-3 py-2"
+                      className="space-y-1 rounded-md border px-3 py-2"
                     >
                       <p className="truncate text-sm font-medium">
                         {formatNamespacedId(entity.entityType)}
@@ -3126,7 +3133,7 @@ function MemoryInspectorCard(props: {
                   {memoryState.droppedItems.map((item) => (
                     <div
                       key={item.entityId}
-                      className="space-y-1 rounded-lg border px-3 py-2"
+                      className="space-y-1 rounded-md border px-3 py-2"
                     >
                       <p className="truncate text-sm font-medium">
                         {formatNamespacedId(item.itemId)} x{item.count}
@@ -3154,7 +3161,7 @@ function MemoryInspectorCard(props: {
                   {memoryState.unreachablePositions.map((position) => (
                     <div
                       key={`${position.x}:${position.y}:${position.z}:${position.untilTick}`}
-                      className="space-y-1 rounded-lg border px-3 py-2"
+                      className="space-y-1 rounded-md border px-3 py-2"
                     >
                       <p className="truncate text-sm font-medium">
                         {position.x}, {position.y}, {position.z}
@@ -3186,7 +3193,7 @@ function MemorySection(props: {
     : props.children !== null && props.children !== undefined;
 
   return (
-    <section className="space-y-2 rounded-lg border px-3 py-3">
+    <section className="space-y-2 rounded-md border px-3 py-3">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <p className="text-sm font-medium">{props.title}</p>
@@ -3209,7 +3216,7 @@ function InfoRow(props: {
   icon: ComponentType<{ className?: string }>;
 }) {
   return (
-    <div className="flex items-start gap-2 rounded-lg border px-3 py-2">
+    <div className="flex items-start gap-2 rounded-md border px-3 py-2">
       <props.icon className="text-muted-foreground mt-0.5 size-4 shrink-0" />
       <div className="min-w-0">
         <p className="text-muted-foreground text-xs">{props.label}</p>
