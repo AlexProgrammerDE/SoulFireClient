@@ -51,6 +51,7 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { Switch } from "@/components/ui/switch.tsx";
 import { TimestampSchema } from "@/generated/google/protobuf/timestamp_pb.ts";
 import {
+  type AutomationBotSettings,
   AutomationBotSettingsSchema,
   type AutomationBotState,
   type AutomationCoordinationState,
@@ -144,6 +145,61 @@ const quotaOverrideConfigs = [
     readSetting: (settings: AutomationInstanceSettings) => settings.targetBeds,
   },
 ] as const;
+
+const botTuningNumberConfigs = [
+  {
+    key: "memoryScanRadius",
+    label: "Memory Scan Radius",
+    description:
+      "Default 48, range 8-96. Larger scans discover more blocks but cost more work.",
+    min: 8,
+    max: 96,
+  },
+  {
+    key: "memoryScanIntervalTicks",
+    label: "Memory Scan Interval",
+    description:
+      "Default 20 ticks, range 1-200. Lower values rescan more aggressively.",
+    min: 1,
+    max: 200,
+  },
+  {
+    key: "retreatHealthThreshold",
+    label: "Retreat Health",
+    description:
+      "Default 8, range 1-20. Automation disengages at or below this health.",
+    min: 1,
+    max: 20,
+  },
+  {
+    key: "retreatFoodThreshold",
+    label: "Eat Food Threshold",
+    description:
+      "Default 12, range 1-20. Automation interrupts to eat at or below this food level.",
+    min: 1,
+    max: 20,
+  },
+] as const;
+
+type BotSettingsDraft = {
+  enabled: boolean;
+  allowDeathRecovery: boolean;
+  roleOverride: AutomationTeamRole;
+  memoryScanRadius: string;
+  memoryScanIntervalTicks: string;
+  retreatHealthThreshold: string;
+  retreatFoodThreshold: string;
+};
+
+type BotSettingsPatch = {
+  enabled?: boolean;
+  allowDeathRecovery?: boolean;
+  roleOverride?: AutomationTeamRole;
+  memoryScanRadius?: number;
+  memoryScanIntervalTicks?: number;
+  retreatHealthThreshold?: number;
+  retreatFoodThreshold?: number;
+};
 
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/automation",
@@ -525,11 +581,11 @@ function Content() {
     },
   });
 
-  const botRoleMutation = useMutation({
+  const botSettingsMutation = useMutation({
     mutationFn: async (action: {
       botId: string;
       accountName: string;
-      role: AutomationTeamRole;
+      patch: BotSettingsPatch;
     }) => {
       const activeTransport = createTransport();
       if (activeTransport === null) {
@@ -540,20 +596,18 @@ function Content() {
         AutomationService,
         activeTransport,
       );
-      return automationService.setAutomationRoleOverride({
+      return automationService.updateAutomationBotSettings({
         instanceId: instanceInfo.id,
         botIds: [action.botId],
-        role: action.role,
+        ...action.patch,
       });
     },
     onSuccess: async (_, action) => {
       await invalidateAutomation();
-      toast.success(
-        `${action.accountName}: role override set to ${roleLabel(action.role)}.`,
-      );
+      toast.success(`${action.accountName}: automation settings updated.`);
     },
     onError: (error) => {
-      toast.error("Failed to update role override.", {
+      toast.error("Failed to update automation settings.", {
         description: error instanceof Error ? error.message : String(error),
       });
     },
@@ -1013,7 +1067,7 @@ function Content() {
                 bot={bot}
                 disabled={isReadOnlyDemo}
                 pending={
-                  botActionMutation.isPending || botRoleMutation.isPending
+                  botActionMutation.isPending || botSettingsMutation.isPending
                 }
                 onPauseResume={() =>
                   botActionMutation.mutate({
@@ -1043,11 +1097,11 @@ function Content() {
                     accountName: bot.accountName,
                   })
                 }
-                onRoleOverrideChange={(role) =>
-                  botRoleMutation.mutate({
+                onUpdateSettings={(patch) =>
+                  botSettingsMutation.mutate({
                     botId: bot.botId,
                     accountName: bot.accountName,
-                    role,
+                    patch,
                   })
                 }
               />
@@ -1224,10 +1278,32 @@ function BotRuntimeCard(props: {
   onStop: () => void;
   onResetMemory: () => void;
   onReleaseClaims: () => void;
-  onRoleOverrideChange: (role: AutomationTeamRole) => void;
+  onUpdateSettings: (patch: BotSettingsPatch) => void;
 }) {
   const botSettings =
     props.bot.settings ?? create(AutomationBotSettingsSchema, {});
+  const [draft, setDraft] = useState(() => createBotSettingsDraft(botSettings));
+  const botSettingsPatch = useMemo(
+    () => buildBotSettingsPatch(botSettings, draft),
+    [botSettings, draft],
+  );
+  const hasSettingsChanges = Object.keys(botSettingsPatch).length > 0;
+  const hasValidTuningInputs = botTuningNumberConfigs.every((config) =>
+    isValidBotSettingInput(draft[config.key], config.min, config.max),
+  );
+
+  useEffect(() => {
+    setDraft(createBotSettingsDraft(botSettings));
+  }, [
+    botSettings.allowDeathRecovery,
+    botSettings.enabled,
+    botSettings.memoryScanIntervalTicks,
+    botSettings.memoryScanRadius,
+    botSettings.retreatFoodThreshold,
+    botSettings.retreatHealthThreshold,
+    botSettings.roleOverride,
+    botSettings,
+  ]);
 
   return (
     <Card className="h-full">
@@ -1248,18 +1324,6 @@ function BotRuntimeCard(props: {
             </Badge>
           </div>
         </div>
-        <SettingSelect
-          label="Role Override"
-          value={String(botSettings.roleOverride)}
-          options={roleOverrideOptions.map((option) => ({
-            value: String(option.value),
-            label: option.label,
-          }))}
-          disabled={props.disabled || props.pending}
-          onValueChange={(value) =>
-            props.onRoleOverrideChange(Number(value) as AutomationTeamRole)
-          }
-        />
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-3 text-sm sm:grid-cols-2">
@@ -1332,6 +1396,100 @@ function BotRuntimeCard(props: {
               ))}
             </div>
           )}
+        </div>
+
+        <div className="space-y-3 rounded-lg border px-3 py-3">
+          <div className="space-y-1">
+            <p className="text-sm font-medium">Automation Tuning</p>
+            <p className="text-muted-foreground text-xs">
+              Persisted bot-level settings with inline defaults, ranges, and
+              role control.
+            </p>
+          </div>
+          <SettingToggle
+            label="Automation Enabled"
+            description="Master switch. Turning this off also stops the current run on connected bots."
+            checked={draft.enabled}
+            disabled={props.disabled || props.pending}
+            onCheckedChange={(checked) =>
+              setDraft((current) => ({ ...current, enabled: checked }))
+            }
+          />
+          <SettingToggle
+            label="Allow Death Recovery"
+            description="Default on. Recover dropped items after deaths before resuming progression."
+            checked={draft.allowDeathRecovery}
+            disabled={props.disabled || props.pending}
+            onCheckedChange={(checked) =>
+              setDraft((current) => ({
+                ...current,
+                allowDeathRecovery: checked,
+              }))
+            }
+          />
+          <SettingSelect
+            label="Role Override"
+            value={String(draft.roleOverride)}
+            options={roleOverrideOptions.map((option) => ({
+              value: String(option.value),
+              label: option.label,
+            }))}
+            disabled={props.disabled || props.pending}
+            onValueChange={(value) =>
+              setDraft((current) => ({
+                ...current,
+                roleOverride: Number(value) as AutomationTeamRole,
+              }))
+            }
+          />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {botTuningNumberConfigs.map((config) => (
+              <div key={config.key} className="grid gap-2">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">{config.label}</p>
+                  <p className="text-muted-foreground text-xs">
+                    {config.description}
+                  </p>
+                </div>
+                <Input
+                  type="number"
+                  min={config.min}
+                  max={config.max}
+                  value={draft[config.key]}
+                  disabled={props.disabled || props.pending}
+                  onChange={(event) =>
+                    setDraft((current) => ({
+                      ...current,
+                      [config.key]: event.target.value,
+                    }))
+                  }
+                />
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={
+                props.disabled ||
+                props.pending ||
+                !hasValidTuningInputs ||
+                !hasSettingsChanges
+              }
+              onClick={() => props.onUpdateSettings(botSettingsPatch)}
+            >
+              Apply Tuning
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              disabled={props.disabled || props.pending || !hasSettingsChanges}
+              onClick={() => setDraft(createBotSettingsDraft(botSettings))}
+            >
+              Reset Draft
+            </Button>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -1471,6 +1629,63 @@ function isValidQuotaInput(value: string, min: number, max: number): boolean {
 
   const parsed = Number(value);
   return Number.isInteger(parsed) && parsed >= min && parsed <= max;
+}
+
+function createBotSettingsDraft(
+  settings: AutomationBotSettings,
+): BotSettingsDraft {
+  return {
+    enabled: settings.enabled,
+    allowDeathRecovery: settings.allowDeathRecovery,
+    roleOverride: settings.roleOverride,
+    memoryScanRadius: String(settings.memoryScanRadius),
+    memoryScanIntervalTicks: String(settings.memoryScanIntervalTicks),
+    retreatHealthThreshold: String(settings.retreatHealthThreshold),
+    retreatFoodThreshold: String(settings.retreatFoodThreshold),
+  };
+}
+
+function buildBotSettingsPatch(
+  settings: AutomationBotSettings,
+  draft: BotSettingsDraft,
+): BotSettingsPatch {
+  const patch: BotSettingsPatch = {};
+
+  if (draft.enabled !== settings.enabled) {
+    patch.enabled = draft.enabled;
+  }
+  if (draft.allowDeathRecovery !== settings.allowDeathRecovery) {
+    patch.allowDeathRecovery = draft.allowDeathRecovery;
+  }
+  if (draft.roleOverride !== settings.roleOverride) {
+    patch.roleOverride = draft.roleOverride;
+  }
+  if (Number(draft.memoryScanRadius) !== settings.memoryScanRadius) {
+    patch.memoryScanRadius = Number(draft.memoryScanRadius);
+  }
+  if (
+    Number(draft.memoryScanIntervalTicks) !== settings.memoryScanIntervalTicks
+  ) {
+    patch.memoryScanIntervalTicks = Number(draft.memoryScanIntervalTicks);
+  }
+  if (
+    Number(draft.retreatHealthThreshold) !== settings.retreatHealthThreshold
+  ) {
+    patch.retreatHealthThreshold = Number(draft.retreatHealthThreshold);
+  }
+  if (Number(draft.retreatFoodThreshold) !== settings.retreatFoodThreshold) {
+    patch.retreatFoodThreshold = Number(draft.retreatFoodThreshold);
+  }
+
+  return patch;
+}
+
+function isValidBotSettingInput(
+  value: string,
+  min: number,
+  max: number,
+): boolean {
+  return isValidQuotaInput(value, min, max);
 }
 
 function goalModeLabel(mode: AutomationGoalMode): string {
