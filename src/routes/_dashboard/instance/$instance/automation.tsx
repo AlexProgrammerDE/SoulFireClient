@@ -3,6 +3,7 @@ import { createClient } from "@connectrpc/connect";
 import {
   queryOptions,
   useMutation,
+  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
@@ -60,6 +61,8 @@ import {
   AutomationGoalMode,
   type AutomationInstanceSettings,
   AutomationInstanceSettingsSchema,
+  type AutomationMemoryState,
+  AutomationMemoryStateSchema,
   AutomationPreset,
   AutomationRolePolicy,
   AutomationService,
@@ -343,6 +346,8 @@ function Content() {
   const [bulkDeathRecoveryInput, setBulkDeathRecoveryInput] =
     useState(NO_CHANGE);
   const [bulkRoleOverrideInput, setBulkRoleOverrideInput] = useState(NO_CHANGE);
+  const [memoryBotId, setMemoryBotId] = useState("");
+  const [memoryMaxEntriesInput, setMemoryMaxEntriesInput] = useState("8");
   const transport = createTransport();
   const isReadOnlyDemo = transport === null;
   const hasAutomationSettingsPage = instanceInfo.instanceSettings.some(
@@ -375,6 +380,25 @@ function Content() {
     });
   }, [teamState.bots]);
 
+  useEffect(() => {
+    if (teamState.bots.length === 0) {
+      if (memoryBotId.length > 0) {
+        setMemoryBotId("");
+      }
+      return;
+    }
+
+    const hasSelectedMemoryBot = teamState.bots.some(
+      (bot) => bot.botId === memoryBotId,
+    );
+    if (!hasSelectedMemoryBot) {
+      const firstBot = teamState.bots[0];
+      if (firstBot) {
+        setMemoryBotId(firstBot.botId);
+      }
+    }
+  }, [memoryBotId, teamState.bots]);
+
   const invalidateAutomation = async () => {
     await Promise.all([
       queryClient.invalidateQueries({
@@ -382,6 +406,9 @@ function Content() {
       }),
       queryClient.invalidateQueries({
         queryKey: automationCoordinationStateQueryOptions.queryKey,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: ["automation-memory-state", instanceInfo.id],
       }),
     ]);
   };
@@ -728,6 +755,19 @@ function Content() {
     () => filteredBots.map((bot) => bot.botId),
     [filteredBots],
   );
+  const inspectedMemoryBot = useMemo(
+    () =>
+      teamState.bots.find((bot) => bot.botId === memoryBotId) ??
+      teamState.bots[0],
+    [memoryBotId, teamState.bots],
+  );
+  const memoryMaxEntries = useMemo(
+    () =>
+      isValidQuotaInput(memoryMaxEntriesInput, 1, 32)
+        ? Number(memoryMaxEntriesInput)
+        : 8,
+    [memoryMaxEntriesInput],
+  );
   const selectedBotIds = useMemo(
     () =>
       teamState.bots
@@ -749,6 +789,54 @@ function Content() {
     return patch;
   }, [bulkDeathRecoveryInput, bulkEnabledInput, bulkRoleOverrideInput]);
   const hasBulkSettingsPatch = Object.keys(bulkSettingsPatch).length > 0;
+  const memoryStateQuery = useQuery({
+    queryKey: [
+      "automation-memory-state",
+      instanceInfo.id,
+      inspectedMemoryBot?.botId ?? "none",
+      memoryMaxEntries,
+    ],
+    enabled: inspectedMemoryBot !== undefined,
+    queryFn: async (queryProps): Promise<AutomationMemoryState> => {
+      if (inspectedMemoryBot === undefined) {
+        return create(AutomationMemoryStateSchema, {
+          instanceId: instanceInfo.id,
+        });
+      }
+
+      const activeTransport = createTransport();
+      if (activeTransport === null) {
+        return createDemoAutomationMemoryState(
+          instanceInfo.id,
+          inspectedMemoryBot.botId,
+          inspectedMemoryBot.accountName,
+          memoryMaxEntries,
+        );
+      }
+
+      const automationService = createClient(
+        AutomationService,
+        activeTransport,
+      );
+      const result = await automationService.getAutomationMemoryState(
+        {
+          instanceId: instanceInfo.id,
+          botId: inspectedMemoryBot.botId,
+          maxEntries: memoryMaxEntries,
+        },
+        { signal: queryProps.signal },
+      );
+      return (
+        result.state ??
+        create(AutomationMemoryStateSchema, {
+          instanceId: instanceInfo.id,
+          botId: inspectedMemoryBot.botId,
+          accountName: inspectedMemoryBot.accountName,
+        })
+      );
+    },
+    refetchInterval: inspectedMemoryBot ? 2_000 : false,
+  });
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4 py-4">
@@ -1457,6 +1545,7 @@ function Content() {
                       label: bot.accountName,
                     })
                   }
+                  onInspectMemory={() => setMemoryBotId(bot.botId)}
                   onUpdateSettings={(patch) =>
                     botSettingsMutation.mutate({
                       botIds: [bot.botId],
@@ -1471,6 +1560,40 @@ function Content() {
         </Card>
 
         <div className="grid gap-4">
+          <MemoryInspectorCard
+            bots={teamState.bots}
+            selectedBotId={memoryBotId}
+            maxEntriesInput={memoryMaxEntriesInput}
+            onBotIdChange={setMemoryBotId}
+            onMaxEntriesInputChange={setMemoryMaxEntriesInput}
+            memoryState={memoryStateQuery.data}
+            isLoading={memoryStateQuery.isPending}
+            isRefreshing={memoryStateQuery.isFetching}
+            errorMessage={
+              memoryStateQuery.error instanceof Error
+                ? memoryStateQuery.error.message
+                : memoryStateQuery.error
+                  ? String(memoryStateQuery.error)
+                  : null
+            }
+            resetDisabled={
+              isReadOnlyDemo ||
+              botActionMutation.isPending ||
+              inspectedMemoryBot === undefined
+            }
+            onResetMemory={() => {
+              if (inspectedMemoryBot === undefined) {
+                return;
+              }
+
+              botActionMutation.mutate({
+                kind: "reset-memory",
+                botIds: [inspectedMemoryBot.botId],
+                label: inspectedMemoryBot.accountName,
+              });
+            }}
+          />
+
           <CoordinationCard
             title="Shared Claims"
             description="Exact team reservations that can be released from the dashboard."
@@ -1641,6 +1764,7 @@ function BotRuntimeCard(props: {
   onStop: () => void;
   onResetMemory: () => void;
   onReleaseClaims: () => void;
+  onInspectMemory: () => void;
   onUpdateSettings: (patch: BotSettingsPatch) => void;
 }) {
   const botSettings =
@@ -1901,6 +2025,15 @@ function BotRuntimeCard(props: {
             size="sm"
             variant="outline"
             disabled={props.disabled || props.pending}
+            onClick={props.onInspectMemory}
+          >
+            <BrainCircuitIcon className="size-4" />
+            Inspect Memory
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={props.disabled || props.pending}
             onClick={props.onResetMemory}
           >
             <RotateCcwIcon className="size-4" />
@@ -1959,6 +2092,338 @@ function CoordinationCard(props: {
         )}
       </CardContent>
     </Card>
+  );
+}
+
+function MemoryInspectorCard(props: {
+  bots: AutomationBotState[];
+  selectedBotId: string;
+  maxEntriesInput: string;
+  onBotIdChange: (botId: string) => void;
+  onMaxEntriesInputChange: (value: string) => void;
+  memoryState: AutomationMemoryState | undefined;
+  isLoading: boolean;
+  isRefreshing: boolean;
+  errorMessage: string | null;
+  resetDisabled: boolean;
+  onResetMemory: () => void;
+}) {
+  const selectedBot = props.bots.find(
+    (bot) => bot.botId === props.selectedBotId,
+  );
+  const selectedBotId = selectedBot?.botId ?? props.bots[0]?.botId ?? "";
+  const memoryState = props.memoryState;
+
+  return (
+    <Card>
+      <CardHeader className="space-y-4">
+        <div>
+          <CardTitle>Memory Browser</CardTitle>
+          <CardDescription>
+            Inspect remembered blocks, containers, entities, dropped items, and
+            unreachable spots for one automation bot.
+          </CardDescription>
+        </div>
+        {props.bots.length === 0 ? null : (
+          <div className="grid gap-3">
+            <SettingSelect
+              label="Inspect Bot"
+              value={selectedBotId}
+              options={props.bots.map((bot) => ({
+                value: bot.botId,
+                label: bot.accountName,
+              }))}
+              disabled={false}
+              onValueChange={props.onBotIdChange}
+            />
+            <div className="grid gap-2">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-medium">Snapshot Depth</p>
+                  <p className="text-muted-foreground text-xs">
+                    Returned per category. Valid range 1-32.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Input
+                    className="w-20"
+                    type="number"
+                    min={1}
+                    max={32}
+                    value={props.maxEntriesInput}
+                    onChange={(event) =>
+                      props.onMaxEntriesInputChange(event.target.value)
+                    }
+                  />
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={props.resetDisabled}
+                    onClick={props.onResetMemory}
+                  >
+                    <RotateCcwIcon className="size-4" />
+                    Reset
+                  </Button>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {selectedBot && (
+                  <>
+                    <Badge variant="outline">
+                      {roleLabel(selectedBot.teamRole)}
+                    </Badge>
+                    <Badge variant="outline">
+                      {selectedBot.dimension || "Unknown"}
+                    </Badge>
+                    <Badge
+                      variant={selectedBot.paused ? "secondary" : "outline"}
+                    >
+                      {selectedBot.paused ? "Paused" : "Live"}
+                    </Badge>
+                  </>
+                )}
+                {memoryState && (
+                  <Badge variant="secondary">
+                    Tick {String(memoryState.tick)}
+                  </Badge>
+                )}
+                {props.isRefreshing && (
+                  <Badge variant="secondary">Refreshing</Badge>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {props.bots.length === 0 ? (
+          <p className="text-muted-foreground text-sm">
+            No automation bots are available for memory inspection.
+          </p>
+        ) : props.errorMessage ? (
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-3 text-sm">
+            <p className="font-medium">Memory snapshot failed.</p>
+            <p className="text-muted-foreground mt-1">{props.errorMessage}</p>
+          </div>
+        ) : props.isLoading || memoryState === undefined ? (
+          <div className="grid gap-3">
+            <Skeleton className="h-20 w-full rounded-xl" />
+            <Skeleton className="h-64 w-full rounded-xl" />
+          </div>
+        ) : (
+          <>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <InfoRow
+                label="Remembered Blocks"
+                value={String(memoryState.rememberedBlockCount)}
+                icon={WaypointsIcon}
+              />
+              <InfoRow
+                label="Containers"
+                value={String(memoryState.rememberedContainerCount)}
+                icon={PackageIcon}
+              />
+              <InfoRow
+                label="Entities"
+                value={String(memoryState.rememberedEntityCount)}
+                icon={SwordsIcon}
+              />
+              <InfoRow
+                label="Dropped Items"
+                value={String(memoryState.rememberedDroppedItemCount)}
+                icon={RefreshCcwIcon}
+              />
+              <InfoRow
+                label="Unreachable Spots"
+                value={String(memoryState.unreachablePositionCount)}
+                icon={ShieldAlertIcon}
+              />
+              <InfoRow
+                label="Snapshot Owner"
+                value={
+                  memoryState.accountName ||
+                  selectedBot?.accountName ||
+                  "Unknown"
+                }
+                icon={BotMessageSquareIcon}
+              />
+            </div>
+
+            <ScrollArea className="h-[30rem] pr-3">
+              <div className="space-y-4">
+                <MemorySection
+                  title="Blocks"
+                  description="Recent remembered block locations."
+                  count={memoryState.blocks.length}
+                  emptyState="No remembered blocks in this snapshot."
+                >
+                  {memoryState.blocks.map((block) => (
+                    <div
+                      key={`${block.x}:${block.y}:${block.z}:${block.blockId}`}
+                      className="space-y-1 rounded-lg border px-3 py-2"
+                    >
+                      <p className="truncate text-sm font-medium">
+                        {formatNamespacedId(block.blockId)}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {block.x}, {block.y}, {block.z}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Seen{" "}
+                        {formatSeenTick(memoryState.tick, block.lastSeenTick)}
+                      </p>
+                    </div>
+                  ))}
+                </MemorySection>
+
+                <MemorySection
+                  title="Containers"
+                  description="Tracked storage blocks and whether they were inspected."
+                  count={memoryState.containers.length}
+                  emptyState="No remembered containers in this snapshot."
+                >
+                  {memoryState.containers.map((container) => (
+                    <div
+                      key={`${container.x}:${container.y}:${container.z}:${container.blockId}`}
+                      className="space-y-1 rounded-lg border px-3 py-2"
+                    >
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="truncate text-sm font-medium">
+                          {formatNamespacedId(container.blockId)}
+                        </p>
+                        <Badge variant="outline">
+                          {container.inspected ? "Inspected" : "Unopened"}
+                        </Badge>
+                      </div>
+                      <p className="text-muted-foreground text-xs">
+                        {container.x}, {container.y}, {container.z}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {container.distinctItemKinds} item kinds,{" "}
+                        {container.totalItemCount} total items
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Seen{" "}
+                        {formatSeenTick(
+                          memoryState.tick,
+                          container.lastSeenTick,
+                        )}
+                      </p>
+                    </div>
+                  ))}
+                </MemorySection>
+
+                <MemorySection
+                  title="Entities"
+                  description="Recent live entities still remembered by automation."
+                  count={memoryState.entities.length}
+                  emptyState="No remembered entities in this snapshot."
+                >
+                  {memoryState.entities.map((entity) => (
+                    <div
+                      key={entity.entityId}
+                      className="space-y-1 rounded-lg border px-3 py-2"
+                    >
+                      <p className="truncate text-sm font-medium">
+                        {formatNamespacedId(entity.entityType)}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {formatPosition(entity.position)}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Entity {shortId(entity.entityId)}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Seen{" "}
+                        {formatSeenTick(memoryState.tick, entity.lastSeenTick)}
+                      </p>
+                    </div>
+                  ))}
+                </MemorySection>
+
+                <MemorySection
+                  title="Dropped Items"
+                  description="Loot or grave items that may still be recoverable."
+                  count={memoryState.droppedItems.length}
+                  emptyState="No remembered dropped items in this snapshot."
+                >
+                  {memoryState.droppedItems.map((item) => (
+                    <div
+                      key={item.entityId}
+                      className="space-y-1 rounded-lg border px-3 py-2"
+                    >
+                      <p className="truncate text-sm font-medium">
+                        {formatNamespacedId(item.itemId)} x{item.count}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {formatPosition(item.position)}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Entity {shortId(item.entityId)}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        Seen{" "}
+                        {formatSeenTick(memoryState.tick, item.lastSeenTick)}
+                      </p>
+                    </div>
+                  ))}
+                </MemorySection>
+
+                <MemorySection
+                  title="Unreachable Positions"
+                  description="Known bad positions that automation is temporarily avoiding."
+                  count={memoryState.unreachablePositions.length}
+                  emptyState="No unreachable positions in this snapshot."
+                >
+                  {memoryState.unreachablePositions.map((position) => (
+                    <div
+                      key={`${position.x}:${position.y}:${position.z}:${position.untilTick}`}
+                      className="space-y-1 rounded-lg border px-3 py-2"
+                    >
+                      <p className="truncate text-sm font-medium">
+                        {position.x}, {position.y}, {position.z}
+                      </p>
+                      <p className="text-muted-foreground text-xs">
+                        {formatUntilTick(memoryState.tick, position.untilTick)}
+                      </p>
+                    </div>
+                  ))}
+                </MemorySection>
+              </div>
+            </ScrollArea>
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function MemorySection(props: {
+  title: string;
+  description: string;
+  count: number;
+  emptyState: string;
+  children: ReactNode;
+}) {
+  const hasItems = Array.isArray(props.children)
+    ? props.children.length > 0
+    : props.children !== null && props.children !== undefined;
+
+  return (
+    <section className="space-y-2 rounded-lg border px-3 py-3">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <p className="text-sm font-medium">{props.title}</p>
+          <p className="text-muted-foreground text-xs">{props.description}</p>
+        </div>
+        <Badge variant="outline">{props.count}</Badge>
+      </div>
+      {hasItems ? (
+        <div className="space-y-2">{props.children}</div>
+      ) : (
+        <p className="text-muted-foreground text-sm">{props.emptyState}</p>
+      )}
+    </section>
   );
 }
 
@@ -2146,6 +2611,42 @@ function formatPosition(
   }
 
   return `${Math.floor(position.x)}, ${Math.floor(position.y)}, ${Math.floor(position.z)}`;
+}
+
+function formatNamespacedId(value: string): string {
+  return value.startsWith("minecraft:")
+    ? value.slice("minecraft:".length)
+    : value;
+}
+
+function shortId(value: string): string {
+  return value.length <= 8 ? value : value.slice(0, 8);
+}
+
+function formatSeenTick(
+  currentTick: bigint | number,
+  seenTick: bigint | number,
+): string {
+  const current = Number(currentTick);
+  const seen = Number(seenTick);
+  const delta = Math.max(0, current - seen);
+  return delta === 0
+    ? "this tick"
+    : `${delta} tick${delta === 1 ? "" : "s"} ago`;
+}
+
+function formatUntilTick(
+  currentTick: bigint | number,
+  untilTick: bigint | number,
+): string {
+  const current = Number(currentTick);
+  const until = Number(untilTick);
+  if (until <= current) {
+    return "Expired but still cached.";
+  }
+
+  const delta = until - current;
+  return `Avoid for ${delta} more tick${delta === 1 ? "" : "s"}.`;
 }
 
 function createDemoAutomationTeamState(
@@ -2422,4 +2923,208 @@ function createDemoAutomationCoordinationState(
       },
     ],
   });
+}
+
+function createDemoAutomationMemoryState(
+  instanceId: string,
+  botId: string,
+  accountName: string,
+  maxEntries: number,
+): AutomationMemoryState {
+  const baseTick = 214_580;
+
+  switch (botId) {
+    case "22222222-2222-2222-2222-222222222222":
+      return create(AutomationMemoryStateSchema, {
+        instanceId,
+        botId,
+        accountName,
+        tick: BigInt(baseTick),
+        rememberedBlockCount: 18,
+        rememberedContainerCount: 2,
+        rememberedEntityCount: 3,
+        rememberedDroppedItemCount: 1,
+        unreachablePositionCount: 2,
+        blocks: [
+          {
+            x: -118,
+            y: 70,
+            z: 236,
+            blockId: "minecraft:nether_bricks",
+            lastSeenTick: BigInt(baseTick - 6),
+          },
+          {
+            x: -104,
+            y: 74,
+            z: 219,
+            blockId: "minecraft:blaze_spawner",
+            lastSeenTick: BigInt(baseTick - 12),
+          },
+        ].slice(0, maxEntries),
+        containers: [
+          {
+            x: -121,
+            y: 68,
+            z: 232,
+            blockId: "minecraft:chest",
+            inspected: true,
+            distinctItemKinds: 3,
+            totalItemCount: 9,
+            lastSeenTick: BigInt(baseTick - 18),
+          },
+        ].slice(0, maxEntries),
+        entities: [
+          {
+            entityId: "cafe0000-0000-0000-0000-000000000001",
+            entityType: "minecraft:blaze",
+            position: { x: -106, y: 74, z: 221 },
+            lastSeenTick: BigInt(baseTick - 3),
+          },
+          {
+            entityId: "cafe0000-0000-0000-0000-000000000002",
+            entityType: "minecraft:wither_skeleton",
+            position: { x: -130, y: 69, z: 244 },
+            lastSeenTick: BigInt(baseTick - 14),
+          },
+        ].slice(0, maxEntries),
+        droppedItems: [
+          {
+            entityId: "cafe0000-0000-0000-0000-000000000003",
+            itemId: "minecraft:blaze_rod",
+            count: 1,
+            position: { x: -108, y: 74, z: 220 },
+            lastSeenTick: BigInt(baseTick - 8),
+          },
+        ].slice(0, maxEntries),
+        unreachablePositions: [
+          {
+            x: -140,
+            y: 67,
+            z: 252,
+            untilTick: BigInt(baseTick + 40),
+          },
+        ].slice(0, maxEntries),
+      });
+    case "33333333-3333-3333-3333-333333333333":
+      return create(AutomationMemoryStateSchema, {
+        instanceId,
+        botId,
+        accountName,
+        tick: BigInt(baseTick),
+        rememberedBlockCount: 9,
+        rememberedContainerCount: 1,
+        rememberedEntityCount: 1,
+        rememberedDroppedItemCount: 0,
+        unreachablePositionCount: 1,
+        blocks: [
+          {
+            x: 1394,
+            y: 65,
+            z: -252,
+            blockId: "minecraft:oak_planks",
+            lastSeenTick: BigInt(baseTick - 4),
+          },
+          {
+            x: 1388,
+            y: 65,
+            z: -246,
+            blockId: "minecraft:white_bed",
+            lastSeenTick: BigInt(baseTick - 11),
+          },
+        ].slice(0, maxEntries),
+        containers: [
+          {
+            x: 1392,
+            y: 65,
+            z: -250,
+            blockId: "minecraft:chest",
+            inspected: false,
+            distinctItemKinds: 0,
+            totalItemCount: 0,
+            lastSeenTick: BigInt(baseTick - 11),
+          },
+        ].slice(0, maxEntries),
+        entities: [
+          {
+            entityId: "cafe0000-0000-0000-0000-000000000004",
+            entityType: "minecraft:villager",
+            position: { x: 1389, y: 65, z: -248 },
+            lastSeenTick: BigInt(baseTick - 13),
+          },
+        ].slice(0, maxEntries),
+        unreachablePositions: [
+          {
+            x: 1406,
+            y: 34,
+            z: -301,
+            untilTick: BigInt(baseTick + 12),
+          },
+        ].slice(0, maxEntries),
+      });
+    default:
+      return create(AutomationMemoryStateSchema, {
+        instanceId,
+        botId,
+        accountName,
+        tick: BigInt(baseTick),
+        rememberedBlockCount: 15,
+        rememberedContainerCount: 2,
+        rememberedEntityCount: 2,
+        rememberedDroppedItemCount: 1,
+        unreachablePositionCount: 1,
+        blocks: [
+          {
+            x: 1407,
+            y: 34,
+            z: -301,
+            blockId: "minecraft:end_portal_frame",
+            lastSeenTick: BigInt(baseTick - 5),
+          },
+          {
+            x: 1412,
+            y: 73,
+            z: -288,
+            blockId: "minecraft:stone_bricks",
+            lastSeenTick: BigInt(baseTick - 10),
+          },
+        ].slice(0, maxEntries),
+        containers: [
+          {
+            x: 1415,
+            y: 72,
+            z: -285,
+            blockId: "minecraft:chest",
+            inspected: true,
+            distinctItemKinds: 4,
+            totalItemCount: 17,
+            lastSeenTick: BigInt(baseTick - 14),
+          },
+        ].slice(0, maxEntries),
+        entities: [
+          {
+            entityId: "cafe0000-0000-0000-0000-000000000005",
+            entityType: "minecraft:enderman",
+            position: { x: 1418, y: 72, z: -280 },
+            lastSeenTick: BigInt(baseTick - 9),
+          },
+        ].slice(0, maxEntries),
+        droppedItems: [
+          {
+            entityId: "cafe0000-0000-0000-0000-000000000006",
+            itemId: "minecraft:ender_eye",
+            count: 2,
+            position: { x: 1410, y: 72, z: -287 },
+            lastSeenTick: BigInt(baseTick - 16),
+          },
+        ].slice(0, maxEntries),
+        unreachablePositions: [
+          {
+            x: 1411,
+            y: 33,
+            z: -297,
+            untilTick: BigInt(baseTick + 20),
+          },
+        ].slice(0, maxEntries),
+      });
+  }
 }
