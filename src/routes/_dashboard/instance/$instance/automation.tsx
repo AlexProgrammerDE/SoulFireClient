@@ -813,6 +813,30 @@ function Content() {
       ),
     [botAttentionEntries],
   );
+  const attentionBotIds = useMemo(
+    () =>
+      botAttentionEntries
+        .filter((entry) => entry.attention.severity !== "ok")
+        .map((entry) => entry.bot.botId),
+    [botAttentionEntries],
+  );
+  const criticalBotIds = useMemo(
+    () =>
+      botAttentionEntries
+        .filter(
+          (entry) =>
+            entry.attention.severity === "critical" && !entry.bot.paused,
+        )
+        .map((entry) => entry.bot.botId),
+    [botAttentionEntries],
+  );
+  const healthyPausedBotIds = useMemo(
+    () =>
+      teamState.bots
+        .filter((bot) => isHealthyPausedResumeCandidate(bot))
+        .map((bot) => bot.botId),
+    [teamState.bots],
+  );
   const botById = useMemo(
     () => new Map(teamState.bots.map((bot) => [bot.botId, bot])),
     [teamState.bots],
@@ -1792,8 +1816,34 @@ function Content() {
             criticalCount={attentionCounts.critical}
             warningCount={attentionCounts.warning}
             healthyCount={attentionCounts.healthy}
+            attentionCount={attentionBotIds.length}
+            pausableCriticalCount={criticalBotIds.length}
+            resumablePausedCount={healthyPausedBotIds.length}
+            isPending={botActionMutation.isPending}
+            isReadOnlyDemo={isReadOnlyDemo}
             onInspectMemory={setMemoryBotId}
             onFocusClaims={setClaimFocusBotId}
+            onSelectAttentionBots={() =>
+              setSelectedBots(
+                Object.fromEntries(
+                  attentionBotIds.map((botId) => [botId, true] as const),
+                ),
+              )
+            }
+            onPauseCriticalBots={() =>
+              botActionMutation.mutate({
+                kind: "pause",
+                botIds: criticalBotIds,
+                label: "Critical bots",
+              })
+            }
+            onResumeHealthyPausedBots={() =>
+              botActionMutation.mutate({
+                kind: "resume",
+                botIds: healthyPausedBotIds,
+                label: "Healthy paused bots",
+              })
+            }
             onSelectBot={(botId) =>
               setSelectedBots((current) => ({
                 ...current,
@@ -2419,8 +2469,16 @@ function RunHealthCard(props: {
   criticalCount: number;
   warningCount: number;
   healthyCount: number;
+  attentionCount: number;
+  pausableCriticalCount: number;
+  resumablePausedCount: number;
+  isPending: boolean;
+  isReadOnlyDemo: boolean;
   onInspectMemory: (botId: string) => void;
   onFocusClaims: (botId: string) => void;
+  onSelectAttentionBots: () => void;
+  onPauseCriticalBots: () => void;
+  onResumeHealthyPausedBots: () => void;
   onSelectBot: (botId: string) => void;
 }) {
   const attentionEntries = props.entries.filter(
@@ -2453,6 +2511,66 @@ function RunHealthCard(props: {
             value={String(props.healthyCount)}
             icon={PlayIcon}
           />
+        </div>
+        <div className="space-y-3 rounded-lg border px-3 py-3">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Health Actions</p>
+              <p className="text-muted-foreground text-xs">
+                Fast operator workflows derived from the current health
+                heuristics instead of manual filtering first.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary">
+                {props.attentionCount} attention
+              </Badge>
+              <Badge variant="secondary">
+                {props.resumablePausedCount} resumable paused
+              </Badge>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={props.attentionCount === 0}
+              onClick={props.onSelectAttentionBots}
+            >
+              <ShieldAlertIcon className="size-4" />
+              Select Attention
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={
+                props.isReadOnlyDemo ||
+                props.isPending ||
+                props.pausableCriticalCount === 0
+              }
+              onClick={props.onPauseCriticalBots}
+            >
+              <PauseIcon className="size-4" />
+              Pause Critical
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={
+                props.isReadOnlyDemo ||
+                props.isPending ||
+                props.resumablePausedCount === 0
+              }
+              onClick={props.onResumeHealthyPausedBots}
+            >
+              <PlayIcon className="size-4" />
+              Resume Healthy Paused
+            </Button>
+          </div>
+          <p className="text-muted-foreground text-xs">
+            Resume candidates ignore pause age and use the current failure
+            counters plus goal state as a lightweight safety check.
+          </p>
         </div>
         {attentionEntries.length === 0 ? (
           <p className="text-muted-foreground text-sm">
@@ -3547,6 +3665,26 @@ function claimExpiryLabel(expiresInSeconds: number | null): string {
     return "Expired";
   }
   return `Expires in ${formatDurationSeconds(expiresInSeconds)}`;
+}
+
+function isHealthyPausedResumeCandidate(bot: AutomationBotState): boolean {
+  if (!bot.paused) {
+    return false;
+  }
+  if (bot.goalMode === AutomationGoalMode.IDLE) {
+    return false;
+  }
+  if (!bot.settings?.enabled) {
+    return false;
+  }
+  if (bot.timeoutCount >= 3 || bot.deathCount >= 3 || bot.recoveryCount >= 4) {
+    return false;
+  }
+  return (
+    bot.currentAction !== undefined ||
+    bot.queuedTargets.length > 0 ||
+    bot.target !== undefined
+  );
 }
 
 function goalModeLabel(mode: AutomationGoalMode): string {
