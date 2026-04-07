@@ -36,6 +36,18 @@ export function NavSettings() {
     return map;
   }, [instanceInfo.instanceSettings]);
 
+  const builtinPageMap = useMemo(() => {
+    const map = new Map(
+      instanceInfo.instanceSettings.map((page) => [page.id, page]),
+    );
+    return map;
+  }, [instanceInfo.instanceSettings]);
+
+  const knownSettingPageIds = useMemo(
+    () => new Set(["bot", "account", "proxy", "ai", "pathfinding"]),
+    [],
+  );
+
   const navLinks: NavLink[] = [
     {
       title: t("instanceSidebar.botSettings"),
@@ -92,6 +104,25 @@ export function NavSettings() {
           } satisfies NavLink,
         ]
       : []),
+    ...instanceInfo.instanceSettings
+      .filter(
+        (page) =>
+          page.owningPluginId === undefined &&
+          !knownSettingPageIds.has(page.id) &&
+          page.id !== "account" &&
+          page.id !== "proxy",
+      )
+      .map(
+        (page) =>
+          ({
+            title: page.pageName,
+            iconId: builtinPageMap.get(page.id)?.iconId ?? "settings-2",
+            linkProps: {
+              to: "/instance/$instance/settings/$pageId" as const,
+              params: { instance: instanceInfo.id, pageId: page.id },
+            },
+          }) satisfies NavLink,
+      ),
   ];
 
   return (
