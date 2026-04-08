@@ -354,6 +354,7 @@ export function edgesToProto(edges: Edge[]): ScriptEdge[] {
       target: edge.target,
       targetHandle: edge.targetHandle ?? "",
       edgeType: isExecution ? EdgeType.EXECUTION : EdgeType.DATA,
+      order: (edge.data as { order?: number } | undefined)?.order,
     });
   });
 }
@@ -371,7 +372,10 @@ export function protoToEdges(edges: ScriptEdge[]): Edge[] {
       target: edge.target,
       targetHandle: edge.targetHandle || undefined,
       type: isExecution ? "execution" : "data",
-      data: { edgeType: isExecution ? "execution" : "data" },
+      data: {
+        edgeType: isExecution ? "execution" : "data",
+        ...(edge.order != null ? { order: edge.order } : {}),
+      },
     };
   });
 }

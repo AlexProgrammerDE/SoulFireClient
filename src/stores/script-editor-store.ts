@@ -28,6 +28,66 @@ export type { PortType };
 // Stable empty array to avoid infinite re-renders in Zustand selectors
 const EMPTY_DEBUG_HISTORY: Array<{ value: unknown; timestamp: Date }> = [];
 
+function normalizeMultiInputEdgeOrders(nodes: Node[], edges: Edge[]): Edge[] {
+  const counters = new Map<string, number>();
+  return edges.map((edge) => {
+    const targetNode = nodes.find((n) => n.id === edge.target);
+    const targetHandle = edge.targetHandle;
+    if (
+      !targetNode ||
+      !targetHandle ||
+      !isPortMultiInput(targetNode.type ?? "", targetHandle)
+    ) {
+      return edge;
+    }
+
+    const key = `${edge.target}:${targetHandle}`;
+    const nextOrder = counters.get(key) ?? 0;
+    counters.set(key, nextOrder + 1);
+    return {
+      ...edge,
+      data: {
+        ...(edge.data as Record<string, unknown> | undefined),
+        order: nextOrder,
+      },
+    };
+  });
+}
+
+function assignEdgeOrder(
+  nodes: Node[],
+  edges: Edge[],
+  edge: Connection & { type: string; data: Record<string, unknown> },
+): Connection & { type: string; data: Record<string, unknown> } {
+  const targetNode = nodes.find((n) => n.id === edge.target);
+  const targetHandle = edge.targetHandle;
+  if (
+    !targetNode ||
+    !targetHandle ||
+    !isPortMultiInput(targetNode.type ?? "", targetHandle)
+  ) {
+    return edge;
+  }
+
+  const nextOrder =
+    edges
+      .filter(
+        (e) => e.target === edge.target && e.targetHandle === targetHandle,
+      )
+      .map((e) =>
+        Number((e.data as { order?: number } | undefined)?.order ?? -1),
+      )
+      .reduce((max, value) => Math.max(max, value), -1) + 1;
+
+  return {
+    ...edge,
+    data: {
+      ...(edge.data as Record<string, unknown> | undefined),
+      order: nextOrder,
+    },
+  };
+}
+
 export interface ScriptEditorState {
   // React Flow state
   nodes: Node[];
@@ -423,22 +483,23 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       }
     }
 
+    const newEdge = assignEdgeOrder(nodes, baseEdges, {
+      ...connection,
+      type: edgeType,
+      data: { edgeType, edgeStyle },
+    });
+
     set({
-      edges: addEdge(
-        {
-          ...connection,
-          type: edgeType,
-          data: { edgeType, edgeStyle },
-        },
-        baseEdges,
-      ),
+      edges: normalizeMultiInputEdgeOrders(nodes, addEdge(newEdge, baseEdges)),
       isDirty: true,
     });
   },
 
   onReconnect: (oldEdge, newConnection) => {
+    const { nodes, edges } = get();
+    const reconnected = reconnectEdge(oldEdge, newConnection, edges);
     set({
-      edges: reconnectEdge(oldEdge, newConnection, get().edges),
+      edges: normalizeMultiInputEdgeOrders(nodes, reconnected),
       isDirty: true,
     });
   },

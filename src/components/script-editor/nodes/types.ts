@@ -20,6 +20,8 @@ export type PortType =
   | "item"
   | "list"
   | "map"
+  | "set"
+  | "collection"
   | "any";
 
 /**
@@ -329,6 +331,10 @@ export function protoPortTypeToLocal(protoType: ProtoPortType): PortType {
       return "item";
     case ProtoPortType.MAP:
       return "map";
+    case ProtoPortType.SET:
+      return "set";
+    case ProtoPortType.COLLECTION:
+      return "collection";
     default:
       return "any";
   }
@@ -456,6 +462,8 @@ export const DEFAULT_PORT_COLORS: Record<PortType, string> = {
   item: "#ec4899",
   list: "#8b5cf6",
   map: "#14b8a6",
+  set: "#0ea5e9",
+  collection: "#6366f1",
   any: "#6b7280",
 };
 
@@ -474,6 +482,8 @@ export const DEFAULT_HANDLE_SHAPES: Record<PortType, HandleShape> = {
   item: "circle",
   list: "circle",
   map: "diamond",
+  set: "diamond",
+  collection: "diamond",
   any: "circle",
 };
 
@@ -492,6 +502,8 @@ export const DEFAULT_EDGE_STYLES: Record<PortType, EdgeStyle> = {
   item: "default",
   list: "default",
   map: "default",
+  set: "default",
+  collection: "default",
   any: "default",
 };
 
