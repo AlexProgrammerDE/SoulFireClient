@@ -19,54 +19,54 @@ message ClientDataRequest {
 // Used to communicate which server-wide permissions the authenticated user has been granted.
 message GlobalPermissionState {
   // The global permission being described.
-  GlobalPermission global_permission = 1;
+  GlobalPermission global_permission = 1 [(google.api.field_behavior) = REQUIRED];
   // Whether this permission has been granted to the current user.
   // True if the user has this permission, false otherwise.
-  bool granted = 2;
+  bool granted = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Contains metadata about the SoulFire server instance.
 // This information is useful for client compatibility checks and connecting to related services.
 message ServerInfo {
   // The semantic version of the SoulFire server (e.g., "1.0.0").
-  string version = 1;
+  string version = 1 [(google.api.field_behavior) = REQUIRED];
   // The git commit hash of the server build, useful for debugging and version tracking.
-  string commit_hash = 2;
+  string commit_hash = 2 [(google.api.field_behavior) = REQUIRED];
   // The git branch name from which the server was built (e.g., "main", "develop").
-  string branch_name = 3;
+  string branch_name = 3 [(google.api.field_behavior) = REQUIRED];
   // The public URL for the gRPC/HTTP API endpoint.
   // This is the base address clients should use to connect to the server.
-  string public_api_address = 4;
+  string public_api_address = 4 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uri"];
   // The public URL for the WebDAV file access endpoint.
   // Derived from public_api_address with "/webdav" appended.
-  string public_webdav_address = 5;
+  string public_webdav_address = 5 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uri"];
   // The public URL for the API documentation endpoint.
   // Derived from public_api_address with "/docs" appended.
-  string public_docs_address = 6;
+  string public_docs_address = 6 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uri"];
   // The public URL for the MCP (Model Context Protocol) endpoint.
   // Derived from public_api_address with "/mcp" appended.
   // Clients can use this to connect AI assistants to the SoulFire server.
-  string public_mcp_address = 8;
+  string public_mcp_address = 8 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uri"];
   // The native Minecraft protocol version supported by this server (e.g., "1.21.4").
-  string minecraft_version = 7;
+  string minecraft_version = 7 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response containing comprehensive information about the authenticated client and server.
 // This is typically called after authentication to populate the client UI with user details.
 message ClientDataResponse {
   // The unique identifier (UUID) of the authenticated user.
-  string id = 6;
+  string id = 6 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The display username of the authenticated user.
-  string username = 1;
+  string username = 1 [(google.api.field_behavior) = REQUIRED];
   // The role assigned to the user (ADMIN or USER), which determines base permission levels.
-  UserRole role = 7;
+  UserRole role = 7 [(google.api.field_behavior) = REQUIRED];
   // The email address associated with the user account.
-  string email = 8;
+  string email = 8 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "email"];
   // A complete list of all global permissions and whether they are granted to this user.
   // This allows the client to determine which features/actions are available.
-  repeated GlobalPermissionState server_permissions = 2;
+  repeated GlobalPermissionState server_permissions = 2 [(google.api.field_behavior) = REQUIRED];
   // Metadata about the server instance the client is connected to.
-  ServerInfo server_info = 11;
+  ServerInfo server_info = 11 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for generating a WebDAV authentication token.
@@ -78,7 +78,7 @@ message GenerateWebDAVTokenRequest {
 message GenerateWebDAVTokenResponse {
   // A JWT token with "webdav" audience that can be used to authenticate WebDAV requests.
   // This token should be included in the Authorization header when accessing the WebDAV endpoint.
-  string token = 1;
+  string token = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for generating an API authentication token.
@@ -90,7 +90,7 @@ message GenerateAPITokenRequest {
 message GenerateAPITokenResponse {
   // A JWT token with "api" audience that can be used to authenticate gRPC/HTTP API requests.
   // This token should be included in the Authorization header for subsequent API calls.
-  string token = 1;
+  string token = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for updating the authenticated user's username.

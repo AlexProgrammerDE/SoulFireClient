@@ -8,6 +8,7 @@ package soulfire.v1;
 import "soulfire/common.proto";
 import "soulfire/api_docs.proto";
 import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
 
@@ -15,11 +16,11 @@ import "google/protobuf/struct.proto";
 // to track who performed an action.
 message InstanceUser {
   // Unique identifier for the user (UUID format).
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The username of the user.
-  string username = 2;
+  string username = 2 [(google.api.field_behavior) = REQUIRED];
   // The email address of the user.
-  string email = 3;
+  string email = 3 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "email"];
 }
 
 // Contains the complete configuration for an instance, including settings,
@@ -43,21 +44,21 @@ message InstanceConfig {
 message InstanceCreateRequest {
   // A human-readable name for the instance. This will be displayed in the UI
   // and can be changed later via UpdateInstanceMeta.
-  string friendlyName = 1;
+  string friendlyName = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully creating an instance.
 message InstanceCreateResponse {
   // The unique identifier (UUID) of the newly created instance.
   // Use this ID for all subsequent operations on the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Request to delete an existing instance.
 message InstanceDeleteRequest {
   // The unique identifier (UUID) of the instance to delete.
   // The instance will be stopped if running before deletion.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response after successfully deleting an instance.
@@ -95,34 +96,34 @@ message InstanceListResponse {
   // Summary information about a single instance.
   message Instance {
     // The unique identifier (UUID) of the instance.
-    string id = 1;
+    string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
     // The human-readable name of the instance.
-    string friendly_name = 2;
+    string friendly_name = 2 [(google.api.field_behavior) = REQUIRED];
     // The icon identifier for the instance (used for UI display).
-    string icon = 5;
+    string icon = 5 [(google.api.field_behavior) = REQUIRED];
     // The current lifecycle state of the instance.
-    InstanceState state = 3;
+    InstanceState state = 3 [(google.api.field_behavior) = REQUIRED];
     // The permissions the current user has on this instance.
     // Each permission indicates whether a specific action is allowed.
     repeated InstancePermissionState instance_permissions = 4;
   }
 
   // List of instances the user has READ_INSTANCE permission for.
-  repeated Instance instances = 1;
+  repeated Instance instances = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Represents the grant status of a specific instance permission for the current user.
 message InstancePermissionState {
   // The permission being described.
-  InstancePermission instance_permission = 1;
+  InstancePermission instance_permission = 1 [(google.api.field_behavior) = REQUIRED];
   // Whether the current user has been granted this permission.
-  bool granted = 2;
+  bool granted = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to get detailed information about a specific instance.
 message InstanceInfoRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Optional timestamp for conditional requests. If provided and the instance
   // configuration has not been modified since this timestamp, the server returns
   // InstanceNotModified instead of the full InstanceInfo. This helps reduce
@@ -134,14 +135,14 @@ message InstanceInfoRequest {
 // configuration, state, permissions, and available settings.
 message InstanceInfo {
   // The human-readable name of the instance.
-  string friendly_name = 1;
+  string friendly_name = 1 [(google.api.field_behavior) = REQUIRED];
   // The icon identifier for the instance (used for UI display).
-  string icon = 5;
+  string icon = 5 [(google.api.field_behavior) = REQUIRED];
   // The complete configuration of the instance including settings,
   // accounts, and proxies.
-  InstanceConfig config = 2;
+  InstanceConfig config = 2 [(google.api.field_behavior) = REQUIRED];
   // The current lifecycle state of the instance.
-  InstanceState state = 3;
+  InstanceState state = 3 [(google.api.field_behavior) = REQUIRED];
   // The permissions the current user has on this instance.
   repeated InstancePermissionState instance_permissions = 4;
   // All available settings definitions that can be rendered by identifier.
@@ -154,7 +155,7 @@ message InstanceInfo {
   repeated ServerPlugin plugins = 7;
   // Timestamp of when the configuration was last modified.
   // Used for conditional requests via if_modified_since.
-  google.protobuf.Timestamp last_modified = 9;
+  google.protobuf.Timestamp last_modified = 9 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Returned when the instance configuration has not changed since
@@ -162,7 +163,7 @@ message InstanceInfo {
 message InstanceNotModified {
   // The current last_modified timestamp of the instance.
   // Clients should use this for subsequent conditional requests.
-  google.protobuf.Timestamp last_modified = 1;
+  google.protobuf.Timestamp last_modified = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response for GetInstanceInfo containing either full info or a not-modified status.
@@ -179,7 +180,7 @@ message InstanceInfoResponse {
 // Request to update instance metadata (name or icon).
 message InstanceUpdateMetaRequest {
   // The unique identifier (UUID) of the instance to update.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The metadata field to update. Only one can be set per request.
   oneof meta {
     // New human-readable name for the instance.
@@ -199,10 +200,10 @@ message InstanceUpdateMetaResponse {
 // For individual setting changes, use UpdateInstanceConfigEntry instead.
 message InstanceUpdateConfigRequest {
   // The unique identifier (UUID) of the instance to update.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The complete new configuration to replace the existing one.
   // Includes settings, accounts, and proxies.
-  InstanceConfig config = 2;
+  InstanceConfig config = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully updating instance configuration.
@@ -215,14 +216,14 @@ message InstanceUpdateConfigResponse {
 // is more efficient than replacing the entire configuration.
 message InstanceUpdateConfigEntryRequest {
   // The unique identifier (UUID) of the instance to update.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The namespace of the setting (e.g., "bot", "account", plugin ID).
-  string namespace = 2;
+  string namespace = 2 [(google.api.field_behavior) = REQUIRED];
   // The key of the setting within the namespace.
-  string key = 3;
+  string key = 3 [(google.api.field_behavior) = REQUIRED];
   // The new value for the setting. Supports JSON value types
   // (string, number, boolean, null, array, object).
-  google.protobuf.Value value = 4;
+  google.protobuf.Value value = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully updating a configuration entry.
@@ -233,10 +234,10 @@ message InstanceUpdateConfigEntryResponse {
 // Request to add a single Minecraft account to an instance.
 message InstanceAddAccountRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The Minecraft account to add. The profile_id must be unique
   // within the instance.
-  MinecraftAccountProto account = 2;
+  MinecraftAccountProto account = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully adding an account.
@@ -247,9 +248,9 @@ message InstanceAddAccountResponse {
 // Request to remove a Minecraft account from an instance.
 message InstanceRemoveAccountRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The profile_id (UUID) of the account to remove.
-  string profile_id = 2;
+  string profile_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response after successfully removing an account.
@@ -261,10 +262,10 @@ message InstanceRemoveAccountResponse {
 // The account is matched by profile_id and replaced with the new data.
 message InstanceUpdateAccountRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The updated account data. The profile_id must match an existing
   // account in the instance.
-  MinecraftAccountProto account = 2;
+  MinecraftAccountProto account = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully updating an account.
@@ -276,10 +277,10 @@ message InstanceUpdateAccountResponse {
 // More efficient than multiple individual AddInstanceAccount calls.
 message InstanceAddAccountsBatchRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // List of accounts to add. Each account's profile_id must be unique
   // within the instance.
-  repeated MinecraftAccountProto accounts = 2;
+  repeated MinecraftAccountProto accounts = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully adding accounts in batch.
@@ -291,9 +292,9 @@ message InstanceAddAccountsBatchResponse {
 // More efficient than multiple individual RemoveInstanceAccount calls.
 message InstanceRemoveAccountsBatchRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // List of profile_ids (UUIDs) of accounts to remove.
-  repeated string profile_ids = 2;
+  repeated string profile_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response after successfully removing accounts in batch.
@@ -304,9 +305,9 @@ message InstanceRemoveAccountsBatchResponse {
 // Request to add a single proxy to an instance.
 message InstanceAddProxyRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The proxy configuration to add.
-  ProxyProto proxy = 2;
+  ProxyProto proxy = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully adding a proxy.
@@ -317,10 +318,10 @@ message InstanceAddProxyResponse {
 // Request to remove a proxy from an instance by its index.
 message InstanceRemoveProxyRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The zero-based index of the proxy to remove.
   // Returns INVALID_ARGUMENT if index is out of bounds.
-  int32 index = 2;
+  int32 index = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully removing a proxy.
@@ -331,12 +332,12 @@ message InstanceRemoveProxyResponse {
 // Request to update an existing proxy in an instance.
 message InstanceUpdateProxyRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The zero-based index of the proxy to update.
   // Returns INVALID_ARGUMENT if index is out of bounds.
-  int32 index = 2;
+  int32 index = 2 [(google.api.field_behavior) = REQUIRED];
   // The new proxy configuration to replace the existing one.
-  ProxyProto proxy = 3;
+  ProxyProto proxy = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully updating a proxy.
@@ -348,9 +349,9 @@ message InstanceUpdateProxyResponse {
 // More efficient than multiple individual AddInstanceProxy calls.
 message InstanceAddProxiesBatchRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // List of proxy configurations to add.
-  repeated ProxyProto proxies = 2;
+  repeated ProxyProto proxies = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully adding proxies in batch.
@@ -361,10 +362,10 @@ message InstanceAddProxiesBatchResponse {
 // Request to remove multiple proxies from an instance by their addresses.
 message InstanceRemoveProxiesBatchRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // List of proxy addresses to remove (in serialized format, e.g., "host:port").
   // Proxies matching these addresses will be removed.
-  repeated string addresses = 2;
+  repeated string addresses = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully removing proxies in batch.
@@ -376,14 +377,14 @@ message InstanceRemoveProxiesBatchResponse {
 // Used to start, pause, resume, or stop an instance.
 message InstanceStateChangeRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The target state for the instance. Valid transitions:
   // - STOPPED -> RUNNING: Starts the instance
   // - RUNNING -> PAUSED: Pauses bot ticking
   // - PAUSED -> RUNNING: Resumes bot ticking
   // - RUNNING/PAUSED -> STOPPED: Stops the instance
   // The server will handle intermediate states (STARTING, STOPPING) automatically.
-  InstanceState state = 2;
+  InstanceState state = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully changing instance state.
@@ -395,37 +396,37 @@ message InstanceStateChangeResponse {
 // Request to retrieve the audit log for an instance.
 message InstanceAuditLogRequest {
   // The unique identifier (UUID) of the instance.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Request to get persistent metadata for a specific Minecraft account.
 // Persistent metadata survives bot restarts and is stored with the account.
 message GetAccountMetadataRequest {
   // The unique identifier (UUID) of the instance containing the account.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The profile_id (UUID) of the Minecraft account.
-  string account_id = 2;
+  string account_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response containing the persistent metadata for an account.
 message GetAccountMetadataResponse {
   // Metadata organized by namespace. Each namespace contains
   // key-value pairs of metadata.
-  repeated SettingsNamespace metadata = 1;
+  repeated SettingsNamespace metadata = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to set a single persistent metadata entry for an account.
 message SetAccountMetadataEntryRequest {
   // The unique identifier (UUID) of the instance containing the account.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The profile_id (UUID) of the Minecraft account.
-  string account_id = 2;
+  string account_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The namespace for the metadata entry.
-  string namespace = 3;
+  string namespace = 3 [(google.api.field_behavior) = REQUIRED];
   // The key for the metadata entry within the namespace.
-  string key = 4;
+  string key = 4 [(google.api.field_behavior) = REQUIRED];
   // The value to set. Supports JSON value types.
-  google.protobuf.Value value = 5;
+  google.protobuf.Value value = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully setting a metadata entry.
@@ -436,13 +437,13 @@ message SetAccountMetadataEntryResponse {
 // Request to delete a persistent metadata entry from an account.
 message DeleteAccountMetadataEntryRequest {
   // The unique identifier (UUID) of the instance containing the account.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The profile_id (UUID) of the Minecraft account.
-  string account_id = 2;
+  string account_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The namespace of the metadata entry to delete.
-  string namespace = 3;
+  string namespace = 3 [(google.api.field_behavior) = REQUIRED];
   // The key of the metadata entry to delete.
-  string key = 4;
+  string key = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully deleting a metadata entry.
@@ -454,26 +455,26 @@ message DeleteAccountMetadataEntryResponse {
 // Persistent metadata survives restarts and is stored with the instance.
 message GetInstanceMetadataRequest {
   // The unique identifier (UUID) of the instance.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response containing the persistent metadata for an instance.
 message GetInstanceMetadataResponse {
   // Metadata organized by namespace. Each namespace contains
   // key-value pairs of metadata.
-  repeated SettingsNamespace metadata = 1;
+  repeated SettingsNamespace metadata = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to set a single persistent metadata entry for an instance.
 message SetInstanceMetadataEntryRequest {
   // The unique identifier (UUID) of the instance.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The namespace for the metadata entry.
-  string namespace = 2;
+  string namespace = 2 [(google.api.field_behavior) = REQUIRED];
   // The key for the metadata entry within the namespace.
-  string key = 3;
+  string key = 3 [(google.api.field_behavior) = REQUIRED];
   // The value to set. Supports JSON value types.
-  google.protobuf.Value value = 4;
+  google.protobuf.Value value = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully setting an instance metadata entry.
@@ -484,11 +485,11 @@ message SetInstanceMetadataEntryResponse {
 // Request to delete a persistent metadata entry from an instance.
 message DeleteInstanceMetadataEntryRequest {
   // The unique identifier (UUID) of the instance.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The namespace of the metadata entry to delete.
-  string namespace = 2;
+  string namespace = 2 [(google.api.field_behavior) = REQUIRED];
   // The key of the metadata entry to delete.
-  string key = 3;
+  string key = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully deleting an instance metadata entry.
@@ -533,20 +534,20 @@ message InstanceAuditLogResponse {
   // A single entry in the audit log.
   message AuditLogEntry {
     // Unique identifier for this audit log entry.
-    string id = 1;
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
     // The user who performed the action.
-    InstanceUser user = 2;
+    InstanceUser user = 2 [(google.api.field_behavior) = REQUIRED];
     // The type of action that was performed.
-    AuditLogEntryType type = 3;
+    AuditLogEntryType type = 3 [(google.api.field_behavior) = REQUIRED];
     // When the action was performed.
-    google.protobuf.Timestamp timestamp = 4;
+    google.protobuf.Timestamp timestamp = 4 [(google.api.field_behavior) = REQUIRED];
     // Additional data about the action (e.g., command text for EXECUTE_COMMAND).
     // May be empty for some action types.
-    string data = 5;
+    string data = 5 [(google.api.field_behavior) = REQUIRED];
   }
 
   // List of audit log entries, ordered by timestamp descending (newest first).
-  repeated AuditLogEntry entry = 1;
+  repeated AuditLogEntry entry = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Service for managing SoulFire instances.

@@ -9,6 +9,8 @@ option java_multiple_files = true;
 
 package soulfire.v1;
 
+import "soulfire/api_docs.proto";
+import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
 
 // Represents a network proxy configuration used for routing bot connections.
@@ -31,10 +33,10 @@ message ProxyProto {
   }
 
   // The proxy protocol type. Determines how the connection is established.
-  Type type = 1;
+  Type type = 1 [(google.api.field_behavior) = REQUIRED];
   // The proxy server address in "host:port" format (e.g., "proxy.example.com:8080").
   // The address must be resolvable and the port must be valid (1-65535).
-  string address = 2;
+  string address = 2 [(google.api.field_behavior) = REQUIRED];
   // Optional username for proxy authentication.
   // Required if the proxy server requires authentication.
   // If password is set, username must also be set.
@@ -134,7 +136,7 @@ message MinecraftAccountProto {
     // JSON structure containing the complete authentication chain from minecraftauth library.
     // Includes Microsoft OAuth tokens, Xbox Live tokens, and Minecraft access tokens.
     // This data can be refreshed to obtain new tokens without re-authentication.
-    google.protobuf.Struct auth_chain = 3;
+    google.protobuf.Struct auth_chain = 3 [(google.api.field_behavior) = REQUIRED];
   }
 
   // Account data for offline mode Java accounts.
@@ -150,9 +152,9 @@ message MinecraftAccountProto {
   // Cannot be refreshed; used until the token expires.
   message OnlineSimpleJavaData {
     // The raw Minecraft access token (JWT).
-    string access_token = 1;
+    string access_token = 1 [(google.api.field_behavior) = REQUIRED];
     // Token expiry time in milliseconds since epoch.
-    int64 expire_time_ms = 2;
+    int64 expire_time_ms = 2 [(google.api.field_behavior) = REQUIRED];
   }
 
   // Authentication chain data for Bedrock Edition accounts.
@@ -162,22 +164,22 @@ message MinecraftAccountProto {
     // JSON structure containing the complete Bedrock authentication chain.
     // Includes Xbox Live tokens and Bedrock-specific session data.
     // Compatible with the ViaBedrock protocol implementation.
-    google.protobuf.Struct auth_chain = 7;
+    google.protobuf.Struct auth_chain = 7 [(google.api.field_behavior) = REQUIRED];
   }
 
   // The authentication type used for this account.
   // Determines which account_data field is populated.
-  AccountTypeProto type = 1;
+  AccountTypeProto type = 1 [(google.api.field_behavior) = REQUIRED];
   // The unique profile identifier (UUID) for this account.
   // For online accounts: The official Minecraft profile UUID from Microsoft.
   // For offline accounts: A deterministic UUID derived from the username.
   // Format: Standard UUID string (e.g., "550e8400-e29b-41d4-a716-446655440000").
-  string profile_id = 2;
+  string profile_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The last known username/gamertag for this account.
   // Updated during authentication and refresh operations.
   // For Java: The Minecraft username (up to 16 characters).
   // For Bedrock: The Xbox gamertag.
-  string last_known_name = 3;
+  string last_known_name = 3 [(google.api.field_behavior) = REQUIRED];
   // The platform-specific authentication data.
   // Exactly one of these fields will be set based on the account type.
   oneof account_data {
@@ -211,17 +213,17 @@ message SettingsNamespace {
   message SettingsEntry {
     // The unique key identifying this setting within its namespace.
     // Should be a valid identifier (alphanumeric with underscores/dashes).
-    string key = 1;
+    string key = 1 [(google.api.field_behavior) = REQUIRED];
     // The value of this setting as a protobuf Value.
     // Can be a string, number, boolean, list, or nested object.
     // The expected type depends on the setting definition (see SettingsDefinition).
-    google.protobuf.Value value = 2;
+    google.protobuf.Value value = 2 [(google.api.field_behavior) = REQUIRED];
   }
 
   // The namespace identifier that groups related settings together.
   // Typically matches a plugin ID or internal system component name.
   // Examples: "bot", "account", "auto-reconnect", "anti-afk".
-  string namespace = 1;
+  string namespace = 1 [(google.api.field_behavior) = REQUIRED];
   // The list of setting entries within this namespace.
   // Each entry has a unique key within the namespace.
   repeated SettingsEntry entries = 2;
@@ -233,10 +235,10 @@ message SettingsNamespace {
 message SettingsEntryIdentifier {
   // The namespace containing this setting.
   // Must match a namespace from a registered SettingsNamespace.
-  string namespace = 1;
+  string namespace = 1 [(google.api.field_behavior) = REQUIRED];
   // The key of the setting within its namespace.
   // Must match a key from a SettingsEntry in the corresponding namespace.
-  string key = 2;
+  string key = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Server-wide permissions that apply globally across all instances.
@@ -403,27 +405,27 @@ message StringSetting {
   }
 
   // The display name shown in the UI label for this setting.
-  string ui_name = 1;
+  string ui_name = 1 [(google.api.field_behavior) = REQUIRED];
   // A longer description explaining what this setting does.
   // Typically shown as a tooltip or help text.
-  string description = 2;
+  string description = 2 [(google.api.field_behavior) = REQUIRED];
   // The default value used when no value is configured.
-  string def = 3;
+  string def = 3 [(google.api.field_behavior) = REQUIRED];
   // The type of input field to render (affects keyboard, validation, and display).
-  InputType input_type = 10;
+  InputType input_type = 10 [(google.api.field_behavior) = REQUIRED];
   // Placeholder text shown when the input is empty.
   // Provides a hint about expected format or content.
-  string placeholder = 6;
+  string placeholder = 6 [(google.api.field_behavior) = REQUIRED];
   // Minimum required string length (0 means no minimum).
-  int32 min_length = 7;
+  int32 min_length = 7 [(google.api.field_behavior) = REQUIRED];
   // Maximum allowed string length (0 means no maximum).
-  int32 max_length = 8;
+  int32 max_length = 8 [(google.api.field_behavior) = REQUIRED];
   // Regular expression pattern for value validation.
   // Empty string means no pattern validation.
-  string pattern = 9;
+  string pattern = 9 [(google.api.field_behavior) = REQUIRED];
   // Whether this setting is disabled (read-only) in the UI.
   // Disabled settings display their value but cannot be modified.
-  bool disabled = 11;
+  bool disabled = 11 [(google.api.field_behavior) = REQUIRED];
 }
 
 // UI definition for an integer number setting.
@@ -431,25 +433,25 @@ message StringSetting {
 // Supports range limits, step increments, and locale-aware formatting.
 message IntSetting {
   // The display name shown in the UI label for this setting.
-  string ui_name = 1;
+  string ui_name = 1 [(google.api.field_behavior) = REQUIRED];
   // A longer description explaining what this setting does.
-  string description = 2;
+  string description = 2 [(google.api.field_behavior) = REQUIRED];
   // The default value used when no value is configured.
-  int32 def = 3;
+  int32 def = 3 [(google.api.field_behavior) = REQUIRED];
   // The minimum allowed value (inclusive).
-  int32 min = 4;
+  int32 min = 4 [(google.api.field_behavior) = REQUIRED];
   // The maximum allowed value (inclusive).
-  int32 max = 5;
+  int32 max = 5 [(google.api.field_behavior) = REQUIRED];
   // The step increment for value adjustments (e.g., for spinbox controls).
   // A value of 0 means any integer is valid within the min/max range.
-  int32 step = 6;
+  int32 step = 6 [(google.api.field_behavior) = REQUIRED];
   // Placeholder text shown when the input is empty.
-  string placeholder = 7;
+  string placeholder = 7 [(google.api.field_behavior) = REQUIRED];
   // Whether to display the number with thousand separators (e.g., 1,000,000).
   // Improves readability for large numbers.
-  bool thousand_separator = 8;
+  bool thousand_separator = 8 [(google.api.field_behavior) = REQUIRED];
   // Whether this setting is disabled (read-only) in the UI.
-  bool disabled = 9;
+  bool disabled = 9 [(google.api.field_behavior) = REQUIRED];
 }
 
 // UI definition for a floating-point number setting.
@@ -457,30 +459,30 @@ message IntSetting {
 // Supports range limits, step increments, and decimal formatting options.
 message DoubleSetting {
   // The display name shown in the UI label for this setting.
-  string ui_name = 1;
+  string ui_name = 1 [(google.api.field_behavior) = REQUIRED];
   // A longer description explaining what this setting does.
-  string description = 2;
+  string description = 2 [(google.api.field_behavior) = REQUIRED];
   // The default value used when no value is configured.
-  double def = 3;
+  double def = 3 [(google.api.field_behavior) = REQUIRED];
   // The minimum allowed value (inclusive).
-  double min = 4;
+  double min = 4 [(google.api.field_behavior) = REQUIRED];
   // The maximum allowed value (inclusive).
-  double max = 5;
+  double max = 5 [(google.api.field_behavior) = REQUIRED];
   // The step increment for value adjustments.
   // A value of 0 means any decimal is valid within the min/max range.
-  double step = 6;
+  double step = 6 [(google.api.field_behavior) = REQUIRED];
   // Placeholder text shown when the input is empty.
-  string placeholder = 7;
+  string placeholder = 7 [(google.api.field_behavior) = REQUIRED];
   // Whether to display the integer part with thousand separators.
-  bool thousand_separator = 8;
+  bool thousand_separator = 8 [(google.api.field_behavior) = REQUIRED];
   // The number of decimal places to display/allow.
   // Used for formatting and input validation.
-  int32 decimal_scale = 9;
+  int32 decimal_scale = 9 [(google.api.field_behavior) = REQUIRED];
   // Whether to always show the exact number of decimal places specified by decimal_scale.
   // If true, trailing zeros are preserved (e.g., 1.50 instead of 1.5).
-  bool fixed_decimal_scale = 10;
+  bool fixed_decimal_scale = 10 [(google.api.field_behavior) = REQUIRED];
   // Whether this setting is disabled (read-only) in the UI.
-  bool disabled = 11;
+  bool disabled = 11 [(google.api.field_behavior) = REQUIRED];
 }
 
 // UI definition for a boolean toggle setting.
@@ -488,13 +490,13 @@ message DoubleSetting {
 // Commonly used for enabling/disabling features.
 message BoolSetting {
   // The display name shown in the UI label for this setting.
-  string ui_name = 1;
+  string ui_name = 1 [(google.api.field_behavior) = REQUIRED];
   // A longer description explaining what this setting does.
-  string description = 2;
+  string description = 2 [(google.api.field_behavior) = REQUIRED];
   // The default value used when no value is configured.
-  bool def = 3;
+  bool def = 3 [(google.api.field_behavior) = REQUIRED];
   // Whether this setting is disabled (read-only) in the UI.
-  bool disabled = 4;
+  bool disabled = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // UI definition for a dropdown/select setting with predefined options.
@@ -506,10 +508,10 @@ message ComboSetting {
     // The internal identifier for this option.
     // This value is stored in the configuration when selected.
     // Typically a machine-readable string (e.g., enum name, UUID).
-    string id = 1;
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
     // The human-readable name displayed to the user.
     // Can include spaces and special characters for readability.
-    string display_name = 2;
+    string display_name = 2 [(google.api.field_behavior) = REQUIRED];
     // Optional icon identifier to display next to the option.
     // Uses lucide.dev icon IDs (e.g., "user", "settings", "shield").
     optional string icon_id = 3;
@@ -519,17 +521,17 @@ message ComboSetting {
   }
 
   // The display name shown in the UI label for this setting.
-  string ui_name = 1;
+  string ui_name = 1 [(google.api.field_behavior) = REQUIRED];
   // A longer description explaining what this setting does.
-  string description = 2;
+  string description = 2 [(google.api.field_behavior) = REQUIRED];
   // The list of available options to choose from.
   // The order determines display order in the dropdown.
   repeated Option options = 3;
   // The default option ID used when no value is configured.
   // Must match one of the option IDs in the options list.
-  string def = 4;
+  string def = 4 [(google.api.field_behavior) = REQUIRED];
   // Whether this setting is disabled (read-only) in the UI.
-  bool disabled = 5;
+  bool disabled = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 // UI definition for a list of strings setting.
@@ -537,14 +539,14 @@ message ComboSetting {
 // Commonly used for lists of allowed values, server addresses, or tags.
 message StringListSetting {
   // The display name shown in the UI label for this setting.
-  string ui_name = 1;
+  string ui_name = 1 [(google.api.field_behavior) = REQUIRED];
   // A longer description explaining what this setting does.
-  string description = 2;
+  string description = 2 [(google.api.field_behavior) = REQUIRED];
   // The default list of values used when no value is configured.
   // Can be empty for an initially empty list.
   repeated string def = 3;
   // Whether this setting is disabled (read-only) in the UI.
-  bool disabled = 4;
+  bool disabled = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // UI definition for a min/max range setting with two integer values.
@@ -555,33 +557,33 @@ message MinMaxSetting {
   // Configuration for a single entry in the min/max pair.
   message Entry {
     // The display name for this entry (e.g., "Minimum Delay").
-    string ui_name = 1;
+    string ui_name = 1 [(google.api.field_behavior) = REQUIRED];
     // A description explaining what this entry represents.
-    string description = 2;
+    string description = 2 [(google.api.field_behavior) = REQUIRED];
     // The default value for this entry.
-    int32 def = 3;
+    int32 def = 3 [(google.api.field_behavior) = REQUIRED];
     // Placeholder text shown when the input is empty.
-    string placeholder = 4;
+    string placeholder = 4 [(google.api.field_behavior) = REQUIRED];
   }
 
   // The minimum allowed value for both entries (inclusive).
   // Both min and max entries must be >= this value.
-  int32 min = 1;
+  int32 min = 1 [(google.api.field_behavior) = REQUIRED];
   // The maximum allowed value for both entries (inclusive).
   // Both min and max entries must be <= this value.
-  int32 max = 2;
+  int32 max = 2 [(google.api.field_behavior) = REQUIRED];
   // The step increment for value adjustments.
-  int32 step = 3;
+  int32 step = 3 [(google.api.field_behavior) = REQUIRED];
   // Whether to display numbers with thousand separators.
-  bool thousand_separator = 4;
+  bool thousand_separator = 4 [(google.api.field_behavior) = REQUIRED];
   // Configuration for the minimum value input field.
   // The actual value must be <= maxEntry value.
-  Entry minEntry = 5;
+  Entry minEntry = 5 [(google.api.field_behavior) = REQUIRED];
   // Configuration for the maximum value input field.
   // The actual value must be >= minEntry value.
-  Entry maxEntry = 6;
+  Entry maxEntry = 6 [(google.api.field_behavior) = REQUIRED];
   // Whether this setting is disabled (read-only) in the UI.
-  bool disabled = 7;
+  bool disabled = 7 [(google.api.field_behavior) = REQUIRED];
 }
 
 // The scope/level at which a setting applies.
@@ -609,10 +611,10 @@ enum SettingsPageEntryScopeType {
 message SettingsDefinition {
   // Unique identifier for this setting (namespace + key).
   // Used to reference this setting from pages and to store/retrieve values.
-  SettingsEntryIdentifier id = 1;
+  SettingsEntryIdentifier id = 1 [(google.api.field_behavior) = REQUIRED];
   // The configuration scope where this setting applies (SERVER, INSTANCE, BOT).
   // Determines where values are stored and how they cascade.
-  SettingsPageEntryScopeType scope = 2;
+  SettingsPageEntryScopeType scope = 2 [(google.api.field_behavior) = REQUIRED];
   // The setting type and its UI configuration.
   // Exactly one of these fields will be set based on the setting's data type.
   oneof type {
@@ -641,14 +643,14 @@ message SettingsPage {
   // Unique page identifier, URL-safe for navigation.
   // Examples: "bot", "account", "auto-reconnect", "anti-afk".
   // Should be lowercase with hyphens for word separation.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
   // The ID of the plugin that owns this page (optional).
   // Null/empty for internal SoulFire pages.
   // Used to group pages by plugin in the UI navigation.
   optional string owning_plugin_id = 2;
   // The human-readable display name shown in the UI navigation.
   // Examples: "Bot Settings", "Account", "Auto Reconnect".
-  string page_name = 3;
+  string page_name = 3 [(google.api.field_behavior) = REQUIRED];
   // Ordered list of setting identifiers to display on this page.
   // Settings are rendered in the order they appear in this list.
   // Each identifier must correspond to a valid SettingsDefinition.
@@ -656,7 +658,7 @@ message SettingsPage {
   // Icon identifier for visual representation of this page.
   // Uses lucide.dev icon IDs (e.g., "bot", "user", "refresh-cw").
   // Rendered next to the page name in navigation menus.
-  string icon_id = 6;
+  string icon_id = 6 [(google.api.field_behavior) = REQUIRED];
   // Optional identifier for a boolean setting that controls whether
   // this page/feature is enabled. Used primarily for plugin pages.
   // When set, the page may show an enable/disable toggle.
@@ -671,20 +673,20 @@ message ServerPlugin {
   // The unique plugin identifier.
   // Should be a lowercase, hyphenated string (e.g., "auto-reconnect", "chat-control").
   // Used to reference the plugin in owning_plugin_id fields.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
   // The semantic version of the plugin (e.g., "1.0.0", "2.1.3-beta").
   // Follows semver conventions for compatibility tracking.
-  string version = 2;
+  string version = 2 [(google.api.field_behavior) = REQUIRED];
   // A brief description of what the plugin does.
   // Shown in plugin lists and information panels.
-  string description = 3;
+  string description = 3 [(google.api.field_behavior) = REQUIRED];
   // The author or organization that created the plugin.
   // Typically a name or organization identifier.
-  string author = 4;
+  string author = 4 [(google.api.field_behavior) = REQUIRED];
   // The software license under which the plugin is distributed.
   // Examples: "MIT", "Apache-2.0", "GPL-3.0".
-  string license = 5;
+  string license = 5 [(google.api.field_behavior) = REQUIRED];
   // URL to the plugin's website, documentation, or repository.
   // Allows users to find more information or report issues.
-  string website = 6;
+  string website = 6 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uri"];
 }

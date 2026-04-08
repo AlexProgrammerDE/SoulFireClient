@@ -7,6 +7,7 @@ package soulfire.v1;
 
 import "soulfire/api_docs.proto";
 import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
 
@@ -72,10 +73,10 @@ enum LogLevel {
 message Position {
   // The horizontal position in canvas coordinates.
   // Positive values extend to the right.
-  double x = 1;
+  double x = 1 [(google.api.field_behavior) = REQUIRED];
   // The vertical position in canvas coordinates.
   // Positive values extend downward.
-  double y = 2;
+  double y = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // A recursive type descriptor for generic/parameterized port types.
@@ -97,7 +98,7 @@ message TypeDescriptor {
 // For example, List<Bot> has base=LIST and params=[Simple(BOT)].
 message ParameterizedType {
   // The container type (e.g., LIST, MAP).
-  PortType base = 1;
+  PortType base = 1 [(google.api.field_behavior) = REQUIRED];
   // The type arguments (e.g., [BOT] for List<Bot>, [STRING, NUMBER] for Map<String, Number>).
   repeated TypeDescriptor params = 2;
 }
@@ -108,15 +109,15 @@ message PortDefinition {
   // The identifier for this port.
   // Used in edge connections (source_handle/target_handle).
   // Examples: "value", "target", "bot", "exec_in", "exec_out".
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
   // Human-readable name displayed in the UI.
   // Examples: "Target Position", "Bot", "Message".
-  string display_name = 2;
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
   // The data type this port accepts or produces.
-  PortType port_type = 3;
+  PortType port_type = 3 [(google.api.field_behavior) = REQUIRED];
   // Whether this input is required for the node to execute.
   // Only applicable for input ports.
-  bool required = 4;
+  bool required = 4 [(google.api.field_behavior) = REQUIRED];
   // Default value for this port when not connected (JSON-encoded).
   // Only applicable for input ports.
   optional string default_value = 5;
@@ -128,14 +129,14 @@ message PortDefinition {
   // Whether this input accepts multiple connections (Blender-style multi-input).
   // When true, all connected values are collected into a list.
   // Visually rendered as a pill/ellipsis shaped socket.
-  bool multi_input = 8;
+  bool multi_input = 8 [(google.api.field_behavior) = REQUIRED];
   // For polymorphic ports, the list of accepted types.
   // If non-empty, this port can accept any of these types and will
   // adapt its behavior based on the connected type.
   repeated PortType accepted_types = 9;
   // For dynamic output ports, the ID of the input port to inherit type from.
   // Used for polymorphic nodes where output type depends on input type.
-  string infer_type_from = 10;
+  string infer_type_from = 10 [(google.api.field_behavior) = REQUIRED];
   // Optional generic type descriptor for parameterized types.
   // When present, provides richer type information than the flat port_type field.
   // For example, List<Bot> or a type variable T that resolves from connections.
@@ -148,20 +149,20 @@ message PortDefinition {
 message NodeTypeDefinition {
   // The unique type identifier for this node.
   // Examples: "trigger.on_tick", "action.pathfind", "math.add".
-  string type = 1;
+  string type = 1 [(google.api.field_behavior) = REQUIRED];
   // Human-readable name displayed in the UI.
   // Examples: "On Tick", "Pathfind To", "Add".
-  string display_name = 2;
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
   // Description of what this node does.
   // Displayed in tooltips and node palettes.
-  string description = 3;
+  string description = 3 [(google.api.field_behavior) = REQUIRED];
   // Category ID for organizing nodes in the palette.
   // References CategoryDefinition.id from GetNodeTypesResponse.
   // Examples: "triggers", "actions", "math", "logic", "flow".
-  string category = 4;
+  string category = 4 [(google.api.field_behavior) = REQUIRED];
   // Whether this is a trigger node (entry point for execution).
   // Trigger nodes have no execution input and start script flows.
-  bool is_trigger = 5;
+  bool is_trigger = 5 [(google.api.field_behavior) = REQUIRED];
   // The input ports for this node type.
   // Includes both data inputs and execution inputs.
   repeated PortDefinition inputs = 6;
@@ -177,20 +178,20 @@ message NodeTypeDefinition {
   // Keywords for searching/filtering nodes in the palette.
   repeated string keywords = 10;
   // Whether this node is deprecated and should be avoided.
-  bool deprecated = 11;
+  bool deprecated = 11 [(google.api.field_behavior) = REQUIRED];
   // If deprecated, message explaining what to use instead.
   string deprecation_message = 12;
   // Whether this is a layout node (reroute, frame, etc.).
   // Layout nodes have special minimal rendering and don't execute logic.
-  bool is_layout_node = 13;
+  bool is_layout_node = 13 [(google.api.field_behavior) = REQUIRED];
   // Whether this node can be muted (bypassed during execution).
   // When muted, inputs pass through to outputs unchanged.
-  bool supports_muting = 14;
+  bool supports_muting = 14 [(google.api.field_behavior) = REQUIRED];
   // Whether this node supports inline preview of its output.
-  bool supports_preview = 15;
+  bool supports_preview = 15 [(google.api.field_behavior) = REQUIRED];
   // Whether this node is expensive (slow, may block).
   // Used for visual warnings in tick-path analysis.
-  bool is_expensive = 16;
+  bool is_expensive = 16 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Represents a single node in the visual script graph.
@@ -200,13 +201,13 @@ message ScriptNode {
   // Unique identifier for this node within the script.
   // Used to reference this node in edges and during execution tracking.
   // Format: UUID string.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The type identifier for this node, determining its behavior and available ports.
   // Examples: "trigger.on_chat", "action.send_message", "control.delay", "logic.condition".
-  string type = 2;
+  string type = 2 [(google.api.field_behavior) = REQUIRED];
   // The visual position of this node on the editor canvas.
   // Persisted to maintain the user's layout when reopening the script.
-  Position position = 3;
+  Position position = 3 [(google.api.field_behavior) = REQUIRED];
   // Configuration data for this node instance.
   // Contains node-specific settings and parameter values.
   // The structure depends on the node type.
@@ -214,10 +215,10 @@ message ScriptNode {
   // Whether this node is muted (bypassed during execution).
   // When muted, the node passes inputs directly to outputs without processing.
   // Visually shown as grayed out with pass-through indicator.
-  bool muted = 5;
+  bool muted = 5 [(google.api.field_behavior) = REQUIRED];
   // Whether this node is collapsed (showing only header).
   // Collapsed nodes still function normally but take less visual space.
-  bool collapsed = 6;
+  bool collapsed = 6 [(google.api.field_behavior) = REQUIRED];
   // For frame nodes: the width of the frame.
   optional double width = 7;
   // For frame nodes: the height of the frame.
@@ -232,7 +233,7 @@ message ScriptNode {
   // Dynamically updated when connections change.
   optional PortType resolved_type = 11;
   // Parent frame node ID, if this node is inside a frame.
-  string parent_frame_id = 12;
+  string parent_frame_id = 12 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Represents a connection between two nodes in the visual script graph.
@@ -240,23 +241,23 @@ message ScriptNode {
 message ScriptEdge {
   // Unique identifier for this edge within the script.
   // Format: UUID string.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the source node where this edge originates.
   // Must reference a valid node ID in the script's nodes list.
-  string source = 2;
+  string source = 2 [(google.api.field_behavior) = REQUIRED];
   // The handle/port identifier on the source node.
   // Identifies which output port of the source node this edge connects from.
   // Examples: "exec_out", "value", "true", "false".
-  string source_handle = 3;
+  string source_handle = 3 [(google.api.field_behavior) = REQUIRED];
   // The ID of the target node where this edge terminates.
   // Must reference a valid node ID in the script's nodes list.
-  string target = 4;
+  string target = 4 [(google.api.field_behavior) = REQUIRED];
   // The handle/port identifier on the target node.
   // Identifies which input port of the target node this edge connects to.
   // Examples: "exec_in", "message", "condition".
-  string target_handle = 5;
+  string target_handle = 5 [(google.api.field_behavior) = REQUIRED];
   // The type of this edge, determining whether it carries execution flow or data.
-  EdgeType edge_type = 6;
+  EdgeType edge_type = 6 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Complete data structure representing a visual script.
@@ -264,10 +265,10 @@ message ScriptEdge {
 message ScriptData {
   // Unique identifier for this script.
   // Format: UUID string.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Human-readable name for the script.
   // Displayed in the UI and used for identification.
-  string name = 2;
+  string name = 2 [(google.api.field_behavior) = REQUIRED];
   // Optional description explaining what the script does.
   // Displayed in script listings and detail views.
   string description = 3;
@@ -282,11 +283,11 @@ message ScriptData {
   // The instance this script belongs to.
   // Scripts are always associated with a specific instance.
   // Format: UUID string.
-  string instance_id = 7;
+  string instance_id = 7 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Whether this script is paused (not running).
   // Scripts run by default. When paused, they won't be started on server startup
   // or when created/updated.
-  bool paused = 8;
+  bool paused = 8 [(google.api.field_behavior) = REQUIRED];
   // Optional resource quotas for this script.
   ScriptQuotas quotas = 9;
 }
@@ -303,7 +304,7 @@ message ScriptQuotas {
   // Maximum number of entries in the script's state store.
   optional int64 max_state_store_entries = 4;
   // When true, disables per-node and data edge timeouts entirely.
-  bool disable_timeouts = 5;
+  bool disable_timeouts = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Summary information about a script for listing purposes.
@@ -311,22 +312,22 @@ message ScriptQuotas {
 message ScriptInfo {
   // Unique identifier for this script.
   // Format: UUID string.
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Human-readable name for the script.
-  string name = 2;
+  string name = 2 [(google.api.field_behavior) = REQUIRED];
   // Optional description of what the script does.
   string description = 3;
   // Reserved field 4 was scope (removed - all scripts run at instance level)
   reserved 4;
   // The instance this script belongs to.
   // Format: UUID string.
-  string instance_id = 5;
+  string instance_id = 5 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Timestamp when the script was first created.
-  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp created_at = 6 [(google.api.field_behavior) = REQUIRED];
   // Timestamp when the script was last modified.
-  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp updated_at = 7 [(google.api.field_behavior) = REQUIRED];
   // Whether this script is paused (not running).
-  bool paused = 8;
+  bool paused = 8 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Runtime status information for a script.
@@ -334,15 +335,15 @@ message ScriptInfo {
 message ScriptStatus {
   // The script this status applies to.
   // Format: UUID string.
-  string script_id = 1;
+  string script_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Whether the script is currently active (listening for triggers).
-  bool is_active = 2;
+  bool is_active = 2 [(google.api.field_behavior) = REQUIRED];
   // The ID of the currently executing node, if any.
   // Only present when a node is actively executing.
   optional string active_node_id = 3;
   // The total number of times this script has been activated.
   // Incremented each time ActivateScript is called.
-  int64 activation_count = 4;
+  int64 activation_count = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // A single log entry generated during script execution.
@@ -350,55 +351,55 @@ message ScriptStatus {
 message ScriptLogEntry {
   // The script that generated this log entry.
   // Format: UUID string.
-  string script_id = 1;
+  string script_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The node that generated this log entry, if applicable.
   // May be empty for script-level log entries.
-  string node_id = 2;
+  string node_id = 2 [(google.api.field_behavior) = REQUIRED];
   // The severity level of this log entry.
-  LogLevel level = 3;
+  LogLevel level = 3 [(google.api.field_behavior) = REQUIRED];
   // The log message content.
-  string message = 4;
+  string message = 4 [(google.api.field_behavior) = REQUIRED];
   // When this log entry was created.
-  google.protobuf.Timestamp timestamp = 5;
+  google.protobuf.Timestamp timestamp = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Event emitted when a node begins execution.
 message NodeStarted {
   // The ID of the node that started executing.
-  string node_id = 1;
+  string node_id = 1 [(google.api.field_behavior) = REQUIRED];
   // When the node started execution.
-  google.protobuf.Timestamp timestamp = 2;
+  google.protobuf.Timestamp timestamp = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Event emitted when a node completes execution successfully.
 message NodeCompleted {
   // The ID of the node that completed execution.
-  string node_id = 1;
+  string node_id = 1 [(google.api.field_behavior) = REQUIRED];
   // The output values produced by the node.
   // Keys are output port names, values are the data produced.
   map<string, google.protobuf.Value> outputs = 2;
   // When the node completed execution.
-  google.protobuf.Timestamp timestamp = 3;
+  google.protobuf.Timestamp timestamp = 3 [(google.api.field_behavior) = REQUIRED];
   // Execution time in nanoseconds for profiling.
-  int64 execution_time_nanos = 4;
+  int64 execution_time_nanos = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Execution statistics emitted when a trigger chain completes.
 message ExecutionStats {
   // Total number of node executions in this chain.
-  int64 node_count = 1;
+  int64 node_count = 1 [(google.api.field_behavior) = REQUIRED];
   // Maximum allowed node executions.
-  int64 max_count = 2;
+  int64 max_count = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Event emitted when a node encounters an error during execution.
 message NodeError {
   // The ID of the node that encountered the error.
-  string node_id = 1;
+  string node_id = 1 [(google.api.field_behavior) = REQUIRED];
   // A description of what went wrong.
-  string error_message = 2;
+  string error_message = 2 [(google.api.field_behavior) = REQUIRED];
   // When the error occurred.
-  google.protobuf.Timestamp timestamp = 3;
+  google.protobuf.Timestamp timestamp = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Event emitted when a script logs a message (e.g., from Print node).
@@ -406,11 +407,11 @@ message ScriptLog {
   // The ID of the node that produced the log (if applicable).
   optional string node_id = 1;
   // The log level (debug, info, warn, error).
-  string level = 2;
+  string level = 2 [(google.api.field_behavior) = REQUIRED];
   // The log message content.
-  string message = 3;
+  string message = 3 [(google.api.field_behavior) = REQUIRED];
   // When the log was produced.
-  google.protobuf.Timestamp timestamp = 4;
+  google.protobuf.Timestamp timestamp = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Event emitted when a trigger fires and begins executing a node chain.
@@ -418,9 +419,9 @@ message ScriptLog {
 // not that the script "started running" in the traditional sense.
 message ScriptStarted {
   // The ID of the script containing the triggered chain.
-  string script_id = 1;
+  string script_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // When the trigger fired and execution began.
-  google.protobuf.Timestamp timestamp = 2;
+  google.protobuf.Timestamp timestamp = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Event emitted when a triggered node chain finishes executing.
@@ -428,11 +429,11 @@ message ScriptStarted {
 // is done - the script remains active and will respond to future triggers.
 message ScriptCompleted {
   // The ID of the script that completed the chain.
-  string script_id = 1;
+  string script_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Whether the chain completed successfully without errors.
-  bool success = 2;
+  bool success = 2 [(google.api.field_behavior) = REQUIRED];
   // When the chain completed execution.
-  google.protobuf.Timestamp timestamp = 3;
+  google.protobuf.Timestamp timestamp = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Severity level for validation diagnostics.
@@ -446,13 +447,13 @@ enum DiagnosticSeverity {
 // A structured validation diagnostic with node/edge context and severity.
 message ValidationDiagnostic {
   // The node related to this diagnostic, or empty for graph-level issues.
-  string node_id = 1;
+  string node_id = 1 [(google.api.field_behavior) = REQUIRED];
   // A composite edge key related to this diagnostic, or empty.
-  string edge_id = 2;
+  string edge_id = 2 [(google.api.field_behavior) = REQUIRED];
   // Human-readable description of the issue.
-  string message = 3;
+  string message = 3 [(google.api.field_behavior) = REQUIRED];
   // Severity level of this diagnostic.
-  DiagnosticSeverity severity = 4;
+  DiagnosticSeverity severity = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Union type for all script execution events.
@@ -482,22 +483,22 @@ message ScriptEvent {
 message CreateScriptRequest {
   // The instance to create the script in.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The human-readable name for the script.
-  string name = 2;
+  string name = 2 [(google.api.field_behavior) = REQUIRED];
   // Optional description of what the script does.
   string description = 3;
   // Reserved field 4 was scope (removed - all scripts run at instance level)
   reserved 4;
   // Initial nodes for the script graph.
   // Can be empty to create a blank script.
-  repeated ScriptNode nodes = 5;
+  repeated ScriptNode nodes = 5 [(google.api.field_behavior) = REQUIRED];
   // Initial edges for the script graph.
   // Can be empty to create a blank script.
-  repeated ScriptEdge edges = 6;
+  repeated ScriptEdge edges = 6 [(google.api.field_behavior) = REQUIRED];
   // Whether the script should be created in paused state.
   // If false (default), the script starts running immediately after creation.
-  bool paused = 7;
+  bool paused = 7 [(google.api.field_behavior) = REQUIRED];
   // Optional resource quotas for this script.
   ScriptQuotas quotas = 8;
 }
@@ -505,35 +506,35 @@ message CreateScriptRequest {
 // Response after successfully creating a script.
 message CreateScriptResponse {
   // The complete script data including the generated ID.
-  ScriptData script = 1;
+  ScriptData script = 1 [(google.api.field_behavior) = REQUIRED];
   // Validation diagnostics (warnings) from building the script graph.
-  repeated ValidationDiagnostic diagnostics = 2;
+  repeated ValidationDiagnostic diagnostics = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to retrieve a specific script by ID.
 message GetScriptRequest {
   // The instance containing the script.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the script to retrieve.
   // Format: UUID string.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response containing the requested script.
 message GetScriptResponse {
   // The complete script data including all nodes and edges.
-  ScriptData script = 1;
+  ScriptData script = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to update an existing script.
 message UpdateScriptRequest {
   // The instance containing the script.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the script to update.
   // Format: UUID string.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Updated name for the script.
   // If not set, the name remains unchanged.
   optional string name = 3;
@@ -551,35 +552,35 @@ message UpdateScriptRequest {
   // If not provided, edges remain unchanged.
   repeated ScriptEdge edges = 7;
   // Whether the nodes field should be updated (allows setting to empty list).
-  bool update_nodes = 8;
+  bool update_nodes = 8 [(google.api.field_behavior) = REQUIRED];
   // Whether the edges field should be updated (allows setting to empty list).
-  bool update_edges = 9;
+  bool update_edges = 9 [(google.api.field_behavior) = REQUIRED];
   // Updated paused setting.
   // If not set, the paused setting remains unchanged.
   // If set to false and script was paused, the script will be restarted.
   optional bool paused = 10;
   // Updated resource quotas for this script.
-  ScriptQuotas quotas = 11;
+  ScriptQuotas quotas = 11 [(google.api.field_behavior) = REQUIRED];
   // Whether the quotas field should be updated (allows clearing quotas).
-  bool update_quotas = 12;
+  bool update_quotas = 12 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response after successfully updating a script.
 message UpdateScriptResponse {
   // The updated script data.
-  ScriptData script = 1;
+  ScriptData script = 1 [(google.api.field_behavior) = REQUIRED];
   // Validation diagnostics (warnings) from building the script graph.
-  repeated ValidationDiagnostic diagnostics = 2;
+  repeated ValidationDiagnostic diagnostics = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to delete a script.
 message DeleteScriptRequest {
   // The instance containing the script.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the script to delete.
   // Format: UUID string.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response after successfully deleting a script.
@@ -591,34 +592,34 @@ message DeleteScriptResponse {
 message ListScriptsRequest {
   // The instance to list scripts from.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response containing the list of scripts.
 message ListScriptsResponse {
   // Summary information for each script in the instance.
   // Does not include full node/edge data to reduce payload size.
-  repeated ScriptInfo scripts = 1;
+  repeated ScriptInfo scripts = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to activate a script (register its event listeners).
 message ActivateScriptRequest {
   // The instance containing the script.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the script to activate.
   // Format: UUID string.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Request to deactivate an active script.
 message DeactivateScriptRequest {
   // The instance containing the script.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the script to deactivate.
   // Format: UUID string.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response after successfully deactivating a script.
@@ -630,29 +631,29 @@ message DeactivateScriptResponse {
 message GetScriptStatusRequest {
   // The instance containing the script.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the script to check.
   // Format: UUID string.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response containing the script's execution status.
 message GetScriptStatusResponse {
   // The current status of the script.
-  ScriptStatus status = 1;
+  ScriptStatus status = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to subscribe to log entries from a script.
 message SubscribeScriptLogsRequest {
   // The instance containing the script.
   // Format: UUID string.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the script to receive logs from.
   // Format: UUID string.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // Minimum log level to receive.
   // Only log entries at this level or higher severity will be streamed.
-  LogLevel min_level = 3;
+  LogLevel min_level = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to get all available node types.
@@ -664,37 +665,37 @@ message GetNodeTypesRequest {
   optional string category = 1;
   // Whether to include deprecated node types.
   // Default is false.
-  bool include_deprecated = 2;
+  bool include_deprecated = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Definition of a node category for organizing the node palette.
 message CategoryDefinition {
   // The unique identifier for this category.
   // Examples: "triggers", "actions", "math", "logic".
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
   // Human-readable name displayed in the UI.
   // Examples: "Triggers", "Actions", "Math", "Logic".
-  string display_name = 2;
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
   // Icon identifier for the category.
   // Examples: "zap", "play", "calculator", "git-branch".
-  string icon = 3;
+  string icon = 3 [(google.api.field_behavior) = REQUIRED];
   // Optional description of this category.
   string description = 4;
   // Sort order for displaying categories (lower = earlier).
-  int32 sort_order = 5;
+  int32 sort_order = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response containing all available node types.
 message GetNodeTypesResponse {
   // List of all node type definitions.
   // Clients can use this to render any node and validate connections.
-  repeated NodeTypeDefinition node_types = 1;
+  repeated NodeTypeDefinition node_types = 1 [(google.api.field_behavior) = REQUIRED];
   // List of all categories with their metadata.
   // Useful for building category filters and palette sections in the UI.
-  repeated CategoryDefinition categories = 2;
+  repeated CategoryDefinition categories = 2 [(google.api.field_behavior) = REQUIRED];
   // Metadata for each port type including colors and compatibility.
   // Clients should use this instead of hardcoded port type info.
-  repeated PortTypeMetadata port_type_metadata = 3;
+  repeated PortTypeMetadata port_type_metadata = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Shape of the port handle in the visual editor.
@@ -720,18 +721,18 @@ enum EdgeStyle {
 // Metadata for a port type, enabling data-driven port rendering.
 message PortTypeMetadata {
   // The port type this metadata applies to.
-  PortType port_type = 1;
+  PortType port_type = 1 [(google.api.field_behavior) = REQUIRED];
   // Display color for this port type (hex color code, e.g., "#22c55e").
-  string color = 2;
+  string color = 2 [(google.api.field_behavior) = REQUIRED];
   // Human-readable name for this port type.
-  string display_name = 3;
+  string display_name = 3 [(google.api.field_behavior) = REQUIRED];
   // List of port types that can be implicitly converted to this type.
   // Used for connection validation. Empty means only exact matches allowed.
   repeated PortType compatible_from = 4;
   // Shape of the handle for this port type in the visual editor.
-  HandleShape handle_shape = 5;
+  HandleShape handle_shape = 5 [(google.api.field_behavior) = REQUIRED];
   // Visual style for edges of this port type.
-  EdgeStyle edge_style = 6;
+  EdgeStyle edge_style = 6 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to get Minecraft registry data for autocomplete and validation.
@@ -744,9 +745,9 @@ message GetRegistryDataRequest {
 // A single registry entry (block, entity, item, or biome).
 message RegistryEntry {
   // The namespaced identifier (e.g., "minecraft:diamond_ore").
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
   // Human-readable display name.
-  string display_name = 2;
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
   // Optional icon or texture identifier.
   string icon = 3;
   // Optional category/group for organizing in UI.
@@ -756,27 +757,27 @@ message RegistryEntry {
 // Request to validate a script graph without saving it.
 message ValidateScriptRequest {
   // The instance context for validation.
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The nodes to validate.
-  repeated ScriptNode nodes = 2;
+  repeated ScriptNode nodes = 2 [(google.api.field_behavior) = REQUIRED];
   // The edges to validate.
-  repeated ScriptEdge edges = 3;
+  repeated ScriptEdge edges = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response containing validation diagnostics.
 message ValidateScriptResponse {
   // All diagnostics (errors and warnings) for the script graph.
-  repeated ValidationDiagnostic diagnostics = 1;
+  repeated ValidationDiagnostic diagnostics = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to dry-run a script from a specific trigger node with mock inputs.
 message DryRunScriptRequest {
   // The instance ID for context (may be used for registry data).
-  string instance_id = 1;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The ID of the saved script to dry-run.
-  string script_id = 2;
+  string script_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   // The trigger node ID to start execution from.
-  string trigger_node_id = 3;
+  string trigger_node_id = 3 [(google.api.field_behavior) = REQUIRED];
   // Mock input values for the trigger (port ID -> value).
   map<string, google.protobuf.Value> mock_inputs = 4;
 }
@@ -784,13 +785,13 @@ message DryRunScriptRequest {
 // Response containing Minecraft registry data.
 message GetRegistryDataResponse {
   // Block types (e.g., "minecraft:stone", "minecraft:diamond_ore").
-  repeated RegistryEntry blocks = 1;
+  repeated RegistryEntry blocks = 1 [(google.api.field_behavior) = REQUIRED];
   // Entity types (e.g., "minecraft:zombie", "minecraft:player").
-  repeated RegistryEntry entities = 2;
+  repeated RegistryEntry entities = 2 [(google.api.field_behavior) = REQUIRED];
   // Item types (e.g., "minecraft:diamond", "minecraft:stick").
-  repeated RegistryEntry items = 3;
+  repeated RegistryEntry items = 3 [(google.api.field_behavior) = REQUIRED];
   // Biome types (e.g., "minecraft:plains", "minecraft:forest").
-  repeated RegistryEntry biomes = 4;
+  repeated RegistryEntry biomes = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ScriptService provides management and execution capabilities for visual node-based

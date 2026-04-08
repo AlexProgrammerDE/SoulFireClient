@@ -43,7 +43,7 @@ message UserDeleteRequest {
   // The unique identifier (UUID) of the user to delete.
   // Cannot be the ID of the requesting user (cannot delete self).
   // Cannot be the root user ID (00000000-0000-0000-0000-000000000000).
-  string id = 1;
+  string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 // Response message returned after successfully deleting a user.
@@ -61,28 +61,28 @@ message UserListResponse {
   // Represents a user in the list with all their profile information.
   message User {
     // The unique identifier (UUID) of the user.
-    string id = 1;
+    string id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
     // The username of the user (3-32 lowercase alphanumeric characters with dashes allowed).
-    string username = 2;
+    string username = 2 [(google.api.field_behavior) = REQUIRED];
     // The role of the user (ADMIN or USER).
-    UserRole role = 3;
+    UserRole role = 3 [(google.api.field_behavior) = REQUIRED];
     // The email address of the user.
-    string email = 4;
+    string email = 4 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "email"];
     // Timestamp when the user account was created.
-    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp created_at = 5 [(google.api.field_behavior) = REQUIRED];
     // Timestamp when the user account was last updated.
-    google.protobuf.Timestamp updated_at = 6;
+    google.protobuf.Timestamp updated_at = 6 [(google.api.field_behavior) = REQUIRED];
     // Timestamp of the user's last successful authentication.
     // Optional; may be absent if the user has never logged in.
     optional google.protobuf.Timestamp last_login_at = 7;
     // Minimum issued-at timestamp for valid JWT tokens.
     // Tokens issued before this timestamp are considered invalid.
     // Used to invalidate all sessions by updating this value.
-    google.protobuf.Timestamp min_issued_at = 8;
+    google.protobuf.Timestamp min_issued_at = 8 [(google.api.field_behavior) = REQUIRED];
   }
 
   // List of all users in the system.
-  repeated User users = 1;
+  repeated User users = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for retrieving detailed information about a specific user.
@@ -94,22 +94,22 @@ message UserInfoRequest {
 // Response message containing detailed information about a specific user.
 message UserInfoResponse {
   // The username of the user (3-32 lowercase alphanumeric characters with dashes allowed).
-  string username = 1;
+  string username = 1 [(google.api.field_behavior) = REQUIRED];
   // The role of the user (ADMIN or USER).
-  UserRole role = 2;
+  UserRole role = 2 [(google.api.field_behavior) = REQUIRED];
   // The email address of the user.
-  string email = 3;
+  string email = 3 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "email"];
   // Timestamp when the user account was created.
-  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp created_at = 4 [(google.api.field_behavior) = REQUIRED];
   // Timestamp when the user account was last updated.
-  google.protobuf.Timestamp updated_at = 5;
+  google.protobuf.Timestamp updated_at = 5 [(google.api.field_behavior) = REQUIRED];
   // Timestamp of the user's last successful authentication.
   // Optional; may be absent if the user has never logged in.
   optional google.protobuf.Timestamp last_login_at = 6;
   // Minimum issued-at timestamp for valid JWT tokens.
   // Tokens issued before this timestamp are considered invalid.
   // Used to invalidate all sessions by updating this value.
-  google.protobuf.Timestamp min_issued_at = 7;
+  google.protobuf.Timestamp min_issued_at = 7 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for invalidating all sessions for a user.
@@ -169,7 +169,7 @@ message GenerateUserAPITokenResponse {
   // This token is signed with the server's secret key and has the "api" audience.
   // The token does not expire but can be invalidated by updating the user's min_issued_at.
   // Should be stored securely as it grants full access as the specified user.
-  string token = 1;
+  string token = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // UserService provides user management functionality for the SoulFire system.

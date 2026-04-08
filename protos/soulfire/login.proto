@@ -33,7 +33,7 @@ message NextAuthFlowResponse {
     // A JWT (JSON Web Token) for authenticating subsequent API requests.
     // This token should be included in the Authorization header for authenticated endpoints.
     // The token is issued with the "api" audience claim.
-    string token = 1;
+    string token = 1 [(google.api.field_behavior) = REQUIRED];
   }
 
   // Indicates that the authentication flow has failed.
@@ -47,7 +47,7 @@ message NextAuthFlowResponse {
     }
 
     // The specific reason for the authentication failure.
-    Reason reason = 1;
+    Reason reason = 1 [(google.api.field_behavior) = REQUIRED];
   }
 
   // A unique token identifying this authentication flow session.
@@ -76,7 +76,7 @@ message EmailCodeRequest {
   // The authentication flow token received from the Login RPC response.
   // This token links the code verification to the original login request.
   // Must be a valid UUID string.
-  string auth_flow_token = 1;
+  string auth_flow_token = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 
   // The six-digit verification code that was sent to the user's email address.
   // Must exactly match the code that was emailed to the user.

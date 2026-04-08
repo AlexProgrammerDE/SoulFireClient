@@ -54,17 +54,17 @@ message ServerInfoResponse {
   // UI metadata (display name, description), constraints (min/max, patterns),
   // and scope (SERVER, INSTANCE, or BOT level).
   // These definitions are referenced by their identifier (namespace + key).
-  repeated SettingsDefinition settings_definitions = 4;
+  repeated SettingsDefinition settings_definitions = 4 [(google.api.field_behavior) = REQUIRED];
 
   // Pages that group settings together for UI organization.
   // Each page has an ID, display name, icon, and references settings by their identifiers.
   // Pages may be associated with plugins and can have an "enabled" toggle setting.
-  repeated SettingsPage server_settings = 2;
+  repeated SettingsPage server_settings = 2 [(google.api.field_behavior) = REQUIRED];
 
   // List of registered plugins on the server.
   // Each plugin includes metadata such as ID, version, description, author,
   // license, and website URL. Plugins may own settings pages.
-  repeated ServerPlugin plugins = 3;
+  repeated ServerPlugin plugins = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for UpdateServerConfig RPC.
@@ -74,7 +74,7 @@ message ServerUpdateConfigRequest {
   // The complete new server configuration to apply.
   // This will replace the existing configuration entirely.
   // All settings namespaces and their entries will be overwritten.
-  ServerConfig config = 1;
+  ServerConfig config = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for UpdateServerConfig RPC.

@@ -67,7 +67,7 @@ message CommandResponse {
   // - 1 (Command.SINGLE_SUCCESS): Command executed successfully
   // - >1: Command succeeded and affected multiple targets (count of affected items)
   // Note: Syntax errors return 0 and error details are sent via the logging system.
-  int32 code = 1;
+  int32 code = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for getting tab-completion suggestions for a partial command.
@@ -88,7 +88,7 @@ message CommandCompletionRequest {
 message CommandCompletion {
   // The suggested text to insert at the cursor position.
   // This is the actual completion value, not the full command.
-  string suggestion = 1;
+  string suggestion = 1 [(google.api.field_behavior) = REQUIRED];
   // Optional tooltip providing additional context about this suggestion.
   // May contain formatted text explaining what the suggestion does.
   // If not present, no tooltip should be displayed.
@@ -101,7 +101,7 @@ message CommandCompletionResponse {
   // May be empty if no completions are available.
   // Suggestions are generated based on the command's Brigadier definition
   // and the current execution scope's visibility.
-  repeated CommandCompletion suggestions = 1;
+  repeated CommandCompletion suggestions = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Service for executing server commands and retrieving tab-completion suggestions.

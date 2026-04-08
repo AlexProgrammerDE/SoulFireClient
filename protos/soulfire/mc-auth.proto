@@ -30,14 +30,14 @@ message CredentialsAuthRequest {
   // Each string is processed according to the service type.
   // Multiple payloads are authenticated concurrently (controlled by
   // ACCOUNT_IMPORT_CONCURRENCY instance setting).
-  repeated string payload = 3;
+  repeated string payload = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Result of a single account authentication attempt.
 // Includes the authenticated account data on success.
 message CredentialsAuthOneSuccess {
   // The successfully authenticated Minecraft account.
-  MinecraftAccountProto account = 1;
+  MinecraftAccountProto account = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Result sent when an individual account authentication fails.
@@ -91,20 +91,20 @@ message DeviceCodeAuthRequest {
 message DeviceCode {
   // The device code used internally for polling authentication status.
   // This is not shown to the user.
-  string device_code = 1;
+  string device_code = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The short alphanumeric code the user must enter at the verification URI.
   // Typically displayed to the user for manual entry.
-  string user_code = 2;
+  string user_code = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The URL where the user must go to enter the user_code.
   // Example: "https://microsoft.com/devicelogin"
-  string verification_uri = 3;
+  string verification_uri = 3 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uri"];
 
   // A URL that includes the user_code as a parameter for one-click verification.
   // Users can visit this URL directly without manually entering the code.
   // Example: "https://microsoft.com/devicelogin?otc=ABCD1234"
-  string direct_verification_uri = 4;
+  string direct_verification_uri = 4 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uri"];
 }
 
 // Streaming response message for device code authentication.
@@ -145,7 +145,7 @@ message RefreshResponse {
   // The refreshed Minecraft account with updated tokens.
   // Contains new access tokens and updated expiration times.
   // For offline accounts, returns the same account unchanged.
-  MinecraftAccountProto account = 1;
+  MinecraftAccountProto account = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Service for authenticating Minecraft accounts for use with SoulFire bots.

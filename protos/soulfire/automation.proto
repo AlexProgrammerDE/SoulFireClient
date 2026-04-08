@@ -11,15 +11,15 @@ import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 
 message AutomationPosition {
-  double x = 1;
-  double y = 2;
-  double z = 3;
+  double x = 1 [(google.api.field_behavior) = REQUIRED];
+  double y = 2 [(google.api.field_behavior) = REQUIRED];
+  double z = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationRequirementTarget {
-  string requirement_key = 1;
-  string display_name = 2;
-  int32 count = 3;
+  string requirement_key = 1 [(google.api.field_behavior) = REQUIRED];
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 count = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 enum AutomationPreset {
@@ -73,114 +73,114 @@ enum AutomationBeatPhase {
 }
 
 message AutomationBotSettings {
-  bool enabled = 1;
-  bool allow_death_recovery = 2;
-  int32 memory_scan_radius = 3;
-  int32 memory_scan_interval_ticks = 4;
-  int32 retreat_health_threshold = 5;
-  int32 retreat_food_threshold = 6;
-  AutomationTeamRole role_override = 7;
+  bool enabled = 1 [(google.api.field_behavior) = REQUIRED];
+  bool allow_death_recovery = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 memory_scan_radius = 3 [(google.api.field_behavior) = REQUIRED];
+  int32 memory_scan_interval_ticks = 4 [(google.api.field_behavior) = REQUIRED];
+  int32 retreat_health_threshold = 5 [(google.api.field_behavior) = REQUIRED];
+  int32 retreat_food_threshold = 6 [(google.api.field_behavior) = REQUIRED];
+  AutomationTeamRole role_override = 7 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationInstanceSettings {
-  AutomationPreset preset = 1;
-  bool team_collaboration = 2;
-  AutomationRolePolicy role_policy = 3;
-  bool shared_end_entry = 4;
-  int32 max_end_bots = 5;
-  bool shared_structure_intel = 6;
-  bool shared_target_claims = 7;
-  AutomationTeamObjective objective_override = 8;
-  int32 target_blaze_rods = 9;
-  int32 target_ender_pearls = 10;
-  int32 target_ender_eyes = 11;
-  int32 target_arrows = 12;
-  int32 target_beds = 13;
+  AutomationPreset preset = 1 [(google.api.field_behavior) = REQUIRED];
+  bool team_collaboration = 2 [(google.api.field_behavior) = REQUIRED];
+  AutomationRolePolicy role_policy = 3 [(google.api.field_behavior) = REQUIRED];
+  bool shared_end_entry = 4 [(google.api.field_behavior) = REQUIRED];
+  int32 max_end_bots = 5 [(google.api.field_behavior) = REQUIRED];
+  bool shared_structure_intel = 6 [(google.api.field_behavior) = REQUIRED];
+  bool shared_target_claims = 7 [(google.api.field_behavior) = REQUIRED];
+  AutomationTeamObjective objective_override = 8 [(google.api.field_behavior) = REQUIRED];
+  int32 target_blaze_rods = 9 [(google.api.field_behavior) = REQUIRED];
+  int32 target_ender_pearls = 10 [(google.api.field_behavior) = REQUIRED];
+  int32 target_ender_eyes = 11 [(google.api.field_behavior) = REQUIRED];
+  int32 target_arrows = 12 [(google.api.field_behavior) = REQUIRED];
+  int32 target_beds = 13 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationResourceQuota {
-  string requirement_key = 1;
-  string display_name = 2;
-  int32 current_count = 3;
-  int32 target_count = 4;
+  string requirement_key = 1 [(google.api.field_behavior) = REQUIRED];
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 current_count = 3 [(google.api.field_behavior) = REQUIRED];
+  int32 target_count = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationBotState {
-  string instance_id = 1;
-  string bot_id = 2;
-  string account_name = 3;
-  string status_summary = 4;
-  AutomationGoalMode goal_mode = 5;
-  bool paused = 6;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string bot_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string account_name = 3 [(google.api.field_behavior) = REQUIRED];
+  string status_summary = 4 [(google.api.field_behavior) = REQUIRED];
+  AutomationGoalMode goal_mode = 5 [(google.api.field_behavior) = REQUIRED];
+  bool paused = 6 [(google.api.field_behavior) = REQUIRED];
   optional AutomationBeatPhase beat_phase = 7;
   optional string current_action = 8;
-  AutomationRequirementTarget target = 9;
-  AutomationTeamRole team_role = 10;
-  AutomationTeamObjective team_objective = 11;
+  AutomationRequirementTarget target = 9 [(google.api.field_behavior) = REQUIRED];
+  AutomationTeamRole team_role = 10 [(google.api.field_behavior) = REQUIRED];
+  AutomationTeamObjective team_objective = 11 [(google.api.field_behavior) = REQUIRED];
   optional string dimension = 12;
-  AutomationPosition position = 13;
-  int32 death_count = 14;
-  int32 timeout_count = 15;
-  int32 recovery_count = 16;
+  AutomationPosition position = 13 [(google.api.field_behavior) = REQUIRED];
+  int32 death_count = 14 [(google.api.field_behavior) = REQUIRED];
+  int32 timeout_count = 15 [(google.api.field_behavior) = REQUIRED];
+  int32 recovery_count = 16 [(google.api.field_behavior) = REQUIRED];
   optional string last_recovery_reason = 17;
-  google.protobuf.Timestamp last_progress_at = 18;
-  AutomationBotSettings settings = 19;
+  google.protobuf.Timestamp last_progress_at = 18 [(google.api.field_behavior) = REQUIRED];
+  AutomationBotSettings settings = 19 [(google.api.field_behavior) = REQUIRED];
   repeated AutomationRequirementTarget queued_targets = 20;
 }
 
 message AutomationTeamState {
-  string instance_id = 1;
-  string friendly_name = 2;
-  AutomationInstanceSettings settings = 3;
-  AutomationTeamObjective objective = 4;
-  int32 active_bots = 5;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string friendly_name = 2 [(google.api.field_behavior) = REQUIRED];
+  AutomationInstanceSettings settings = 3 [(google.api.field_behavior) = REQUIRED];
+  AutomationTeamObjective objective = 4 [(google.api.field_behavior) = REQUIRED];
+  int32 active_bots = 5 [(google.api.field_behavior) = REQUIRED];
   repeated AutomationResourceQuota quotas = 6;
   repeated AutomationBotState bots = 7;
 }
 
 message AutomationCoordinationSharedBlock {
-  string observer_bot_id = 1;
-  string observer_account_name = 2;
-  string dimension = 3;
-  int32 x = 4;
-  int32 y = 5;
-  int32 z = 6;
-  string block_id = 7;
-  google.protobuf.Timestamp last_seen_at = 8;
+  string observer_bot_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string observer_account_name = 2 [(google.api.field_behavior) = REQUIRED];
+  string dimension = 3 [(google.api.field_behavior) = REQUIRED];
+  int32 x = 4 [(google.api.field_behavior) = REQUIRED];
+  int32 y = 5 [(google.api.field_behavior) = REQUIRED];
+  int32 z = 6 [(google.api.field_behavior) = REQUIRED];
+  string block_id = 7 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp last_seen_at = 8 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationCoordinationClaim {
-  string key = 1;
-  string owner_bot_id = 2;
-  string owner_account_name = 3;
-  AutomationPosition target = 4;
-  google.protobuf.Timestamp expires_at = 5;
+  string key = 1 [(google.api.field_behavior) = REQUIRED];
+  string owner_bot_id = 2 [(google.api.field_behavior) = REQUIRED];
+  string owner_account_name = 3 [(google.api.field_behavior) = REQUIRED];
+  AutomationPosition target = 4 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp expires_at = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationCoordinationEyeSample {
-  string bot_id = 1;
-  string account_name = 2;
-  AutomationPosition origin = 3;
-  AutomationPosition direction = 4;
-  google.protobuf.Timestamp recorded_at = 5;
+  string bot_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string account_name = 2 [(google.api.field_behavior) = REQUIRED];
+  AutomationPosition origin = 3 [(google.api.field_behavior) = REQUIRED];
+  AutomationPosition direction = 4 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp recorded_at = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationSharedRequirementCount {
-  string requirement_key = 1;
-  string display_name = 2;
-  int32 current_count = 3;
-  int32 target_count = 4;
+  string requirement_key = 1 [(google.api.field_behavior) = REQUIRED];
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 current_count = 3 [(google.api.field_behavior) = REQUIRED];
+  int32 target_count = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationCoordinationState {
-  string instance_id = 1;
-  string friendly_name = 2;
-  AutomationInstanceSettings settings = 3;
-  AutomationTeamObjective objective = 4;
-  int32 active_bots = 5;
-  int32 shared_block_count = 6;
-  int32 claim_count = 7;
-  int32 eye_sample_count = 8;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string friendly_name = 2 [(google.api.field_behavior) = REQUIRED];
+  AutomationInstanceSettings settings = 3 [(google.api.field_behavior) = REQUIRED];
+  AutomationTeamObjective objective = 4 [(google.api.field_behavior) = REQUIRED];
+  int32 active_bots = 5 [(google.api.field_behavior) = REQUIRED];
+  int32 shared_block_count = 6 [(google.api.field_behavior) = REQUIRED];
+  int32 claim_count = 7 [(google.api.field_behavior) = REQUIRED];
+  int32 eye_sample_count = 8 [(google.api.field_behavior) = REQUIRED];
   repeated AutomationSharedRequirementCount shared_counts = 9;
   repeated AutomationCoordinationSharedBlock shared_blocks = 10;
   repeated AutomationCoordinationClaim claims = 11;
@@ -188,56 +188,56 @@ message AutomationCoordinationState {
 }
 
 message AutomationMemoryBlock {
-  int32 x = 1;
-  int32 y = 2;
-  int32 z = 3;
-  string block_id = 4;
-  int64 last_seen_tick = 5;
+  int32 x = 1 [(google.api.field_behavior) = REQUIRED];
+  int32 y = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 z = 3 [(google.api.field_behavior) = REQUIRED];
+  string block_id = 4 [(google.api.field_behavior) = REQUIRED];
+  int64 last_seen_tick = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationMemoryContainer {
-  int32 x = 1;
-  int32 y = 2;
-  int32 z = 3;
-  string block_id = 4;
-  bool inspected = 5;
-  int32 distinct_item_kinds = 6;
-  int32 total_item_count = 7;
-  int64 last_seen_tick = 8;
+  int32 x = 1 [(google.api.field_behavior) = REQUIRED];
+  int32 y = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 z = 3 [(google.api.field_behavior) = REQUIRED];
+  string block_id = 4 [(google.api.field_behavior) = REQUIRED];
+  bool inspected = 5 [(google.api.field_behavior) = REQUIRED];
+  int32 distinct_item_kinds = 6 [(google.api.field_behavior) = REQUIRED];
+  int32 total_item_count = 7 [(google.api.field_behavior) = REQUIRED];
+  int64 last_seen_tick = 8 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationMemoryEntity {
-  string entity_id = 1;
-  string entity_type = 2;
-  AutomationPosition position = 3;
-  int64 last_seen_tick = 4;
+  string entity_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string entity_type = 2 [(google.api.field_behavior) = REQUIRED];
+  AutomationPosition position = 3 [(google.api.field_behavior) = REQUIRED];
+  int64 last_seen_tick = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationMemoryDroppedItem {
-  string entity_id = 1;
-  string item_id = 2;
-  int32 count = 3;
-  AutomationPosition position = 4;
-  int64 last_seen_tick = 5;
+  string entity_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string item_id = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 count = 3 [(google.api.field_behavior) = REQUIRED];
+  AutomationPosition position = 4 [(google.api.field_behavior) = REQUIRED];
+  int64 last_seen_tick = 5 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationMemoryUnreachablePosition {
-  int32 x = 1;
-  int32 y = 2;
-  int32 z = 3;
-  int64 until_tick = 4;
+  int32 x = 1 [(google.api.field_behavior) = REQUIRED];
+  int32 y = 2 [(google.api.field_behavior) = REQUIRED];
+  int32 z = 3 [(google.api.field_behavior) = REQUIRED];
+  int64 until_tick = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationMemoryState {
-  string instance_id = 1;
-  string bot_id = 2;
-  string account_name = 3;
-  int64 tick = 4;
-  int32 remembered_block_count = 5;
-  int32 remembered_container_count = 6;
-  int32 remembered_entity_count = 7;
-  int32 remembered_dropped_item_count = 8;
-  int32 unreachable_position_count = 9;
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string bot_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string account_name = 3 [(google.api.field_behavior) = REQUIRED];
+  int64 tick = 4 [(google.api.field_behavior) = REQUIRED];
+  int32 remembered_block_count = 5 [(google.api.field_behavior) = REQUIRED];
+  int32 remembered_container_count = 6 [(google.api.field_behavior) = REQUIRED];
+  int32 remembered_entity_count = 7 [(google.api.field_behavior) = REQUIRED];
+  int32 remembered_dropped_item_count = 8 [(google.api.field_behavior) = REQUIRED];
+  int32 unreachable_position_count = 9 [(google.api.field_behavior) = REQUIRED];
   repeated AutomationMemoryBlock blocks = 10;
   repeated AutomationMemoryContainer containers = 11;
   repeated AutomationMemoryEntity entities = 12;
@@ -250,16 +250,16 @@ message GetAutomationTeamStateRequest {
 }
 
 message GetAutomationTeamStateResponse {
-  AutomationTeamState state = 1;
+  AutomationTeamState state = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message GetAutomationCoordinationStateRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  int32 max_entries = 2;
+  int32 max_entries = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message GetAutomationCoordinationStateResponse {
-  AutomationCoordinationState state = 1;
+  AutomationCoordinationState state = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message GetAutomationBotStateRequest {
@@ -268,49 +268,49 @@ message GetAutomationBotStateRequest {
 }
 
 message GetAutomationBotStateResponse {
-  AutomationBotState state = 1;
+  AutomationBotState state = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message GetAutomationMemoryStateRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   string bot_id = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  int32 max_entries = 3;
+  int32 max_entries = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message GetAutomationMemoryStateResponse {
-  AutomationMemoryState state = 1;
+  AutomationMemoryState state = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationBotActionResult {
-  string bot_id = 1;
-  string account_name = 2;
-  bool success = 3;
-  string message = 4;
+  string bot_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
+  string account_name = 2 [(google.api.field_behavior) = REQUIRED];
+  bool success = 3 [(google.api.field_behavior) = REQUIRED];
+  string message = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationActionRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  repeated string bot_ids = 2 [(soulfire.v1.api_field).format = "uuid"];
+  repeated string bot_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 message StartAutomationAcquireRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  repeated string bot_ids = 2 [(soulfire.v1.api_field).format = "uuid"];
+  repeated string bot_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   string target = 3 [(google.api.field_behavior) = REQUIRED];
   int32 count = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 message AutomationActionResponse {
-  repeated AutomationBotActionResult results = 1;
+  repeated AutomationBotActionResult results = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ResetAutomationMemoryRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  repeated string bot_ids = 2 [(soulfire.v1.api_field).format = "uuid"];
+  repeated string bot_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 message ResetAutomationMemoryResponse {
-  repeated AutomationBotActionResult results = 1;
+  repeated AutomationBotActionResult results = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ResetAutomationCoordinationStateRequest {
@@ -318,7 +318,7 @@ message ResetAutomationCoordinationStateRequest {
 }
 
 message ResetAutomationCoordinationStateResponse {
-  AutomationCoordinationState state = 1;
+  AutomationCoordinationState state = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ReleaseAutomationClaimRequest {
@@ -327,29 +327,29 @@ message ReleaseAutomationClaimRequest {
 }
 
 message ReleaseAutomationClaimResponse {
-  bool released = 1;
-  AutomationCoordinationState state = 2;
+  bool released = 1 [(google.api.field_behavior) = REQUIRED];
+  AutomationCoordinationState state = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ReleaseAutomationBotClaimsRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  repeated string bot_ids = 2 [(soulfire.v1.api_field).format = "uuid"];
+  repeated string bot_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 }
 
 message ReleaseAutomationBotClaimsResponse {
-  repeated AutomationBotActionResult results = 1;
-  AutomationCoordinationState state = 2;
+  repeated AutomationBotActionResult results = 1 [(google.api.field_behavior) = REQUIRED];
+  AutomationCoordinationState state = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ApplyAutomationPresetRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  repeated string bot_ids = 2 [(soulfire.v1.api_field).format = "uuid"];
+  repeated string bot_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   AutomationPreset preset = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ApplyAutomationPresetResponse {
-  AutomationInstanceSettings settings = 1;
-  repeated AutomationBotActionResult results = 2;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
+  repeated AutomationBotActionResult results = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationCollaborationRequest {
@@ -358,7 +358,7 @@ message SetAutomationCollaborationRequest {
 }
 
 message SetAutomationCollaborationResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationRolePolicyRequest {
@@ -367,7 +367,7 @@ message SetAutomationRolePolicyRequest {
 }
 
 message SetAutomationRolePolicyResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationSharedStructuresRequest {
@@ -376,7 +376,7 @@ message SetAutomationSharedStructuresRequest {
 }
 
 message SetAutomationSharedStructuresResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationSharedClaimsRequest {
@@ -385,7 +385,7 @@ message SetAutomationSharedClaimsRequest {
 }
 
 message SetAutomationSharedClaimsResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationSharedEndEntryRequest {
@@ -394,7 +394,7 @@ message SetAutomationSharedEndEntryRequest {
 }
 
 message SetAutomationSharedEndEntryResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationMaxEndBotsRequest {
@@ -403,7 +403,7 @@ message SetAutomationMaxEndBotsRequest {
 }
 
 message SetAutomationMaxEndBotsResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationQuotaOverrideRequest {
@@ -413,7 +413,7 @@ message SetAutomationQuotaOverrideRequest {
 }
 
 message SetAutomationQuotaOverrideResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationObjectiveOverrideRequest {
@@ -422,22 +422,22 @@ message SetAutomationObjectiveOverrideRequest {
 }
 
 message SetAutomationObjectiveOverrideResponse {
-  AutomationInstanceSettings settings = 1;
+  AutomationInstanceSettings settings = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationRoleOverrideRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  repeated string bot_ids = 2 [(soulfire.v1.api_field).format = "uuid"];
+  repeated string bot_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   AutomationTeamRole role = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message SetAutomationRoleOverrideResponse {
-  repeated AutomationBotActionResult results = 1;
+  repeated AutomationBotActionResult results = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message UpdateAutomationBotSettingsRequest {
   string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
-  repeated string bot_ids = 2 [(soulfire.v1.api_field).format = "uuid"];
+  repeated string bot_ids = 2 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
   optional bool enabled = 3;
   optional bool allow_death_recovery = 4;
   optional int32 memory_scan_radius = 5;
@@ -448,7 +448,7 @@ message UpdateAutomationBotSettingsRequest {
 }
 
 message UpdateAutomationBotSettingsResponse {
-  repeated AutomationBotActionResult results = 1;
+  repeated AutomationBotActionResult results = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 service AutomationService {

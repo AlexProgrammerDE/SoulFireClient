@@ -18,37 +18,37 @@ message ProxyCheckRequest {
   // (configured via ProxySettings.PROXY_CHECK_ADDRESS, defaults to "mc.hypixel.net"),
   // the protocol version, and concurrency settings.
   // The user must have CHECK_PROXY permission on this instance.
-  string instance_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string instance_id = 1 [(google.api.field_behavior) = REQUIRED, (soulfire.v1.api_field).format = "uuid"];
 
   // List of proxies to check. Each proxy will be tested by attempting to
   // establish a connection to the configured Minecraft server through it.
   // Proxies are checked concurrently based on the instance's PROXY_CHECK_CONCURRENCY
   // setting (defaults to 10 concurrent checks).
-  repeated ProxyProto proxy = 2;
+  repeated ProxyProto proxy = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Result of checking a single proxy's validity and performance.
 message ProxyCheckResponseSingle {
   // The proxy that was checked. This is echoed back from the request
   // to allow correlation when checking multiple proxies.
-  ProxyProto proxy = 1;
+  ProxyProto proxy = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Whether the proxy check was successful. A proxy is considered valid if
   // a connection through it to the Minecraft server was established successfully
   // and a status response packet was received within the 30-second timeout.
   // If false, the proxy failed to connect, timed out, or encountered an error.
-  bool valid = 2;
+  bool valid = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The time in milliseconds taken to complete the proxy check.
   // This measures the total time from starting the connection attempt
   // until receiving the server status response (or until failure/timeout).
   // Useful for comparing proxy performance and choosing the fastest proxies.
-  int32 latency = 3;
+  int32 latency = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The real IP address as seen by the target server (if available).
   // This field may be empty if the IP could not be determined.
   // Note: Currently not populated by the implementation.
-  string real_ip = 4;
+  string real_ip = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Sentinel message indicating that all proxy checks have completed.

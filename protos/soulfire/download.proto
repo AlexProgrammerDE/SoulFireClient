@@ -16,10 +16,10 @@ import "google/api/field_behavior.proto";
 message HeaderPair {
   // The header name (e.g., "Content-Type", "Authorization", "Accept").
   // Header names are case-insensitive per HTTP specification.
-  string key = 1;
+  string key = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The header value (e.g., "application/json", "Bearer token123").
-  string value = 2;
+  string value = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request message for downloading content from a URL through the SoulFire server.
@@ -54,12 +54,12 @@ message DownloadResponse {
   // The raw bytes of the downloaded content.
   // This contains the complete response body from the target server.
   // May be empty if the server returned no content (e.g., 204 No Content).
-  bytes data = 1;
+  bytes data = 1 [(google.api.field_behavior) = REQUIRED];
 
   // All HTTP headers returned by the target server in its response.
   // Includes standard headers like Content-Type, Content-Length, Cache-Control,
   // as well as any custom headers set by the server.
-  repeated HeaderPair headers = 2;
+  repeated HeaderPair headers = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The HTTP status code returned by the target server (e.g., 200, 404, 500).
   // Common values:
@@ -70,7 +70,7 @@ message DownloadResponse {
   // - 403: Forbidden
   // - 404: Not Found
   // - 500: Internal Server Error
-  int32 status_code = 3;
+  int32 status_code = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Service for downloading content from remote URLs through the SoulFire server.
