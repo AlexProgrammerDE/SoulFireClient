@@ -9,12 +9,14 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
+import { MultiInputOrderList } from "../MultiInputOrderList";
 import { useNodeEditing } from "../NodeEditingContext";
 import { NodePreview } from "../NodePreview";
 import { EditableNodeLabel } from "./EditableNodeLabel";
 import { InlineEditor } from "./InlineEditor";
 import {
   getHandleShape,
+  getNodeDefinition,
   getPortColor,
   getPortDefinition,
   getResolvedPortType,
@@ -29,6 +31,12 @@ import {
 
 // Stable empty object to avoid creating new references in selectors
 const EMPTY_PREVIEW_VALUES: Record<string, unknown> = {};
+const EMPTY_MULTI_INPUT_ITEMS: Array<{
+  id: string;
+  index: number;
+  label: string;
+  sublabel?: string;
+}> = [];
 
 export interface BaseNodeData {
   label?: string;
@@ -73,6 +81,13 @@ interface PortRowProps {
   onValueChange?: (value: unknown) => void;
   /** Resolved port type after generic type inference (overrides static type for color/shape) */
   resolvedType?: PortType;
+  multiInputItems?: Array<{
+    id: string;
+    index: number;
+    label: string;
+    sublabel?: string;
+  }>;
+  onReorderMultiInput?: (orderedEdgeIds: string[]) => void;
 }
 
 function PortRow({
@@ -85,6 +100,8 @@ function PortRow({
   value,
   onValueChange,
   resolvedType,
+  multiInputItems = [],
+  onReorderMultiInput,
 }: PortRowProps) {
   // Use resolved type for color/shape when available (from generic inference)
   const effectiveType = resolvedType ?? port.type;
@@ -114,6 +131,7 @@ function PortRow({
     !isConnected &&
     handleShape !== "square" &&
     !collapsed;
+  const showMultiInputList = isInput && isMultiInput && !collapsed;
 
   // When collapsed, render handles at the edges without labels
   if (collapsed) {
@@ -181,14 +199,26 @@ function PortRow({
           />
         </div>
       ) : (
-        <span
-          className={cn(
-            "text-xs",
-            isConnected ? "text-foreground" : "text-muted-foreground",
+        <div className="min-w-0 flex-1">
+          <span
+            className={cn(
+              "block text-xs",
+              isConnected ? "text-foreground" : "text-muted-foreground",
+            )}
+          >
+            {translatedLabel}
+          </span>
+          {showMultiInputList && onReorderMultiInput && (
+            <div className="mt-1">
+              <MultiInputOrderList
+                items={multiInputItems}
+                onReorder={onReorderMultiInput}
+                compact
+                emptyLabel={`Connect values to ${translatedLabel}`}
+              />
+            </div>
           )}
-        >
-          {translatedLabel}
-        </span>
+        </div>
       )}
     </div>
   );
@@ -262,6 +292,10 @@ function BaseNodeComponent({
   typeBindings,
 }: BaseNodeProps) {
   const { inputs, outputs, label, color, supportsMuting } = definition;
+  const reorderMultiInputEdges = useScriptEditorStore(
+    (s) => s.reorderMultiInputEdges,
+  );
+  const { getNode } = useReactFlow();
 
   // Compute resolved port type for a given port using type bindings
   const getResolvedType = useCallback(
@@ -325,6 +359,48 @@ function BaseNodeComponent({
     }
     return connected;
   }, [edges, id]);
+
+  const multiInputItemsByPort = useMemo(() => {
+    const itemsByPort = new Map<
+      string,
+      Array<{ id: string; index: number; label: string; sublabel?: string }>
+    >();
+
+    for (const edge of edges) {
+      if (edge.target !== id || !edge.targetHandle) continue;
+
+      const port = inputs.find((input) => input.id === edge.targetHandle);
+      if (!port?.multiInput) continue;
+
+      const sourceNode = getNode(edge.source);
+      const sourceLabel =
+        (sourceNode?.data?.label as string | undefined) ??
+        getNodeDefinition(sourceNode?.type ?? "")?.label ??
+        "Node";
+      const sourcePort = sourceNode?.type
+        ? getPortDefinition(sourceNode.type, edge.sourceHandle ?? "")
+        : undefined;
+      const list = itemsByPort.get(edge.targetHandle) ?? [];
+      list.push({
+        id: edge.id,
+        index:
+          Number((edge.data as { order?: number } | undefined)?.order ?? 0) + 1,
+        label: sourceLabel,
+        sublabel: sourcePort?.label,
+      });
+      itemsByPort.set(edge.targetHandle, list);
+    }
+
+    for (const [portId, items] of itemsByPort) {
+      items.sort((a, b) => a.index - b.index);
+      itemsByPort.set(
+        portId,
+        items.map((item, index) => ({ ...item, index: index + 1 })),
+      );
+    }
+
+    return itemsByPort;
+  }, [edges, getNode, id, inputs]);
 
   // Compute which output ports are connected
   const connectedOutputs = useMemo(() => {
@@ -488,6 +564,13 @@ function BaseNodeComponent({
                       handleValueChange(row.input.id, val)
                     }
                     resolvedType={getResolvedType(row.input)}
+                    multiInputItems={
+                      multiInputItemsByPort.get(row.input.id) ??
+                      EMPTY_MULTI_INPUT_ITEMS
+                    }
+                    onReorderMultiInput={(orderedEdgeIds) =>
+                      reorderMultiInputEdges(id, row.input.id, orderedEdgeIds)
+                    }
                   />
                 ) : (
                   <div />

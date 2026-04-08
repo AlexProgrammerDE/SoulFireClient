@@ -28,9 +28,14 @@ export type { PortType };
 // Stable empty array to avoid infinite re-renders in Zustand selectors
 const EMPTY_DEBUG_HISTORY: Array<{ value: unknown; timestamp: Date }> = [];
 
+function getMultiInputOrder(edge: Edge): number {
+  const rawOrder = Number((edge.data as { order?: number } | undefined)?.order);
+  return Number.isFinite(rawOrder) ? rawOrder : Number.MAX_SAFE_INTEGER;
+}
+
 function normalizeMultiInputEdgeOrders(nodes: Node[], edges: Edge[]): Edge[] {
-  const counters = new Map<string, number>();
-  return edges.map((edge) => {
+  const groupedEdges = new Map<string, Edge[]>();
+  for (const edge of edges) {
     const targetNode = nodes.find((n) => n.id === edge.target);
     const targetHandle = edge.targetHandle;
     if (
@@ -38,12 +43,38 @@ function normalizeMultiInputEdgeOrders(nodes: Node[], edges: Edge[]): Edge[] {
       !targetHandle ||
       !isPortMultiInput(targetNode.type ?? "", targetHandle)
     ) {
-      return edge;
+      continue;
     }
 
     const key = `${edge.target}:${targetHandle}`;
-    const nextOrder = counters.get(key) ?? 0;
-    counters.set(key, nextOrder + 1);
+    const group = groupedEdges.get(key) ?? [];
+    group.push(edge);
+    groupedEdges.set(key, group);
+  }
+
+  const normalizedOrders = new Map<string, number>();
+  for (const group of groupedEdges.values()) {
+    group
+      .slice()
+      .sort((a, b) => getMultiInputOrder(a) - getMultiInputOrder(b))
+      .forEach((edge, index) => {
+        normalizedOrders.set(edge.id, index);
+      });
+  }
+
+  return edges.map((edge) => {
+    const nextOrder = normalizedOrders.get(edge.id);
+    if (nextOrder === undefined) {
+      return edge;
+    }
+
+    const currentOrder = Number(
+      (edge.data as { order?: number } | undefined)?.order ?? -1,
+    );
+    if (currentOrder === nextOrder) {
+      return edge;
+    }
+
     return {
       ...edge,
       data: {
@@ -156,6 +187,11 @@ export interface ScriptEditorState {
   deleteSelected: () => void;
   disconnectNode: (nodeId: string) => void;
   setSelectedNode: (nodeId: string | null) => void;
+  reorderMultiInputEdges: (
+    targetNodeId: string,
+    targetHandleId: string,
+    orderedEdgeIds: string[],
+  ) => void;
 
   // Blender-style node actions
   toggleMute: (nodeId: string) => void;
@@ -448,8 +484,11 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
         change.type === "add" ||
         change.type === "replace",
     );
+    const nextEdges = applyEdgeChanges(changes, get().edges);
     set({
-      edges: applyEdgeChanges(changes, get().edges),
+      edges: hasMeaningfulChange
+        ? normalizeMultiInputEdgeOrders(get().nodes, nextEdges)
+        : nextEdges,
       ...(hasMeaningfulChange && { isDirty: true }),
     });
   },
@@ -548,27 +587,66 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
 
     set({
       nodes: nodes.filter((node) => !nodeIdsToDelete.has(node.id)),
-      edges: edges.filter(
-        (edge) =>
-          !edge.selected &&
-          !nodeIdsToDelete.has(edge.source) &&
-          !nodeIdsToDelete.has(edge.target),
+      edges: normalizeMultiInputEdgeOrders(
+        nodes,
+        edges.filter(
+          (edge) =>
+            !edge.selected &&
+            !nodeIdsToDelete.has(edge.source) &&
+            !nodeIdsToDelete.has(edge.target),
+        ),
       ),
       isDirty: true,
     });
   },
 
   disconnectNode: (nodeId) => {
-    const { edges } = get();
+    const { edges, nodes } = get();
     set({
-      edges: edges.filter(
-        (edge) => edge.source !== nodeId && edge.target !== nodeId,
+      edges: normalizeMultiInputEdgeOrders(
+        nodes,
+        edges.filter(
+          (edge) => edge.source !== nodeId && edge.target !== nodeId,
+        ),
       ),
       isDirty: true,
     });
   },
 
   setSelectedNode: (nodeId) => set({ selectedNodeId: nodeId }),
+
+  reorderMultiInputEdges: (targetNodeId, targetHandleId, orderedEdgeIds) => {
+    const { nodes, edges } = get();
+    const orderLookup = new Map(
+      orderedEdgeIds.map((edgeId, index) => [edgeId, index]),
+    );
+    const reorderedEdges = edges.map((edge) => {
+      if (
+        edge.target !== targetNodeId ||
+        edge.targetHandle !== targetHandleId
+      ) {
+        return edge;
+      }
+
+      const nextOrder = orderLookup.get(edge.id);
+      if (nextOrder === undefined) {
+        return edge;
+      }
+
+      return {
+        ...edge,
+        data: {
+          ...(edge.data as Record<string, unknown> | undefined),
+          order: nextOrder,
+        },
+      };
+    });
+
+    set({
+      edges: normalizeMultiInputEdgeOrders(nodes, reorderedEdges),
+      isDirty: true,
+    });
+  },
 
   // Blender-style node actions
   toggleMute: (nodeId) => {
@@ -1894,7 +1972,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       paused: data.paused,
       quotas: data.quotas,
       nodes: data.nodes,
-      edges: data.edges,
+      edges: normalizeMultiInputEdgeOrders(data.nodes, data.edges),
       isDirty: false,
       selectedNodeId: null,
       groupEditStack: [],
@@ -1905,14 +1983,14 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
         Array<{ value: unknown; timestamp: Date }>
       >(),
       lastSavedNodes: data.nodes,
-      lastSavedEdges: data.edges,
+      lastSavedEdges: normalizeMultiInputEdgeOrders(data.nodes, data.edges),
     }),
 
   loadScriptData: (data) => {
     const current = get();
     set({
       nodes: data.nodes,
-      edges: data.edges,
+      edges: normalizeMultiInputEdgeOrders(data.nodes, data.edges),
       scriptName: data.name ?? current.scriptName,
       scriptDescription: data.description ?? current.scriptDescription,
       paused: data.paused ?? current.paused,
