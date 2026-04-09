@@ -4,7 +4,7 @@ version = "2.7.0"
 description = "Frontend client for SoulFire."
 authors = ["Pistonmaster"]
 license = "AGPL-3.0"
-repository = "https://github.com/AlexProgrammerDE/SoulFireClient"
+repository = "https://github.com/soulfiremc-com/SoulFireClient"
 edition = "2024"
 rust-version = "1.85"
 

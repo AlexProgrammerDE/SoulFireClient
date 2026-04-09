@@ -24,7 +24,7 @@ JAR_NAME="SoulFireDedicated-$1.jar"
 
 # Only download if the jar does not exist
 if [ ! -f ~/soulfire/jars/$JAR_NAME ]; then
-  curl -L -o ~/soulfire/jars/$JAR_NAME "https://github.com/AlexProgrammerDE/SoulFire/releases/download/$1/$JAR_NAME"
+  curl -L -o ~/soulfire/jars/$JAR_NAME "https://github.com/soulfiremc-com/SoulFire/releases/download/$1/$JAR_NAME"
 else
   echo "$JAR_NAME already exists, skipping download."
 fi

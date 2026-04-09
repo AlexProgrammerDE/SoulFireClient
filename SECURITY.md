@@ -7,4 +7,4 @@ If you discover a **security vulnerability**, please **do not** open a public is
 * **Email:** [security@soulfiremc.com](mailto:security@soulfiremc.com)
 * **Discord Username:** `pistonmaster`
 
-If your issue is **not security-related** (e.g., bug reports, feature requests, or usage questions), please use the [GitHub Issues page](https://github.com/AlexProgrammerDE/SoulFire/issues) or contact us via the [Discord server](https://soulfiremc.com/discord).
+If your issue is **not security-related** (e.g., bug reports, feature requests, or usage questions), please use the [GitHub Issues page](https://github.com/soulfiremc-com/SoulFire/issues) or contact us via the [Discord server](https://soulfiremc.com/discord).

@@ -1,14 +1,14 @@
-<img align="right" src="https://github.com/AlexProgrammerDE/SoulFire/blob/main/mod/src/main/resources/icons/icon.png?raw=true" height="150" width="150">
+<img align="right" src="https://github.com/soulfiremc-com/SoulFire/blob/main/mod/src/main/resources/icons/icon.png?raw=true" height="150" width="150">
 
 [![discord](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg)](https://discord.gg/vHgRd6YZmH) [![kofi](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular_vector.svg)](https://ko-fi.com/alexprogrammerde)
 
 # SoulFireClient
 
-This is a frontend for the [SoulFire server](https://github.com/AlexProgrammerDE/SoulFire).
+This is a frontend for the [SoulFire server](https://github.com/soulfiremc-com/SoulFire).
 It mainly targets the web, but uses native APIs using Tauri.
 
 > [!NOTE]
-> For more info about SoulFire, take a look at the main [SoulFire repository](https://github.com/AlexProgrammerDE/SoulFire).
+> For more info about SoulFire, take a look at the main [SoulFire repository](https://github.com/soulfiremc-com/SoulFire).
 
 ## About the client
 

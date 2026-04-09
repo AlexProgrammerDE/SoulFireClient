@@ -325,27 +325,27 @@ jobs:
             "platforms": {
               "windows-x86_64": {
                 "signature": "$(cat "$windowsAmd64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$windowsAmd64File")"
+                "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$windowsAmd64File")"
               },
               "windows-aarch64": {
                 "signature": "$(cat "$windowsAarch64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$windowsAarch64File")"
+                "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$windowsAarch64File")"
               },
               "darwin-aarch64": {
                 "signature": "$(cat "$macosAarch64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$macosAarch64File")"
+                "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$macosAarch64File")"
               },
               "darwin-x86_64": {
                 "signature": "$(cat "$macosAmd64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$macosAmd64File")"
+                "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$macosAmd64File")"
               },
               "linux-x86_64": {
                 "signature": "$(cat "$linuxAmd64AppImageSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$linuxAmd64AppImageFile")"
+                "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$linuxAmd64AppImageFile")"
               },
               "linux-aarch64": {
                 "signature": "$(cat "$linuxAarch64AppImageSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$linuxAarch64AppImageFile")"
+                "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$linuxAarch64AppImageFile")"
               }
             }
           }
@@ -366,7 +366,7 @@ jobs:
           configurationJson: |
             {
               "template": "#{{CHANGELOG}}",
-              "commit_template": "- [`#{{SHORT_MERGE_SHA}}`](https://github.com/AlexProgrammerDE/SoulFireClient/commit/#{{MERGE_SHA}}) #{{TITLE}}",
+              "commit_template": "- [`#{{SHORT_MERGE_SHA}}`](https://github.com/soulfiremc-com/SoulFireClient/commit/#{{MERGE_SHA}}) #{{TITLE}}",
               "categories": [
                 {
                     "title": "## 🚀 Features",
@@ -440,10 +440,10 @@ jobs:
 
             | Platform              | Download Link |
             |-----------------------|---------------|
-            | Windows (x86_64)      | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
-            | Windows (AArch64)     | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAarch64File }}) |
-            | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64DmgFile }}) |
-            | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64DmgFile }}) |
+            | Windows (x86_64)      | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
+            | Windows (AArch64)     | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAarch64File }}) |
+            | macOS (Intel)         | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64DmgFile }}) |
+            | macOS (Apple Silicon) | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64DmgFile }}) |
             | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
             | Linux (AArch64)       | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
 
@@ -470,6 +470,6 @@ jobs:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           content: <@&850705047938793503> New SoulFireClient version released!
           embed-title: SoulFireClient ${{ inputs.app-version }}
-          embed-description: SoulFireClient ${{ inputs.app-version }} has been released! Download at https://soulfiremc.com/download and changelog at https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ inputs.app-version }}
+          embed-description: SoulFireClient ${{ inputs.app-version }} has been released! Download at https://soulfiremc.com/download and changelog at https://github.com/soulfiremc-com/SoulFireClient/releases/tag/${{ inputs.app-version }}
           embed-color: 3312063
           embed-thumbnail-url: https://soulfiremc.com/logo.png

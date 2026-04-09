@@ -354,7 +354,7 @@ async fn internal_load_integrated_server(
     if need_download_jar {
         send_log(&app_handle, "Fetching SoulFire data...")?;
         let soul_fire_url = format!(
-            "https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/{}",
+            "https://github.com/soulfiremc-com/SoulFire/releases/download/{}/{}",
             SOULFIRE_VERSION, soulfire_jar_name
         );
         info!("SoulFire URL: {}", soul_fire_url);

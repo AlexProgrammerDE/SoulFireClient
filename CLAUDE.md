@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-SoulFireClient is a React/TypeScript + Tauri frontend for the [SoulFire server](https://github.com/AlexProgrammerDE/SoulFire). It runs on web, desktop (Windows/macOS/Linux), and mobile (Android/iOS) via Tauri 2.
+SoulFireClient is a React/TypeScript + Tauri frontend for the [SoulFire server](https://github.com/soulfiremc-com/SoulFire). It runs on web, desktop (Windows/macOS/Linux), and mobile (Android/iOS) via Tauri 2.
 
 ## Build Commands
 
