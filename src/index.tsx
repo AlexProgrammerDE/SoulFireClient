@@ -85,9 +85,9 @@ declare module "@tanstack/react-router" {
 if (
   isAuthenticated() &&
   getServerType() === "dedicated" &&
-  window.location.hash === ""
+  window.location.pathname === ""
 ) {
-  window.location.hash = "/user";
+  window.location.pathname = "/user";
 }
 
 // Render the app
