@@ -629,6 +629,84 @@ export async function updateBotConfigEntry(
   });
 }
 
+export async function removeBotConfigEntry(
+  namespace: string,
+  key: string,
+  instanceId: string,
+  botId: string,
+  transport: Transport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  let updatedAccount: ProfileAccount | null = null;
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      const accountIndex = old.profile.accounts.findIndex(
+        (account) => account.profileId === botId,
+      );
+      if (accountIndex < 0) {
+        return old;
+      }
+
+      const account = old.profile.accounts[accountIndex];
+      const nextConfig = account.config
+        .map((settingsNamespace) => {
+          if (settingsNamespace.namespace !== namespace) {
+            return settingsNamespace;
+          }
+
+          return {
+            ...settingsNamespace,
+            entries: settingsNamespace.entries.filter(
+              (entry) => entry.key !== key,
+            ),
+          };
+        })
+        .filter((settingsNamespace) => settingsNamespace.entries.length > 0);
+
+      updatedAccount = {
+        ...account,
+        config: nextConfig,
+      };
+
+      const nextAccounts = [...old.profile.accounts];
+      nextAccounts[accountIndex] = updatedAccount;
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          accounts: nextAccounts,
+        },
+      };
+    },
+  );
+
+  if (updatedAccount === null) {
+    return;
+  }
+
+  const instanceService = createClient(InstanceService, transport);
+  await instanceService.updateInstanceAccount({
+    id: instanceId,
+    account: toMinecraftAccountProto(updatedAccount),
+  });
+}
+
 // Account operations
 export async function addInstanceAccount(
   account: ProfileAccount,

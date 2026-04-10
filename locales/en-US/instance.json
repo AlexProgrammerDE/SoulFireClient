@@ -149,7 +149,21 @@
       "description": "Configure per-bot settings for this account",
       "openButton": "Configure account",
       "pageTitle": "{{name}} - {{page}} Settings",
-      "noSettings": "No settings available for this page"
+      "noSettings": "No settings available for this page",
+      "search": "Search settings",
+      "overrides": "Overrides",
+      "allSettings": "All settings",
+      "noOverrides": "This bot does not have any explicit overrides yet.",
+      "noOverridesMatching": "No overrides match this search.",
+      "noOverridesHelp": "Open All settings to inherit values or create the first bot-specific override.",
+      "tryDifferentSearch": "Try a different search term.",
+      "openAllSettings": "Open all settings",
+      "selectPage": "Select a settings page",
+      "noSearchResults": "No settings match this search.",
+      "matchesInheritedValue": "Matches inherited value",
+      "instanceValue": "Instance value",
+      "defaultValue": "Default value",
+      "resetOverride": "Reset override"
     },
     "deviceCodeConfirmDialog": {
       "title": "Device Code Authentication",

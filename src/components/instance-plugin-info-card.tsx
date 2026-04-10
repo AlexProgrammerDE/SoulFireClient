@@ -52,6 +52,7 @@ function PluginInfoCardContent(props: {
   link: ReactNode;
   enabledValue: boolean;
   onEnabledChange: (value: boolean) => void;
+  cardSize?: "default" | "sm";
   settingsUrl?: string;
 }) {
   const { t } = useTranslation("common");
@@ -64,6 +65,7 @@ function PluginInfoCardContent(props: {
     <>
       <Card
         className="container"
+        size={props.cardSize}
         onContextMenu={(e) => handleContextMenu(e, null)}
       >
         <CardHeader>
@@ -290,6 +292,7 @@ export function BotPluginInfoCard(props: {
   botConfig: BaseSettings;
   instanceId: string;
   botId: string;
+  cardSize?: "default" | "sm";
   instanceInfoQueryKey: readonly unknown[];
   settingsDefinitions: SettingsDefinition[];
 }) {
@@ -338,6 +341,7 @@ export function BotPluginInfoCard(props: {
     <PluginInfoCardContent
       settingsEntry={props.settingsEntry}
       plugin={props.plugin}
+      cardSize={props.cardSize}
       enabledValue={enabledValue}
       onEnabledChange={setEnabledMutation.mutate}
       link={<PluginCardTitle settingsEntry={props.settingsEntry} />}
