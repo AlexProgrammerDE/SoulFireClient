@@ -108,7 +108,7 @@ fn parse_sha256_digest(value: &str) -> Option<&str> {
 
 async fn fetch_soulfire_jar_sha256(version: &str, jar_file_name: &str) -> Result<String, SFAnyError> {
     let url = format!(
-        "https://api.github.com/repos/AlexProgrammerDE/SoulFire/releases/tags/{}",
+        "https://api.github.com/repos/soulfiremc-com/SoulFire/releases/tags/{}",
         version
     );
     let response = reqwest::Client::new()

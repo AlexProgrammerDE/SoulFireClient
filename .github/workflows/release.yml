@@ -14,14 +14,14 @@ on:
 # See this issue to learn more: https://github.com/zizmorcore/zizmor/issues/360
 jobs:
   set-server-version:
-    uses: AlexProgrammerDE/SoulFireClient/.github/workflows/set-server-version.yml@main
+    uses: soulfiremc-com/SoulFireClient/.github/workflows/set-server-version.yml@main
     with:
       version: ${{ inputs.server-version }}
     secrets: inherit
 
   set-version:
     needs: set-server-version
-    uses: AlexProgrammerDE/SoulFireClient/.github/workflows/set-version.yml@main
+    uses: soulfiremc-com/SoulFireClient/.github/workflows/set-version.yml@main
     with:
       version: ${{ inputs.app-version }}
     secrets: inherit

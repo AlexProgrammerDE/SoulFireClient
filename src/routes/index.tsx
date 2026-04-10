@@ -830,7 +830,7 @@ function IntegratedMobileMenu({
   const copyToClipboard = useCopyToClipboard();
   const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation("login");
-  const runCommand = `bash <(curl -s https://raw.githubusercontent.com/AlexProgrammerDE/SoulFireClient/refs/heads/main/scripts/termux_setup.sh) ${systemInfo?.sfServerVersion} "${localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS)}"`;
+  const runCommand = `bash <(curl -s https://raw.githubusercontent.com/soulfiremc-com/SoulFireClient/refs/heads/main/scripts/termux_setup.sh) ${systemInfo?.sfServerVersion} "${localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS)}"`;
   const form = useForm({
     defaultValues: {
       token:
