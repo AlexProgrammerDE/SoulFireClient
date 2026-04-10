@@ -24,6 +24,7 @@ import {
 import { use, useCallback, useEffect, useId, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useStickToBottom } from "use-stick-to-bottom";
 import { z } from "zod";
 import { ExternalLink } from "@/components/external-link.tsx";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
@@ -683,17 +684,18 @@ function useElapsedSeconds() {
 
 function IntegratedLoadingMenu({ logs }: { logs: IntegratedLog[] }) {
   const { t } = useTranslation("login");
-  const scrollRef = useRef<HTMLDivElement>(null);
   const elapsed = useElapsedSeconds();
+  const { scrollRef, contentRef, scrollToBottom } = useStickToBottom({
+    initial: "instant",
+    resize: "instant",
+  });
 
   useEffect(() => {
-    requestAnimationFrame(() => {
-      scrollRef.current?.scrollTo({
-        top: scrollRef.current.scrollHeight,
-        behavior: "smooth",
-      });
+    void scrollToBottom({
+      animation: "instant",
+      preserveScrollPosition: true,
     });
-  }, []);
+  }, [scrollToBottom]);
 
   return (
     <Card>
@@ -707,7 +709,7 @@ function IntegratedLoadingMenu({ logs }: { logs: IntegratedLog[] }) {
       </CardHeader>
       <CardContent>
         <Scroller ref={scrollRef} className="h-48" hideScrollbar>
-          <div className="flex flex-col gap-1">
+          <div ref={contentRef} className="flex flex-col gap-1">
             {logs.map((log) => (
               <p
                 key={log.id}
