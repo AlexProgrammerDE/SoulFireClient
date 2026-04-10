@@ -246,6 +246,12 @@
     "offline": "Offline",
     "notJoined": "Not Joined",
     "backToBots": "Back to Bots",
+    "tabs": {
+      "overview": "Overview",
+      "inventory": "Inventory",
+      "controls": "Controls",
+      "terminal": "Terminal"
+    },
     "comingSoon": "Coming Soon",
     "terminalPanel": {
       "title": "Bot Terminal"

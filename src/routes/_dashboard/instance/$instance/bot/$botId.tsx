@@ -38,14 +38,20 @@ import {
   ShieldIcon,
   SparklesIcon,
   SquareIcon,
-  TerminalIcon,
   TicketIcon,
   Trash2Icon,
   UtensilsIcon,
   WifiOffIcon,
   XIcon,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import CommandInput from "@/components/command-input.tsx";
 import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
@@ -54,15 +60,13 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip.tsx";
 import {
   type BookPage,
   type BotContainerButtonClickRequest,
@@ -109,7 +113,7 @@ import {
   mapUnionToValue,
   type ProfileAccount,
 } from "@/lib/types.ts";
-import { hasInstancePermission } from "@/lib/utils.tsx";
+import { cn, hasInstancePermission } from "@/lib/utils.tsx";
 import { createTransport } from "@/lib/web-rpc.ts";
 
 export const Route = createFileRoute(
@@ -271,6 +275,57 @@ function BotDetail() {
   );
 }
 
+type BotTab = "overview" | "inventory" | "controls" | "terminal";
+
+function TabButton(props: {
+  active: boolean;
+  onClick: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={props.onClick}
+      className={cn(
+        "border-b-2 px-3 pb-2 text-sm transition-colors",
+        props.active
+          ? "border-primary text-foreground font-medium"
+          : "border-transparent text-muted-foreground hover:text-foreground",
+      )}
+    >
+      {props.children}
+    </button>
+  );
+}
+
+function getGameModeLabel(
+  gameMode: GameMode,
+  t: (key: string) => string,
+): string {
+  switch (gameMode) {
+    case GameMode.SURVIVAL:
+      return t("bots.statsPanel.survival");
+    case GameMode.CREATIVE:
+      return t("bots.statsPanel.creative");
+    case GameMode.ADVENTURE:
+      return t("bots.statsPanel.adventure");
+    case GameMode.SPECTATOR:
+      return t("bots.statsPanel.spectator");
+    default:
+      return t("bots.statsPanel.unknown");
+  }
+}
+
+// Helper to get the avatar URL based on online status and skin hash
+function getAvatarUrl(skinTextureHash?: string): string {
+  if (skinTextureHash) {
+    // Use the skin texture hash for online bots with skins
+    return `https://mc-heads.net/body/${skinTextureHash}`;
+  }
+  // Default to Steve for offline bots or bots without skin data
+  return "https://mc-heads.net/body/MHF_Steve";
+}
+
 function BotDetailContent({
   account,
   instanceId,
@@ -279,6 +334,7 @@ function BotDetailContent({
   instanceId: string;
 }) {
   const { t } = useTranslation("instance");
+  const { t: tCommon } = useTranslation("common");
   const { botInfoQueryOptions, instanceInfoQueryOptions } =
     Route.useRouteContext();
   const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
@@ -290,6 +346,12 @@ function BotDetailContent({
     account.type,
   );
   const TypeIcon = accountTypeToIcon(typeKey);
+
+  const [activeTab, setActiveTab] = useState<BotTab>("overview");
+
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<null>();
+  const copyToClipboard = useCopyToClipboard();
 
   const logScope = useMemo<LogScope>(
     () =>
@@ -319,10 +381,103 @@ function BotDetailContent({
     [instanceId, account.profileId],
   );
 
+  const liveState = botInfo.liveState;
+
   return (
     <div className="container flex flex-col gap-4 py-4">
-      {/* Back button */}
-      <div>
+      {/* Compact Header Strip */}
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: context menu on container */}
+      <div
+        className="flex flex-wrap items-center gap-4 rounded-lg border p-4"
+        onContextMenu={(e) => handleContextMenu(e, null)}
+      >
+        <img
+          src={getAvatarUrl(liveState?.skinTextureHash)}
+          alt={account.lastKnownName}
+          className="h-16 w-auto"
+          loading="lazy"
+        />
+        <div className="flex flex-col gap-1">
+          <h2 className="text-lg font-semibold">{account.lastKnownName}</h2>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <span
+              className={cn("font-medium", isOnline ? "text-emerald-500" : "")}
+            >
+              {isOnline ? t("bots.online") : t("bots.notJoined")}
+            </span>
+            <span className="flex items-center gap-1">
+              <TypeIcon className="size-3" />
+              {accountTypeLabel(typeKey)}
+            </span>
+            <span className="font-mono text-xs">{account.profileId}</span>
+          </div>
+        </div>
+        {/* Inline mini stats when online */}
+        {isOnline && liveState && (
+          <div className="ml-auto flex flex-wrap items-center gap-3">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-1">
+                  <HeartIcon className="size-3.5 text-red-500" />
+                  <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                    <div
+                      className="h-full bg-red-500 transition-all"
+                      style={{
+                        width: `${(liveState.health / liveState.maxHealth) * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs tabular-nums">
+                    {liveState.health.toFixed(0)}/
+                    {liveState.maxHealth.toFixed(0)}
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>{t("bots.statsPanel.health")}</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-1">
+                  <UtensilsIcon className="size-3.5 text-amber-500" />
+                  <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                    <div
+                      className="h-full bg-amber-500 transition-all"
+                      style={{
+                        width: `${(liveState.foodLevel / 20) * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs tabular-nums">
+                    {liveState.foodLevel}/20
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>{t("bots.statsPanel.food")}</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-1">
+                  <SparklesIcon className="size-3.5 text-green-500" />
+                  <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                    <div
+                      className="h-full bg-green-500 transition-all"
+                      style={{
+                        width: `${liveState.experienceProgress * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs tabular-nums">
+                    L{liveState.experienceLevel}
+                  </span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>{t("bots.statsPanel.experience")}</TooltipContent>
+            </Tooltip>
+            <span className="text-xs text-muted-foreground">
+              {getGameModeLabel(liveState.gameMode, t)}
+            </span>
+          </div>
+        )}
         <Button asChild variant="ghost" size="sm">
           <Link to="/instance/$instance/bots" params={{ instance: instanceId }}>
             <ArrowLeftIcon className="mr-2 size-4" />
@@ -331,143 +486,7 @@ function BotDetailContent({
         </Button>
       </div>
 
-      {/* Main content grid */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {/* Left column */}
-        <div className="flex flex-col gap-4">
-          {/* Bot info card */}
-          <BotSkinPreview
-            account={account}
-            isOnline={isOnline}
-            skinTextureHash={botInfo.liveState?.skinTextureHash}
-            typeKey={typeKey}
-            TypeIcon={TypeIcon}
-          />
-
-          {/* Stats panel (health, food, xp) */}
-          <BotStatsPanel liveState={botInfo.liveState} isOnline={isOnline} />
-
-          {/* Inventory panel */}
-          <BotInventoryPanel
-            isOnline={isOnline}
-            instanceId={instanceId}
-            botId={account.profileId}
-          />
-
-          {/* Actions panel */}
-          <BotActionsPanel
-            isOnline={isOnline}
-            instanceId={instanceId}
-            botId={account.profileId}
-          />
-
-          {/* Movement control panel */}
-          <BotMovementPanel
-            isOnline={isOnline}
-            instanceId={instanceId}
-            botId={account.profileId}
-            liveState={botInfo.liveState}
-          />
-
-          {/* Dialog panel */}
-          <BotDialogPanel
-            isOnline={isOnline}
-            instanceId={instanceId}
-            botId={account.profileId}
-          />
-        </div>
-
-        {/* Right column */}
-        <div className="flex flex-col gap-4">
-          {/* POV Render panel */}
-          <BotPovPanel
-            instanceId={instanceId}
-            botId={account.profileId}
-            isOnline={isOnline}
-          />
-
-          {/* Position panel */}
-          <BotPositionPanel liveState={botInfo.liveState} isOnline={isOnline} />
-
-          {/* Visual panel with compass */}
-          <BotVisualPanel liveState={botInfo.liveState} isOnline={isOnline} />
-
-          {/* Terminal panel with personal logs */}
-          <BotTerminalPanel
-            logScope={logScope}
-            commandScope={commandScope}
-            instanceInfo={instanceInfo}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Helper to get the avatar URL based on online status and skin hash
-function getAvatarUrl(skinTextureHash?: string): string {
-  if (skinTextureHash) {
-    // Use the skin texture hash for online bots with skins
-    return `https://mc-heads.net/body/${skinTextureHash}`;
-  }
-  // Default to Steve for offline bots or bots without skin data
-  return "https://mc-heads.net/body/MHF_Steve";
-}
-
-function BotSkinPreview({
-  account,
-  isOnline,
-  skinTextureHash,
-  typeKey,
-  TypeIcon,
-}: {
-  account: ProfileAccount;
-  isOnline: boolean;
-  skinTextureHash?: string;
-  typeKey: keyof typeof MinecraftAccountProto_AccountTypeProto;
-  TypeIcon: React.ComponentType<{ className?: string }>;
-}) {
-  const { t } = useTranslation("instance");
-  const { t: tCommon } = useTranslation("common");
-  const { contextMenu, handleContextMenu, dismiss, menuRef } =
-    useContextMenu<null>();
-  const copyToClipboard = useCopyToClipboard();
-
-  return (
-    <>
-      <Card onContextMenu={(e) => handleContextMenu(e, null)}>
-        <CardHeader>
-          <div className="flex items-start gap-4">
-            {/* Full body render */}
-            <img
-              src={getAvatarUrl(skinTextureHash)}
-              alt={account.lastKnownName}
-              className="h-32 w-auto"
-              loading="lazy"
-            />
-            <div className="flex flex-1 flex-col gap-2">
-              <CardTitle className="text-2xl">
-                {account.lastKnownName}
-              </CardTitle>
-              <div className="flex flex-wrap gap-2">
-                <Badge
-                  variant={isOnline ? "default" : "secondary"}
-                  className="text-sm"
-                >
-                  {isOnline ? t("bots.online") : t("bots.notJoined")}
-                </Badge>
-                <Badge variant="outline" className="text-sm">
-                  <TypeIcon className="mr-1 size-3" />
-                  {accountTypeLabel(typeKey)}
-                </Badge>
-              </div>
-              <CardDescription className="select-text font-mono text-xs">
-                UUID: {account.profileId}
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
+      {/* Context menu for header */}
       {contextMenu && (
         <ContextMenuPortal
           x={contextMenu.position.x}
@@ -494,16 +513,82 @@ function BotSkinPreview({
           </MenuItem>
         </ContextMenuPortal>
       )}
-    </>
+
+      {/* Tab bar + content */}
+      <div className="rounded-lg border">
+        <div className="flex items-center gap-1 border-b px-4 pt-2">
+          <TabButton
+            active={activeTab === "overview"}
+            onClick={() => setActiveTab("overview")}
+          >
+            {t("bots.tabs.overview")}
+          </TabButton>
+          <TabButton
+            active={activeTab === "inventory"}
+            onClick={() => setActiveTab("inventory")}
+          >
+            {t("bots.tabs.inventory")}
+          </TabButton>
+          <TabButton
+            active={activeTab === "controls"}
+            onClick={() => setActiveTab("controls")}
+          >
+            {t("bots.tabs.controls")}
+          </TabButton>
+          <TabButton
+            active={activeTab === "terminal"}
+            onClick={() => setActiveTab("terminal")}
+          >
+            {t("bots.tabs.terminal")}
+          </TabButton>
+        </div>
+        <div className="p-4">
+          {activeTab === "overview" && (
+            <OverviewTab
+              instanceId={instanceId}
+              botId={account.profileId}
+              isOnline={isOnline}
+              liveState={liveState}
+            />
+          )}
+          {activeTab === "inventory" && (
+            <BotInventoryPanel
+              isOnline={isOnline}
+              instanceId={instanceId}
+              botId={account.profileId}
+            />
+          )}
+          {activeTab === "controls" && (
+            <ControlsTab
+              isOnline={isOnline}
+              instanceId={instanceId}
+              botId={account.profileId}
+              liveState={liveState}
+            />
+          )}
+          {activeTab === "terminal" && (
+            <BotTerminalPanel
+              logScope={logScope}
+              commandScope={commandScope}
+              instanceInfo={instanceInfo}
+            />
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
-function BotPositionPanel({
-  liveState,
+function OverviewTab({
+  instanceId,
+  botId,
   isOnline,
+  liveState,
 }: {
-  liveState?: BotLiveState;
+  instanceId: string;
+  botId: string;
   isOnline: boolean;
+  liveState?: BotLiveState;
 }) {
   const { t } = useTranslation("instance");
   const { t: tCommon } = useTranslation("common");
@@ -513,17 +598,28 @@ function BotPositionPanel({
 
   return (
     <>
-      <Card onContextMenu={(e) => handleContextMenu(e, null)}>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CompassIcon className="size-5" />
-            {t("bots.positionPanel.title")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isOnline && liveState ? (
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-3">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* Left: POV panel */}
+        <BotPovPanel
+          instanceId={instanceId}
+          botId={botId}
+          isOnline={isOnline}
+        />
+
+        {/* Right: Position + Compass */}
+        {/* biome-ignore lint/a11y/noStaticElementInteractions: context menu on container */}
+        <div
+          className="flex flex-col gap-6"
+          onContextMenu={(e) => handleContextMenu(e, null)}
+        >
+          {/* Position */}
+          <div>
+            <h3 className="mb-2 flex items-center gap-2 text-sm font-medium">
+              <CompassIcon className="size-4" />
+              {t("bots.positionPanel.title")}
+            </h3>
+            {isOnline && liveState ? (
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-muted-foreground text-xs font-medium uppercase">
                     {t("bots.positionPanel.position")}
@@ -543,8 +639,6 @@ function BotPositionPanel({
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="space-y-3">
                 <div>
                   <p className="text-muted-foreground text-xs font-medium uppercase">
                     {t("bots.positionPanel.rotation")}
@@ -561,16 +655,21 @@ function BotPositionPanel({
                   </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-              <p className="text-muted-foreground">
-                {t("bots.positionPanel.offline")}
-              </p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+            ) : (
+              <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+                <p className="text-muted-foreground">
+                  {t("bots.positionPanel.offline")}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Compass + Look direction */}
+          <BotVisualPanel liveState={liveState} isOnline={isOnline} />
+        </div>
+      </div>
+
+      {/* Context menu for position copy */}
       {contextMenu && isOnline && liveState && (
         <ContextMenuPortal
           x={contextMenu.position.x}
@@ -594,6 +693,43 @@ function BotPositionPanel({
   );
 }
 
+function ControlsTab({
+  isOnline,
+  instanceId,
+  botId,
+  liveState,
+}: {
+  isOnline: boolean;
+  instanceId: string;
+  botId: string;
+  liveState?: BotLiveState;
+}) {
+  return (
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="flex flex-col gap-6">
+        <BotMovementPanel
+          isOnline={isOnline}
+          instanceId={instanceId}
+          botId={botId}
+          liveState={liveState}
+        />
+      </div>
+      <div className="flex flex-col gap-6">
+        <BotActionsPanel
+          isOnline={isOnline}
+          instanceId={instanceId}
+          botId={botId}
+        />
+        <BotDialogPanel
+          isOnline={isOnline}
+          instanceId={instanceId}
+          botId={botId}
+        />
+      </div>
+    </div>
+  );
+}
+
 function BotTerminalPanel({
   logScope,
   commandScope,
@@ -603,151 +739,14 @@ function BotTerminalPanel({
   commandScope: CommandScope;
   instanceInfo: InstanceInfoQueryData;
 }) {
-  const { t } = useTranslation("instance");
-
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2">
-          <TerminalIcon className="size-5" />
-          {t("bots.terminalPanel.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <TerminalComponent scope={logScope} />
-        {hasInstancePermission(
-          instanceInfo,
-          InstancePermission.INSTANCE_COMMAND_EXECUTION,
-        ) && <CommandInput scope={commandScope} />}
-      </CardContent>
-    </Card>
-  );
-}
-
-function BotStatsPanel({
-  liveState,
-  isOnline,
-}: {
-  liveState?: BotLiveState;
-  isOnline: boolean;
-}) {
-  const { t } = useTranslation("instance");
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <HeartIcon className="size-5" />
-          {t("bots.statsPanel.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isOnline && liveState ? (
-          <div className="space-y-4">
-            {/* Health bar */}
-            <div>
-              <div className="mb-1 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <HeartIcon className="size-4 text-red-500" />
-                  <span className="text-sm font-medium">
-                    {t("bots.statsPanel.health")}
-                  </span>
-                </div>
-                <span className="select-text font-mono text-sm">
-                  {liveState.health.toFixed(1)} /{" "}
-                  {liveState.maxHealth.toFixed(1)}
-                </span>
-              </div>
-              <div className="bg-muted h-3 overflow-hidden rounded-full">
-                <div
-                  className="h-full bg-red-500 transition-all"
-                  style={{
-                    width: `${(liveState.health / liveState.maxHealth) * 100}%`,
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Food bar */}
-            <div>
-              <div className="mb-1 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <UtensilsIcon className="size-4 text-amber-500" />
-                  <span className="text-sm font-medium">
-                    {t("bots.statsPanel.food")}
-                  </span>
-                </div>
-                <span className="select-text font-mono text-sm">
-                  {liveState.foodLevel} / 20
-                </span>
-              </div>
-              <div className="bg-muted h-3 overflow-hidden rounded-full">
-                <div
-                  className="h-full bg-amber-500 transition-all"
-                  style={{ width: `${(liveState.foodLevel / 20) * 100}%` }}
-                />
-              </div>
-              <p className="text-muted-foreground mt-0.5 select-text text-xs">
-                {t("bots.statsPanel.saturation")}:{" "}
-                {liveState.saturationLevel.toFixed(1)}
-              </p>
-            </div>
-
-            {/* Experience bar */}
-            <div>
-              <div className="mb-1 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <SparklesIcon className="size-4 text-green-500" />
-                  <span className="text-sm font-medium">
-                    {t("bots.statsPanel.experience")}
-                  </span>
-                </div>
-                <span className="select-text font-mono text-sm">
-                  {t("bots.statsPanel.level")} {liveState.experienceLevel}
-                </span>
-              </div>
-              <div className="bg-muted h-3 overflow-hidden rounded-full">
-                <div
-                  className="h-full bg-green-500 transition-all"
-                  style={{ width: `${liveState.experienceProgress * 100}%` }}
-                />
-              </div>
-              <p className="text-muted-foreground mt-0.5 select-text text-xs">
-                {(liveState.experienceProgress * 100).toFixed(0)}%{" "}
-                {t("bots.statsPanel.toNextLevel")}
-              </p>
-            </div>
-
-            {/* Game Mode */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <GamepadIcon className="size-4 text-purple-500" />
-                <span className="text-sm font-medium">
-                  {t("bots.statsPanel.gameMode")}
-                </span>
-              </div>
-              <Badge variant="outline">
-                {liveState.gameMode === GameMode.SURVIVAL
-                  ? t("bots.statsPanel.survival")
-                  : liveState.gameMode === GameMode.CREATIVE
-                    ? t("bots.statsPanel.creative")
-                    : liveState.gameMode === GameMode.ADVENTURE
-                      ? t("bots.statsPanel.adventure")
-                      : liveState.gameMode === GameMode.SPECTATOR
-                        ? t("bots.statsPanel.spectator")
-                        : t("bots.statsPanel.unknown")}
-              </Badge>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-            <p className="text-muted-foreground">
-              {t("bots.statsPanel.offline")}
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    <div className="flex flex-col gap-2">
+      <TerminalComponent scope={logScope} />
+      {hasInstancePermission(
+        instanceInfo,
+        InstancePermission.INSTANCE_COMMAND_EXECUTION,
+      ) && <CommandInput scope={commandScope} />}
+    </div>
   );
 }
 
@@ -824,88 +823,86 @@ function BotPovPanel({
   }, [isOnline]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CameraIcon className="size-5" />
+    <div>
+      <div className="mb-2 flex items-center gap-2">
+        <h3 className="flex items-center gap-2 text-sm font-medium">
+          <CameraIcon className="size-4" />
           {t("bots.povPanel.title")}
-          {isOnline && (
-            <div className="ml-auto flex gap-2">
-              <Button
-                variant={autoRefresh ? "default" : "outline"}
-                size="sm"
-                onClick={() => setAutoRefresh(!autoRefresh)}
-                title={
-                  autoRefresh
-                    ? t("bots.povPanel.stopAutoRefresh")
-                    : t("bots.povPanel.startAutoRefresh")
-                }
-              >
-                {autoRefresh ? (
-                  <PauseIcon className="mr-1 size-4" />
-                ) : (
-                  <PlayIcon className="mr-1 size-4" />
-                )}
-                {t("bots.povPanel.auto")}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={renderPov}
-                disabled={isLoading || autoRefresh}
-              >
-                {isLoading ? (
-                  <LoaderIcon className="mr-1 size-4 animate-spin" />
-                ) : (
-                  <RefreshCwIcon className="mr-1 size-4" />
-                )}
-                {povImage
-                  ? t("bots.povPanel.refresh")
-                  : t("bots.povPanel.capture")}
-              </Button>
-            </div>
-          )}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isOnline ? (
-          <div className="space-y-2">
-            {error && (
-              <div className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm">
-                {error}
-              </div>
-            )}
-            {povImage ? (
-              <div className="overflow-hidden rounded-lg">
-                <img
-                  src={`data:image/png;base64,${povImage}`}
-                  alt="Bot POV"
-                  className="w-full"
-                />
-              </div>
-            ) : (
-              <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
-                <div className="text-center">
-                  <CameraIcon className="text-muted-foreground mx-auto size-12" />
-                  <p className="text-muted-foreground mt-2 text-sm">
-                    {t("bots.povPanel.clickToCapture")}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
-            <div className="text-center">
-              <CameraIcon className="text-muted-foreground mx-auto size-12" />
-              <p className="text-muted-foreground mt-2 text-sm">
-                {t("bots.povPanel.offline")}
-              </p>
-            </div>
+        </h3>
+        {isOnline && (
+          <div className="ml-auto flex gap-2">
+            <Button
+              variant={autoRefresh ? "default" : "outline"}
+              size="sm"
+              onClick={() => setAutoRefresh(!autoRefresh)}
+              title={
+                autoRefresh
+                  ? t("bots.povPanel.stopAutoRefresh")
+                  : t("bots.povPanel.startAutoRefresh")
+              }
+            >
+              {autoRefresh ? (
+                <PauseIcon className="mr-1 size-4" />
+              ) : (
+                <PlayIcon className="mr-1 size-4" />
+              )}
+              {t("bots.povPanel.auto")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={renderPov}
+              disabled={isLoading || autoRefresh}
+            >
+              {isLoading ? (
+                <LoaderIcon className="mr-1 size-4 animate-spin" />
+              ) : (
+                <RefreshCwIcon className="mr-1 size-4" />
+              )}
+              {povImage
+                ? t("bots.povPanel.refresh")
+                : t("bots.povPanel.capture")}
+            </Button>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+      {isOnline ? (
+        <div className="flex flex-col gap-2">
+          {error && (
+            <div className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm">
+              {error}
+            </div>
+          )}
+          {povImage ? (
+            <div className="overflow-hidden rounded-lg">
+              <img
+                src={`data:image/png;base64,${povImage}`}
+                alt="Bot POV"
+                className="w-full"
+              />
+            </div>
+          ) : (
+            <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
+              <div className="text-center">
+                <CameraIcon className="text-muted-foreground mx-auto size-12" />
+                <p className="text-muted-foreground mt-2 text-sm">
+                  {t("bots.povPanel.clickToCapture")}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
+          <div className="text-center">
+            <CameraIcon className="text-muted-foreground mx-auto size-12" />
+            <p className="text-muted-foreground mt-2 text-sm">
+              {t("bots.povPanel.offline")}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -1054,7 +1051,7 @@ function SlotRegionGrid({
 
   return (
     <div>
-      <p className="text-muted-foreground mb-1 text-xs font-medium flex items-center gap-1">
+      <p className="text-muted-foreground mb-1 flex items-center gap-1 text-xs font-medium">
         {isArmor && <ShieldIcon className="size-3" />}
         {region.label}
         {isOutput && <span className="text-muted-foreground/50">(output)</span>}
@@ -1287,125 +1284,123 @@ function BotInventoryPanel({
   const currentBookPage = layout?.currentBookPage ?? 0;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <PackageIcon className="size-5" />
+    <div>
+      <div className="mb-3 flex items-center gap-2">
+        <h3 className="flex items-center gap-2 text-sm font-medium">
+          <PackageIcon className="size-4" />
           {layout?.title || t("bots.inventoryPanel.title")}
-          <div className="ml-auto flex items-center gap-2">
-            {carriedItem && (
-              <Badge variant="default" className="gap-1">
-                <HandIcon className="size-3" />
-                {formatItemId(carriedItem.itemId)} x{carriedItem.count}
-              </Badge>
-            )}
-            {slots.length > 0 && (
-              <Badge variant="outline">
-                {slots.length} {t("bots.inventoryPanel.items")}
-              </Badge>
-            )}
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isOnline && layout ? (
-          <div className="space-y-3">
-            {/* Container controls */}
-            {!isPlayerInventory && (
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => closeContainerMutation.mutate()}
-                  disabled={closeContainerMutation.isPending}
-                >
-                  <XIcon className="mr-1 size-4" />
-                  {t("bots.inventoryPanel.closeContainer")}
-                </Button>
-              </div>
-            )}
-
-            {/* Render all slot regions from layout */}
-            {layout.regions.map((region) => (
-              <SlotRegionGrid
-                key={region.id}
-                region={region}
-                slots={slots}
-                selectedHotbarSlot={selectedHotbarSlot}
-                onSlotClick={handleSlotClick}
-                onHotbarSlotSelect={handleHotbarSlotSelect}
-                containerType={layout.containerType}
-              />
-            ))}
-
-            {/* Container action buttons (stonecutter recipes, trades, etc.) */}
-            {buttons.length > 0 && (
-              <ContainerButtonsPanel
-                buttons={buttons}
-                containerType={layout.containerType}
-                onButtonClick={handleButtonClick}
-                isPending={buttonClickMutation.isPending}
-              />
-            )}
-
-            {/* Text inputs (anvil rename, etc.) */}
-            {textInputs.length > 0 && (
-              <ContainerTextInputPanel
-                textInputs={textInputs}
-                containerType={layout.containerType}
-                onSetText={handleSetText}
-                isPending={setTextMutation.isPending}
-              />
-            )}
-
-            {/* Book pages (lectern) */}
-            {bookPages.length > 0 && (
-              <BookPagesPanel
-                pages={bookPages}
-                currentPage={currentBookPage}
-                onPageChange={handleButtonClick}
-              />
-            )}
-
-            {/* Drop zone */}
-            <div className="border-destructive/30 hover:border-destructive/50 hover:bg-destructive/5 flex items-center justify-center gap-2 rounded-lg border-2 border-dashed p-3 transition-colors">
-              <Trash2Icon className="text-muted-foreground size-4" />
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleDropOutside(false)}
-                  disabled={!carriedItem}
-                  className="text-xs"
-                >
-                  {t("bots.inventoryPanel.dropOne")}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleDropOutside(true)}
-                  disabled={!carriedItem}
-                  className="text-xs"
-                >
-                  {t("bots.inventoryPanel.dropAll")}
-                </Button>
-              </div>
+        </h3>
+        <div className="ml-auto flex items-center gap-2">
+          {carriedItem && (
+            <Badge variant="default" className="gap-1">
+              <HandIcon className="size-3" />
+              {formatItemId(carriedItem.itemId)} x{carriedItem.count}
+            </Badge>
+          )}
+          {slots.length > 0 && (
+            <Badge variant="outline">
+              {slots.length} {t("bots.inventoryPanel.items")}
+            </Badge>
+          )}
+        </div>
+      </div>
+      {isOnline && layout ? (
+        <div className="flex flex-col gap-3">
+          {/* Container controls */}
+          {!isPlayerInventory && (
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => closeContainerMutation.mutate()}
+                disabled={closeContainerMutation.isPending}
+              >
+                <XIcon className="mr-1 size-4" />
+                {t("bots.inventoryPanel.closeContainer")}
+              </Button>
             </div>
+          )}
 
-            {/* Click instructions */}
-            <p className="text-muted-foreground text-center text-xs">
-              {t("bots.inventoryPanel.clickHint")}
-            </p>
+          {/* Render all slot regions from layout */}
+          {layout.regions.map((region) => (
+            <SlotRegionGrid
+              key={region.id}
+              region={region}
+              slots={slots}
+              selectedHotbarSlot={selectedHotbarSlot}
+              onSlotClick={handleSlotClick}
+              onHotbarSlotSelect={handleHotbarSlotSelect}
+              containerType={layout.containerType}
+            />
+          ))}
+
+          {/* Container action buttons (stonecutter recipes, trades, etc.) */}
+          {buttons.length > 0 && (
+            <ContainerButtonsPanel
+              buttons={buttons}
+              containerType={layout.containerType}
+              onButtonClick={handleButtonClick}
+              isPending={buttonClickMutation.isPending}
+            />
+          )}
+
+          {/* Text inputs (anvil rename, etc.) */}
+          {textInputs.length > 0 && (
+            <ContainerTextInputPanel
+              textInputs={textInputs}
+              containerType={layout.containerType}
+              onSetText={handleSetText}
+              isPending={setTextMutation.isPending}
+            />
+          )}
+
+          {/* Book pages (lectern) */}
+          {bookPages.length > 0 && (
+            <BookPagesPanel
+              pages={bookPages}
+              currentPage={currentBookPage}
+              onPageChange={handleButtonClick}
+            />
+          )}
+
+          {/* Drop zone */}
+          <div className="border-destructive/30 hover:border-destructive/50 hover:bg-destructive/5 flex items-center justify-center gap-2 rounded-lg border-2 border-dashed p-3 transition-colors">
+            <Trash2Icon className="text-muted-foreground size-4" />
+            <div className="flex gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleDropOutside(false)}
+                disabled={!carriedItem}
+                className="text-xs"
+              >
+                {t("bots.inventoryPanel.dropOne")}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleDropOutside(true)}
+                disabled={!carriedItem}
+                className="text-xs"
+              >
+                {t("bots.inventoryPanel.dropAll")}
+              </Button>
+            </div>
           </div>
-        ) : (
-          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-            <p className="text-muted-foreground">
-              {t("bots.inventoryPanel.offline")}
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+
+          {/* Click instructions */}
+          <p className="text-muted-foreground text-center text-xs">
+            {t("bots.inventoryPanel.clickHint")}
+          </p>
+        </div>
+      ) : (
+        <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+          <p className="text-muted-foreground">
+            {t("bots.inventoryPanel.offline")}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -1445,7 +1440,7 @@ function ContainerButtonsPanel({
   })();
 
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-2">
       <div className="text-muted-foreground text-sm font-medium">{title}</div>
       <div className="flex max-h-48 flex-wrap gap-1.5 overflow-y-auto rounded-lg border p-2">
         {buttons.map((button) => (
@@ -1510,9 +1505,9 @@ function ContainerTextInputPanel({
       : t("bots.inventoryPanel.textInput.title");
 
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-2">
       <div className="text-muted-foreground text-sm font-medium">{title}</div>
-      <div className="space-y-2 rounded-lg border p-2">
+      <div className="flex flex-col gap-2 rounded-lg border p-2">
         {textInputs.map((input) => (
           <div key={input.id} className="flex items-center gap-2">
             <Input
@@ -1581,7 +1576,7 @@ function BookPagesPanel({
   };
 
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-2">
       <div className="text-muted-foreground flex items-center gap-2 text-sm font-medium">
         <BookOpenIcon className="size-4" />
         {t("bots.inventoryPanel.bookPages.title")}
@@ -1669,48 +1664,44 @@ function BotActionsPanel({
   }, [clickMutation, instanceId, botId]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MousePointerClickIcon className="size-5" />
-          {t("bots.actionsPanel.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isOnline ? (
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant="outline"
-              onClick={handleLeftClick}
-              disabled={clickMutation.isPending}
-              title={t("bots.actionsPanel.leftClickDescription")}
-            >
-              {clickMutation.isPending ? (
-                <LoaderIcon className="mr-2 size-4 animate-spin" />
-              ) : null}
-              {t("bots.actionsPanel.leftClick")}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={handleRightClick}
-              disabled={clickMutation.isPending}
-              title={t("bots.actionsPanel.rightClickDescription")}
-            >
-              {clickMutation.isPending ? (
-                <LoaderIcon className="mr-2 size-4 animate-spin" />
-              ) : null}
-              {t("bots.actionsPanel.rightClick")}
-            </Button>
-          </div>
-        ) : (
-          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-            <p className="text-muted-foreground">
-              {t("bots.actionsPanel.offline")}
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    <div>
+      <h3 className="mb-2 flex items-center gap-2 text-sm font-medium">
+        <MousePointerClickIcon className="size-4" />
+        {t("bots.actionsPanel.title")}
+      </h3>
+      {isOnline ? (
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant="outline"
+            onClick={handleLeftClick}
+            disabled={clickMutation.isPending}
+            title={t("bots.actionsPanel.leftClickDescription")}
+          >
+            {clickMutation.isPending ? (
+              <LoaderIcon className="mr-2 size-4 animate-spin" />
+            ) : null}
+            {t("bots.actionsPanel.leftClick")}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={handleRightClick}
+            disabled={clickMutation.isPending}
+            title={t("bots.actionsPanel.rightClickDescription")}
+          >
+            {clickMutation.isPending ? (
+              <LoaderIcon className="mr-2 size-4 animate-spin" />
+            ) : null}
+            {t("bots.actionsPanel.rightClick")}
+          </Button>
+        </div>
+      ) : (
+        <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+          <p className="text-muted-foreground">
+            {t("bots.actionsPanel.offline")}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -1824,168 +1815,164 @@ function BotMovementPanel({
     rotationMutation.isPending;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <GamepadIcon className="size-5" />
-          {t("bots.movementPanel.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isOnline ? (
-          <div className="space-y-4">
-            {/* WASD Controls */}
-            <div>
-              <p className="text-muted-foreground mb-2 text-xs font-medium">
-                {t("bots.movementPanel.movement")}
-              </p>
-              <div className="flex flex-col items-center gap-1">
-                {/* Forward */}
+    <div>
+      <h3 className="mb-2 flex items-center gap-2 text-sm font-medium">
+        <GamepadIcon className="size-4" />
+        {t("bots.movementPanel.title")}
+      </h3>
+      {isOnline ? (
+        <div className="flex flex-col gap-4">
+          {/* WASD Controls */}
+          <div>
+            <p className="text-muted-foreground mb-2 text-xs font-medium">
+              {t("bots.movementPanel.movement")}
+            </p>
+            <div className="flex flex-col items-center gap-1">
+              {/* Forward */}
+              <Button
+                variant={movementState.forward ? "default" : "outline"}
+                size="sm"
+                className="size-10"
+                onClick={() => toggleMovement("forward")}
+                disabled={isPending}
+                title={t("bots.movementPanel.forward")}
+              >
+                <ArrowUpIcon className="size-4" />
+              </Button>
+              {/* Left, Backward, Right */}
+              <div className="flex gap-1">
                 <Button
-                  variant={movementState.forward ? "default" : "outline"}
+                  variant={movementState.left ? "default" : "outline"}
                   size="sm"
                   className="size-10"
-                  onClick={() => toggleMovement("forward")}
+                  onClick={() => toggleMovement("left")}
                   disabled={isPending}
-                  title={t("bots.movementPanel.forward")}
+                  title={t("bots.movementPanel.left")}
                 >
-                  <ArrowUpIcon className="size-4" />
+                  <ArrowLeftIcon className="size-4" />
                 </Button>
-                {/* Left, Backward, Right */}
-                <div className="flex gap-1">
-                  <Button
-                    variant={movementState.left ? "default" : "outline"}
-                    size="sm"
-                    className="size-10"
-                    onClick={() => toggleMovement("left")}
-                    disabled={isPending}
-                    title={t("bots.movementPanel.left")}
-                  >
-                    <ArrowLeftIcon className="size-4" />
-                  </Button>
-                  <Button
-                    variant={movementState.backward ? "default" : "outline"}
-                    size="sm"
-                    className="size-10"
-                    onClick={() => toggleMovement("backward")}
-                    disabled={isPending}
-                    title={t("bots.movementPanel.backward")}
-                  >
-                    <ArrowDownIcon className="size-4" />
-                  </Button>
-                  <Button
-                    variant={movementState.right ? "default" : "outline"}
-                    size="sm"
-                    className="size-10"
-                    onClick={() => toggleMovement("right")}
-                    disabled={isPending}
-                    title={t("bots.movementPanel.right")}
-                  >
-                    <ArrowRightIcon className="size-4" />
-                  </Button>
-                </div>
+                <Button
+                  variant={movementState.backward ? "default" : "outline"}
+                  size="sm"
+                  className="size-10"
+                  onClick={() => toggleMovement("backward")}
+                  disabled={isPending}
+                  title={t("bots.movementPanel.backward")}
+                >
+                  <ArrowDownIcon className="size-4" />
+                </Button>
+                <Button
+                  variant={movementState.right ? "default" : "outline"}
+                  size="sm"
+                  className="size-10"
+                  onClick={() => toggleMovement("right")}
+                  disabled={isPending}
+                  title={t("bots.movementPanel.right")}
+                >
+                  <ArrowRightIcon className="size-4" />
+                </Button>
               </div>
             </div>
+          </div>
 
-            {/* Action buttons */}
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant={movementState.jump ? "default" : "outline"}
-                size="sm"
-                onClick={() => toggleMovement("jump")}
-                disabled={isPending}
-              >
-                {t("bots.movementPanel.jump")}
-              </Button>
-              <Button
-                variant={movementState.sneak ? "default" : "outline"}
-                size="sm"
-                onClick={() => toggleMovement("sneak")}
-                disabled={isPending}
-              >
-                {t("bots.movementPanel.sneak")}
-              </Button>
-              <Button
-                variant={movementState.sprint ? "default" : "outline"}
-                size="sm"
-                onClick={() => toggleMovement("sprint")}
-                disabled={isPending}
-              >
-                {t("bots.movementPanel.sprint")}
-              </Button>
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => resetMutation.mutate()}
-                disabled={isPending}
-              >
-                <SquareIcon className="mr-1 size-3" />
-                {t("bots.movementPanel.stop")}
-              </Button>
-            </div>
+          {/* Action buttons */}
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant={movementState.jump ? "default" : "outline"}
+              size="sm"
+              onClick={() => toggleMovement("jump")}
+              disabled={isPending}
+            >
+              {t("bots.movementPanel.jump")}
+            </Button>
+            <Button
+              variant={movementState.sneak ? "default" : "outline"}
+              size="sm"
+              onClick={() => toggleMovement("sneak")}
+              disabled={isPending}
+            >
+              {t("bots.movementPanel.sneak")}
+            </Button>
+            <Button
+              variant={movementState.sprint ? "default" : "outline"}
+              size="sm"
+              onClick={() => toggleMovement("sprint")}
+              disabled={isPending}
+            >
+              {t("bots.movementPanel.sprint")}
+            </Button>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => resetMutation.mutate()}
+              disabled={isPending}
+            >
+              <SquareIcon className="mr-1 size-3" />
+              {t("bots.movementPanel.stop")}
+            </Button>
+          </div>
 
-            {/* Rotation controls */}
-            <div>
-              <p className="text-muted-foreground mb-2 text-xs font-medium">
-                {t("bots.movementPanel.rotation")}
-              </p>
-              <div className="flex flex-col items-center gap-1">
-                {/* Look up */}
+          {/* Rotation controls */}
+          <div>
+            <p className="text-muted-foreground mb-2 text-xs font-medium">
+              {t("bots.movementPanel.rotation")}
+            </p>
+            <div className="flex flex-col items-center gap-1">
+              {/* Look up */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="size-10"
+                onClick={() => handleRotationChange(0, -15)}
+                disabled={isPending}
+                title={t("bots.movementPanel.lookUp")}
+              >
+                <ChevronUpIcon className="size-4" />
+              </Button>
+              {/* Look left, down, right */}
+              <div className="flex gap-1">
                 <Button
                   variant="outline"
                   size="sm"
                   className="size-10"
-                  onClick={() => handleRotationChange(0, -15)}
+                  onClick={() => handleRotationChange(-15, 0)}
                   disabled={isPending}
-                  title={t("bots.movementPanel.lookUp")}
+                  title={t("bots.movementPanel.lookLeft")}
                 >
-                  <ChevronUpIcon className="size-4" />
+                  <ChevronLeftIcon className="size-4" />
                 </Button>
-                {/* Look left, down, right */}
-                <div className="flex gap-1">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="size-10"
-                    onClick={() => handleRotationChange(-15, 0)}
-                    disabled={isPending}
-                    title={t("bots.movementPanel.lookLeft")}
-                  >
-                    <ChevronLeftIcon className="size-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="size-10"
-                    onClick={() => handleRotationChange(0, 15)}
-                    disabled={isPending}
-                    title={t("bots.movementPanel.lookDown")}
-                  >
-                    <ChevronDownIcon className="size-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="size-10"
-                    onClick={() => handleRotationChange(15, 0)}
-                    disabled={isPending}
-                    title={t("bots.movementPanel.lookRight")}
-                  >
-                    <ChevronRightIcon className="size-4" />
-                  </Button>
-                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="size-10"
+                  onClick={() => handleRotationChange(0, 15)}
+                  disabled={isPending}
+                  title={t("bots.movementPanel.lookDown")}
+                >
+                  <ChevronDownIcon className="size-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="size-10"
+                  onClick={() => handleRotationChange(15, 0)}
+                  disabled={isPending}
+                  title={t("bots.movementPanel.lookRight")}
+                >
+                  <ChevronRightIcon className="size-4" />
+                </Button>
               </div>
             </div>
           </div>
-        ) : (
-          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-            <p className="text-muted-foreground">
-              {t("bots.movementPanel.offline")}
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+      ) : (
+        <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+          <p className="text-muted-foreground">
+            {t("bots.movementPanel.offline")}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -2059,73 +2046,67 @@ function BotDialogPanel({
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MonitorIcon className="size-5" />
-          {t("bots.dialogPanel.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {!isOnline ? (
-          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-            <p className="text-muted-foreground">
-              {t("bots.dialogPanel.offline")}
-            </p>
-          </div>
-        ) : dialog ? (
-          <div className="space-y-4">
-            {/* Dialog info */}
-            <div className="space-y-2">
+    <div>
+      <h3 className="mb-2 flex items-center gap-2 text-sm font-medium">
+        <MonitorIcon className="size-4" />
+        {t("bots.dialogPanel.title")}
+      </h3>
+      {!isOnline ? (
+        <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+          <p className="text-muted-foreground">
+            {t("bots.dialogPanel.offline")}
+          </p>
+        </div>
+      ) : dialog ? (
+        <div className="flex flex-col gap-4">
+          {/* Dialog info */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground text-sm">
+                {t("bots.dialogPanel.dialogType")}:
+              </span>
+              <Badge variant="outline">{getDialogTypeName(dialog.type)}</Badge>
+            </div>
+            {dialog.id && (
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground text-sm">
-                  {t("bots.dialogPanel.dialogType")}:
+                  {t("bots.dialogPanel.dialogId")}:
                 </span>
-                <Badge variant="outline">
-                  {getDialogTypeName(dialog.type)}
-                </Badge>
+                <code className="bg-muted select-text rounded px-2 py-1 text-xs">
+                  {dialog.id}
+                </code>
               </div>
-              {dialog.id && (
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground text-sm">
-                    {t("bots.dialogPanel.dialogId")}:
-                  </span>
-                  <code className="bg-muted select-text rounded px-2 py-1 text-xs">
-                    {dialog.id}
-                  </code>
-                </div>
-              )}
-              {dialog.title && (
-                <div className="bg-muted/30 rounded-lg p-4">
-                  <p className="font-medium">{dialog.title}</p>
-                </div>
-              )}
-            </div>
+            )}
+            {dialog.title && (
+              <div className="bg-muted/30 rounded-lg p-4">
+                <p className="font-medium">{dialog.title}</p>
+              </div>
+            )}
+          </div>
 
-            {/* Dismiss button */}
-            <Button
-              variant="outline"
-              onClick={() => dismissMutation.mutate()}
-              disabled={dismissMutation.isPending}
-              className="w-full"
-            >
-              {dismissMutation.isPending ? (
-                <LoaderIcon className="mr-2 size-4 animate-spin" />
-              ) : (
-                <XIcon className="mr-2 size-4" />
-              )}
-              {t("bots.dialogPanel.dismiss")}
-            </Button>
-          </div>
-        ) : (
-          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-            <p className="text-muted-foreground">
-              {t("bots.dialogPanel.noDialog")}
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          {/* Dismiss button */}
+          <Button
+            variant="outline"
+            onClick={() => dismissMutation.mutate()}
+            disabled={dismissMutation.isPending}
+            className="w-full"
+          >
+            {dismissMutation.isPending ? (
+              <LoaderIcon className="mr-2 size-4 animate-spin" />
+            ) : (
+              <XIcon className="mr-2 size-4" />
+            )}
+            {t("bots.dialogPanel.dismiss")}
+          </Button>
+        </div>
+      ) : (
+        <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+          <p className="text-muted-foreground">
+            {t("bots.dialogPanel.noDialog")}
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -2158,128 +2139,129 @@ function BotVisualPanel({
     return "SE";
   };
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <EyeIcon className="size-5" />
+  if (!isOnline || !liveState) {
+    return (
+      <div>
+        <h3 className="mb-2 flex items-center gap-2 text-sm font-medium">
+          <EyeIcon className="size-4" />
           {t("bots.visualPanel.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isOnline && liveState ? (
-          <div className="flex flex-col gap-4">
-            {/* Compass and Look direction side by side on desktop */}
-            <div className="flex flex-col items-center gap-4 md:flex-row md:justify-center md:gap-8">
-              {/* Compass */}
-              <div className="flex flex-col items-center gap-2">
-                <p className="text-muted-foreground text-xs font-medium uppercase">
-                  {t("bots.visualPanel.compass")}
-                </p>
-                <div className="relative size-32">
-                  {/* Compass background */}
-                  <div className="border-border bg-muted/30 absolute inset-0 rounded-full border-2" />
-                  {/* Cardinal directions */}
-                  <span className="text-muted-foreground absolute left-1/2 top-1 -translate-x-1/2 text-xs font-bold">
-                    N
-                  </span>
-                  <span className="text-muted-foreground absolute bottom-1 left-1/2 -translate-x-1/2 text-xs font-bold">
-                    S
-                  </span>
-                  <span className="text-muted-foreground absolute left-1 top-1/2 -translate-y-1/2 text-xs font-bold">
-                    W
-                  </span>
-                  <span className="text-muted-foreground absolute right-1 top-1/2 -translate-y-1/2 text-xs font-bold">
-                    E
-                  </span>
-                  {/* Direction indicator */}
-                  <div
-                    className="absolute bottom-1/2 left-1/2 h-12 w-1 origin-bottom"
-                    style={{
-                      transform: `translateX(-50%) rotate(${liveState.yRot + 180}deg)`,
-                    }}
-                  >
-                    <div className="bg-primary h-full w-full rounded-full" />
-                    <div
-                      className="border-primary absolute -top-1 left-1/2 size-0 -translate-x-1/2 border-4 border-transparent border-b-4"
-                      style={{ borderBottomColor: "hsl(var(--primary))" }}
-                    />
-                  </div>
-                  {/* Center dot */}
-                  <div className="bg-primary absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-                </div>
-                <div className="text-center">
-                  <p className="select-text text-lg font-bold">
-                    {getCompassDirection(liveState.yRot)}
-                  </p>
-                  <p className="text-muted-foreground select-text text-xs">
-                    {liveState.yRot.toFixed(1)}°
-                  </p>
-                </div>
-              </div>
+        </h3>
+        <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+          <p className="text-muted-foreground">
+            {t("bots.visualPanel.offline")}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
-              {/* Look direction (pitch) */}
-              <div className="flex flex-col items-center gap-2">
-                <p className="text-muted-foreground text-xs font-medium uppercase">
-                  {t("bots.visualPanel.lookDirection")}
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="bg-muted/30 relative h-24 w-4 overflow-hidden rounded-full">
-                    {/* Pitch indicator */}
-                    <div
-                      className="bg-primary absolute left-0 right-0 h-2 rounded-full transition-all"
-                      style={{
-                        // Pitch ranges from -90 (up) to 90 (down)
-                        // Map to percentage: -90 -> 0%, 0 -> 50%, 90 -> 100%
-                        top: `${((liveState.xRot + 90) / 180) * 100}%`,
-                        transform: "translateY(-50%)",
-                      }}
-                    />
-                  </div>
-                  <div className="text-sm">
-                    <p className="text-muted-foreground">
-                      {liveState.xRot < -30
-                        ? t("bots.visualPanel.lookingUp")
-                        : liveState.xRot > 30
-                          ? t("bots.visualPanel.lookingDown")
-                          : t("bots.visualPanel.lookingStraight")}
-                    </p>
-                    <p className="text-muted-foreground select-text text-xs">
-                      {liveState.xRot.toFixed(1)}°
-                    </p>
-                  </div>
-                </div>
+  return (
+    <div>
+      <h3 className="mb-2 flex items-center gap-2 text-sm font-medium">
+        <EyeIcon className="size-4" />
+        {t("bots.visualPanel.title")}
+      </h3>
+      <div className="flex flex-col gap-4">
+        {/* Compass and Look direction side by side on desktop */}
+        <div className="flex flex-col items-center gap-4 md:flex-row md:justify-center md:gap-8">
+          {/* Compass */}
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-muted-foreground text-xs font-medium uppercase">
+              {t("bots.visualPanel.compass")}
+            </p>
+            <div className="relative size-32">
+              {/* Compass background */}
+              <div className="border-border bg-muted/30 absolute inset-0 rounded-full border-2" />
+              {/* Cardinal directions */}
+              <span className="text-muted-foreground absolute left-1/2 top-1 -translate-x-1/2 text-xs font-bold">
+                N
+              </span>
+              <span className="text-muted-foreground absolute bottom-1 left-1/2 -translate-x-1/2 text-xs font-bold">
+                S
+              </span>
+              <span className="text-muted-foreground absolute left-1 top-1/2 -translate-y-1/2 text-xs font-bold">
+                W
+              </span>
+              <span className="text-muted-foreground absolute right-1 top-1/2 -translate-y-1/2 text-xs font-bold">
+                E
+              </span>
+              {/* Direction indicator */}
+              <div
+                className="absolute bottom-1/2 left-1/2 h-12 w-1 origin-bottom"
+                style={{
+                  transform: `translateX(-50%) rotate(${liveState.yRot + 180}deg)`,
+                }}
+              >
+                <div className="bg-primary h-full w-full rounded-full" />
+                <div
+                  className="border-primary absolute -top-1 left-1/2 size-0 -translate-x-1/2 border-4 border-transparent border-b-4"
+                  style={{ borderBottomColor: "hsl(var(--primary))" }}
+                />
               </div>
+              {/* Center dot */}
+              <div className="bg-primary absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full" />
             </div>
-
-            {/* World info */}
-            <div className="border-border bg-muted/20 rounded-lg border p-3">
-              <p className="text-muted-foreground mb-2 text-xs font-medium uppercase">
-                {t("bots.visualPanel.worldInfo")}
-              </p>
-              <div className="text-sm">
-                <div>
-                  <span className="text-muted-foreground">
-                    {t("bots.visualPanel.dimension")}:
-                  </span>{" "}
-                  <span className="select-text font-mono">
-                    {formatDimension(liveState.dimension)}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
             <div className="text-center">
-              <MonitorIcon className="text-muted-foreground mx-auto size-12" />
-              <p className="text-muted-foreground mt-2 text-sm">
-                {t("bots.visualPanel.offline")}
+              <p className="select-text text-lg font-bold">
+                {getCompassDirection(liveState.yRot)}
+              </p>
+              <p className="text-muted-foreground select-text text-xs">
+                {liveState.yRot.toFixed(1)}°
               </p>
             </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+
+          {/* Look direction (pitch) */}
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-muted-foreground text-xs font-medium uppercase">
+              {t("bots.visualPanel.lookDirection")}
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="bg-muted/30 relative h-24 w-4 overflow-hidden rounded-full">
+                {/* Pitch indicator */}
+                <div
+                  className="bg-primary absolute left-0 right-0 h-2 rounded-full transition-all"
+                  style={{
+                    // Pitch ranges from -90 (up) to 90 (down)
+                    // Map to percentage: -90 -> 0%, 0 -> 50%, 90 -> 100%
+                    top: `${((liveState.xRot + 90) / 180) * 100}%`,
+                    transform: "translateY(-50%)",
+                  }}
+                />
+              </div>
+              <div className="text-sm">
+                <p className="text-muted-foreground">
+                  {liveState.xRot < -30
+                    ? t("bots.visualPanel.lookingUp")
+                    : liveState.xRot > 30
+                      ? t("bots.visualPanel.lookingDown")
+                      : t("bots.visualPanel.lookingStraight")}
+                </p>
+                <p className="text-muted-foreground select-text text-xs">
+                  {liveState.xRot.toFixed(1)}°
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* World info */}
+        <div className="border-border bg-muted/20 rounded-lg border p-3">
+          <p className="text-muted-foreground mb-2 text-xs font-medium uppercase">
+            {t("bots.visualPanel.worldInfo")}
+          </p>
+          <div className="text-sm">
+            <div>
+              <span className="text-muted-foreground">
+                {t("bots.visualPanel.dimension")}:
+              </span>{" "}
+              <span className="select-text font-mono">
+                {formatDimension(liveState.dimension)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
