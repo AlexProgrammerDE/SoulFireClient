@@ -43,12 +43,12 @@ jobs:
           persist-credentials: false
 
       - name: 'Push to release branch'
-        uses: ad-m/github-push-action@77c5b412c50b723d2a4fbc6d71fb5723bcd439aa # 1.0.0
+        uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # 1.1.0
         with:
           branch: 'release'
 
       - name: 'Push to demo branch'
-        uses: ad-m/github-push-action@77c5b412c50b723d2a4fbc6d71fb5723bcd439aa # 1.0.0
+        uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # 1.1.0
         with:
           branch: 'demo'
 
@@ -219,7 +219,7 @@ jobs:
       - name: 'Windows AMD64/AArch64: Upload unsigned artifact'
         id: upload-unsigned-artifact
         if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1
         with:
           name: ${{ matrix.type }}-unsigned
           path: |
@@ -253,7 +253,7 @@ jobs:
           pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}" $fileName
 
       - name: 'Desktop: Upload artifacts'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1
         with:
           name: ${{ matrix.type }}
           path: |
@@ -359,7 +359,7 @@ jobs:
 
       - name: Build Changelog
         id: github_release
-        uses: mikepenz/release-changelog-builder-action@2cb9befdbc05f65b8354cc9873cd506509bd0782 # 6.2.0
+        uses: mikepenz/release-changelog-builder-action@bcae7115752d4ed746ff92feb666574428a79415 # 6.2.1
         with:
           mode: COMMIT
           toTag: ${{ github.ref }}
