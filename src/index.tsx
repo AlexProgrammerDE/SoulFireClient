@@ -16,6 +16,10 @@ import { NotFoundComponent } from "@/components/not-found-component.tsx";
 import { getServerType, isAuthenticated } from "@/lib/web-rpc.ts";
 import { routeTree } from "./routeTree.gen";
 
+window.addEventListener("vite:preloadError", () => {
+  window.location.reload();
+});
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
