@@ -891,10 +891,7 @@ export function InstanceSettingsPageComponent({
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const transport = use(TransportContext);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = instanceInfo.profile;
   const settingsRegistry = useMemo(
     () => createSettingsRegistry(instanceInfo.settingsDefinitions),
     [instanceInfo.settingsDefinitions],
@@ -933,10 +930,7 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
     select: (context) => context.serverInfoQueryOptions,
   });
   const { data: serverInfo } = useSuspenseQuery(serverInfoQueryOptions);
-  const { data: serverConfig } = useSuspenseQuery({
-    ...serverInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const serverConfig = serverInfo.profile;
   const transport = use(TransportContext);
   const settingsRegistry = useMemo(
     () => createSettingsRegistry(serverInfo.settingsDefinitions),

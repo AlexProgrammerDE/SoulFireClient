@@ -137,12 +137,9 @@ function GenerateAccountsButton() {
   const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const profile = instanceInfo.profile;
   const { trackEvent } = useAptabase();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -401,12 +398,9 @@ function AddButton() {
   const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const profile = instanceInfo.profile;
   const { trackEvent } = useAptabase();
   // Batch add accounts mutation for bulk import
   const { mutateAsync: addAccountsBatchMutation } = useMutation({
@@ -1137,10 +1131,7 @@ function Content() {
   const { t } = useTranslation("instance");
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = instanceInfo.profile;
   const { table } = useDataTable({
     data: profile.accounts,
     columns,

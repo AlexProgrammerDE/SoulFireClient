@@ -155,10 +155,7 @@ function InstanceActionButtons() {
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = instanceInfo.profile;
   const systemInfo = use(SystemInfoContext);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   // Using setInstanceConfigFull for profile import

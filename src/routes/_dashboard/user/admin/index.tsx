@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import * as React from "react";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Label, Pie, PieChart } from "recharts";
 import {
@@ -288,29 +288,83 @@ function OverviewPage() {
 }
 
 function Content() {
+  return (
+    <div className="flex h-full w-full grow flex-col gap-2 pl-2">
+      <Suspense fallback={<Skeleton className="h-7 w-48" />}>
+        <AdminWelcomeHeading />
+      </Suspense>
+      <Suspense fallback={<AdminChartsSkeleton />}>
+        <AdminChartsSection />
+      </Suspense>
+      <Suspense fallback={<AdminMetricsSkeleton />}>
+        <AdminMetricsSection />
+      </Suspense>
+    </div>
+  );
+}
+
+function AdminWelcomeHeading() {
   const { t } = useTranslation("common");
-  const {
-    usersQueryOptions,
-    clientDataQueryOptions,
-    instanceListQueryOptions,
-    serverMetricsOptions,
-  } = Route.useRouteContext();
-  const { data: userList } = useSuspenseQuery(usersQueryOptions);
+  const { clientDataQueryOptions } = Route.useRouteContext();
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+
+  return (
+    <h2 className="text-xl font-semibold">
+      {t("admin:overview.welcome", {
+        name: clientInfo.username,
+      })}
+    </h2>
+  );
+}
+
+function AdminChartsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <Skeleton className="h-64 w-full rounded-lg" />
+      <Skeleton className="h-64 w-full rounded-lg" />
+    </div>
+  );
+}
+
+function AdminChartsSection() {
+  const { usersQueryOptions, instanceListQueryOptions } =
+    Route.useRouteContext();
+  const { data: userList } = useSuspenseQuery(usersQueryOptions);
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
+
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <UsersChart userList={userList} />
+      <InstancesChart instanceList={instanceList} />
+    </div>
+  );
+}
+
+function AdminMetricsSkeleton() {
+  return (
+    <>
+      <Skeleton className="mt-4 h-7 w-48" />
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <Skeleton className="h-24 w-full rounded-lg" />
+        <Skeleton className="h-24 w-full rounded-lg" />
+        <Skeleton className="h-24 w-full rounded-lg" />
+        <Skeleton className="h-24 w-full rounded-lg" />
+      </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Skeleton className="h-64 w-full rounded-lg" />
+        <Skeleton className="h-64 w-full rounded-lg" />
+      </div>
+    </>
+  );
+}
+
+function AdminMetricsSection() {
+  const { t } = useTranslation("common");
+  const { serverMetricsOptions } = Route.useRouteContext();
   const { data: serverMetrics } = useSuspenseQuery(serverMetricsOptions);
 
   return (
-    <div className="flex h-full w-full grow flex-col gap-2 pl-2">
-      <h2 className="text-xl font-semibold">
-        {t("admin:overview.welcome", {
-          name: clientInfo.username,
-        })}
-      </h2>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <UsersChart userList={userList} />
-        <InstancesChart instanceList={instanceList} />
-      </div>
+    <>
       <h3 className="mt-4 text-lg font-semibold">
         {t("admin:overview.serverMetrics.sectionTitle")}
       </h3>
@@ -323,6 +377,6 @@ function Content() {
           <AggregateBotsChart snapshots={serverMetrics.snapshots} />
         </div>
       )}
-    </div>
+    </>
   );
 }

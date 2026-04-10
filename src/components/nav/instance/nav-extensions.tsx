@@ -47,10 +47,7 @@ export function NavExtensions() {
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = instanceInfo.profile;
   const pageId = useParams({
     from: "/_dashboard/instance/$instance/settings/$pageId",
     select: (params) => params.pageId,

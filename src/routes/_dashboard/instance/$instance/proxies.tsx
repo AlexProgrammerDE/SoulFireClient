@@ -122,10 +122,7 @@ function ProxyCheckDialog({
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = instanceInfo.profile;
   const transport = use(TransportContext);
 
   return (
@@ -1064,10 +1061,7 @@ function Content() {
   const { t } = useTranslation("instance");
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = instanceInfo.profile;
   const transport = use(TransportContext);
   const queryClient = useQueryClient();
   const { table } = useDataTable({

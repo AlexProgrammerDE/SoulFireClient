@@ -44,10 +44,7 @@ export default function ControlsMenu() {
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = instanceInfo.profile;
   const existingUsernames = useMemo(
     () => new Set(profile.accounts.map((a) => a.lastKnownName)),
     [profile.accounts],

@@ -47,6 +47,7 @@ import {
 import {
   Activity,
   type ReactNode,
+  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -110,7 +111,6 @@ import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import {
   getEnumKeyByValue,
-  type InstanceInfoQueryData,
   mapUnionToValue,
   type ProfileAccount,
 } from "@/lib/types.ts";
@@ -336,24 +336,15 @@ function BotDetailContent({
 }) {
   const { t } = useTranslation("instance");
   const { t: tCommon } = useTranslation("common");
-  const { botInfoQueryOptions, instanceInfoQueryOptions } =
-    Route.useRouteContext();
-  const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-
-  const isOnline = !!botInfo.liveState;
   const typeKey = getEnumKeyByValue(
     MinecraftAccountProto_AccountTypeProto,
     account.type,
   );
   const TypeIcon = accountTypeToIcon(typeKey);
-
   const [activeTab, setActiveTab] = useState<BotTab>("overview");
-
   const { contextMenu, handleContextMenu, dismiss, menuRef } =
     useContextMenu<null>();
   const copyToClipboard = useCopyToClipboard();
-
   const logScope = useMemo<LogScope>(
     () =>
       create(LogScopeSchema, {
@@ -367,7 +358,6 @@ function BotDetailContent({
       }),
     [instanceId, account.profileId],
   );
-
   const commandScope = useMemo<CommandScope>(
     () =>
       create(CommandScopeSchema, {
@@ -382,112 +372,18 @@ function BotDetailContent({
     [instanceId, account.profileId],
   );
 
-  const liveState = botInfo.liveState;
-
   return (
     <div className="container flex flex-col gap-4 py-4">
-      {/* Compact Header Strip */}
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: context menu on container */}
-      <div
-        className="flex flex-wrap items-center gap-4 rounded-lg border p-4"
-        onContextMenu={(e) => handleContextMenu(e, null)}
-      >
-        <img
-          src={getAvatarUrl(liveState?.skinTextureHash)}
-          alt={account.lastKnownName}
-          className="h-16 w-auto"
-          loading="lazy"
+      <Suspense fallback={<BotDetailHeaderSkeleton />}>
+        <BotDetailHeader
+          account={account}
+          instanceId={instanceId}
+          typeKey={typeKey}
+          typeIcon={TypeIcon}
+          onContextMenu={handleContextMenu}
         />
-        <div className="flex flex-col gap-1">
-          <h2 className="text-lg font-semibold">{account.lastKnownName}</h2>
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            <span
-              className={cn("font-medium", isOnline ? "text-emerald-500" : "")}
-            >
-              {isOnline ? t("bots.online") : t("bots.notJoined")}
-            </span>
-            <span className="flex items-center gap-1">
-              <TypeIcon className="size-3" />
-              {accountTypeLabel(typeKey)}
-            </span>
-            <span className="font-mono text-xs">{account.profileId}</span>
-          </div>
-        </div>
-        {/* Inline mini stats when online */}
-        {isOnline && liveState && (
-          <div className="ml-auto flex flex-wrap items-center gap-3">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-1">
-                  <HeartIcon className="size-3.5 text-red-500" />
-                  <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                    <div
-                      className="h-full bg-red-500 transition-all"
-                      style={{
-                        width: `${(liveState.health / liveState.maxHealth) * 100}%`,
-                      }}
-                    />
-                  </div>
-                  <span className="text-xs tabular-nums">
-                    {liveState.health.toFixed(0)}/
-                    {liveState.maxHealth.toFixed(0)}
-                  </span>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>{t("bots.statsPanel.health")}</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-1">
-                  <UtensilsIcon className="size-3.5 text-amber-500" />
-                  <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                    <div
-                      className="h-full bg-amber-500 transition-all"
-                      style={{
-                        width: `${(liveState.foodLevel / 20) * 100}%`,
-                      }}
-                    />
-                  </div>
-                  <span className="text-xs tabular-nums">
-                    {liveState.foodLevel}/20
-                  </span>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>{t("bots.statsPanel.food")}</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-1">
-                  <SparklesIcon className="size-3.5 text-green-500" />
-                  <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                    <div
-                      className="h-full bg-green-500 transition-all"
-                      style={{
-                        width: `${liveState.experienceProgress * 100}%`,
-                      }}
-                    />
-                  </div>
-                  <span className="text-xs tabular-nums">
-                    L{liveState.experienceLevel}
-                  </span>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>{t("bots.statsPanel.experience")}</TooltipContent>
-            </Tooltip>
-            <span className="text-xs text-muted-foreground">
-              {getGameModeLabel(liveState.gameMode, t)}
-            </span>
-          </div>
-        )}
-        <Button asChild variant="ghost" size="sm">
-          <Link to="/instance/$instance/bots" params={{ instance: instanceId }}>
-            <ArrowLeftIcon className="mr-2 size-4" />
-            {t("bots.backToBots")}
-          </Link>
-        </Button>
-      </div>
+      </Suspense>
 
-      {/* Context menu for header */}
       {contextMenu && (
         <ContextMenuPortal
           x={contextMenu.position.x}
@@ -515,7 +411,6 @@ function BotDetailContent({
         </ContextMenuPortal>
       )}
 
-      {/* Tab bar + content */}
       <div className="rounded-lg border">
         <div className="flex items-center gap-1 border-b px-4 pt-2">
           <TabButton
@@ -545,34 +440,30 @@ function BotDetailContent({
         </div>
         <div className="p-4">
           <Activity mode={activeTab === "overview" ? "visible" : "hidden"}>
-            <OverviewTab
-              instanceId={instanceId}
-              botId={account.profileId}
-              isOnline={isOnline}
-              liveState={liveState}
-            />
+            <Suspense fallback={<TabPanelSkeleton />}>
+              <OverviewTab instanceId={instanceId} botId={account.profileId} />
+            </Suspense>
           </Activity>
           <Activity mode={activeTab === "inventory" ? "visible" : "hidden"}>
-            <BotInventoryPanel
-              isOnline={isOnline}
-              instanceId={instanceId}
-              botId={account.profileId}
-            />
+            <Suspense fallback={<TabPanelSkeleton />}>
+              <BotInventoryPanel
+                instanceId={instanceId}
+                botId={account.profileId}
+              />
+            </Suspense>
           </Activity>
           <Activity mode={activeTab === "controls" ? "visible" : "hidden"}>
-            <ControlsTab
-              isOnline={isOnline}
-              instanceId={instanceId}
-              botId={account.profileId}
-              liveState={liveState}
-            />
+            <Suspense fallback={<TabPanelSkeleton />}>
+              <ControlsTab instanceId={instanceId} botId={account.profileId} />
+            </Suspense>
           </Activity>
           <Activity mode={activeTab === "terminal" ? "visible" : "hidden"}>
-            <BotTerminalPanel
-              logScope={logScope}
-              commandScope={commandScope}
-              instanceInfo={instanceInfo}
-            />
+            <Suspense fallback={<TabPanelSkeleton className="gap-2" />}>
+              <BotTerminalPanel
+                logScope={logScope}
+                commandScope={commandScope}
+              />
+            </Suspense>
           </Activity>
         </div>
       </div>
@@ -580,22 +471,171 @@ function BotDetailContent({
   );
 }
 
+function TabPanelSkeleton({ className }: { className?: string }) {
+  return (
+    <div className={cn("flex flex-col gap-4", className)}>
+      <Skeleton className="h-48 w-full rounded-lg" />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <Skeleton className="h-40 w-full rounded-lg" />
+        <Skeleton className="h-40 w-full rounded-lg" />
+      </div>
+    </div>
+  );
+}
+
+function BotDetailHeaderSkeleton() {
+  return (
+    <div className="flex flex-wrap items-center gap-4 rounded-lg border p-4">
+      <Skeleton className="h-16 w-12 rounded" />
+      <div className="flex flex-col gap-2">
+        <Skeleton className="h-6 w-32" />
+        <div className="flex gap-2">
+          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-4 w-28" />
+          <Skeleton className="h-4 w-32" />
+        </div>
+      </div>
+      <Skeleton className="ml-auto h-9 w-28 rounded-md" />
+    </div>
+  );
+}
+
+function BotDetailHeader({
+  account,
+  instanceId,
+  typeKey,
+  typeIcon: TypeIcon,
+  onContextMenu,
+}: {
+  account: ProfileAccount;
+  instanceId: string;
+  typeKey: keyof typeof MinecraftAccountProto_AccountTypeProto;
+  typeIcon: ReturnType<typeof accountTypeToIcon>;
+  onContextMenu: (event: React.MouseEvent, data: null) => void;
+}) {
+  const { t } = useTranslation("instance");
+  const { botInfoQueryOptions } = Route.useRouteContext();
+  const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
+  const isOnline = !!botInfo.liveState;
+  const liveState = botInfo.liveState;
+
+  return (
+    /* biome-ignore lint/a11y/noStaticElementInteractions: context menu on container */
+    <div
+      className="flex flex-wrap items-center gap-4 rounded-lg border p-4"
+      onContextMenu={(event) => onContextMenu(event, null)}
+    >
+      <img
+        src={getAvatarUrl(liveState?.skinTextureHash)}
+        alt={account.lastKnownName}
+        className="h-16 w-auto"
+        loading="lazy"
+      />
+      <div className="flex flex-col gap-1">
+        <h2 className="text-lg font-semibold">{account.lastKnownName}</h2>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+          <span
+            className={cn("font-medium", isOnline ? "text-emerald-500" : "")}
+          >
+            {isOnline ? t("bots.online") : t("bots.notJoined")}
+          </span>
+          <span className="flex items-center gap-1">
+            <TypeIcon className="size-3" />
+            {accountTypeLabel(typeKey)}
+          </span>
+          <span className="font-mono text-xs">{account.profileId}</span>
+        </div>
+      </div>
+      {isOnline && liveState && (
+        <div className="ml-auto flex flex-wrap items-center gap-3">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex items-center gap-1">
+                <HeartIcon className="size-3.5 text-red-500" />
+                <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                  <div
+                    className="h-full bg-red-500 transition-all"
+                    style={{
+                      width: `${(liveState.health / liveState.maxHealth) * 100}%`,
+                    }}
+                  />
+                </div>
+                <span className="text-xs tabular-nums">
+                  {liveState.health.toFixed(0)}/{liveState.maxHealth.toFixed(0)}
+                </span>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>{t("bots.statsPanel.health")}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex items-center gap-1">
+                <UtensilsIcon className="size-3.5 text-amber-500" />
+                <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                  <div
+                    className="h-full bg-amber-500 transition-all"
+                    style={{
+                      width: `${(liveState.foodLevel / 20) * 100}%`,
+                    }}
+                  />
+                </div>
+                <span className="text-xs tabular-nums">
+                  {liveState.foodLevel}/20
+                </span>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>{t("bots.statsPanel.food")}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex items-center gap-1">
+                <SparklesIcon className="size-3.5 text-green-500" />
+                <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                  <div
+                    className="h-full bg-green-500 transition-all"
+                    style={{
+                      width: `${liveState.experienceProgress * 100}%`,
+                    }}
+                  />
+                </div>
+                <span className="text-xs tabular-nums">
+                  L{liveState.experienceLevel}
+                </span>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>{t("bots.statsPanel.experience")}</TooltipContent>
+          </Tooltip>
+          <span className="text-xs text-muted-foreground">
+            {getGameModeLabel(liveState.gameMode, t)}
+          </span>
+        </div>
+      )}
+      <Button asChild variant="ghost" size="sm">
+        <Link to="/instance/$instance/bots" params={{ instance: instanceId }}>
+          <ArrowLeftIcon className="mr-2 size-4" />
+          {t("bots.backToBots")}
+        </Link>
+      </Button>
+    </div>
+  );
+}
+
 function OverviewTab({
   instanceId,
   botId,
-  isOnline,
-  liveState,
 }: {
   instanceId: string;
   botId: string;
-  isOnline: boolean;
-  liveState?: BotLiveState;
 }) {
+  const { botInfoQueryOptions } = Route.useRouteContext();
+  const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
   const { t } = useTranslation("instance");
   const { t: tCommon } = useTranslation("common");
   const { contextMenu, handleContextMenu, dismiss, menuRef } =
     useContextMenu<null>();
   const copyToClipboard = useCopyToClipboard();
+  const isOnline = !!botInfo.liveState;
+  const liveState = botInfo.liveState;
 
   return (
     <>
@@ -695,16 +735,17 @@ function OverviewTab({
 }
 
 function ControlsTab({
-  isOnline,
   instanceId,
   botId,
-  liveState,
 }: {
-  isOnline: boolean;
   instanceId: string;
   botId: string;
-  liveState?: BotLiveState;
 }) {
+  const { botInfoQueryOptions } = Route.useRouteContext();
+  const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
+  const isOnline = !!botInfo.liveState;
+  const liveState = botInfo.liveState;
+
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <div className="flex flex-col gap-6">
@@ -734,12 +775,13 @@ function ControlsTab({
 function BotTerminalPanel({
   logScope,
   commandScope,
-  instanceInfo,
 }: {
   logScope: LogScope;
   commandScope: CommandScope;
-  instanceInfo: InstanceInfoQueryData;
 }) {
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+
   return (
     <div className="flex flex-col gap-2">
       <TerminalComponent scope={logScope} />
@@ -1096,15 +1138,16 @@ function SlotRegionGrid({
 }
 
 function BotInventoryPanel({
-  isOnline,
   instanceId,
   botId,
 }: {
-  isOnline: boolean;
   instanceId: string;
   botId: string;
 }) {
   const { t } = useTranslation("instance");
+  const { botInfoQueryOptions } = Route.useRouteContext();
+  const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
+  const isOnline = !!botInfo.liveState;
 
   // Query for inventory state with layout
   const { data: inventoryState, refetch } = useSuspenseQuery(

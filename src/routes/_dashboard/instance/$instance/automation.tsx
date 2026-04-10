@@ -21,7 +21,13 @@ import {
   WaypointsIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import {
+  Suspense,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -350,12 +356,11 @@ function AutomationDashboard() {
 
 function Content() {
   const queryClient = useQueryClient();
+  const { instance: instanceId } = Route.useParams();
   const {
-    instanceInfoQueryOptions,
     automationTeamStateQueryOptions,
     automationCoordinationStateQueryOptions,
   } = Route.useRouteContext();
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: teamState } = useSuspenseQuery(automationTeamStateQueryOptions);
   const { data: coordinationState } = useSuspenseQuery(
     automationCoordinationStateQueryOptions,
@@ -393,9 +398,6 @@ function Content() {
   >("health");
   const transport = createTransport();
   const isReadOnlyDemo = transport === null;
-  const hasAutomationSettingsPage = instanceInfo.instanceSettings.some(
-    (page) => page.id === "automation",
-  );
 
   useEffect(() => {
     setMaxEndBotsInput(String(teamSettings.maxEndBots));
@@ -460,7 +462,7 @@ function Content() {
         queryKey: automationCoordinationStateQueryOptions.queryKey,
       }),
       queryClient.invalidateQueries({
-        queryKey: ["automation-memory-state", instanceInfo.id],
+        queryKey: ["automation-memory-state", instanceId],
       }),
     ]);
   };
@@ -486,28 +488,20 @@ function Content() {
       );
       switch (action.kind) {
         case "beat":
-          return automationService.startAutomationBeat({
-            instanceId: instanceInfo.id,
-          });
+          return automationService.startAutomationBeat({ instanceId });
         case "pause":
-          return automationService.pauseAutomation({
-            instanceId: instanceInfo.id,
-          });
+          return automationService.pauseAutomation({ instanceId });
         case "resume":
-          return automationService.resumeAutomation({
-            instanceId: instanceInfo.id,
-          });
+          return automationService.resumeAutomation({ instanceId });
         case "stop":
-          return automationService.stopAutomation({
-            instanceId: instanceInfo.id,
-          });
+          return automationService.stopAutomation({ instanceId });
         case "reset-coordination":
           return automationService.resetAutomationCoordinationState({
-            instanceId: instanceInfo.id,
+            instanceId,
           });
         case "acquire":
           return automationService.startAutomationAcquire({
-            instanceId: instanceInfo.id,
+            instanceId,
             target: action.target,
             count: action.count,
           });
@@ -559,48 +553,48 @@ function Content() {
       switch (action.kind) {
         case "preset":
           return automationService.applyAutomationPreset({
-            instanceId: instanceInfo.id,
+            instanceId,
             preset: action.preset,
           });
         case "collaboration":
           return automationService.setAutomationCollaboration({
-            instanceId: instanceInfo.id,
+            instanceId,
             enabled: action.enabled,
           });
         case "role-policy":
           return automationService.setAutomationRolePolicy({
-            instanceId: instanceInfo.id,
+            instanceId,
             rolePolicy: action.rolePolicy,
           });
         case "shared-structures":
           return automationService.setAutomationSharedStructures({
-            instanceId: instanceInfo.id,
+            instanceId,
             enabled: action.enabled,
           });
         case "shared-claims":
           return automationService.setAutomationSharedClaims({
-            instanceId: instanceInfo.id,
+            instanceId,
             enabled: action.enabled,
           });
         case "shared-end-entry":
           return automationService.setAutomationSharedEndEntry({
-            instanceId: instanceInfo.id,
+            instanceId,
             enabled: action.enabled,
           });
         case "max-end-bots":
           return automationService.setAutomationMaxEndBots({
-            instanceId: instanceInfo.id,
+            instanceId,
             maxEndBots: action.maxEndBots,
           });
         case "quota-override":
           return automationService.setAutomationQuotaOverride({
-            instanceId: instanceInfo.id,
+            instanceId,
             requirementKey: action.requirementKey,
             targetCount: action.targetCount,
           });
         case "objective":
           return automationService.setAutomationObjectiveOverride({
-            instanceId: instanceInfo.id,
+            instanceId,
             objective: action.objective,
           });
       }
@@ -648,27 +642,27 @@ function Content() {
       switch (action.kind) {
         case "pause":
           return automationService.pauseAutomation({
-            instanceId: instanceInfo.id,
+            instanceId,
             botIds: action.botIds,
           });
         case "resume":
           return automationService.resumeAutomation({
-            instanceId: instanceInfo.id,
+            instanceId,
             botIds: action.botIds,
           });
         case "stop":
           return automationService.stopAutomation({
-            instanceId: instanceInfo.id,
+            instanceId,
             botIds: action.botIds,
           });
         case "reset-memory":
           return automationService.resetAutomationMemory({
-            instanceId: instanceInfo.id,
+            instanceId,
             botIds: action.botIds,
           });
         case "release-claims":
           return automationService.releaseAutomationBotClaims({
-            instanceId: instanceInfo.id,
+            instanceId,
             botIds: action.botIds,
           });
       }
@@ -700,7 +694,7 @@ function Content() {
         activeTransport,
       );
       return automationService.updateAutomationBotSettings({
-        instanceId: instanceInfo.id,
+        instanceId,
         botIds: action.botIds,
         ...action.patch,
       });
@@ -728,7 +722,7 @@ function Content() {
         activeTransport,
       );
       return automationService.releaseAutomationClaim({
-        instanceId: instanceInfo.id,
+        instanceId,
         key: claimKey,
       });
     },
@@ -1005,7 +999,7 @@ function Content() {
   const memoryStateQuery = useQuery({
     queryKey: [
       "automation-memory-state",
-      instanceInfo.id,
+      instanceId,
       inspectedMemoryBot?.botId ?? "none",
       memoryMaxEntries,
     ],
@@ -1013,14 +1007,14 @@ function Content() {
     queryFn: async (queryProps): Promise<AutomationMemoryState> => {
       if (inspectedMemoryBot === undefined) {
         return create(AutomationMemoryStateSchema, {
-          instanceId: instanceInfo.id,
+          instanceId,
         });
       }
 
       const activeTransport = createTransport();
       if (activeTransport === null) {
         return createDemoAutomationMemoryState(
-          instanceInfo.id,
+          instanceId,
           inspectedMemoryBot.botId,
           inspectedMemoryBot.accountName,
           memoryMaxEntries,
@@ -1033,7 +1027,7 @@ function Content() {
       );
       const result = await automationService.getAutomationMemoryState(
         {
-          instanceId: instanceInfo.id,
+          instanceId,
           botId: inspectedMemoryBot.botId,
           maxEntries: memoryMaxEntries,
         },
@@ -1042,7 +1036,7 @@ function Content() {
       return (
         result.state ??
         create(AutomationMemoryStateSchema, {
-          instanceId: instanceInfo.id,
+          instanceId,
           botId: inspectedMemoryBot.botId,
           accountName: inspectedMemoryBot.accountName,
         })
@@ -1166,19 +1160,9 @@ function Content() {
                 </TooltipTrigger>
                 <TooltipContent>Reset Coordination</TooltipContent>
               </Tooltip>
-              {hasAutomationSettingsPage && (
-                <Button asChild size="icon-sm" variant="ghost">
-                  <Link
-                    to="/instance/$instance/settings/$pageId"
-                    params={{
-                      instance: instanceInfo.id,
-                      pageId: "automation",
-                    }}
-                  >
-                    <Settings2Icon className="size-4" />
-                  </Link>
-                </Button>
-              )}
+              <Suspense fallback={null}>
+                <AutomationSettingsButton instanceId={instanceId} />
+              </Suspense>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -2046,6 +2030,32 @@ function InlineSelect(props: {
         ))}
       </SelectContent>
     </Select>
+  );
+}
+
+function AutomationSettingsButton({ instanceId }: { instanceId: string }) {
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const hasAutomationSettingsPage = instanceInfo.instanceSettings.some(
+    (page) => page.id === "automation",
+  );
+
+  if (!hasAutomationSettingsPage) {
+    return null;
+  }
+
+  return (
+    <Button asChild size="icon-sm" variant="ghost">
+      <Link
+        to="/instance/$instance/settings/$pageId"
+        params={{
+          instance: instanceId,
+          pageId: "automation",
+        }}
+      >
+        <Settings2Icon className="size-4" />
+      </Link>
+    </Button>
   );
 }
 

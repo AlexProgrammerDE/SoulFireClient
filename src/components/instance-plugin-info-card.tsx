@@ -219,11 +219,8 @@ export function InstancePluginInfoCard(props: {
     from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const profile = instanceInfo.profile;
   const transport = use(TransportContext);
   const queryClient = useQueryClient();
 
@@ -358,10 +355,7 @@ export function ServerPluginInfoCard(props: {
     select: (context) => context.serverInfoQueryOptions,
   });
   const { data: serverInfo } = useSuspenseQuery(serverInfoQueryOptions);
-  const { data: profile } = useSuspenseQuery({
-    ...serverInfoQueryOptions,
-    select: (info) => info.profile,
-  });
+  const profile = serverInfo.profile;
   const transport = use(TransportContext);
   const queryClient = useQueryClient();
 
