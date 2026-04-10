@@ -14,9 +14,9 @@ import {
 } from "@/generated/soulfire/command_pb.ts";
 import { InstancePermission } from "@/generated/soulfire/common_pb.ts";
 import {
-  InstanceLogScopeSchema,
   type LogScope,
   LogScopeSchema,
+  PersonalLogScopeSchema,
 } from "@/generated/soulfire/logs_pb.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
@@ -61,13 +61,11 @@ function Content() {
     () =>
       create(LogScopeSchema, {
         scope: {
-          case: "instance",
-          value: create(InstanceLogScopeSchema, {
-            instanceId: instanceInfo.id,
-          }),
+          case: "personal",
+          value: create(PersonalLogScopeSchema, {}),
         },
       }),
-    [instanceInfo.id],
+    [],
   );
   const commandScope = useMemo<CommandScope>(
     () =>

@@ -14,9 +14,9 @@ import {
 } from "@/generated/soulfire/command_pb.ts";
 import { GlobalPermission } from "@/generated/soulfire/common_pb.ts";
 import {
-  GlobalLogScopeSchema,
   type LogScope,
   LogScopeSchema,
+  PersonalLogScopeSchema,
 } from "@/generated/soulfire/logs_pb.ts";
 import { hasGlobalPermission } from "@/lib/utils.tsx";
 
@@ -60,8 +60,8 @@ function Content() {
     () =>
       create(LogScopeSchema, {
         scope: {
-          case: "global",
-          value: create(GlobalLogScopeSchema, {}),
+          case: "personal",
+          value: create(PersonalLogScopeSchema, {}),
         },
       }),
     [],
