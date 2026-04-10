@@ -45,6 +45,7 @@ import {
   XIcon,
 } from "lucide-react";
 import {
+  Activity,
   type ReactNode,
   useCallback,
   useEffect,
@@ -543,36 +544,36 @@ function BotDetailContent({
           </TabButton>
         </div>
         <div className="p-4">
-          {activeTab === "overview" && (
+          <Activity mode={activeTab === "overview" ? "visible" : "hidden"}>
             <OverviewTab
               instanceId={instanceId}
               botId={account.profileId}
               isOnline={isOnline}
               liveState={liveState}
             />
-          )}
-          {activeTab === "inventory" && (
+          </Activity>
+          <Activity mode={activeTab === "inventory" ? "visible" : "hidden"}>
             <BotInventoryPanel
               isOnline={isOnline}
               instanceId={instanceId}
               botId={account.profileId}
             />
-          )}
-          {activeTab === "controls" && (
+          </Activity>
+          <Activity mode={activeTab === "controls" ? "visible" : "hidden"}>
             <ControlsTab
               isOnline={isOnline}
               instanceId={instanceId}
               botId={account.profileId}
               liveState={liveState}
             />
-          )}
-          {activeTab === "terminal" && (
+          </Activity>
+          <Activity mode={activeTab === "terminal" ? "visible" : "hidden"}>
             <BotTerminalPanel
               logScope={logScope}
               commandScope={commandScope}
               instanceInfo={instanceInfo}
             />
-          )}
+          </Activity>
         </div>
       </div>
     </div>
