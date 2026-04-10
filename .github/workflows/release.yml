@@ -33,7 +33,7 @@ jobs:
     permissions:
       contents: write
 
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
@@ -74,13 +74,13 @@ jobs:
             name: 'macOS 26 (AMD64)'
             rust-targets: 'x86_64-apple-darwin'
             type: 'macos-amd64'
-          - platform: 'ubuntu-22.04'
+          - platform: 'blacksmith-2vcpu-ubuntu-2404'
             args: ''
             target-path: ''
             name: 'Ubuntu 22.04 (AMD64)'
             rust-targets: ''
             type: 'linux-amd64'
-          - platform: 'ubuntu-22.04-arm'
+          - platform: 'blacksmith-2vcpu-ubuntu-2404'
             args: ''
             target-path: ''
             name: 'Ubuntu 22.04 (AArch64)'
@@ -267,7 +267,7 @@ jobs:
     permissions:
       contents: write
 
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
       - name: Download linux-amd64 artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # 8.0.1
