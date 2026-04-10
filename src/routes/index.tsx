@@ -69,7 +69,6 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Scroller } from "@/components/ui/scroller.tsx";
-import { WindowTitlebar } from "@/components/window/window-titlebar.tsx";
 import {
   LoginService,
   NextAuthFlowResponse_Failure_Reason,
@@ -226,7 +225,7 @@ function Index() {
   };
 
   return (
-    <div className="relative flex h-dvh w-full flex-col">
+    <div className="relative flex min-h-0 flex-1 flex-col">
       <svg className="fill-muted-foreground/5 absolute top-0 right-0 bottom-0 left-0 z-[-1] h-dvh w-dvw">
         <title>Decorative background pattern</title>
         <defs>
@@ -249,35 +248,8 @@ function Index() {
           fill={`url(#${circuitPatternId})`}
         />
       </svg>
-      <WindowTitlebar
-        leading={<div className="h-8 w-8" />}
-        center={
-          <div className="window-titlebar-no-drag flex min-w-0 justify-center">
-            <ExternalLink
-              href="https://soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-logo"
-              className="flex items-center gap-2 rounded-md px-2 py-1 text-sm font-medium tracking-wide transition-colors hover:bg-titlebar-accent/80"
-            >
-              <img
-                className="size-5"
-                width={20}
-                height={20}
-                src="/logo.png"
-                alt={t("header.image.alt")}
-              />
-              <span>{t("header.title")}</span>
-            </ExternalLink>
-          </div>
-        }
-        trailing={<ModeToggle />}
-      />
-      <ScrollArea
-        className="relative w-full px-4"
-        style={{ height: "calc(100dvh - var(--titlebar-height))" }}
-      >
-        <main
-          className="flex w-full flex-col"
-          style={{ minHeight: "calc(100dvh - var(--titlebar-height))" }}
-        >
+      <ScrollArea className="relative min-h-0 flex-1 w-full px-4">
+        <main className="flex min-h-full w-full flex-col">
           <div className="m-auto flex w-full max-w-lg flex-col gap-4 py-6">
             <ExternalLink
               href="https://soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-logo"
@@ -405,6 +377,7 @@ function Index() {
                     </DropdownMenuGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                <ModeToggle />
               </div>
             </div>
           </div>

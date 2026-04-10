@@ -17,9 +17,13 @@ export function UserSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <ScrollArea className="h-[calc(100svh-4rem)] w-full pr-2">
-        <SidebarContent className="min-h-[calc(100svh-4rem)]">
+    <Sidebar
+      collapsible="icon"
+      className="top-(--titlebar-height) h-[calc(100svh-var(--titlebar-height))]"
+      {...props}
+    >
+      <ScrollArea className="min-h-0 flex-1 w-full pr-2">
+        <SidebarContent className="min-h-full">
           <Suspense fallback={<NavDefaultSkeleton />}>
             <NavUserOptions />
             <NavUserAdmin />

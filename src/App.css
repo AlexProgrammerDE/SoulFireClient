@@ -42,7 +42,7 @@
   --titlebar-border: oklch(0.91 0.004 286.32 / 85%);
   --titlebar-accent: oklch(0.95 0.005 286.3 / 80%);
   --titlebar-accent-foreground: oklch(0.19 0.006 285.88);
-  --titlebar-height: 3rem;
+  --titlebar-height: 1.75rem;
 }
 
 .dark {
@@ -156,36 +156,31 @@
 }
 
 @layer components {
-  .window-titlebar {
+  .window-topbar {
     height: var(--titlebar-height);
-    @apply bg-titlebar/95 text-titlebar-foreground border-titlebar-border supports-[backdrop-filter]:bg-titlebar/85 flex shrink-0 items-stretch border-b backdrop-blur-md;
+    @apply bg-titlebar/95 text-titlebar-foreground border-titlebar-border supports-[backdrop-filter]:bg-titlebar/88 flex shrink-0 items-stretch border-b backdrop-blur-md;
   }
 
-  .window-titlebar-edge-spacer {
-    width: 0.75rem;
-    @apply shrink-0;
-  }
-
-  .window-titlebar-drag {
+  .window-topbar-drag {
     @apply min-w-0;
   }
 
-  .window-titlebar-button {
-    width: var(--titlebar-height);
-    @apply text-titlebar-foreground/78 hover:bg-titlebar-accent hover:text-titlebar-accent-foreground active:bg-titlebar-accent/90 inline-flex items-center justify-center transition-colors;
+  .window-topbar-button {
+    width: 1.75rem;
+    @apply text-titlebar-foreground/72 hover:bg-titlebar-accent hover:text-titlebar-accent-foreground disabled:text-titlebar-foreground/35 disabled:hover:bg-transparent inline-flex items-center justify-center rounded-md transition-colors;
   }
 
-  .window-titlebar-button-danger {
+  .window-topbar-button-danger {
     @apply hover:bg-destructive hover:text-white active:bg-destructive/90;
   }
 
-  .window-titlebar .window-titlebar-no-drag,
-  .window-titlebar .window-titlebar-button,
-  .window-titlebar button,
-  .window-titlebar a,
-  .window-titlebar input,
-  .window-titlebar textarea,
-  .window-titlebar select {
+  .window-topbar .window-topbar-no-drag,
+  .window-topbar .window-topbar-button,
+  .window-topbar button,
+  .window-topbar a,
+  .window-topbar input,
+  .window-topbar textarea,
+  .window-topbar select {
     app-region: no-drag;
     -webkit-app-region: no-drag;
   }

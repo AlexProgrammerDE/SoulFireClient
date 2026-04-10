@@ -1,13 +1,14 @@
+import { useCanGoBack, useLocation, useRouter } from "@tanstack/react-router";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import { type as getOsType } from "@tauri-apps/plugin-os";
-import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import {
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MinusIcon,
+  SquareIcon,
+  XIcon,
+} from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { cn, isTauri } from "@/lib/utils.tsx";
 
 function isDesktopTauri() {
@@ -64,6 +65,7 @@ function WindowControls() {
     if (!appWindow) {
       return;
     }
+
     void appWindow.minimize();
   }, [appWindow]);
 
@@ -87,6 +89,7 @@ function WindowControls() {
     if (!appWindow) {
       return;
     }
+
     void appWindow.close();
   }, [appWindow]);
 
@@ -95,67 +98,90 @@ function WindowControls() {
   }
 
   return (
-    <div className="window-titlebar-no-drag flex items-stretch">
+    <div className="window-topbar-no-drag flex items-stretch">
       <button
         type="button"
-        className="window-titlebar-button"
+        className="window-topbar-button"
         onClick={handleMinimize}
         aria-label="Minimize window"
         title="Minimize"
       >
-        <MinusIcon className="size-4" />
+        <MinusIcon className="size-3.5" />
       </button>
       <button
         type="button"
-        className="window-titlebar-button"
+        className="window-topbar-button"
         onClick={handleToggleMaximize}
         aria-label={isMaximized ? "Restore window" : "Maximize window"}
         title={isMaximized ? "Restore" : "Maximize"}
       >
-        <SquareIcon className={cn("size-3.5", isMaximized && "scale-90")} />
+        <SquareIcon className={cn("size-3", isMaximized && "scale-90")} />
       </button>
       <button
         type="button"
-        className="window-titlebar-button window-titlebar-button-danger"
+        className="window-topbar-button window-topbar-button-danger"
         onClick={handleClose}
         aria-label="Close window"
         title="Close"
       >
-        <XIcon className="size-4" />
+        <XIcon className="size-3.5" />
       </button>
     </div>
   );
 }
 
-export function WindowTitlebar(props: {
-  leading?: ReactNode;
-  center?: ReactNode;
-  trailing?: ReactNode;
-  className?: string;
-}) {
+export function WindowTitlebar() {
+  const router = useRouter();
+  const canGoBack = useCanGoBack();
+  const location = useLocation();
   const desktopTauri = isDesktopTauri();
+  const canGoForward =
+    typeof window !== "undefined" &&
+    router.history.location.state.__TSR_index < router.history.length - 1;
+
+  const handleBack = useCallback(() => {
+    router.history.back();
+  }, [router]);
+
+  const handleForward = useCallback(() => {
+    router.history.forward();
+  }, [router]);
 
   return (
-    <header className={cn("window-titlebar", props.className)}>
-      {props.leading ? (
-        <div className="window-titlebar-no-drag flex shrink-0 items-center gap-2 px-3">
-          {props.leading}
-        </div>
-      ) : (
-        <div className="window-titlebar-edge-spacer" />
-      )}
+    <header className="window-topbar">
+      <div className="window-topbar-no-drag flex items-stretch gap-1 px-2">
+        <button
+          type="button"
+          className="window-topbar-button"
+          onClick={handleBack}
+          disabled={!canGoBack}
+          aria-label="Go back"
+          title="Back"
+        >
+          <ChevronLeftIcon className="size-3.5" />
+        </button>
+        <button
+          type="button"
+          className="window-topbar-button"
+          onClick={handleForward}
+          disabled={!canGoForward}
+          aria-label="Go forward"
+          title="Forward"
+        >
+          <ChevronRightIcon className="size-3.5" />
+        </button>
+      </div>
       <div
         data-tauri-drag-region={desktopTauri ? "" : undefined}
-        className="window-titlebar-drag flex min-w-0 flex-1 items-center px-2"
+        className="window-topbar-drag flex min-w-0 flex-1 items-center"
       >
-        {props.center}
+        <div className="window-topbar-no-drag mx-auto max-w-full px-3 text-center">
+          <p className="text-titlebar-foreground/58 truncate text-[11px] font-medium tracking-[0.02em]">
+            {location.pathname === "/" ? "SoulFire" : location.pathname}
+          </p>
+        </div>
       </div>
-      <div className="window-titlebar-no-drag ml-auto flex shrink-0 items-stretch pl-2">
-        {props.trailing ? (
-          <div className="flex items-center gap-2 px-2">{props.trailing}</div>
-        ) : null}
-        <WindowControls />
-      </div>
+      <WindowControls />
     </header>
   );
 }

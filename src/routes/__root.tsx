@@ -36,6 +36,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider.tsx";
 import { TailwindIndicator } from "@/components/tailwind-indicator.tsx";
 import { Toaster } from "@/components/ui/sonner.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { WindowTitlebar } from "@/components/window/window-titlebar.tsx";
 import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics_pb.ts";
 import { useDiscordPresence } from "@/hooks/use-discord-presence.ts";
 import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
@@ -108,7 +109,9 @@ function RootPending() {
       disableTransitionOnChange
     >
       <WindowThemeSyncer />
-      <div vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col" />
+      <div vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col">
+        <div className="window-topbar" />
+      </div>
     </ThemeProvider>
   );
 }
@@ -327,7 +330,10 @@ function RootLayout() {
                     <PointerReset />
                     <CustomContextMenu />
                     <AboutProvider>
-                      <Outlet />
+                      <WindowTitlebar />
+                      <div className="flex min-h-0 flex-1 flex-col">
+                        <Outlet />
+                      </div>
                       <TanStackDevtools
                         plugins={[
                           {

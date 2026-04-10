@@ -185,7 +185,7 @@ function InstanceLayout() {
     sidebarState === null ? !isMobile : sidebarState === "true";
 
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
+    <SidebarProvider defaultOpen={defaultOpen} className="min-h-0 flex-1">
       <InstanceSidebar />
       <TooltipProvider delayDuration={500}>
         <SidebarInset>
