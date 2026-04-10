@@ -69,6 +69,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Scroller } from "@/components/ui/scroller.tsx";
+import { WindowTitlebar } from "@/components/window/window-titlebar.tsx";
 import {
   LoginService,
   NextAuthFlowResponse_Failure_Reason,
@@ -225,7 +226,7 @@ function Index() {
   };
 
   return (
-    <ScrollArea className="relative h-dvh w-full px-4">
+    <div className="relative flex h-dvh w-full flex-col">
       <svg className="fill-muted-foreground/5 absolute top-0 right-0 bottom-0 left-0 z-[-1] h-dvh w-dvw">
         <title>Decorative background pattern</title>
         <defs>
@@ -248,140 +249,168 @@ function Index() {
           fill={`url(#${circuitPatternId})`}
         />
       </svg>
-      <main className="flex min-h-dvh w-full flex-col">
-        <div className="m-auto flex w-full max-w-lg flex-col gap-4">
-          <ExternalLink
-            href="https://soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-logo"
-            className="flex flex-row items-center justify-center gap-2 text-center"
-          >
-            <img
-              className="size-8"
-              width={32}
-              height={32}
-              src="/logo.png"
-              alt={t("header.image.alt")}
-            />
-            <p className="font-medium tracking-wide">{t("header.title")}</p>
-          </ExternalLink>
-          {loginType === null && (
-            <DefaultMenu
-              setLoginType={setLoginType}
-              demoLogin={targetRedirect}
-            />
-          )}
-          {loginType === "INTEGRATED" && (
-            <IntegratedMenu
-              setLoginType={setLoginType}
-              redirectWithCredentials={redirectWithCredentials}
-              startIntegratedServer={startIntegratedServer}
-            />
-          )}
-          {loginType === "DEDICATED" && (
-            <DedicatedMenu
-              setAuthFlowData={setAuthFlowData}
-              setLoginType={setLoginType}
-              redirectWithCredentials={redirectWithCredentials}
-            />
-          )}
-          {loginType === "EMAIL_CODE" && authFlowData !== null && (
-            <EmailCodeMenu
-              authFlowData={authFlowData}
-              setLoginType={setLoginType}
-              redirectWithCredentials={redirectWithCredentials}
-            />
-          )}
-          <div>
-            <div className="text-muted-foreground text-center text-xs text-balance">
-              <p className="mb-2">
-                <Trans
-                  i18nKey="login:newUser"
-                  components={{
-                    a: (
-                      <ExternalLink
-                        href="https://soulfiremc.com/demo-video?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-demo-video"
-                        className="text-nowrap text-blue-500"
-                      />
-                    ),
-                  }}
-                />
-              </p>
-              <p className="select-text mb-1">
-                {t("footer.version", {
-                  version: APP_VERSION,
-                  environment: APP_ENVIRONMENT,
-                })}
-              </p>
-              {!systemInfo && (
-                <>
-                  {APP_ENVIRONMENT === "production" && (
-                    <a
-                      className="text-blue-500"
-                      href="https://preview.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-preview"
-                    >
-                      {t("footer.preview")}
-                    </a>
-                  )}
-                  {APP_ENVIRONMENT === "preview" && (
-                    <a
-                      className="text-blue-500"
-                      href="https://app.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-production"
-                    >
-                      {t("footer.production")}
-                    </a>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="flex flex-row justify-center">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    className="text-muted-foreground w-fit text-sm text-balance"
-                    variant="ghost"
-                  >
-                    {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{" "}
-                    {getLanguageName(
-                      i18n.resolvedLanguage ?? i18n.language,
-                      i18n.resolvedLanguage ?? i18n.language,
+      <WindowTitlebar
+        leading={<div className="h-8 w-8" />}
+        center={
+          <div className="window-titlebar-no-drag flex min-w-0 justify-center">
+            <ExternalLink
+              href="https://soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-logo"
+              className="flex items-center gap-2 rounded-md px-2 py-1 text-sm font-medium tracking-wide transition-colors hover:bg-titlebar-accent/80"
+            >
+              <img
+                className="size-5"
+                width={20}
+                height={20}
+                src="/logo.png"
+                alt={t("header.image.alt")}
+              />
+              <span>{t("header.title")}</span>
+            </ExternalLink>
+          </div>
+        }
+        trailing={<ModeToggle />}
+      />
+      <ScrollArea
+        className="relative w-full px-4"
+        style={{ height: "calc(100dvh - var(--titlebar-height))" }}
+      >
+        <main
+          className="flex w-full flex-col"
+          style={{ minHeight: "calc(100dvh - var(--titlebar-height))" }}
+        >
+          <div className="m-auto flex w-full max-w-lg flex-col gap-4 py-6">
+            <ExternalLink
+              href="https://soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-logo"
+              className="flex flex-row items-center justify-center gap-2 text-center"
+            >
+              <img
+                className="size-8"
+                width={32}
+                height={32}
+                src="/logo.png"
+                alt={t("header.image.alt")}
+              />
+              <p className="font-medium tracking-wide">{t("header.title")}</p>
+            </ExternalLink>
+            {loginType === null && (
+              <DefaultMenu
+                setLoginType={setLoginType}
+                demoLogin={targetRedirect}
+              />
+            )}
+            {loginType === "INTEGRATED" && (
+              <IntegratedMenu
+                setLoginType={setLoginType}
+                redirectWithCredentials={redirectWithCredentials}
+                startIntegratedServer={startIntegratedServer}
+              />
+            )}
+            {loginType === "DEDICATED" && (
+              <DedicatedMenu
+                setAuthFlowData={setAuthFlowData}
+                setLoginType={setLoginType}
+                redirectWithCredentials={redirectWithCredentials}
+              />
+            )}
+            {loginType === "EMAIL_CODE" && authFlowData !== null && (
+              <EmailCodeMenu
+                authFlowData={authFlowData}
+                setLoginType={setLoginType}
+                redirectWithCredentials={redirectWithCredentials}
+              />
+            )}
+            <div>
+              <div className="text-muted-foreground text-center text-xs text-balance">
+                <p className="mb-2">
+                  <Trans
+                    i18nKey="login:newUser"
+                    components={{
+                      a: (
+                        <ExternalLink
+                          href="https://soulfiremc.com/demo-video?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-demo-video"
+                          className="text-nowrap text-blue-500"
+                        />
+                      ),
+                    }}
+                  />
+                </p>
+                <p className="select-text mb-1">
+                  {t("footer.version", {
+                    version: APP_VERSION,
+                    environment: APP_ENVIRONMENT,
+                  })}
+                </p>
+                {!systemInfo && (
+                  <>
+                    {APP_ENVIRONMENT === "production" && (
+                      <a
+                        className="text-blue-500"
+                        href="https://preview.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-preview"
+                      >
+                        {t("footer.preview")}
+                      </a>
                     )}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-96">
-                  <DropdownMenuLabel>{t("common:locale")}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuRadioGroup
-                    value={i18n.resolvedLanguage ?? i18n.language}
-                    onValueChange={(lang) => void i18n.changeLanguage(lang)}
-                    className="grid grid-cols-1 md:grid-cols-2"
-                  >
-                    {(i18n.options.supportedLngs
-                      ? i18n.options.supportedLngs
-                      : []
-                    )
-                      .filter((lang) => lang !== "cimode")
-                      .map((lang) => (
-                        <DropdownMenuRadioItem key={lang} value={lang}>
-                          {languageEmoji(lang)} {getLanguageName(lang, lang)}
-                        </DropdownMenuRadioItem>
-                      ))}
-                  </DropdownMenuRadioGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem asChild>
-                      <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-translate">
-                        <HeartHandshakeIcon />
-                        {t("footer.helpTranslate")}
-                      </ExternalLink>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <ModeToggle />
+                    {APP_ENVIRONMENT === "preview" && (
+                      <a
+                        className="text-blue-500"
+                        href="https://app.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-production"
+                      >
+                        {t("footer.production")}
+                      </a>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className="flex flex-row justify-center">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      className="text-muted-foreground w-fit text-sm text-balance"
+                      variant="ghost"
+                    >
+                      {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{" "}
+                      {getLanguageName(
+                        i18n.resolvedLanguage ?? i18n.language,
+                        i18n.resolvedLanguage ?? i18n.language,
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-96">
+                    <DropdownMenuLabel>{t("common:locale")}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuRadioGroup
+                      value={i18n.resolvedLanguage ?? i18n.language}
+                      onValueChange={(lang) => void i18n.changeLanguage(lang)}
+                      className="grid grid-cols-1 md:grid-cols-2"
+                    >
+                      {(i18n.options.supportedLngs
+                        ? i18n.options.supportedLngs
+                        : []
+                      )
+                        .filter((lang) => lang !== "cimode")
+                        .map((lang) => (
+                          <DropdownMenuRadioItem key={lang} value={lang}>
+                            {languageEmoji(lang)} {getLanguageName(lang, lang)}
+                          </DropdownMenuRadioItem>
+                        ))}
+                    </DropdownMenuRadioGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem asChild>
+                        <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-translate">
+                          <HeartHandshakeIcon />
+                          {t("footer.helpTranslate")}
+                        </ExternalLink>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-    </ScrollArea>
+        </main>
+      </ScrollArea>
+    </div>
   );
 }
 

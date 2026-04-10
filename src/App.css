@@ -37,6 +37,12 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+  --titlebar: oklch(0.985 0.001 286.2 / 96%);
+  --titlebar-foreground: oklch(0.2 0.006 285.9);
+  --titlebar-border: oklch(0.91 0.004 286.32 / 85%);
+  --titlebar-accent: oklch(0.95 0.005 286.3 / 80%);
+  --titlebar-accent-foreground: oklch(0.19 0.006 285.88);
+  --titlebar-height: 3rem;
 }
 
 .dark {
@@ -71,6 +77,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
+  --titlebar: oklch(0.185 0.01 286 / 94%);
+  --titlebar-foreground: oklch(0.95 0 0);
+  --titlebar-border: oklch(1 0 0 / 8%);
+  --titlebar-accent: oklch(0.28 0.012 286 / 88%);
+  --titlebar-accent-foreground: oklch(0.985 0 0);
 }
 
 @theme inline {
@@ -84,6 +95,11 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  --color-titlebar-accent-foreground: var(--titlebar-accent-foreground);
+  --color-titlebar-accent: var(--titlebar-accent);
+  --color-titlebar-border: var(--titlebar-border);
+  --color-titlebar-foreground: var(--titlebar-foreground);
+  --color-titlebar: var(--titlebar);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -136,5 +152,46 @@
 
   * {
     -webkit-user-drag: none;
+  }
+}
+
+@layer components {
+  .window-titlebar {
+    height: var(--titlebar-height);
+    @apply bg-titlebar/95 text-titlebar-foreground border-titlebar-border supports-[backdrop-filter]:bg-titlebar/85 flex shrink-0 items-stretch border-b backdrop-blur-md;
+  }
+
+  .window-titlebar-edge-spacer {
+    width: 0.75rem;
+    @apply shrink-0;
+  }
+
+  .window-titlebar-drag {
+    @apply min-w-0;
+  }
+
+  .window-titlebar-button {
+    width: var(--titlebar-height);
+    @apply text-titlebar-foreground/78 hover:bg-titlebar-accent hover:text-titlebar-accent-foreground active:bg-titlebar-accent/90 inline-flex items-center justify-center transition-colors;
+  }
+
+  .window-titlebar-button-danger {
+    @apply hover:bg-destructive hover:text-white active:bg-destructive/90;
+  }
+
+  .window-titlebar .window-titlebar-no-drag,
+  .window-titlebar .window-titlebar-button,
+  .window-titlebar button,
+  .window-titlebar a,
+  .window-titlebar input,
+  .window-titlebar textarea,
+  .window-titlebar select {
+    app-region: no-drag;
+    -webkit-app-region: no-drag;
+  }
+
+  [data-tauri-drag-region] {
+    app-region: drag;
+    -webkit-app-region: drag;
   }
 }
