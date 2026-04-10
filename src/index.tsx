@@ -1,6 +1,6 @@
 import { Code, ConnectError } from "@connectrpc/connect";
 import {
-  createHashHistory,
+  createBrowserHistory,
   createRouter,
   deepEqual,
   RouterProvider,
@@ -51,7 +51,7 @@ broadcastQueryClient({
 // noinspection JSUnusedGlobalSymbols
 const router = createRouter({
   routeTree,
-  history: createHashHistory(),
+  history: createBrowserHistory(),
   defaultPreload: "intent",
   // Since we're using React Query, we don't want loader calls to ever be stale
   // This will ensure that the loader is always called when the route is preloaded or visited
