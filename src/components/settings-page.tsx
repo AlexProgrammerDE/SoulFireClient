@@ -313,10 +313,6 @@ function BoolComponent(props: {
         checked={props.value}
         disabled={props.setting.disabled}
         onCheckedChange={(value) => {
-          if (value === "indeterminate") {
-            return;
-          }
-
           props.changeCallback(value);
         }}
       />

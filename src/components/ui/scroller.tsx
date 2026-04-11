@@ -7,7 +7,7 @@ import {
   ChevronRight,
   ChevronUp,
 } from "lucide-react";
-import { Slot } from "radix-ui";
+import { Slot as SlotPrimitive } from "radix-ui";
 import * as React from "react";
 import { useComposedRefs } from "@/lib/compose-refs";
 import { cn } from "@/lib/utils";
@@ -226,7 +226,7 @@ function Scroller(props: ScrollerProps) {
     return orientation === "vertical" ? ["up", "down"] : ["left", "right"];
   }, [orientation, withNavigation]);
 
-  const ScrollerPrimitive = asChild ? Slot.Root : "div";
+  const ScrollerPrimitive = asChild ? SlotPrimitive.Slot : "div";
 
   const ScrollerImpl = (
     <ScrollerPrimitive
