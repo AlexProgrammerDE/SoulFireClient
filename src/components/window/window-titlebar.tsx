@@ -8,9 +8,10 @@ import {
   XIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ButtonGroup } from "@/components/ui/button-group.tsx";
-import { useCurrentRouteTitle } from "@/hooks/use-current-route-title.ts";
+import { useCurrentRouteChrome } from "@/hooks/use-current-route-title.ts";
 import { isDesktopTauri } from "@/lib/platform.ts";
 import { cn } from "@/lib/utils.tsx";
 
@@ -143,7 +144,7 @@ export function WindowTitlebar() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const desktopTauri = isDesktopTauri();
-  const pageTitle = useCurrentRouteTitle();
+  const { title: pageTitle, icon: pageIcon } = useCurrentRouteChrome();
   const canGoForward =
     typeof window !== "undefined" &&
     router.history.location.state.__TSR_index < router.history.length - 1;
@@ -192,7 +193,20 @@ export function WindowTitlebar() {
         data-tauri-drag-region={desktopTauri ? "" : undefined}
         className="flex min-w-0 flex-1 items-center"
       >
-        <div className="window-topbar-no-drag mx-auto max-w-full px-3 text-center">
+        <div className="window-topbar-no-drag mx-auto flex min-w-0 max-w-full items-center gap-1.5 px-3 text-center">
+          {pageIcon?.kind === "dynamic" && (
+            <DynamicIcon
+              name={pageIcon.name}
+              className="text-titlebar-foreground/58 size-3.5 shrink-0"
+            />
+          )}
+          {pageIcon?.kind === "logo" && (
+            <img
+              src={pageIcon.src}
+              alt={pageIcon.alt}
+              className="size-3.5 shrink-0 rounded-sm object-cover"
+            />
+          )}
           <p className="text-titlebar-foreground/58 truncate text-[11px] font-medium tracking-[0.02em]">
             {pageTitle}
           </p>

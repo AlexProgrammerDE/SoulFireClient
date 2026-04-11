@@ -39,7 +39,7 @@ import {
 import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
 import i18n from "@/lib/i18n";
 import { jsonToValue, valueToJson } from "@/lib/protobuf.ts";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 import {
   formatIconName,
   hasInstancePermission,
@@ -49,7 +49,10 @@ import {
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/meta")({
   beforeLoad: () =>
-    staticRouteTitle(() => i18n.t("common:pageName.metaSettings")),
+    staticRouteChrome(() => i18n.t("common:pageName.metaSettings"), {
+      kind: "dynamic",
+      name: "bolt",
+    }),
   component: MetaSettings,
 });
 

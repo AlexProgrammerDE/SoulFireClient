@@ -30,7 +30,7 @@ import { useCastBroadcast } from "@/hooks/use-cast-broadcast.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
 import i18n from "@/lib/i18n";
 import { instanceMetricsQueryOptions } from "@/lib/metrics-query.ts";
-import { routeTitle } from "@/lib/route-title.ts";
+import { routeChrome } from "@/lib/route-title.ts";
 import {
   convertFromInstanceProto,
   type InstanceInfoQueryData,
@@ -164,15 +164,31 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
     return {
       instanceInfoQueryOptions,
       metricsQueryOptions,
-      ...routeTitle((match) => {
-        const titleContext = match.context as {
-          queryClient: QueryClient;
-        };
-        const instanceInfo =
-          titleContext.queryClient.getQueryData<InstanceInfoQueryData>(
-            instanceInfoQueryOptions.queryKey,
+      ...routeChrome({
+        getTitle: (match) => {
+          const titleContext = match.context as {
+            queryClient: QueryClient;
+          };
+          const instanceInfo =
+            titleContext.queryClient.getQueryData<InstanceInfoQueryData>(
+              instanceInfoQueryOptions.queryKey,
+            );
+          return (
+            instanceInfo?.friendlyName ?? i18n.t("common:pageName.overview")
           );
-        return instanceInfo?.friendlyName ?? i18n.t("common:pageName.overview");
+        },
+        getIcon: (match) => {
+          const iconContext = match.context as {
+            queryClient: QueryClient;
+          };
+          const instanceInfo =
+            iconContext.queryClient.getQueryData<InstanceInfoQueryData>(
+              instanceInfoQueryOptions.queryKey,
+            );
+          return instanceInfo?.icon
+            ? { kind: "dynamic", name: instanceInfo.icon }
+            : null;
+        },
       }),
     };
   },

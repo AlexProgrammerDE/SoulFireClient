@@ -19,13 +19,16 @@ import {
   PersonalLogScopeSchema,
 } from "@/generated/soulfire/logs_pb.ts";
 import i18n from "@/lib/i18n";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/terminal")(
   {
     beforeLoad: () =>
-      staticRouteTitle(() => i18n.t("common:pageName.terminal")),
+      staticRouteChrome(() => i18n.t("common:pageName.terminal"), {
+        kind: "dynamic",
+        name: "square-terminal",
+      }),
     component: Terminal,
   },
 );

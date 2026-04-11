@@ -20,7 +20,7 @@ import {
   UserService,
 } from "@/generated/soulfire/user_pb.ts";
 import i18n from "@/lib/i18n";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 import { serverMetricsQueryOptions } from "@/lib/server-metrics-query.ts";
 import {
   convertFromServerProto,
@@ -118,7 +118,10 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
       serverInfoQueryOptions,
       usersQueryOptions,
       serverMetricsOptions,
-      ...staticRouteTitle(() => i18n.t("common:breadcrumbs.admin")),
+      ...staticRouteChrome(() => i18n.t("common:breadcrumbs.admin"), {
+        kind: "dynamic",
+        name: "chart-area",
+      }),
     };
   },
   loader: (props) => {

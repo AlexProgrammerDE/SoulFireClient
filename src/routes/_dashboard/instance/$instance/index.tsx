@@ -30,12 +30,16 @@ import {
   LogScopeSchema,
 } from "@/generated/soulfire/logs_pb.ts";
 import i18n from "@/lib/i18n";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 import { translateInstanceState } from "@/lib/types.ts";
 import { hasInstancePermission } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/")({
-  beforeLoad: () => staticRouteTitle(() => i18n.t("common:pageName.overview")),
+  beforeLoad: () =>
+    staticRouteChrome(() => i18n.t("common:pageName.overview"), {
+      kind: "dynamic",
+      name: "house",
+    }),
   component: Overview,
 });
 

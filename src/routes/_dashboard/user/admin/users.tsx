@@ -60,7 +60,7 @@ import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
@@ -71,7 +71,11 @@ import { startImpersonation } from "@/lib/web-rpc.ts";
 
 export const Route = createFileRoute("/_dashboard/user/admin/users")({
   validateSearch: dataTableValidateSearch,
-  beforeLoad: () => staticRouteTitle(() => i18n.t("common:pageName.users")),
+  beforeLoad: () =>
+    staticRouteChrome(() => i18n.t("common:pageName.users"), {
+      kind: "dynamic",
+      name: "users",
+    }),
   component: Users,
 });
 

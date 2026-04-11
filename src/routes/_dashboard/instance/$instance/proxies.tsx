@@ -1,6 +1,7 @@
 import { useAptabase } from "@aptabase/react";
 import { createClient } from "@connectrpc/connect";
 import {
+  type QueryClient,
   useMutation,
   useQueryClient,
   useSuspenseQuery,
@@ -81,10 +82,11 @@ import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n.ts";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import { observeServerStream } from "@/lib/protobuf.ts";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { routeChrome } from "@/lib/route-title.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
+  type InstanceInfoQueryData,
   mapUnionToValue,
   type ProfileProxy,
 } from "@/lib/types.ts";
@@ -176,7 +178,29 @@ function ProxyCheckDialog({
 export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
   validateSearch: dataTableValidateSearch,
   beforeLoad: () =>
-    staticRouteTitle(() => i18n.t("common:pageName.proxySettings")),
+    routeChrome({
+      getTitle: () => i18n.t("common:pageName.proxySettings"),
+      getIcon: (match) => {
+        const iconContext = match.context as {
+          queryClient: QueryClient;
+          instanceInfoQueryOptions: {
+            queryKey: readonly unknown[];
+          };
+        };
+        const instanceInfo =
+          iconContext.queryClient.getQueryData<InstanceInfoQueryData>(
+            iconContext.instanceInfoQueryOptions.queryKey,
+          );
+        const proxyPage = instanceInfo?.instanceSettings.find(
+          (page) => page.id === "proxy",
+        );
+
+        return {
+          kind: "dynamic",
+          name: proxyPage?.iconId ?? "waypoints",
+        };
+      },
+    }),
   component: ProxySettings,
 });
 

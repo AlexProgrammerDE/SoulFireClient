@@ -1,6 +1,7 @@
 import { useAptabase } from "@aptabase/react";
 import { createClient } from "@connectrpc/connect";
 import {
+  type QueryClient,
   useMutation,
   useQueryClient,
   useSuspenseQuery,
@@ -101,11 +102,12 @@ import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import { observeServerStream } from "@/lib/protobuf.ts";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { routeChrome } from "@/lib/route-title.ts";
 import {
   type GenerateAccountsMode,
   getEnumEntries,
   getEnumKeyByValue,
+  type InstanceInfoQueryData,
   mapUnionToValue,
   type ProfileAccount,
 } from "@/lib/types.ts";
@@ -210,7 +212,29 @@ export const Route = createFileRoute("/_dashboard/instance/$instance/accounts")(
   {
     validateSearch: dataTableValidateSearch,
     beforeLoad: () =>
-      staticRouteTitle(() => i18n.t("common:pageName.accountSettings")),
+      routeChrome({
+        getTitle: () => i18n.t("common:pageName.accountSettings"),
+        getIcon: (match) => {
+          const iconContext = match.context as {
+            queryClient: QueryClient;
+            instanceInfoQueryOptions: {
+              queryKey: readonly unknown[];
+            };
+          };
+          const instanceInfo =
+            iconContext.queryClient.getQueryData<InstanceInfoQueryData>(
+              iconContext.instanceInfoQueryOptions.queryKey,
+            );
+          const accountPage = instanceInfo?.instanceSettings.find(
+            (page) => page.id === "account",
+          );
+
+          return {
+            kind: "dynamic",
+            name: accountPage?.iconId ?? "users",
+          };
+        },
+      }),
     component: AccountSettings,
   },
 );

@@ -50,7 +50,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile.ts";
 import i18n from "@/lib/i18n";
 import { observeServerStream } from "@/lib/protobuf.ts";
-import { routeTitle } from "@/lib/route-title.ts";
+import { routeChrome } from "@/lib/route-title.ts";
 import {
   edgesToProto,
   nodesToProto,
@@ -88,16 +88,22 @@ export const Route = createFileRoute(
   "/_dashboard/instance/$instance/script/$scriptId",
 )({
   beforeLoad: () =>
-    routeTitle((match) => {
-      if (typeof match.loaderData === "string" && match.loaderData.trim()) {
-        return match.loaderData;
-      }
+    routeChrome({
+      getTitle: (match) => {
+        if (typeof match.loaderData === "string" && match.loaderData.trim()) {
+          return match.loaderData;
+        }
 
-      if (match.params.scriptId === "new") {
-        return i18n.t("instance:scripts.createScriptTitle");
-      }
+        if (match.params.scriptId === "new") {
+          return i18n.t("instance:scripts.createScriptTitle");
+        }
 
-      return i18n.t("instance:scripts.title");
+        return i18n.t("instance:scripts.title");
+      },
+      getIcon: () => ({
+        kind: "dynamic",
+        name: "scroll-text",
+      }),
     }),
   loader: async (props) => {
     if (props.params.scriptId === "new") {

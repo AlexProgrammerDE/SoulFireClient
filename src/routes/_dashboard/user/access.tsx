@@ -34,10 +34,14 @@ import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { ClientService } from "@/generated/soulfire/client_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import i18n from "@/lib/i18n";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 
 export const Route = createFileRoute("/_dashboard/user/access")({
-  beforeLoad: () => staticRouteTitle(() => i18n.t("common:pageName.access")),
+  beforeLoad: () =>
+    staticRouteChrome(() => i18n.t("common:pageName.access"), {
+      kind: "dynamic",
+      name: "zap",
+    }),
   component: AccessPage,
 });
 

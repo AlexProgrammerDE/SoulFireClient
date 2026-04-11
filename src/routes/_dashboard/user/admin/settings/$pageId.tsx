@@ -8,26 +8,57 @@ import { NotFoundComponent } from "@/components/not-found-component.tsx";
 import { AdminSettingsPageComponent } from "@/components/settings-page.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import i18n from "@/lib/i18n";
-import { routeTitle } from "@/lib/route-title.ts";
+import { routeChrome } from "@/lib/route-title.ts";
 
 export const Route = createFileRoute("/_dashboard/user/admin/settings/$pageId")(
   {
     beforeLoad: () =>
-      routeTitle((match) =>
-        typeof match.loaderData === "string" && match.loaderData.trim()
-          ? match.loaderData
-          : i18n.t("common:breadcrumbs.settings"),
-      ),
+      routeChrome({
+        getTitle: (match) => {
+          const loaderData = match.loaderData as
+            | {
+                title?: null | string;
+              }
+            | undefined;
+          return (
+            loaderData?.title?.trim() || i18n.t("common:breadcrumbs.settings")
+          );
+        },
+        getIcon: (match) => {
+          const loaderData = match.loaderData as
+            | {
+                iconName?: null | string;
+              }
+            | undefined;
+          return {
+            kind: "dynamic" as const,
+            name: loaderData?.iconName ?? "settings-2",
+          };
+        },
+      }),
     loader: async (props) => {
       const serverInfo = await props.context.queryClient.ensureQueryData(
         props.context.serverInfoQueryOptions,
       );
-
-      return (
-        serverInfo.serverSettings.find(
-          (setting) => setting.id === props.params.pageId,
-        )?.pageName ?? null
+      const settingsEntry = serverInfo.serverSettings.find(
+        (setting) => setting.id === props.params.pageId,
       );
+      const fallbackIconName =
+        props.params.pageId === "server"
+          ? "server"
+          : props.params.pageId === "dev"
+            ? "bug"
+            : "settings-2";
+
+      return settingsEntry
+        ? {
+            title: settingsEntry.pageName,
+            iconName: settingsEntry.iconId ?? fallbackIconName,
+          }
+        : {
+            title: null,
+            iconName: fallbackIconName,
+          };
     },
     component: SettingsPage,
   },

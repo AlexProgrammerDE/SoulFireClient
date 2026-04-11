@@ -9,6 +9,25 @@ type RouteTitleMatch = {
 export type RouteTitleResolver = (
   match: RouteTitleMatch,
 ) => null | string | undefined;
+export type RouteIcon =
+  | {
+      kind: "dynamic";
+      name: string;
+    }
+  | {
+      kind: "logo";
+      src: string;
+      alt: string;
+    };
+export type RouteIconResolver = (
+  match: RouteTitleMatch,
+) => null | RouteIcon | undefined;
+
+const SOULFIRE_LOGO_ICON: RouteIcon = {
+  kind: "logo",
+  src: "/logo.png",
+  alt: "SoulFire logo",
+};
 
 export function buildDocumentTitle(pageTitle?: null | string) {
   const normalizedTitle = pageTitle?.trim();
@@ -24,8 +43,36 @@ export function routeTitle(getTitle: RouteTitleResolver) {
   return { getTitle };
 }
 
+export function routeIcon(getIcon: RouteIconResolver) {
+  return { getIcon };
+}
+
 export function staticRouteTitle(title: (() => string) | string) {
   return routeTitle(() => (typeof title === "function" ? title() : title));
+}
+
+export function staticRouteIcon(icon: (() => RouteIcon) | RouteIcon) {
+  return routeIcon(() => (typeof icon === "function" ? icon() : icon));
+}
+
+export function staticRouteChrome(
+  title: (() => string) | string,
+  icon: (() => RouteIcon) | RouteIcon,
+) {
+  return {
+    ...staticRouteTitle(title),
+    ...staticRouteIcon(icon),
+  };
+}
+
+export function routeChrome(config: {
+  getTitle?: RouteTitleResolver;
+  getIcon?: RouteIconResolver;
+}) {
+  return {
+    ...(config.getTitle ? routeTitle(config.getTitle) : {}),
+    ...(config.getIcon ? routeIcon(config.getIcon) : {}),
+  };
 }
 
 export function resolveRouteTitle(
@@ -52,4 +99,33 @@ export function resolveRouteTitle(
   return APP_TITLE;
 }
 
-export { APP_TITLE };
+export function resolveRouteIcon(
+  matches: Array<{
+    context: unknown;
+    loaderData?: unknown;
+    params: Record<string, string>;
+  }>,
+  pageTitle: string,
+) {
+  for (let index = matches.length - 1; index >= 0; index -= 1) {
+    const match = matches[index];
+    const getIcon = (match.context as { getIcon?: unknown }).getIcon;
+
+    if (typeof getIcon !== "function") {
+      continue;
+    }
+
+    const resolvedIcon = (getIcon as RouteIconResolver)(match);
+    if (resolvedIcon) {
+      return resolvedIcon;
+    }
+  }
+
+  if (pageTitle === APP_TITLE) {
+    return SOULFIRE_LOGO_ICON;
+  }
+
+  return null;
+}
+
+export { APP_TITLE, SOULFIRE_LOGO_ICON };

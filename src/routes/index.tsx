@@ -83,7 +83,7 @@ import {
 } from "@/generated/soulfire/login_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import i18n from "@/lib/i18n";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { SOULFIRE_LOGO_ICON, staticRouteChrome } from "@/lib/route-title.ts";
 import { getEnumKeyByValue, type SFServerType } from "@/lib/types.ts";
 import {
   cancellablePromiseDefault,
@@ -105,7 +105,8 @@ const LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY =
   "form-mobile-integrated-server-token";
 
 export const Route = createFileRoute("/")({
-  beforeLoad: () => staticRouteTitle(() => i18n.t("login:connect.title")),
+  beforeLoad: () =>
+    staticRouteChrome(() => i18n.t("login:connect.title"), SOULFIRE_LOGO_ICON),
   component: Index,
 });
 

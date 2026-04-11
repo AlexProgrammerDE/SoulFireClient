@@ -8,27 +8,73 @@ import { NotFoundComponent } from "@/components/not-found-component.tsx";
 import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import i18n from "@/lib/i18n";
-import { routeTitle } from "@/lib/route-title.ts";
+import { routeChrome } from "@/lib/route-title.ts";
+
+function getSettingsPageFallbackIcon(pageId: string) {
+  switch (pageId) {
+    case "bot":
+      return "bot";
+    case "account":
+      return "users";
+    case "proxy":
+      return "waypoints";
+    case "ai":
+      return "sparkles";
+    case "pathfinding":
+      return "route";
+    default:
+      return "settings-2";
+  }
+}
 
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/settings/$pageId",
 )({
   beforeLoad: () =>
-    routeTitle((match) =>
-      typeof match.loaderData === "string" && match.loaderData.trim()
-        ? match.loaderData
-        : i18n.t("common:breadcrumbs.settings"),
-    ),
+    routeChrome({
+      getTitle: (match) => {
+        const loaderData = match.loaderData as
+          | {
+              title?: null | string;
+            }
+          | undefined;
+        return (
+          loaderData?.title?.trim() || i18n.t("common:breadcrumbs.settings")
+        );
+      },
+      getIcon: (match) => {
+        const loaderData = match.loaderData as
+          | {
+              iconName?: null | string;
+            }
+          | undefined;
+        return {
+          kind: "dynamic" as const,
+          name:
+            loaderData?.iconName ??
+            getSettingsPageFallbackIcon(match.params.pageId),
+        };
+      },
+    }),
   loader: async (props) => {
     const instanceInfo = await props.context.queryClient.ensureQueryData(
       props.context.instanceInfoQueryOptions,
     );
-
-    return (
-      instanceInfo.instanceSettings.find(
-        (setting) => setting.id === props.params.pageId,
-      )?.pageName ?? null
+    const settingsEntry = instanceInfo.instanceSettings.find(
+      (setting) => setting.id === props.params.pageId,
     );
+
+    return settingsEntry
+      ? {
+          title: settingsEntry.pageName,
+          iconName:
+            settingsEntry.iconId ??
+            getSettingsPageFallbackIcon(props.params.pageId),
+        }
+      : {
+          title: null,
+          iconName: getSettingsPageFallbackIcon(props.params.pageId),
+        };
   },
   component: SettingsPage,
 });

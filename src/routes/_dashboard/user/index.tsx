@@ -53,12 +53,16 @@ import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import i18n from "@/lib/i18n";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 import { translateInstanceState } from "@/lib/types.ts";
 import { hasGlobalPermission } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/user/")({
-  beforeLoad: () => staticRouteTitle(() => i18n.t("common:pageName.instances")),
+  beforeLoad: () =>
+    staticRouteChrome(() => i18n.t("common:pageName.instances"), {
+      kind: "dynamic",
+      name: "grid-2x2",
+    }),
   component: InstanceSelectPage,
 });
 

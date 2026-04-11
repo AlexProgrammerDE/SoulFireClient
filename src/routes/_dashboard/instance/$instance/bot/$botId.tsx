@@ -124,7 +124,7 @@ import {
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import i18n from "@/lib/i18n";
-import { routeTitle } from "@/lib/route-title.ts";
+import { routeChrome } from "@/lib/route-title.ts";
 import {
   getEnumKeyByValue,
   mapUnionToValue,
@@ -156,11 +156,16 @@ export const Route = createFileRoute(
     });
     return {
       botInfoQueryOptions,
-      ...routeTitle((match) =>
-        typeof match.loaderData === "string" && match.loaderData.trim()
-          ? match.loaderData
-          : i18n.t("common:pageName.botDetail"),
-      ),
+      ...routeChrome({
+        getTitle: (match) =>
+          typeof match.loaderData === "string" && match.loaderData.trim()
+            ? match.loaderData
+            : i18n.t("common:pageName.botDetail"),
+        getIcon: () => ({
+          kind: "dynamic",
+          name: "users",
+        }),
+      }),
     };
   },
   loader: async (props) => {

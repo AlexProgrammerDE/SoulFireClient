@@ -28,10 +28,14 @@ import {
 } from "@/generated/soulfire/instance_pb.ts";
 import type { UserListResponse } from "@/generated/soulfire/user_pb.ts";
 import i18n from "@/lib/i18n";
-import { staticRouteTitle } from "@/lib/route-title.ts";
+import { staticRouteChrome } from "@/lib/route-title.ts";
 
 export const Route = createFileRoute("/_dashboard/user/admin/")({
-  beforeLoad: () => staticRouteTitle(() => i18n.t("common:pageName.overview")),
+  beforeLoad: () =>
+    staticRouteChrome(() => i18n.t("common:pageName.overview"), {
+      kind: "dynamic",
+      name: "chart-area",
+    }),
   component: OverviewPage,
 });
 
