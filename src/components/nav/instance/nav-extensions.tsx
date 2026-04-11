@@ -118,78 +118,83 @@ export function NavExtensions() {
         {navLinks.map((item) =>
           item.pluginList ? (
             <Collapsible
-              asChild
               open={pluginCollapsibleOpen}
               onOpenChange={setPluginCollapsibleOpen}
-              className="group/collapsible"
+              render={<SidebarMenuItem className="group/collapsible" />}
               key={item.title}
             >
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip={item.title}>
+              <SidebarMenuButton
+                tooltip={item.title}
+                render={
                   <Link
                     activeOptions={{ exact: true }}
                     activeProps={{
                       "data-active": true,
                     }}
                     {...item.linkProps}
-                  >
-                    <item.icon className="size-4" />
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-                <CollapsibleTrigger
-                  onClick={(e) => {
-                    // When sidebar closed, open sidebar and make sure collapsible is expanded
-                    if (!sidebar.isMobile && !sidebar.open) {
-                      e.preventDefault();
-                      sidebar.setOpen(true);
-                      if (!pluginCollapsibleOpen) {
-                        setPluginCollapsibleOpen(true);
-                      }
+                  />
+                }
+              >
+                <item.icon className="size-4" />
+                <span>{item.title}</span>
+              </SidebarMenuButton>
+              <CollapsibleTrigger
+                onClick={(e) => {
+                  // When sidebar closed, open sidebar and make sure collapsible is expanded
+                  if (!sidebar.isMobile && !sidebar.open) {
+                    e.preventDefault();
+                    sidebar.setOpen(true);
+                    if (!pluginCollapsibleOpen) {
+                      setPluginCollapsibleOpen(true);
                     }
-                  }}
-                  asChild
-                >
-                  <SidebarMenuAction className="data-[state=open]:rotate-90">
-                    <ChevronRightIcon />
-                    <span className="sr-only">Toggle</span>
-                  </SidebarMenuAction>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    {pluginSettingLinks.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
+                  }
+                }}
+                render={
+                  <SidebarMenuAction className="data-[state=open]:rotate-90" />
+                }
+              >
+                <ChevronRightIcon />
+                <span className="sr-only">Toggle</span>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarMenuSub>
+                  {pluginSettingLinks.map((subItem) => (
+                    <SidebarMenuSubItem key={subItem.title}>
+                      <SidebarMenuSubButton
+                        render={
                           <Link
                             activeOptions={{ exact: true }}
                             activeProps={{
                               "data-active": true,
                             }}
                             {...subItem.linkProps}
-                          >
-                            <subItem.icon className="size-4" />
-                            <span>{subItem.title}</span>
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </SidebarMenuItem>
+                          />
+                        }
+                      >
+                        <subItem.icon className="size-4" />
+                        <span>{subItem.title}</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  ))}
+                </SidebarMenuSub>
+              </CollapsibleContent>
             </Collapsible>
           ) : (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <Link
-                  activeOptions={{ exact: true }}
-                  activeProps={{
-                    "data-active": true,
-                  }}
-                  {...item.linkProps}
-                >
-                  <item.icon className="size-4" />
-                  <span>{item.title}</span>
-                </Link>
+              <SidebarMenuButton
+                tooltip={item.title}
+                render={
+                  <Link
+                    activeOptions={{ exact: true }}
+                    activeProps={{
+                      "data-active": true,
+                    }}
+                    {...item.linkProps}
+                  />
+                }
+              >
+                <item.icon className="size-4" />
+                <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ),

@@ -464,11 +464,16 @@ function GetProxiesButton() {
   const { t } = useTranslation("instance");
 
   return (
-    <Button variant="outline" size="sm" asChild>
-      <ExternalLink href="https://soulfiremc.com/get-proxies?utm_source=soulfire-client&utm_medium=app&utm_campaign=proxies-get">
-        <ShoppingCartIcon />
-        {t("proxy.getProxies")}
-      </ExternalLink>
+    <Button
+      variant="outline"
+      size="sm"
+      nativeButton={false}
+      render={
+        <ExternalLink href="https://soulfiremc.com/get-proxies?utm_source=soulfire-client&utm_medium=app&utm_campaign=proxies-get" />
+      }
+    >
+      <ShoppingCartIcon />
+      {t("proxy.getProxies")}
     </Button>
   );
 }
@@ -682,11 +687,9 @@ function AddButton() {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
-            <PlusIcon />
-            {t("proxy.addProxies")}
-          </Button>
+        <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
+          <PlusIcon />
+          {t("proxy.addProxies")}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>{t("proxy.import.proxyType")}</DropdownMenuLabel>
@@ -966,10 +969,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         count={selectedProxyCount}
       />
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <DataTableActionBarAction tooltip={t("proxy.exportSelectedTooltip")}>
-            <DownloadIcon />
-          </DataTableActionBarAction>
+        <DropdownMenuTrigger
+          render={
+            <DataTableActionBarAction
+              tooltip={t("proxy.exportSelectedTooltip")}
+            />
+          }
+        >
+          <DownloadIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>{t("proxy.export.format")}</DropdownMenuLabel>

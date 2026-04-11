@@ -247,7 +247,7 @@ export function DataTableFilterList<TData>({
         <PopoverContent
           aria-describedby={descriptionId}
           aria-labelledby={labelId}
-          className="flex w-full max-w-(--radix-popover-content-available-width) flex-col gap-3.5 p-4 sm:min-w-[380px]"
+          className="flex w-full max-w-(--available-width) flex-col gap-3.5 p-4 sm:min-w-[380px]"
           {...props}
         >
           <div className="flex flex-col gap-1">
@@ -412,7 +412,11 @@ function DataTableFilterItem<TData>({
         ) : index === 1 ? (
           <Select
             value={joinOperator}
-            onValueChange={(value: JoinOperator) => setJoinOperator(value)}
+            onValueChange={(value) => {
+              if (value) {
+                setJoinOperator(value);
+              }
+            }}
           >
             <SelectTrigger
               aria-label="Select join operator"
@@ -424,8 +428,7 @@ function DataTableFilterItem<TData>({
             </SelectTrigger>
             <SelectContent
               id={joinOperatorListboxId}
-              position="popper"
-              className="min-w-(--radix-select-trigger-width) lowercase"
+              className="min-w-(--anchor-width) lowercase"
             >
               {dataTableConfig.joinOperators.map((joinOperator) => (
                 <SelectItem key={joinOperator} value={joinOperator}>
@@ -498,13 +501,15 @@ function DataTableFilterItem<TData>({
         open={showOperatorSelector}
         onOpenChange={setShowOperatorSelector}
         value={filter.operator}
-        onValueChange={(value: FilterOperator) =>
+        onValueChange={(value) => {
+          if (!value) return;
+
           onFilterUpdate(filter.filterId, {
             operator: value,
             value:
               value === "isEmpty" || value === "isNotEmpty" ? "" : filter.value,
-          })
-        }
+          });
+        }}
       >
         <SelectTrigger
           aria-controls={operatorListboxId}
@@ -643,12 +648,14 @@ function onFilterInputRender<TData>({
         <Select
           open={showValueSelector}
           onOpenChange={setShowValueSelector}
-          value={filter.value}
-          onValueChange={(value) =>
-            onFilterUpdate(filter.filterId, {
-              value,
-            })
-          }
+          value={filter.value ?? undefined}
+          onValueChange={(value) => {
+            if (value !== null) {
+              onFilterUpdate(filter.filterId, {
+                value,
+              });
+            }
+          }}
         >
           <SelectTrigger
             id={inputId}

@@ -60,13 +60,17 @@ export default function InstancePageLayout(props: {
             orientation="vertical"
             className="my-auto data-[orientation=vertical]:h-4"
           />
-          <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
-            <Link to="/user">
-              <HomeIcon />
-              <span className="sr-only">
-                {t("instanceSidebar.backToDashboard")}
-              </span>
-            </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7"
+            nativeButton={false}
+            render={<Link to="/user" />}
+          >
+            <HomeIcon />
+            <span className="sr-only">
+              {t("instanceSidebar.backToDashboard")}
+            </span>
           </Button>
           {props.documentationLink && (
             <>
@@ -74,13 +78,17 @@ export default function InstancePageLayout(props: {
                 orientation="vertical"
                 className="my-auto data-[orientation=vertical]:h-4"
               />
-              <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
-                <ExternalLink href={props.documentationLink}>
-                  <BookOpenTextIcon />
-                  <span className="sr-only">
-                    {t("instanceSidebar.readDocumentation")}
-                  </span>
-                </ExternalLink>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                nativeButton={false}
+                render={<ExternalLink href={props.documentationLink} />}
+              >
+                <BookOpenTextIcon />
+                <span className="sr-only">
+                  {t("instanceSidebar.readDocumentation")}
+                </span>
               </Button>
             </>
           )}

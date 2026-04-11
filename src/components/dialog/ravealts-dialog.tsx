@@ -246,7 +246,11 @@ export default function RavealtsDialog({
             <FieldLabel>{t("account.ravealts.accountType")}</FieldLabel>
             <Select
               value={selectedType}
-              onValueChange={setSelectedType}
+              onValueChange={(value) => {
+                if (value) {
+                  setSelectedType(value);
+                }
+              }}
               disabled={availableTypes.length === 0}
             >
               <SelectTrigger className="w-full">

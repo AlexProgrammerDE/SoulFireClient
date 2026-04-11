@@ -45,11 +45,13 @@ export function NavSecondary({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild size="sm" tooltip={item.title}>
-                <ExternalLink href={item.url}>
-                  <item.icon className="size-4" />
-                  <span>{item.title}</span>
-                </ExternalLink>
+              <SidebarMenuButton
+                size="sm"
+                tooltip={item.title}
+                render={<ExternalLink href={item.url} />}
+              >
+                <item.icon className="size-4" />
+                <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

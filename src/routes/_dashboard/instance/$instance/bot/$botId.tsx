@@ -248,14 +248,18 @@ function BotDetail() {
       >
         <div className="container flex flex-col items-center justify-center gap-4 py-8">
           <p className="text-muted-foreground">Bot not found</p>
-          <Button asChild variant="outline">
-            <Link
-              to="/instance/$instance/bots"
-              params={{ instance: instanceInfo.id }}
-            >
-              <ArrowLeftIcon className="mr-2 size-4" />
-              Back to Bots
-            </Link>
+          <Button
+            variant="outline"
+            nativeButton={false}
+            render={
+              <Link
+                to="/instance/$instance/bots"
+                params={{ instance: instanceInfo.id }}
+              />
+            }
+          >
+            <ArrowLeftIcon className="mr-2 size-4" />
+            Back to Bots
           </Button>
         </div>
       </InstancePageLayout>
@@ -549,59 +553,59 @@ function BotDetailHeader({
       {isOnline && liveState && (
         <div className="ml-auto flex flex-wrap items-center gap-3">
           <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-1">
-                <HeartIcon className="size-3.5 text-red-500" />
-                <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                  <div
-                    className="h-full bg-red-500 transition-all"
-                    style={{
-                      width: `${(liveState.health / liveState.maxHealth) * 100}%`,
-                    }}
-                  />
-                </div>
-                <span className="text-xs tabular-nums">
-                  {liveState.health.toFixed(0)}/{liveState.maxHealth.toFixed(0)}
-                </span>
+            <TooltipTrigger
+              render={<div className="flex items-center gap-1" />}
+            >
+              <HeartIcon className="size-3.5 text-red-500" />
+              <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                <div
+                  className="h-full bg-red-500 transition-all"
+                  style={{
+                    width: `${(liveState.health / liveState.maxHealth) * 100}%`,
+                  }}
+                />
               </div>
+              <span className="text-xs tabular-nums">
+                {liveState.health.toFixed(0)}/{liveState.maxHealth.toFixed(0)}
+              </span>
             </TooltipTrigger>
             <TooltipContent>{t("bots.statsPanel.health")}</TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-1">
-                <UtensilsIcon className="size-3.5 text-amber-500" />
-                <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                  <div
-                    className="h-full bg-amber-500 transition-all"
-                    style={{
-                      width: `${(liveState.foodLevel / 20) * 100}%`,
-                    }}
-                  />
-                </div>
-                <span className="text-xs tabular-nums">
-                  {liveState.foodLevel}/20
-                </span>
+            <TooltipTrigger
+              render={<div className="flex items-center gap-1" />}
+            >
+              <UtensilsIcon className="size-3.5 text-amber-500" />
+              <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                <div
+                  className="h-full bg-amber-500 transition-all"
+                  style={{
+                    width: `${(liveState.foodLevel / 20) * 100}%`,
+                  }}
+                />
               </div>
+              <span className="text-xs tabular-nums">
+                {liveState.foodLevel}/20
+              </span>
             </TooltipTrigger>
             <TooltipContent>{t("bots.statsPanel.food")}</TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-1">
-                <SparklesIcon className="size-3.5 text-green-500" />
-                <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                  <div
-                    className="h-full bg-green-500 transition-all"
-                    style={{
-                      width: `${liveState.experienceProgress * 100}%`,
-                    }}
-                  />
-                </div>
-                <span className="text-xs tabular-nums">
-                  L{liveState.experienceLevel}
-                </span>
+            <TooltipTrigger
+              render={<div className="flex items-center gap-1" />}
+            >
+              <SparklesIcon className="size-3.5 text-green-500" />
+              <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                <div
+                  className="h-full bg-green-500 transition-all"
+                  style={{
+                    width: `${liveState.experienceProgress * 100}%`,
+                  }}
+                />
               </div>
+              <span className="text-xs tabular-nums">
+                L{liveState.experienceLevel}
+              </span>
             </TooltipTrigger>
             <TooltipContent>{t("bots.statsPanel.experience")}</TooltipContent>
           </Tooltip>
@@ -610,11 +614,19 @@ function BotDetailHeader({
           </span>
         </div>
       )}
-      <Button asChild variant="ghost" size="sm">
-        <Link to="/instance/$instance/bots" params={{ instance: instanceId }}>
-          <ArrowLeftIcon className="mr-2 size-4" />
-          {t("bots.backToBots")}
-        </Link>
+      <Button
+        variant="ghost"
+        size="sm"
+        nativeButton={false}
+        render={
+          <Link
+            to="/instance/$instance/bots"
+            params={{ instance: instanceId }}
+          />
+        }
+      >
+        <ArrowLeftIcon className="mr-2 size-4" />
+        {t("bots.backToBots")}
       </Button>
     </div>
   );

@@ -31,20 +31,28 @@ export const SFTimeAgo = React.memo((props: { date: Date }) => {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <span>{baseText}</span>
+      <PopoverTrigger
+        render={
+          <Button
+            variant="link"
+            className="h-auto px-0 py-0 font-normal text-inherit"
+          />
+        }
+      >
+        {baseText}
       </PopoverTrigger>
       <PopoverContent className="flex flex-row gap-1 size-fit p-2 items-center">
         <time className="select-text text-center text-sm" dateTime={isoString}>
           {formatted}
         </time>
-        <Button variant="outline" size="icon">
-          <ClipboardIcon
-            className="cursor-pointer select-none"
-            onClick={() => {
-              copyToClipboard(isoString);
-            }}
-          />
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => {
+            copyToClipboard(isoString);
+          }}
+        >
+          <ClipboardIcon className="select-none" />
         </Button>
       </PopoverContent>
     </Popover>

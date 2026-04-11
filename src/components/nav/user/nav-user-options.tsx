@@ -67,17 +67,20 @@ export function NavUserOptions() {
       <SidebarMenu>
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild tooltip={item.title}>
-              <Link
-                activeOptions={{ exact: true }}
-                activeProps={{
-                  "data-active": true,
-                }}
-                {...item.linkProps}
-              >
-                <item.icon className="size-4" />
-                <span>{item.title}</span>
-              </Link>
+            <SidebarMenuButton
+              tooltip={item.title}
+              render={
+                <Link
+                  activeOptions={{ exact: true }}
+                  activeProps={{
+                    "data-active": true,
+                  }}
+                  {...item.linkProps}
+                />
+              }
+            >
+              <item.icon className="size-4" />
+              <span>{item.title}</span>
             </SidebarMenuButton>
             {item.createInstance &&
               hasGlobalPermission(

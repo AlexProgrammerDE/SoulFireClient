@@ -316,7 +316,7 @@ function RootLayout() {
             disableTransitionOnChange
           >
             <WindowThemeSyncer />
-            <TooltipProvider delayDuration={500}>
+            <TooltipProvider delay={500}>
               <SystemInfoContext value={systemInfoState}>
                 <TerminalThemeContext
                   value={{

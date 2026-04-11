@@ -454,15 +454,17 @@ function DataTableFilterItem<TData>({
           open={showOperatorSelector}
           onOpenChange={setShowOperatorSelector}
           value={filter.operator}
-          onValueChange={(value: FilterOperator) =>
+          onValueChange={(value) => {
+            if (!value) return;
+
             onFilterUpdate(filter.filterId, {
               operator: value,
               value:
                 value === "isEmpty" || value === "isNotEmpty"
                   ? ""
                   : filter.value,
-            })
-          }
+            });
+          }}
         >
           <SelectTrigger
             aria-controls={operatorListboxId}
@@ -669,9 +671,11 @@ function onFilterInputRender<TData>({
           open={showValueSelector}
           onOpenChange={setShowValueSelector}
           value={typeof filter.value === "string" ? filter.value : "true"}
-          onValueChange={(value: "true" | "false") =>
-            onFilterUpdate(filter.filterId, { value })
-          }
+          onValueChange={(value) => {
+            if (value === "true" || value === "false") {
+              onFilterUpdate(filter.filterId, { value });
+            }
+          }}
         >
           <SelectTrigger
             id={inputId}

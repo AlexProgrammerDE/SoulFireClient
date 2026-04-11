@@ -48,13 +48,17 @@ function GenericInfoButton(props: {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <InfoIcon
-          className="h-4 w-4 shrink-0 cursor-pointer opacity-50"
-          onClick={() => {
-            setOpen(!open);
-          }}
-        />
+      <PopoverTrigger
+        aria-label="Show info"
+        render={
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className="h-4 w-4 shrink-0 opacity-50"
+          />
+        }
+      >
+        <InfoIcon className="size-4" />
       </PopoverTrigger>
       <PopoverContent>{props.value(() => setOpen(false))}</PopoverContent>
     </Popover>

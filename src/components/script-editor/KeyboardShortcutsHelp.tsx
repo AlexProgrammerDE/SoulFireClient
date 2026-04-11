@@ -44,15 +44,15 @@ export function KeyboardShortcutsHelp() {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button variant="outline" size="icon" className="h-8 w-8">
-            <Keyboard className="h-4 w-4" />
-          </Button>
+        <TooltipTrigger
+          render={<Button variant="outline" size="icon" className="h-8 w-8" />}
+        >
+          <Keyboard className="h-4 w-4" />
         </TooltipTrigger>
         <TooltipContent side="left" className="w-64">
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <p className="font-medium">Keyboard Shortcuts</p>
-            <div className="space-y-1">
+            <div className="flex flex-col gap-1">
               {SHORTCUTS.map(({ keys, action }) => (
                 <div
                   key={keys}

@@ -192,7 +192,7 @@ export function DataTableSortList<TData>({
         <PopoverContent
           aria-labelledby={labelId}
           aria-describedby={descriptionId}
-          className="flex w-full max-w-(--radix-popover-content-available-width) flex-col gap-3.5 p-4 sm:min-w-[380px]"
+          className="flex w-full max-w-(--available-width) flex-col gap-3.5 p-4 sm:min-w-[380px]"
           {...props}
         >
           <div className="flex flex-col gap-1">
@@ -342,10 +342,7 @@ function DataTableSortItem({
           <span className="truncate">{columnLabels.get(sort.id)}</span>
           <ChevronsUpDown className="opacity-50" />
         </PopoverTrigger>
-        <PopoverContent
-          id={fieldListboxId}
-          className="w-(--radix-popover-trigger-width) p-0"
-        >
+        <PopoverContent id={fieldListboxId} className="w-(--anchor-width) p-0">
           <Command>
             <CommandInput placeholder="Search fields..." />
             <CommandList>
@@ -369,9 +366,11 @@ function DataTableSortItem({
         open={showDirectionSelector}
         onOpenChange={setShowDirectionSelector}
         value={sort.desc ? "desc" : "asc"}
-        onValueChange={(value: SortDirection) =>
-          onSortUpdate(sort.id, { desc: value === "desc" })
-        }
+        onValueChange={(value) => {
+          if (value) {
+            onSortUpdate(sort.id, { desc: value === "desc" });
+          }
+        }}
       >
         <SelectTrigger
           aria-controls={directionListboxId}
@@ -382,7 +381,7 @@ function DataTableSortItem({
         </SelectTrigger>
         <SelectContent
           id={directionListboxId}
-          className="min-w-(--radix-select-trigger-width)"
+          className="min-w-(--anchor-width)"
         >
           {dataTableConfig.sortOrders.map((order) => (
             <SelectItem key={order.value} value={order.value}>

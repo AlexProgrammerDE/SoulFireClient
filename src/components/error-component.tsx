@@ -74,17 +74,19 @@ export function ErrorComponent({ error }: { error: Error }) {
               </p>
               {hasStack && (
                 <>
-                  <CollapsibleTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-fit gap-1 px-2"
-                    >
-                      <ChevronDownIcon
-                        className={`size-4 transition-transform ${expanded ? "rotate-180" : ""}`}
+                  <CollapsibleTrigger
+                    render={
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-fit gap-1 px-2"
                       />
-                      {t("error.page.showDetails")}
-                    </Button>
+                    }
+                  >
+                    <ChevronDownIcon
+                      className={`size-4 transition-transform ${expanded ? "rotate-180" : ""}`}
+                    />
+                    {t("error.page.showDetails")}
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <pre className="max-h-64 select-text overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-muted-foreground">

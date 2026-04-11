@@ -71,41 +71,45 @@ function SidebarAccountButton() {
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
 
   return (
-    <DropdownMenuTrigger asChild>
-      <SidebarMenuButton
-        size="lg"
-        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-        tooltip={`${clientInfo.username} | ${clientInfo.email}`}
-      >
-        <UserAvatar
-          username={clientInfo.username}
-          email={clientInfo.email}
-          className="size-8"
+    <DropdownMenuTrigger
+      render={
+        <SidebarMenuButton
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          tooltip={`${clientInfo.username} | ${clientInfo.email}`}
         />
-        <div className="grid flex-1 text-left text-sm leading-tight">
-          <span className="truncate font-semibold">{clientInfo.username}</span>
-          <span className="truncate text-xs">{clientInfo.email}</span>
-        </div>
-        <ChevronsUpDown className="ml-auto size-4" />
-      </SidebarMenuButton>
+      }
+    >
+      <UserAvatar
+        username={clientInfo.username}
+        email={clientInfo.email}
+        className="size-8"
+      />
+      <div className="grid flex-1 text-left text-sm leading-tight">
+        <span className="truncate font-semibold">{clientInfo.username}</span>
+        <span className="truncate text-xs">{clientInfo.email}</span>
+      </div>
+      <ChevronsUpDown className="ml-auto size-4" />
     </DropdownMenuTrigger>
   );
 }
 
 function SidebarAccountButtonSkeleton() {
   return (
-    <DropdownMenuTrigger asChild>
-      <SidebarMenuButton
-        size="lg"
-        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-      >
-        <Skeleton className="relative flex size-8 h-10 w-10 shrink-0 overflow-hidden rounded-lg" />
-        <div className="grid flex-1 gap-2 text-left text-sm leading-tight">
-          <Skeleton className="h-3 w-32" />
-          <Skeleton className="h-3 w-24" />
-        </div>
-        <ChevronsUpDown className="ml-auto size-4" />
-      </SidebarMenuButton>
+    <DropdownMenuTrigger
+      render={
+        <SidebarMenuButton
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        />
+      }
+    >
+      <Skeleton className="relative flex size-8 h-10 w-10 shrink-0 overflow-hidden rounded-lg" />
+      <div className="grid flex-1 gap-2 text-left text-sm leading-tight">
+        <Skeleton className="h-3 w-32" />
+        <Skeleton className="h-3 w-24" />
+      </div>
+      <ChevronsUpDown className="ml-auto size-4" />
     </DropdownMenuTrigger>
   );
 }
@@ -161,7 +165,7 @@ export function NavAccount() {
             <SidebarAccountButton />
           </Suspense>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="w-(--anchor-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -182,7 +186,11 @@ export function NavAccount() {
                   <DropdownMenuSubContent>
                     <DropdownMenuRadioGroup
                       value={theme}
-                      onValueChange={(e) => setTheme(e)}
+                      onValueChange={(value) => {
+                        if (value) {
+                          setTheme(value);
+                        }
+                      }}
                     >
                       <DropdownMenuRadioItem value="system">
                         <SunMoonIcon className="mr-1 h-4" />
@@ -209,9 +217,11 @@ export function NavAccount() {
                   <DropdownMenuSubContent>
                     <DropdownMenuRadioGroup
                       value={terminalTheme.value}
-                      onValueChange={(e) => {
-                        setTerminalTheme(e);
-                        terminalTheme.setter(e);
+                      onValueChange={(value) => {
+                        if (value) {
+                          setTerminalTheme(value);
+                          terminalTheme.setter(value);
+                        }
                       }}
                     >
                       {flavorEntries.map((entry) => (
@@ -232,7 +242,11 @@ export function NavAccount() {
                   <DropdownMenuSubContent>
                     <DropdownMenuRadioGroup
                       value={i18n.resolvedLanguage ?? i18n.language}
-                      onValueChange={(lang) => void i18n.changeLanguage(lang)}
+                      onValueChange={(value) => {
+                        if (value) {
+                          void i18n.changeLanguage(value);
+                        }
+                      }}
                       className="grid grid-cols-1 md:grid-cols-2"
                     >
                       {(i18n.options.supportedLngs
@@ -248,11 +262,13 @@ export function NavAccount() {
                     </DropdownMenuRadioGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                      <DropdownMenuItem asChild>
-                        <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=settings-translate">
-                          <HeartHandshakeIcon />
-                          {t("userSidebar.helpTranslate")}
-                        </ExternalLink>
+                      <DropdownMenuItem
+                        render={
+                          <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=settings-translate" />
+                        }
+                      >
+                        <HeartHandshakeIcon />
+                        {t("userSidebar.helpTranslate")}
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
                   </DropdownMenuSubContent>

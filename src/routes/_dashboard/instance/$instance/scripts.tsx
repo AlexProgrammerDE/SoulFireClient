@@ -323,11 +323,9 @@ function Content() {
           </p>
         </div>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
-              <PlusIcon className="size-4" />
-              {tInstance("scripts.createScript")}
-            </Button>
+          <DialogTrigger render={<Button className="gap-2" />}>
+            <PlusIcon className="size-4" />
+            {tInstance("scripts.createScript")}
           </DialogTrigger>
           <DialogContent>
             <form
@@ -622,15 +620,16 @@ function ScriptCard({
             variant="outline"
             size="sm"
             className="flex-1 gap-1.5"
-            asChild
+            nativeButton={false}
+            render={
+              <Link
+                to="/instance/$instance/script/$scriptId"
+                params={{ instance: instanceId, scriptId: script.id }}
+              />
+            }
           >
-            <Link
-              to="/instance/$instance/script/$scriptId"
-              params={{ instance: instanceId, scriptId: script.id }}
-            >
-              <EditIcon className="size-3.5" />
-              {tInstance("scripts.edit")}
-            </Link>
+            <EditIcon className="size-3.5" />
+            {tInstance("scripts.edit")}
           </Button>
           <Button
             variant="outline"

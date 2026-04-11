@@ -334,24 +334,30 @@ function Index() {
               </div>
               <div className="flex flex-row justify-center">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      className="text-muted-foreground w-fit text-sm text-balance"
-                      variant="ghost"
-                    >
-                      {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{" "}
-                      {getLanguageName(
-                        i18n.resolvedLanguage ?? i18n.language,
-                        i18n.resolvedLanguage ?? i18n.language,
-                      )}
-                    </Button>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button
+                        className="text-muted-foreground w-fit text-sm text-balance"
+                        variant="ghost"
+                      />
+                    }
+                  >
+                    {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{" "}
+                    {getLanguageName(
+                      i18n.resolvedLanguage ?? i18n.language,
+                      i18n.resolvedLanguage ?? i18n.language,
+                    )}
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-96">
                     <DropdownMenuLabel>{t("common:locale")}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuRadioGroup
                       value={i18n.resolvedLanguage ?? i18n.language}
-                      onValueChange={(lang) => void i18n.changeLanguage(lang)}
+                      onValueChange={(value) => {
+                        if (value) {
+                          void i18n.changeLanguage(value);
+                        }
+                      }}
                       className="grid grid-cols-1 md:grid-cols-2"
                     >
                       {(i18n.options.supportedLngs
@@ -367,11 +373,13 @@ function Index() {
                     </DropdownMenuRadioGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                      <DropdownMenuItem asChild>
-                        <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-translate">
-                          <HeartHandshakeIcon />
-                          {t("footer.helpTranslate")}
-                        </ExternalLink>
+                      <DropdownMenuItem
+                        render={
+                          <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-translate" />
+                        }
+                      >
+                        <HeartHandshakeIcon />
+                        {t("footer.helpTranslate")}
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
                   </DropdownMenuContent>
@@ -424,10 +432,10 @@ function DefaultMenu(props: {
             {t("connect.integrated.title")}
           </Button>
           <Popover>
-            <PopoverTrigger asChild>
-              <Button className="w-fit" variant="outline">
-                <InfoIcon />
-              </Button>
+            <PopoverTrigger
+              render={<Button className="w-fit" variant="outline" />}
+            >
+              <InfoIcon />
             </PopoverTrigger>
             <PopoverContent>
               {t("connect.integrated.description")}
@@ -446,10 +454,10 @@ function DefaultMenu(props: {
             {t("connect.dedicated.title")}
           </Button>
           <Popover>
-            <PopoverTrigger asChild>
-              <Button className="w-fit" variant="outline">
-                <InfoIcon />
-              </Button>
+            <PopoverTrigger
+              render={<Button className="w-fit" variant="outline" />}
+            >
+              <InfoIcon />
             </PopoverTrigger>
             <PopoverContent>
               {t("connect.dedicated.description")}
@@ -470,10 +478,10 @@ function DefaultMenu(props: {
               {t("connect.demo.title")}
             </Button>
             <Popover>
-              <PopoverTrigger asChild>
-                <Button className="w-fit" variant="outline">
-                  <InfoIcon />
-                </Button>
+              <PopoverTrigger
+                render={<Button className="w-fit" variant="outline" />}
+              >
+                <InfoIcon />
               </PopoverTrigger>
               <PopoverContent>{t("connect.demo.description")}</PopoverContent>
             </Popover>

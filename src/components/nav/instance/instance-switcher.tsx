@@ -72,41 +72,45 @@ function SidebarInstanceButton() {
 
   const capitalizedState = translateInstanceState(i18n, instanceInfo.state);
   return (
-    <DropdownMenuTrigger asChild>
-      <SidebarMenuButton
-        size="lg"
-        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-        tooltip={`${instanceInfo.friendlyName} | ${capitalizedState}`}
-      >
-        <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-          <DynamicIcon name={instanceInfo.icon} className="size-4" />
-        </div>
-        <div className="grid flex-1 text-left text-sm leading-tight">
-          <span className="max-w-64 truncate font-semibold">
-            {instanceInfo.friendlyName}
-          </span>
-          <span className="truncate text-xs">{capitalizedState}</span>
-        </div>
-        <ChevronsUpDownIcon className="ml-auto" />
-      </SidebarMenuButton>
+    <DropdownMenuTrigger
+      render={
+        <SidebarMenuButton
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          tooltip={`${instanceInfo.friendlyName} | ${capitalizedState}`}
+        />
+      }
+    >
+      <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+        <DynamicIcon name={instanceInfo.icon} className="size-4" />
+      </div>
+      <div className="grid flex-1 text-left text-sm leading-tight">
+        <span className="max-w-64 truncate font-semibold">
+          {instanceInfo.friendlyName}
+        </span>
+        <span className="truncate text-xs">{capitalizedState}</span>
+      </div>
+      <ChevronsUpDownIcon className="ml-auto" />
     </DropdownMenuTrigger>
   );
 }
 
 function SidebarInstanceButtonSkeleton() {
   return (
-    <DropdownMenuTrigger asChild>
-      <SidebarMenuButton
-        size="lg"
-        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-      >
-        <Skeleton className="relative flex size-8 h-10 w-10 shrink-0 overflow-hidden rounded-lg" />
-        <div className="grid flex-1 gap-2">
-          <Skeleton className="h-3 w-32" />
-          <Skeleton className="h-3 w-12" />
-        </div>
-        <ChevronsUpDownIcon className="ml-auto" />
-      </SidebarMenuButton>
+    <DropdownMenuTrigger
+      render={
+        <SidebarMenuButton
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        />
+      }
+    >
+      <Skeleton className="relative flex size-8 h-10 w-10 shrink-0 overflow-hidden rounded-lg" />
+      <div className="grid flex-1 gap-2">
+        <Skeleton className="h-3 w-32" />
+        <Skeleton className="h-3 w-12" />
+      </div>
+      <ChevronsUpDownIcon className="ml-auto" />
     </DropdownMenuTrigger>
   );
 }
@@ -122,14 +126,20 @@ function InstanceList() {
     <>
       {instanceList.instances.map((instance, index) => {
         return (
-          <DropdownMenuItem key={instance.id} asChild>
-            <Link to="/instance/$instance" params={{ instance: instance.id }}>
-              <DynamicIcon name={instance.icon} className="size-4 shrink-0" />
-              {instance.friendlyName}
-              <DropdownMenuShortcut>
-                {formatShortcut(`Ctrl+${index + 1}`)}
-              </DropdownMenuShortcut>
-            </Link>
+          <DropdownMenuItem
+            key={instance.id}
+            render={
+              <Link
+                to="/instance/$instance"
+                params={{ instance: instance.id }}
+              />
+            }
+          >
+            <DynamicIcon name={instance.icon} className="size-4 shrink-0" />
+            {instance.friendlyName}
+            <DropdownMenuShortcut>
+              {formatShortcut(`Ctrl+${index + 1}`)}
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
         );
       })}
@@ -395,7 +405,7 @@ export function InstanceSwitcher() {
             <SidebarInstanceButton />
           </Suspense>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="w-(--anchor-width) min-w-56 rounded-lg"
             align="start"
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
@@ -407,11 +417,9 @@ export function InstanceSwitcher() {
               <InstanceList />
             </Suspense>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link to="/user">
-                <HomeIcon className="size-4" />
-                {t("instanceSidebar.backToDashboard")}
-              </Link>
+            <DropdownMenuItem render={<Link to="/user" />}>
+              <HomeIcon className="size-4" />
+              {t("instanceSidebar.backToDashboard")}
             </DropdownMenuItem>
             <Suspense>
               <CreateInstanceButton />

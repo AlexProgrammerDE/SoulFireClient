@@ -171,16 +171,21 @@ export function ScriptToolbar({
       )}
     >
       {/* Back Button */}
-      <Button variant="ghost" size="icon" asChild>
-        <Link
-          to="/instance/$instance/scripts"
-          params={{ instance: instanceId }}
-        >
-          <ArrowLeftIcon className="size-4" />
-          <span className="sr-only">
-            {t("scripts.editor.toolbar.backToScripts")}
-          </span>
-        </Link>
+      <Button
+        variant="ghost"
+        size="icon"
+        nativeButton={false}
+        render={
+          <Link
+            to="/instance/$instance/scripts"
+            params={{ instance: instanceId }}
+          />
+        }
+      >
+        <ArrowLeftIcon className="size-4" />
+        <span className="sr-only">
+          {t("scripts.editor.toolbar.backToScripts")}
+        </span>
       </Button>
 
       {!isMobile && (
@@ -236,21 +241,23 @@ export function ScriptToolbar({
       {/* Save Button + Diff (diff hidden on mobile) */}
       {!isMobile && <ScriptDiffDialog />}
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="outline"
-            size={isMobile ? "icon" : "sm"}
-            onClick={onSave}
-            disabled={isSaving || !isDirty}
-            className={cn(!isMobile && "gap-1.5")}
-          >
-            {isSaving ? (
-              <LoaderCircleIcon className="size-4 animate-spin" />
-            ) : (
-              <SaveIcon className="size-4" />
-            )}
-            {!isMobile && t("scripts.editor.toolbar.save")}
-          </Button>
+        <TooltipTrigger
+          render={
+            <Button
+              variant="outline"
+              size={isMobile ? "icon" : "sm"}
+              onClick={onSave}
+              disabled={isSaving || !isDirty}
+              className={cn(!isMobile && "gap-1.5")}
+            />
+          }
+        >
+          {isSaving ? (
+            <LoaderCircleIcon className="size-4 animate-spin" />
+          ) : (
+            <SaveIcon className="size-4" />
+          )}
+          {!isMobile && t("scripts.editor.toolbar.save")}
         </TooltipTrigger>
         <TooltipContent>
           <p>{t("scripts.editor.toolbar.saveTooltip")}</p>
@@ -265,16 +272,18 @@ export function ScriptToolbar({
       <div className="flex items-center gap-1">
         {paused ? (
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                size={isMobile ? "icon" : "sm"}
-                onClick={onStart}
-                className={cn(!isMobile && "gap-1.5")}
-              >
-                <PlayIcon className="size-4" />
-                {!isMobile && t("scripts.editor.toolbar.resume")}
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  variant="outline"
+                  size={isMobile ? "icon" : "sm"}
+                  onClick={onStart}
+                  className={cn(!isMobile && "gap-1.5")}
+                />
+              }
+            >
+              <PlayIcon className="size-4" />
+              {!isMobile && t("scripts.editor.toolbar.resume")}
             </TooltipTrigger>
             <TooltipContent>
               <p>{t("scripts.editor.toolbar.resumeTooltip")}</p>
@@ -283,16 +292,18 @@ export function ScriptToolbar({
         ) : (
           <>
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size={isMobile ? "icon" : "sm"}
-                  onClick={onStop}
-                  className={cn(!isMobile && "gap-1.5")}
-                >
-                  <PauseIcon className="size-4" />
-                  {!isMobile && t("scripts.editor.toolbar.pause")}
-                </Button>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant="outline"
+                    size={isMobile ? "icon" : "sm"}
+                    onClick={onStop}
+                    className={cn(!isMobile && "gap-1.5")}
+                  />
+                }
+              >
+                <PauseIcon className="size-4" />
+                {!isMobile && t("scripts.editor.toolbar.pause")}
               </TooltipTrigger>
               <TooltipContent>
                 <p>{t("scripts.editor.toolbar.pauseTooltip")}</p>
@@ -316,10 +327,10 @@ export function ScriptToolbar({
         /* Mobile: Overflow dropdown menu */
         <>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <EllipsisVerticalIcon className="size-4" />
-              </Button>
+            <DropdownMenuTrigger
+              render={<Button variant="ghost" size="icon" />}
+            >
+              <EllipsisVerticalIcon className="size-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={handleExport}>
@@ -367,24 +378,28 @@ export function ScriptToolbar({
           {/* Export/Import */}
           <div className="flex items-center gap-1">
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" onClick={handleExport}>
-                  <DownloadIcon className="size-4" />
-                </Button>
+              <TooltipTrigger
+                render={
+                  <Button variant="ghost" size="icon" onClick={handleExport} />
+                }
+              >
+                <DownloadIcon className="size-4" />
               </TooltipTrigger>
               <TooltipContent>
                 <p>{t("scripts.editor.toolbar.export")}</p>
               </TooltipContent>
             </Tooltip>
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <UploadIcon className="size-4" />
-                </Button>
+              <TooltipTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => fileInputRef.current?.click()}
+                  />
+                }
+              >
+                <UploadIcon className="size-4" />
               </TooltipTrigger>
               <TooltipContent>
                 <p>{t("scripts.editor.toolbar.import")}</p>
@@ -405,10 +420,12 @@ export function ScriptToolbar({
           {onClear && (
             <>
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" onClick={onClear}>
-                    <Trash2Icon className="size-4" />
-                  </Button>
+                <TooltipTrigger
+                  render={
+                    <Button variant="ghost" size="icon" onClick={onClear} />
+                  }
+                >
+                  <Trash2Icon className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{t("scripts.editor.toolbar.clearCanvas")}</p>

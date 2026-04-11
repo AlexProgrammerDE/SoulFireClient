@@ -1,5 +1,6 @@
 "use client";
 
+import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
@@ -64,15 +65,19 @@ function Faceted<Multiple extends boolean = false>(
   } = props;
 
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false);
+  const actionsRef = React.useRef<PopoverPrimitive.Root.Actions | null>(null);
   const isControlled = openProp !== undefined;
   const open = isControlled ? openProp : uncontrolledOpen;
 
   const onOpenChange = React.useCallback(
-    (newOpen: boolean) => {
+    (
+      newOpen: boolean,
+      eventDetails: Parameters<NonNullable<typeof onOpenChangeProp>>[1],
+    ) => {
       if (!isControlled) {
         setUncontrolledOpen(newOpen);
       }
-      onOpenChangeProp?.(newOpen);
+      onOpenChangeProp?.(newOpen, eventDetails);
     },
     [isControlled, onOpenChangeProp],
   );
@@ -94,10 +99,10 @@ function Faceted<Multiple extends boolean = false>(
           onValueChange(selectedValue as FacetedValue<Multiple>);
         }
 
-        requestAnimationFrame(() => onOpenChange(false));
+        requestAnimationFrame(() => actionsRef.current?.close());
       }
     },
-    [multiple, value, onValueChange, onOpenChange],
+    [multiple, value, onValueChange],
   );
 
   const contextValue = React.useMemo<FacetedContextValue<typeof multiple>>(
@@ -107,7 +112,12 @@ function Faceted<Multiple extends boolean = false>(
 
   return (
     <FacetedContext.Provider value={contextValue}>
-      <Popover open={open} onOpenChange={onOpenChange} {...facetedProps}>
+      <Popover
+        actionsRef={actionsRef}
+        open={open}
+        onOpenChange={onOpenChange}
+        {...facetedProps}
+      >
         {children}
       </Popover>
     </FacetedContext.Provider>
@@ -203,10 +213,7 @@ function FacetedContent(props: React.ComponentProps<typeof PopoverContent>) {
     <PopoverContent
       {...contentProps}
       align="start"
-      className={cn(
-        "w-[200px] origin-(--radix-popover-content-transform-origin) p-0",
-        className,
-      )}
+      className={cn("w-[200px] origin-(--transform-origin) p-0", className)}
     >
       <Command>{children}</Command>
     </PopoverContent>

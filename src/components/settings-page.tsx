@@ -347,22 +347,24 @@ function ComboComponent(props: {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-72 justify-between"
-          disabled={props.setting.disabled}
-        >
-          <div className="inline-flex flex-row items-center justify-center gap-2">
-            {selectedOption.iconId && (
-              <DynamicIcon name={selectedOption.iconId} />
-            )}
-            <span className="truncate">{selectedOption.displayName}</span>
-          </div>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+      <PopoverTrigger
+        render={
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-72 justify-between"
+            disabled={props.setting.disabled}
+          />
+        }
+      >
+        <div className="inline-flex flex-row items-center justify-center gap-2">
+          {selectedOption.iconId && (
+            <DynamicIcon name={selectedOption.iconId} />
+          )}
+          <span className="truncate">{selectedOption.displayName}</span>
+        </div>
+        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
       </PopoverTrigger>
       <PopoverContent className="w-72 p-0">
         <Command>

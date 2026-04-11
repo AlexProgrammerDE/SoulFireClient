@@ -1103,60 +1103,72 @@ function Content() {
                 Beat
               </Button>
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="icon-sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                    onClick={() => teamActionMutation.mutate({ kind: "pause" })}
-                  >
-                    <PauseIcon className="size-4" />
-                  </Button>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      size="icon-sm"
+                      variant="outline"
+                      disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                      onClick={() =>
+                        teamActionMutation.mutate({ kind: "pause" })
+                      }
+                    />
+                  }
+                >
+                  <PauseIcon className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>Pause All</TooltipContent>
               </Tooltip>
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="icon-sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                    onClick={() =>
-                      teamActionMutation.mutate({ kind: "resume" })
-                    }
-                  >
-                    <PlayIcon className="size-4" />
-                  </Button>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      size="icon-sm"
+                      variant="outline"
+                      disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                      onClick={() =>
+                        teamActionMutation.mutate({ kind: "resume" })
+                      }
+                    />
+                  }
+                >
+                  <PlayIcon className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>Resume All</TooltipContent>
               </Tooltip>
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="icon-sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                    onClick={() => teamActionMutation.mutate({ kind: "stop" })}
-                  >
-                    <StopCircleIcon className="size-4" />
-                  </Button>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      size="icon-sm"
+                      variant="outline"
+                      disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                      onClick={() =>
+                        teamActionMutation.mutate({ kind: "stop" })
+                      }
+                    />
+                  }
+                >
+                  <StopCircleIcon className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>Stop All</TooltipContent>
               </Tooltip>
               <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="icon-sm"
-                    variant="outline"
-                    disabled={isReadOnlyDemo || teamActionMutation.isPending}
-                    onClick={() =>
-                      teamActionMutation.mutate({
-                        kind: "reset-coordination",
-                      })
-                    }
-                  >
-                    <RotateCcwIcon className="size-4" />
-                  </Button>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      size="icon-sm"
+                      variant="outline"
+                      disabled={isReadOnlyDemo || teamActionMutation.isPending}
+                      onClick={() =>
+                        teamActionMutation.mutate({
+                          kind: "reset-coordination",
+                        })
+                      }
+                    />
+                  }
+                >
+                  <RotateCcwIcon className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>Reset Coordination</TooltipContent>
               </Tooltip>
@@ -1177,28 +1189,28 @@ function Content() {
                     : 0;
                 return (
                   <Tooltip key={quota.key}>
-                    <TooltipTrigger asChild>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-xs text-muted-foreground">
-                          {quota.label}
-                        </span>
-                        <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                          <div
-                            className={cn(
-                              "h-full rounded-full transition-all",
-                              percentage >= 100
-                                ? "bg-emerald-500 dark:bg-emerald-400"
-                                : percentage >= 50
-                                  ? "bg-primary"
-                                  : "bg-amber-500 dark:bg-amber-400",
-                            )}
-                            style={{ width: `${percentage}%` }}
-                          />
-                        </div>
-                        <span className="text-xs tabular-nums text-muted-foreground">
-                          {quota.current}/{quota.target}
-                        </span>
+                    <TooltipTrigger
+                      render={<div className="flex items-center gap-1.5" />}
+                    >
+                      <span className="text-xs text-muted-foreground">
+                        {quota.label}
+                      </span>
+                      <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
+                        <div
+                          className={cn(
+                            "h-full rounded-full transition-all",
+                            percentage >= 100
+                              ? "bg-emerald-500 dark:bg-emerald-400"
+                              : percentage >= 50
+                                ? "bg-primary"
+                                : "bg-amber-500 dark:bg-amber-400",
+                          )}
+                          style={{ width: `${percentage}%` }}
+                        />
                       </div>
+                      <span className="text-xs tabular-nums text-muted-foreground">
+                        {quota.current}/{quota.target}
+                      </span>
                     </TooltipTrigger>
                     <TooltipContent>
                       {quota.label}: {quota.current}/{quota.target}
@@ -2018,7 +2030,14 @@ function InlineSelect(props: {
   onValueChange: (value: string) => void;
 }) {
   return (
-    <Select value={props.value} onValueChange={props.onValueChange}>
+    <Select
+      value={props.value}
+      onValueChange={(value) => {
+        if (value) {
+          props.onValueChange(value);
+        }
+      }}
+    >
       <SelectTrigger className="h-8 w-auto min-w-28">
         <SelectValue />
       </SelectTrigger>
@@ -2045,16 +2064,21 @@ function AutomationSettingsButton({ instanceId }: { instanceId: string }) {
   }
 
   return (
-    <Button asChild size="icon-sm" variant="ghost">
-      <Link
-        to="/instance/$instance/settings/$pageId"
-        params={{
-          instance: instanceId,
-          pageId: "automation",
-        }}
-      >
-        <Settings2Icon className="size-4" />
-      </Link>
+    <Button
+      size="icon-sm"
+      variant="ghost"
+      nativeButton={false}
+      render={
+        <Link
+          to="/instance/$instance/settings/$pageId"
+          params={{
+            instance: instanceId,
+            pageId: "automation",
+          }}
+        />
+      }
+    >
+      <Settings2Icon className="size-4" />
     </Button>
   );
 }
@@ -2117,7 +2141,11 @@ function SettingSelect(props: {
       <Select
         value={props.value}
         disabled={props.disabled}
-        onValueChange={props.onValueChange}
+        onValueChange={(value) => {
+          if (value) {
+            props.onValueChange(value);
+          }
+        }}
       >
         <SelectTrigger className="w-full">
           <SelectValue />
@@ -2216,73 +2244,83 @@ function BotRuntimeRow(props: {
             {props.attention.label}
           </span>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                disabled={props.disabled || props.pending}
-                onClick={props.onPauseResume}
-              >
-                {props.bot.paused ? (
-                  <PlayIcon className="size-3.5" />
-                ) : (
-                  <PauseIcon className="size-3.5" />
-                )}
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  disabled={props.disabled || props.pending}
+                  onClick={props.onPauseResume}
+                />
+              }
+            >
+              {props.bot.paused ? (
+                <PlayIcon className="size-3.5" />
+              ) : (
+                <PauseIcon className="size-3.5" />
+              )}
             </TooltipTrigger>
             <TooltipContent>
               {props.bot.paused ? "Resume" : "Pause"}
             </TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                disabled={props.disabled || props.pending}
-                onClick={props.onStop}
-              >
-                <StopCircleIcon className="size-3.5" />
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  disabled={props.disabled || props.pending}
+                  onClick={props.onStop}
+                />
+              }
+            >
+              <StopCircleIcon className="size-3.5" />
             </TooltipTrigger>
             <TooltipContent>Stop</TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                disabled={props.disabled || props.pending}
-                onClick={props.onInspectMemory}
-              >
-                <BrainCircuitIcon className="size-3.5" />
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  disabled={props.disabled || props.pending}
+                  onClick={props.onInspectMemory}
+                />
+              }
+            >
+              <BrainCircuitIcon className="size-3.5" />
             </TooltipTrigger>
             <TooltipContent>Inspect Memory</TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                disabled={props.disabled || props.pending}
-                onClick={props.onResetMemory}
-              >
-                <RotateCcwIcon className="size-3.5" />
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  disabled={props.disabled || props.pending}
+                  onClick={props.onResetMemory}
+                />
+              }
+            >
+              <RotateCcwIcon className="size-3.5" />
             </TooltipTrigger>
             <TooltipContent>Reset Memory</TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                disabled={props.disabled || props.pending}
-                onClick={props.onFocusClaims}
-              >
-                <WaypointsIcon className="size-3.5" />
-              </Button>
+            <TooltipTrigger
+              render={
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  disabled={props.disabled || props.pending}
+                  onClick={props.onFocusClaims}
+                />
+              }
+            >
+              <WaypointsIcon className="size-3.5" />
             </TooltipTrigger>
             <TooltipContent>
               View Claims ({props.claimSummary.totalOwnedClaims})
@@ -2425,10 +2463,12 @@ function BotRuntimeRow(props: {
                     {botTuningNumberConfigs.map((config) => (
                       <div key={config.key} className="flex items-center gap-2">
                         <Tooltip>
-                          <TooltipTrigger asChild>
-                            <p className="min-w-0 truncate text-xs font-medium">
-                              {config.label}
-                            </p>
+                          <TooltipTrigger
+                            render={
+                              <p className="min-w-0 truncate text-xs font-medium" />
+                            }
+                          >
+                            {config.label}
                           </TooltipTrigger>
                           <TooltipContent>{config.description}</TooltipContent>
                         </Tooltip>

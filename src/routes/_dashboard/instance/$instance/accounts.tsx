@@ -124,11 +124,16 @@ function GetAccountsButton() {
   const { t } = useTranslation("instance");
 
   return (
-    <Button variant="outline" size="sm" asChild>
-      <ExternalLink href="https://soulfiremc.com/get-accounts?utm_source=soulfire-client&utm_medium=app&utm_campaign=accounts-get">
-        <ShoppingCartIcon />
-        {t("account.getAccounts")}
-      </ExternalLink>
+    <Button
+      variant="outline"
+      size="sm"
+      nativeButton={false}
+      render={
+        <ExternalLink href="https://soulfiremc.com/get-accounts?utm_source=soulfire-client&utm_medium=app&utm_campaign=accounts-get" />
+      }
+    >
+      <ShoppingCartIcon />
+      {t("account.getAccounts")}
     </Button>
   );
 }
@@ -248,30 +253,34 @@ function ActionsCell({ account }: { account: ProfileAccount }) {
   return (
     <div className="flex items-center">
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-8"
-            onClick={() => setConfigOpen(true)}
-          >
-            <SettingsIcon className="size-4" />
-            <span className="sr-only">{t("account.config.openButton")}</span>
-          </Button>
+        <TooltipTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8"
+              onClick={() => setConfigOpen(true)}
+            />
+          }
+        >
+          <SettingsIcon className="size-4" />
+          <span className="sr-only">{t("account.config.openButton")}</span>
         </TooltipTrigger>
         <TooltipContent>{t("account.config.openButton")}</TooltipContent>
       </Tooltip>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-8"
-            onClick={() => setMetadataOpen(true)}
-          >
-            <BracesIcon className="size-4" />
-            <span className="sr-only">{t("account.metadata.openButton")}</span>
-          </Button>
+        <TooltipTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8"
+              onClick={() => setMetadataOpen(true)}
+            />
+          }
+        >
+          <BracesIcon className="size-4" />
+          <span className="sr-only">{t("account.metadata.openButton")}</span>
         </TooltipTrigger>
         <TooltipContent>{t("account.metadata.openButton")}</TooltipContent>
       </Tooltip>
@@ -772,11 +781,9 @@ function AddButton() {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
-            <PlusIcon />
-            {t("account.addAccounts")}
-          </Button>
+        <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
+          <PlusIcon />
+          {t("account.addAccounts")}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>

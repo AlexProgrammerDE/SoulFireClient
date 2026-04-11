@@ -191,11 +191,15 @@ function Content() {
             <PlusIcon />
             <span>{t("access.token.generate")}</span>
           </Button>
-          <Button variant="secondary" asChild>
-            <ExternalLink href="https://soulfiremc.com/docs/guides/webdav?utm_source=soulfire-client&utm_medium=app&utm_campaign=access-webdav-docs">
-              <BookOpenTextIcon />
-              <span>{t("access.howToConnect")}</span>
-            </ExternalLink>
+          <Button
+            variant="secondary"
+            nativeButton={false}
+            render={
+              <ExternalLink href="https://soulfiremc.com/docs/guides/webdav?utm_source=soulfire-client&utm_medium=app&utm_campaign=access-webdav-docs" />
+            }
+          >
+            <BookOpenTextIcon />
+            <span>{t("access.howToConnect")}</span>
           </Button>
         </CardFooter>
       </Card>
@@ -285,11 +289,15 @@ function Content() {
             <PlusIcon />
             <span>{t("access.token.generate")}</span>
           </Button>
-          <Button variant="secondary" asChild>
-            <ExternalLink href={clientInfo.serverInfo?.publicDocsAddress}>
-              <BookOpenTextIcon />
-              <span>{t("access.documentation")}</span>
-            </ExternalLink>
+          <Button
+            variant="secondary"
+            nativeButton={false}
+            render={
+              <ExternalLink href={clientInfo.serverInfo?.publicDocsAddress} />
+            }
+          >
+            <BookOpenTextIcon />
+            <span>{t("access.documentation")}</span>
           </Button>
         </CardFooter>
       </Card>
