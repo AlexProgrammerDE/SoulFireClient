@@ -193,7 +193,10 @@ export function WindowTitlebar() {
         data-tauri-drag-region={desktopTauri ? "" : undefined}
         className="flex min-w-0 flex-1 items-center"
       >
-        <div className="window-topbar-no-drag mx-auto flex min-w-0 max-w-full items-center gap-1.5 px-3 text-center">
+        <div
+          data-tauri-drag-region={desktopTauri ? "" : undefined}
+          className="mx-auto flex min-w-0 max-w-full items-center gap-1.5 px-3 text-center [&>*]:pointer-events-none"
+        >
           {pageIcon?.kind === "dynamic" && (
             <DynamicIcon
               name={pageIcon.name}
