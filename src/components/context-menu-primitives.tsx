@@ -1,4 +1,5 @@
 import type React from "react";
+import { Kbd } from "@/components/ui/kbd.tsx";
 import { cn } from "@/lib/utils.tsx";
 
 export function MenuItem({
@@ -39,14 +40,14 @@ export function MenuShortcut({
   children: React.ReactNode;
 }) {
   return (
-    <span
+    <Kbd
       className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
+        "ml-auto h-4 min-w-0 px-1.5 text-[10px] tracking-widest",
         className,
       )}
     >
       {children}
-    </span>
+    </Kbd>
   );
 }
 

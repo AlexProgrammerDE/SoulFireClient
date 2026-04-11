@@ -46,7 +46,6 @@ import {
 } from "lucide-react";
 import {
   Activity,
-  type ReactNode,
   Suspense,
   useCallback,
   useEffect,
@@ -63,7 +62,16 @@ import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { Toggle } from "@/components/ui/toggle.tsx";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import {
   Tooltip,
   TooltipContent,
@@ -282,27 +290,6 @@ function BotDetail() {
 
 type BotTab = "overview" | "inventory" | "controls" | "terminal";
 
-function TabButton(props: {
-  active: boolean;
-  onClick: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={props.onClick}
-      className={cn(
-        "border-b-2 px-3 pb-2 text-sm transition-colors",
-        props.active
-          ? "border-primary text-foreground font-medium"
-          : "border-transparent text-muted-foreground hover:text-foreground",
-      )}
-    >
-      {props.children}
-    </button>
-  );
-}
-
 function getGameModeLabel(
   gameMode: GameMode,
   t: (key: string) => string,
@@ -416,31 +403,31 @@ function BotDetailContent({
       )}
 
       <div className="rounded-lg border">
-        <div className="flex items-center gap-1 border-b px-4 pt-2">
-          <TabButton
-            active={activeTab === "overview"}
-            onClick={() => setActiveTab("overview")}
+        <div className="border-b px-4 py-3">
+          <ToggleGroup
+            value={[activeTab]}
+            onValueChange={(value) => {
+              const nextTab = value[0] as BotTab | undefined;
+              if (nextTab) {
+                setActiveTab(nextTab);
+              }
+            }}
+            variant="outline"
+            size="sm"
           >
-            {t("bots.tabs.overview")}
-          </TabButton>
-          <TabButton
-            active={activeTab === "inventory"}
-            onClick={() => setActiveTab("inventory")}
-          >
-            {t("bots.tabs.inventory")}
-          </TabButton>
-          <TabButton
-            active={activeTab === "controls"}
-            onClick={() => setActiveTab("controls")}
-          >
-            {t("bots.tabs.controls")}
-          </TabButton>
-          <TabButton
-            active={activeTab === "terminal"}
-            onClick={() => setActiveTab("terminal")}
-          >
-            {t("bots.tabs.terminal")}
-          </TabButton>
+            <ToggleGroupItem value="overview">
+              {t("bots.tabs.overview")}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="inventory">
+              {t("bots.tabs.inventory")}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="controls">
+              {t("bots.tabs.controls")}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="terminal">
+              {t("bots.tabs.terminal")}
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
         <div className="p-4">
           <Activity mode={activeTab === "overview" ? "visible" : "hidden"}>
@@ -524,20 +511,22 @@ function BotDetailHeader({
   const liveState = botInfo.liveState;
 
   return (
-    /* biome-ignore lint/a11y/noStaticElementInteractions: context menu on container */
-    <div
-      className="flex flex-wrap items-center gap-4 rounded-lg border p-4"
+    <Item
+      variant="outline"
+      className="rounded-lg p-4"
       onContextMenu={(event) => onContextMenu(event, null)}
     >
-      <img
-        src={getAvatarUrl(liveState?.skinTextureHash)}
-        alt={account.lastKnownName}
-        className="h-16 w-auto"
-        loading="lazy"
-      />
-      <div className="flex flex-col gap-1">
-        <h2 className="text-lg font-semibold">{account.lastKnownName}</h2>
-        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+      <ItemMedia>
+        <img
+          src={getAvatarUrl(liveState?.skinTextureHash)}
+          alt={account.lastKnownName}
+          className="h-16 w-auto"
+          loading="lazy"
+        />
+      </ItemMedia>
+      <ItemContent className="gap-1">
+        <ItemTitle className="text-lg">{account.lastKnownName}</ItemTitle>
+        <ItemDescription className="line-clamp-none flex flex-wrap items-center gap-2 text-sm">
           <span
             className={cn("font-medium", isOnline ? "text-emerald-500" : "")}
           >
@@ -548,8 +537,8 @@ function BotDetailHeader({
             {accountTypeLabel(typeKey)}
           </span>
           <span className="font-mono text-xs">{account.profileId}</span>
-        </div>
-      </div>
+        </ItemDescription>
+      </ItemContent>
       {isOnline && liveState && (
         <div className="ml-auto flex flex-wrap items-center gap-3">
           <Tooltip>
@@ -628,7 +617,7 @@ function BotDetailHeader({
         <ArrowLeftIcon className="mr-2 size-4" />
         {t("bots.backToBots")}
       </Button>
-    </div>
+    </Item>
   );
 }
 
@@ -886,9 +875,10 @@ function BotPovPanel({
         </h3>
         {isOnline && (
           <div className="ml-auto flex gap-2">
-            <Button
-              variant={autoRefresh ? "default" : "outline"}
+            <Toggle
+              variant="outline"
               size="sm"
+              pressed={autoRefresh}
               onClick={() => setAutoRefresh(!autoRefresh)}
               title={
                 autoRefresh
@@ -902,7 +892,7 @@ function BotPovPanel({
                 <PlayIcon className="mr-1 size-4" />
               )}
               {t("bots.povPanel.auto")}
-            </Button>
+            </Toggle>
             <Button
               variant="outline"
               size="sm"
@@ -1498,14 +1488,32 @@ function ContainerButtonsPanel({
   return (
     <div className="flex flex-col gap-2">
       <div className="text-muted-foreground text-sm font-medium">{title}</div>
-      <div className="flex max-h-48 flex-wrap gap-1.5 overflow-y-auto rounded-lg border p-2">
+      <ToggleGroup
+        multiple
+        value={buttons
+          .filter((button) => button.selected)
+          .map((button) => String(button.buttonId))}
+        onValueChange={(value) => {
+          const nextSelection = new Set(value);
+          const changedButton = buttons.find(
+            (button) =>
+              nextSelection.has(String(button.buttonId)) !== button.selected,
+          );
+
+          if (changedButton) {
+            onButtonClick(changedButton.buttonId);
+          }
+        }}
+        variant="outline"
+        size="sm"
+        spacing={1}
+        className="max-h-48 w-full flex-wrap overflow-y-auto rounded-lg border p-2"
+      >
         {buttons.map((button) => (
-          <Button
+          <ToggleGroupItem
             key={button.buttonId}
-            variant={button.selected ? "default" : "outline"}
-            size="sm"
-            className="h-auto min-w-0 flex-shrink-0 px-2 py-1 text-xs"
-            onClick={() => onButtonClick(button.buttonId)}
+            value={String(button.buttonId)}
+            className="h-auto min-w-0 shrink-0 px-2 py-1 text-xs"
             disabled={isPending || button.disabled}
             title={button.description || undefined}
           >
@@ -1515,9 +1523,9 @@ function ContainerButtonsPanel({
               </span>
             )}
             {button.label}
-          </Button>
+          </ToggleGroupItem>
         ))}
-      </div>
+      </ToggleGroup>
     </div>
   );
 }
@@ -1932,31 +1940,32 @@ function BotMovementPanel({
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant={movementState.jump ? "default" : "outline"}
-              size="sm"
-              onClick={() => toggleMovement("jump")}
-              disabled={isPending}
-            >
+          <ToggleGroup
+            multiple
+            value={(["jump", "sneak", "sprint"] as const).filter(
+              (key) => movementState[key],
+            )}
+            onValueChange={(value) => {
+              for (const key of ["jump", "sneak", "sprint"] as const) {
+                if (value.includes(key) !== movementState[key]) {
+                  toggleMovement(key);
+                }
+              }
+            }}
+            variant="outline"
+            size="sm"
+            spacing={2}
+            className="flex-wrap"
+          >
+            <ToggleGroupItem value="jump" disabled={isPending}>
               {t("bots.movementPanel.jump")}
-            </Button>
-            <Button
-              variant={movementState.sneak ? "default" : "outline"}
-              size="sm"
-              onClick={() => toggleMovement("sneak")}
-              disabled={isPending}
-            >
+            </ToggleGroupItem>
+            <ToggleGroupItem value="sneak" disabled={isPending}>
               {t("bots.movementPanel.sneak")}
-            </Button>
-            <Button
-              variant={movementState.sprint ? "default" : "outline"}
-              size="sm"
-              onClick={() => toggleMovement("sprint")}
-              disabled={isPending}
-            >
+            </ToggleGroupItem>
+            <ToggleGroupItem value="sprint" disabled={isPending}>
               {t("bots.movementPanel.sprint")}
-            </Button>
+            </ToggleGroupItem>
             <Button
               variant="destructive"
               size="sm"
@@ -1966,7 +1975,7 @@ function BotMovementPanel({
               <SquareIcon className="mr-1 size-3" />
               {t("bots.movementPanel.stop")}
             </Button>
-          </div>
+          </ToggleGroup>
 
           {/* Rotation controls */}
           <div>

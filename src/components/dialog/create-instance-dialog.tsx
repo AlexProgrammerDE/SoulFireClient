@@ -14,7 +14,7 @@ import {
   FieldDescription,
   FieldError,
   FieldLabel,
-} from "@/components/ui/form.tsx";
+} from "@/components/ui/field.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
 import { TransportContext } from "../providers/transport-context.tsx";

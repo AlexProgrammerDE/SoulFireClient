@@ -23,7 +23,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
-import { Input } from "@/components/ui/input.tsx";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field.tsx";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { ClientService } from "@/generated/soulfire/client_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
@@ -108,61 +114,64 @@ function Content() {
           </CardTitle>
           <CardDescription>{t("access.webdav.description")}</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
-          <label
-            htmlFor={webdavAddressId}
-            className="block text-sm font-medium"
-          >
-            {t("access.webdav.publicAddress")}
-          </label>
-          <div className="flex items-center gap-2">
-            <Input
-              id={webdavAddressId}
-              className="select-all"
-              value={clientInfo.serverInfo?.publicWebdavAddress}
-              readOnly
-            />
-            <Button
-              variant="secondary"
-              onClick={() => {
-                copyToClipboard(
-                  clientInfo.serverInfo?.publicWebdavAddress || "",
-                );
-              }}
-            >
-              <CopyIcon />
-              <span>{t("access.address.copy")}</span>
-            </Button>
-          </div>
-          <p className="text-muted-foreground text-sm">
-            {t("access.webdav.addressDescription")}
-          </p>
-          <label htmlFor={webdavTokenId} className="block text-sm font-medium">
-            {t("access.webdav.personalToken")}
-          </label>
-          <div className="flex items-center gap-2">
-            <Input
-              id={webdavTokenId}
-              className="select-all"
-              disabled={webDavToken === ""}
-              value={webDavToken}
-              placeholder={t("access.token.placeholder")}
-              readOnly
-            />
-            <Button
-              variant="secondary"
-              onClick={() => {
-                copyToClipboard(webDavToken);
-              }}
-              disabled={webDavToken === ""}
-            >
-              <CopyIcon />
-              <span>{t("access.token.copy")}</span>
-            </Button>
-          </div>
-          <p className="text-muted-foreground text-sm">
-            {t("access.webdav.securityWarning")}
-          </p>
+        <CardContent className="flex flex-col gap-4">
+          <Field>
+            <FieldLabel htmlFor={webdavAddressId}>
+              {t("access.webdav.publicAddress")}
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupInput
+                id={webdavAddressId}
+                className="select-all"
+                value={clientInfo.serverInfo?.publicWebdavAddress}
+                readOnly
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => {
+                    copyToClipboard(
+                      clientInfo.serverInfo?.publicWebdavAddress || "",
+                    );
+                  }}
+                >
+                  <CopyIcon />
+                  <span>{t("access.address.copy")}</span>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+            <FieldDescription>
+              {t("access.webdav.addressDescription")}
+            </FieldDescription>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={webdavTokenId}>
+              {t("access.webdav.personalToken")}
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupInput
+                id={webdavTokenId}
+                className="select-all"
+                disabled={webDavToken === ""}
+                value={webDavToken}
+                placeholder={t("access.token.placeholder")}
+                readOnly
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => {
+                    copyToClipboard(webDavToken);
+                  }}
+                  disabled={webDavToken === ""}
+                >
+                  <CopyIcon />
+                  <span>{t("access.token.copy")}</span>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+            <FieldDescription>
+              {t("access.webdav.securityWarning")}
+            </FieldDescription>
+          </Field>
         </CardContent>
         <CardFooter className="gap-2">
           <Button
@@ -211,56 +220,64 @@ function Content() {
           </CardTitle>
           <CardDescription>{t("access.api.description")}</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
-          <label htmlFor={apiAddressId} className="block text-sm font-medium">
-            {t("access.api.publicAddress")}
-          </label>
-          <div className="flex items-center gap-2">
-            <Input
-              id={apiAddressId}
-              className="select-all"
-              value={clientInfo.serverInfo?.publicApiAddress}
-              readOnly
-            />
-            <Button
-              variant="secondary"
-              onClick={() => {
-                copyToClipboard(clientInfo.serverInfo?.publicApiAddress || "");
-              }}
-            >
-              <CopyIcon />
-              <span>{t("access.address.copy")}</span>
-            </Button>
-          </div>
-          <p className="text-muted-foreground text-sm">
-            {t("access.api.addressDescription")}
-          </p>
-          <label htmlFor={apiTokenId} className="block text-sm font-medium">
-            {t("access.api.personalToken")}
-          </label>
-          <div className="flex items-center gap-2">
-            <Input
-              id={apiTokenId}
-              className="select-all"
-              disabled={apiToken === ""}
-              value={apiToken}
-              placeholder={t("access.token.placeholder")}
-              readOnly
-            />
-            <Button
-              variant="secondary"
-              onClick={() => {
-                copyToClipboard(apiToken);
-              }}
-              disabled={apiToken === ""}
-            >
-              <CopyIcon />
-              <span>{t("access.token.copy")}</span>
-            </Button>
-          </div>
-          <p className="text-muted-foreground text-sm">
-            {t("access.api.securityWarning")}
-          </p>
+        <CardContent className="flex flex-col gap-4">
+          <Field>
+            <FieldLabel htmlFor={apiAddressId}>
+              {t("access.api.publicAddress")}
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupInput
+                id={apiAddressId}
+                className="select-all"
+                value={clientInfo.serverInfo?.publicApiAddress}
+                readOnly
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => {
+                    copyToClipboard(
+                      clientInfo.serverInfo?.publicApiAddress || "",
+                    );
+                  }}
+                >
+                  <CopyIcon />
+                  <span>{t("access.address.copy")}</span>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+            <FieldDescription>
+              {t("access.api.addressDescription")}
+            </FieldDescription>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={apiTokenId}>
+              {t("access.api.personalToken")}
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupInput
+                id={apiTokenId}
+                className="select-all"
+                disabled={apiToken === ""}
+                value={apiToken}
+                placeholder={t("access.token.placeholder")}
+                readOnly
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => {
+                    copyToClipboard(apiToken);
+                  }}
+                  disabled={apiToken === ""}
+                >
+                  <CopyIcon />
+                  <span>{t("access.token.copy")}</span>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+            <FieldDescription>
+              {t("access.api.securityWarning")}
+            </FieldDescription>
+          </Field>
         </CardContent>
         <CardFooter className="gap-2">
           <Button

@@ -11,8 +11,8 @@ import {
   CredenzaTitle,
   CredenzaTrigger,
 } from "@/components/ui/credenza";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import {
   type ScriptQuotas,
@@ -119,11 +119,11 @@ export function QuotasDialog() {
             defaults.
           </CredenzaDescription>
         </CredenzaHeader>
-        <CredenzaBody className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor={`${id}-maxExecutionCount`}>
+        <CredenzaBody className="flex flex-col gap-4">
+          <Field>
+            <FieldLabel htmlFor={`${id}-maxExecutionCount`}>
               Max Execution Count
-            </Label>
+            </FieldLabel>
             <Input
               id={`${id}-maxExecutionCount`}
               type="number"
@@ -132,15 +132,15 @@ export function QuotasDialog() {
               onChange={(e) => setMaxExecutionCount(e.target.value)}
               className="h-8 text-sm"
             />
-            <p className="text-xs text-muted-foreground">
+            <FieldDescription className="text-xs">
               Maximum node executions per trigger invocation
-            </p>
-          </div>
+            </FieldDescription>
+          </Field>
 
-          <div className="space-y-2">
-            <Label htmlFor={`${id}-maxExecutionTimeMs`}>
+          <Field>
+            <FieldLabel htmlFor={`${id}-maxExecutionTimeMs`}>
               Max Execution Time (ms)
-            </Label>
+            </FieldLabel>
             <Input
               id={`${id}-maxExecutionTimeMs`}
               type="number"
@@ -149,15 +149,15 @@ export function QuotasDialog() {
               onChange={(e) => setMaxExecutionTimeMs(e.target.value)}
               className="h-8 text-sm"
             />
-            <p className="text-xs text-muted-foreground">
+            <FieldDescription className="text-xs">
               Maximum wall-clock time per trigger execution
-            </p>
-          </div>
+            </FieldDescription>
+          </Field>
 
-          <div className="space-y-2">
-            <Label htmlFor={`${id}-maxConcurrentTriggers`}>
+          <Field>
+            <FieldLabel htmlFor={`${id}-maxConcurrentTriggers`}>
               Max Concurrent Triggers
-            </Label>
+            </FieldLabel>
             <Input
               id={`${id}-maxConcurrentTriggers`}
               type="number"
@@ -166,15 +166,15 @@ export function QuotasDialog() {
               onChange={(e) => setMaxConcurrentTriggers(e.target.value)}
               className="h-8 text-sm"
             />
-            <p className="text-xs text-muted-foreground">
+            <FieldDescription className="text-xs">
               Maximum concurrent trigger invocations
-            </p>
-          </div>
+            </FieldDescription>
+          </Field>
 
-          <div className="space-y-2">
-            <Label htmlFor={`${id}-maxStateStoreEntries`}>
+          <Field>
+            <FieldLabel htmlFor={`${id}-maxStateStoreEntries`}>
               Max State Store Entries
-            </Label>
+            </FieldLabel>
             <Input
               id={`${id}-maxStateStoreEntries`}
               type="number"
@@ -183,24 +183,29 @@ export function QuotasDialog() {
               onChange={(e) => setMaxStateStoreEntries(e.target.value)}
               className="h-8 text-sm"
             />
-            <p className="text-xs text-muted-foreground">
+            <FieldDescription className="text-xs">
               Maximum entries in the script state store
-            </p>
-          </div>
+            </FieldDescription>
+          </Field>
 
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label htmlFor={`${id}-disableTimeouts`}>Disable Timeouts</Label>
-              <p className="text-xs text-muted-foreground">
+          <Field
+            orientation="horizontal"
+            className="items-start justify-between"
+          >
+            <div className="flex flex-col gap-0.5">
+              <FieldLabel htmlFor={`${id}-disableTimeouts`}>
+                Disable Timeouts
+              </FieldLabel>
+              <FieldDescription className="text-xs">
                 Disables per-node and data edge timeouts
-              </p>
+              </FieldDescription>
             </div>
             <Switch
               id={`${id}-disableTimeouts`}
               checked={disableTimeouts}
               onCheckedChange={setDisableTimeouts}
             />
-          </div>
+          </Field>
 
           <Button className="w-full" onClick={handleSave}>
             Save Quotas

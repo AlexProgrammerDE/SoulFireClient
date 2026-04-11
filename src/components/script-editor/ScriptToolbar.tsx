@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -376,7 +377,7 @@ export function ScriptToolbar({
         /* Desktop: Full toolbar */
         <>
           {/* Export/Import */}
-          <div className="flex items-center gap-1">
+          <ButtonGroup>
             <Tooltip>
               <TooltipTrigger
                 render={
@@ -412,7 +413,7 @@ export function ScriptToolbar({
               onChange={handleImport}
               className="hidden"
             />
-          </div>
+          </ButtonGroup>
 
           <Separator orientation="vertical" className="h-6 my-auto" />
 
@@ -436,7 +437,7 @@ export function ScriptToolbar({
           )}
 
           {/* Zoom Controls */}
-          <div className="flex items-center gap-1">
+          <ButtonGroup>
             <Button
               variant="ghost"
               size="icon"
@@ -461,7 +462,7 @@ export function ScriptToolbar({
             >
               {t("scripts.editor.toolbar.fit")}
             </Button>
-          </div>
+          </ButtonGroup>
         </>
       )}
     </div>

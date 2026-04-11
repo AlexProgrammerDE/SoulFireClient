@@ -2,6 +2,7 @@ import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { Bug, Copy, Trash2 } from "lucide-react";
 import { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { Empty, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
@@ -194,9 +195,13 @@ function DebugNodeComponent({ id, data, selected }: DebugNodeProps) {
               </div>
             </div>
           ) : (
-            <div className="text-xs text-muted-foreground text-center py-2">
-              No value received yet
-            </div>
+            <Empty className="border-0 p-2">
+              <EmptyHeader className="gap-1">
+                <EmptyTitle className="text-xs text-muted-foreground">
+                  No value received yet
+                </EmptyTitle>
+              </EmptyHeader>
+            </Empty>
           )}
         </div>
       </div>

@@ -7,6 +7,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import { Kbd } from "@/components/ui/kbd";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
@@ -166,11 +167,11 @@ function DataTableActionBarSelection<TData>({
           className="bg-accent text-foreground flex items-center gap-2 border px-2 py-1 font-semibold dark:bg-zinc-900 [&>span]:hidden"
         >
           <p>{t("dataTable.clearSelection")}</p>
-          <kbd className="bg-background text-foreground rounded border px-1.5 py-px font-mono text-[0.7rem] font-normal shadow-xs select-none">
+          <Kbd className="bg-background text-foreground border font-mono text-[0.7rem] font-normal shadow-xs">
             <abbr title="Escape" className="no-underline">
               {t("dataTable.escape")}
             </abbr>
-          </kbd>
+          </Kbd>
         </TooltipContent>
       </Tooltip>
     </div>

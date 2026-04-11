@@ -11,8 +11,8 @@ import {
   CredenzaTitle,
   CredenzaTrigger,
 } from "@/components/ui/credenza";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 
 /**
@@ -63,9 +63,9 @@ export function DryRunDialog() {
             Run a script from a selected trigger with mock inputs.
           </CredenzaDescription>
         </CredenzaHeader>
-        <CredenzaBody className="space-y-4">
-          <div className="space-y-2">
-            <Label>Trigger Node</Label>
+        <CredenzaBody className="flex flex-col gap-4">
+          <Field>
+            <FieldLabel>Trigger Node</FieldLabel>
             <select
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               value={selectedTrigger}
@@ -83,25 +83,32 @@ export function DryRunDialog() {
                 </option>
               ))}
             </select>
-          </div>
+            <FieldDescription>
+              Pick the trigger node to execute with mock input values.
+            </FieldDescription>
+          </Field>
 
           {triggerOutputs.length > 0 && (
-            <div className="space-y-2">
-              <Label>Mock Inputs</Label>
+            <Field>
+              <FieldLabel>Mock Inputs</FieldLabel>
               {triggerOutputs.map((port) => (
-                <div key={port.id} className="flex items-center gap-2">
-                  <Label className="min-w-[100px] text-xs text-muted-foreground">
+                <Field
+                  key={port.id}
+                  orientation="horizontal"
+                  className="items-center gap-2"
+                >
+                  <FieldLabel className="min-w-[100px] text-xs text-muted-foreground">
                     {port.label}
-                  </Label>
+                  </FieldLabel>
                   <Input
                     placeholder={`${port.type} value`}
                     value={mockInputs[port.id] ?? ""}
                     onChange={(e) => handleInputChange(port.id, e.target.value)}
                     className="h-8 text-sm"
                   />
-                </div>
+                </Field>
               ))}
-            </div>
+            </Field>
           )}
 
           <Button

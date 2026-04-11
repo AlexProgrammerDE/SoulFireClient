@@ -29,7 +29,7 @@ import {
 } from "@/components/providers/settings-registry-context.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
+import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import {
   Command,
@@ -38,7 +38,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command.tsx";
+import { Field } from "@/components/ui/field.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group.tsx";
 import {
   Popover,
   PopoverContent,
@@ -441,9 +448,9 @@ function StringListComponent(props: {
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex flex-row gap-1">
-          <Input
+      <CardContent className="flex flex-col gap-2 p-4">
+        <InputGroup>
+          <InputGroupInput
             type="text"
             value={newEntryInput}
             onChange={(e) => {
@@ -458,23 +465,22 @@ function StringListComponent(props: {
               }
             }}
           />
-          <Button
-            variant="outline"
-            onClick={() => {
-              insertValue(newEntryInput);
-              setNewEntryInput("");
-            }}
-            disabled={props.setting.disabled}
-          >
-            <PlusIcon />
-            {t("settingsPage.stringList.add")}
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-1 p-4 pt-0">
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton
+              onClick={() => {
+                insertValue(newEntryInput);
+                setNewEntryInput("");
+              }}
+              disabled={props.setting.disabled}
+            >
+              <PlusIcon />
+              {t("settingsPage.stringList.add")}
+            </InputGroupButton>
+          </InputGroupAddon>
+        </InputGroup>
         {idValueArray.map((item) => (
-          <div key={item.id} className="flex flex-row gap-1">
-            <Input
+          <InputGroup key={item.id}>
+            <InputGroupInput
               type="text"
               defaultValue={item.value}
               onChange={(e) => {
@@ -482,17 +488,18 @@ function StringListComponent(props: {
               }}
               disabled={props.setting.disabled}
             />
-            <Button
-              variant="outline"
-              onClick={() => {
-                deleteId(item.id);
-              }}
-              disabled={props.setting.disabled}
-            >
-              <TrashIcon />
-              {t("settingsPage.stringList.remove")}
-            </Button>
-          </div>
+            <InputGroupAddon align="inline-end">
+              <InputGroupButton
+                onClick={() => {
+                  deleteId(item.id);
+                }}
+                disabled={props.setting.disabled}
+              >
+                <TrashIcon />
+                {t("settingsPage.stringList.remove")}
+              </InputGroupButton>
+            </InputGroupAddon>
+          </InputGroup>
         ))}
       </CardContent>
     </Card>
@@ -567,7 +574,7 @@ export function SettingTypeRenderer(props: {
   switch (props.settingType.case) {
     case "string": {
       return (
-        <div className="flex max-w-xl flex-col gap-1">
+        <Field className="max-w-xl">
           <ComponentTitle
             title={props.settingType.value.uiName}
             description={props.settingType.value.description}
@@ -577,12 +584,12 @@ export function SettingTypeRenderer(props: {
             value={props.value as string}
             changeCallback={props.changeCallback}
           />
-        </div>
+        </Field>
       );
     }
     case "int": {
       return (
-        <div className="flex max-w-xl flex-col gap-1">
+        <Field className="max-w-xl">
           <ComponentTitle
             title={props.settingType.value.uiName}
             description={props.settingType.value.description}
@@ -592,12 +599,12 @@ export function SettingTypeRenderer(props: {
             value={props.value as number}
             changeCallback={props.changeCallback}
           />
-        </div>
+        </Field>
       );
     }
     case "bool": {
       return (
-        <div className="flex max-w-xl flex-row gap-1">
+        <Field orientation="horizontal" className="max-w-xl items-start">
           <BoolComponent
             setting={props.settingType.value}
             value={props.value as boolean}
@@ -605,12 +612,12 @@ export function SettingTypeRenderer(props: {
             title={props.settingType.value.uiName}
             description={props.settingType.value.description}
           />
-        </div>
+        </Field>
       );
     }
     case "double": {
       return (
-        <div className="flex max-w-xl flex-col gap-1">
+        <Field className="max-w-xl">
           <ComponentTitle
             title={props.settingType.value.uiName}
             description={props.settingType.value.description}
@@ -620,12 +627,12 @@ export function SettingTypeRenderer(props: {
             value={props.value as number}
             changeCallback={props.changeCallback}
           />
-        </div>
+        </Field>
       );
     }
     case "combo": {
       return (
-        <div className="flex max-w-xl flex-col gap-1">
+        <Field className="max-w-xl">
           <ComponentTitle
             title={props.settingType.value.uiName}
             description={props.settingType.value.description}
@@ -635,12 +642,12 @@ export function SettingTypeRenderer(props: {
             value={props.value as string}
             changeCallback={props.changeCallback}
           />
-        </div>
+        </Field>
       );
     }
     case "stringList": {
       return (
-        <div className="flex max-w-xl flex-col gap-1">
+        <Field className="max-w-xl">
           <ComponentTitle
             title={props.settingType.value.uiName}
             description={props.settingType.value.description}
@@ -650,7 +657,7 @@ export function SettingTypeRenderer(props: {
             value={props.value as string[]}
             changeCallback={props.changeCallback}
           />
-        </div>
+        </Field>
       );
     }
     case "minMax": {
@@ -660,7 +667,7 @@ export function SettingTypeRenderer(props: {
       };
       return (
         <>
-          <div className="flex max-w-xl flex-col gap-1">
+          <Field className="max-w-xl">
             <ComponentTitle
               title={props.settingType.value.minEntry?.uiName}
               description={props.settingType.value.minEntry?.description}
@@ -676,8 +683,8 @@ export function SettingTypeRenderer(props: {
                 });
               }}
             />
-          </div>
-          <div className="flex max-w-xl flex-col gap-1">
+          </Field>
+          <Field className="max-w-xl">
             <ComponentTitle
               title={props.settingType.value.maxEntry?.uiName}
               description={props.settingType.value.maxEntry?.description}
@@ -693,7 +700,7 @@ export function SettingTypeRenderer(props: {
                 });
               }}
             />
-          </div>
+          </Field>
         </>
       );
     }

@@ -30,7 +30,22 @@ import DynamicIcon from "@/components/dynamic-icon.tsx";
 import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card.tsx";
+import {
+  Empty,
+  EmptyContent,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item.tsx";
+import { Kbd } from "@/components/ui/kbd.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { GlobalPermission } from "@/generated/soulfire/common_pb.ts";
 import type { InstanceListResponse_Instance } from "@/generated/soulfire/instance_pb.ts";
@@ -122,18 +137,20 @@ function Content() {
     <>
       {instanceList.instances.length === 0 ? (
         <div className="flex size-full flex-1">
-          <div className="m-auto flex flex-col items-center gap-4">
-            <div className="flex flex-row gap-2">
-              <SearchXIcon className="m-auto size-7" />
-              <h1 className="m-auto text-xl font-bold">
-                {t("noInstancesFound")}
-              </h1>
-            </div>
-            <CreateInstanceButton />
-          </div>
+          <Empty className="m-auto max-w-md border-0">
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <SearchXIcon className="size-6" />
+              </EmptyMedia>
+              <EmptyTitle>{t("noInstancesFound")}</EmptyTitle>
+            </EmptyHeader>
+            <EmptyContent>
+              <CreateInstanceButton />
+            </EmptyContent>
+          </Empty>
         </div>
       ) : (
-        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+        <ItemGroup className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
           {instanceList.instances.map((instance, index) => (
             <Link
               key={instance.id}
@@ -143,32 +160,32 @@ function Content() {
               className="max-h-fit w-full"
               onContextMenu={(e) => handleContextMenu(e, instance)}
             >
-              <Card className="flex w-full flex-row items-center gap-4 px-6">
-                <div className="shrink-0 pr-0">
+              <Item variant="outline" className="w-full rounded-lg px-6 py-4">
+                <ItemMedia>
                   <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-12 items-center justify-center rounded-lg">
                     <DynamicIcon
                       name={instance.icon}
                       className="size-8 shrink-0"
                     />
                   </div>
-                </div>
-                <div className="grow">
-                  <CardTitle className="max-w-64 truncate">
+                </ItemMedia>
+                <ItemContent>
+                  <ItemTitle className="max-w-64 truncate">
                     {instance.friendlyName}
-                  </CardTitle>
-                  <CardDescription className="font-semibold">
+                  </ItemTitle>
+                  <ItemDescription className="font-semibold">
                     {translateInstanceState(i18n, instance.state)}
-                  </CardDescription>
-                </div>
+                  </ItemDescription>
+                </ItemContent>
                 <div className="ml-auto shrink-0">
-                  <p className="mb-auo m-auto text-2xl tracking-widest opacity-60">
+                  <Kbd className="h-6 px-2 text-sm tracking-widest opacity-60">
                     ⌘{index + 1}
-                  </p>
+                  </Kbd>
                 </div>
-              </Card>
+              </Item>
             </Link>
           ))}
-        </div>
+        </ItemGroup>
       )}
       {contextMenu && (
         <ContextMenuPortal

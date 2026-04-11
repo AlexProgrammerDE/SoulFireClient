@@ -36,7 +36,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
-import { Input } from "@/components/ui/input.tsx";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import type {
   BotListEntry,
@@ -210,15 +214,16 @@ function Content() {
     <div className="container flex h-full w-full grow flex-col gap-4 py-4">
       {/* Search input - always visible, no data needed */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="relative max-w-sm flex-1">
-          <SearchIcon className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
-          <Input
+        <InputGroup className="max-w-sm flex-1">
+          <InputGroupAddon>
+            <SearchIcon className="text-muted-foreground" />
+          </InputGroupAddon>
+          <InputGroupInput
             placeholder={t("bots.searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
           />
-        </div>
+        </InputGroup>
         <Suspense
           fallback={
             <Badge variant="outline" className="w-fit">

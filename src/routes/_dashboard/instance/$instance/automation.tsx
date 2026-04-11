@@ -20,7 +20,6 @@ import {
   StopCircleIcon,
   WaypointsIcon,
 } from "lucide-react";
-import type { ReactNode } from "react";
 import {
   Suspense,
   useDeferredValue,
@@ -52,6 +51,7 @@ import {
 } from "@/components/ui/select.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { Switch } from "@/components/ui/switch.tsx";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import {
   Tooltip,
   TooltipContent,
@@ -1867,32 +1867,31 @@ function Content() {
       {/* Bottom Tabbed Panel */}
       <Card size="sm" className="rounded-lg">
         <CardHeader className="pb-0">
-          <div className="flex items-center gap-4 border-b">
-            <TabButton
-              active={bottomTab === "health"}
-              onClick={() => setBottomTab("health")}
-            >
+          <ToggleGroup
+            value={[bottomTab]}
+            onValueChange={(value) => {
+              const nextTab = value[0] as typeof bottomTab | undefined;
+              if (nextTab) {
+                setBottomTab(nextTab);
+              }
+            }}
+            variant="outline"
+            size="sm"
+            className="w-full"
+          >
+            <ToggleGroupItem value="health" className="flex-1">
               Health
-            </TabButton>
-            <TabButton
-              active={bottomTab === "claims"}
-              onClick={() => setBottomTab("claims")}
-            >
+            </ToggleGroupItem>
+            <ToggleGroupItem value="claims" className="flex-1">
               Claims
-            </TabButton>
-            <TabButton
-              active={bottomTab === "memory"}
-              onClick={() => setBottomTab("memory")}
-            >
+            </ToggleGroupItem>
+            <ToggleGroupItem value="memory" className="flex-1">
               Memory
-            </TabButton>
-            <TabButton
-              active={bottomTab === "intel"}
-              onClick={() => setBottomTab("intel")}
-            >
+            </ToggleGroupItem>
+            <ToggleGroupItem value="intel" className="flex-1">
               Intel
-            </TabButton>
-          </div>
+            </ToggleGroupItem>
+          </ToggleGroup>
         </CardHeader>
         <CardContent className="pt-4">
           {bottomTab === "health" && (
@@ -2080,27 +2079,6 @@ function AutomationSettingsButton({ instanceId }: { instanceId: string }) {
     >
       <Settings2Icon className="size-4" />
     </Button>
-  );
-}
-
-function TabButton(props: {
-  active: boolean;
-  onClick: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={props.onClick}
-      className={cn(
-        "border-b-2 px-3 pb-2 text-sm transition-colors",
-        props.active
-          ? "border-primary text-foreground font-medium"
-          : "border-transparent text-muted-foreground hover:text-foreground",
-      )}
-    >
-      {props.children}
-    </button>
   );
 }
 

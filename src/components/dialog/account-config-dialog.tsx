@@ -21,7 +21,18 @@ import {
   CredenzaDescription,
   CredenzaTitle,
 } from "@/components/ui/credenza.tsx";
-import { Input } from "@/components/ui/input.tsx";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group.tsx";
 import {
   Select,
   SelectContent,
@@ -30,6 +41,7 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import type { Value } from "@/generated/google/protobuf/struct_pb.ts";
 import {
   type ServerPlugin,
@@ -237,31 +249,6 @@ function sourceLabel(source: ResolvedBotSetting["source"]): string {
     case "default":
       return "Using default";
   }
-}
-
-function TabButton(props: {
-  active: boolean;
-  count: number;
-  label: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={props.onClick}
-      className={cn(
-        "inline-flex items-center gap-2 border-b-2 px-0 pb-3 text-sm font-medium transition-colors",
-        props.active
-          ? "border-foreground text-foreground"
-          : "border-transparent text-muted-foreground hover:text-foreground",
-      )}
-    >
-      <span>{props.label}</span>
-      <span className="tabular-nums text-xs text-muted-foreground">
-        {props.count}
-      </span>
-    </button>
-  );
 }
 
 function BotSettingRow(props: {
@@ -730,39 +717,49 @@ function DialogContentInner({
               </p>
             </div>
 
-            <div className="relative w-full md:max-w-xs">
-              <SearchIcon className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                className="pl-8"
+            <InputGroup className="w-full md:max-w-xs">
+              <InputGroupAddon>
+                <SearchIcon className="text-muted-foreground" />
+              </InputGroupAddon>
+              <InputGroupInput
                 placeholder={t("account.config.search", {
                   defaultValue: "Search settings",
                 })}
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.currentTarget.value)}
               />
-            </div>
+            </InputGroup>
           </div>
 
-          <div className="-mb-px mt-4 flex gap-6">
-            <TabButton
-              active={view === "overrides"}
-              count={
-                resolvedSettings.filter((row) => row.source === "bot").length
+          <ToggleGroup
+            value={[view]}
+            onValueChange={(value) => {
+              const nextView = value[0] as BotSettingsView | undefined;
+              if (nextView) {
+                setView(nextView);
               }
-              label={t("account.config.overrides", {
+            }}
+            variant="outline"
+            size="sm"
+            className="mt-4"
+          >
+            <ToggleGroupItem value="overrides">
+              {t("account.config.overrides", {
                 defaultValue: "Overrides",
-              })}
-              onClick={() => setView("overrides")}
-            />
-            <TabButton
-              active={view === "all"}
-              count={resolvedSettings.length}
-              label={t("account.config.allSettings", {
+              })}{" "}
+              <span className="tabular-nums text-xs text-muted-foreground">
+                {resolvedSettings.filter((row) => row.source === "bot").length}
+              </span>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="all">
+              {t("account.config.allSettings", {
                 defaultValue: "All settings",
-              })}
-              onClick={() => setView("all")}
-            />
-          </div>
+              })}{" "}
+              <span className="tabular-nums text-xs text-muted-foreground">
+                {resolvedSettings.length}
+              </span>
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
         <div className="border-b border-border/60" />
       </div>
@@ -784,9 +781,9 @@ function DialogContentInner({
               ))}
             </div>
           ) : (
-            <div className="flex h-full flex-col items-start justify-center gap-3 px-4">
-              <div className="space-y-1">
-                <p className="text-sm font-medium">
+            <Empty className="h-full items-start justify-center border-0 px-4 text-left">
+              <EmptyHeader className="items-start">
+                <EmptyTitle className="text-sm">
                   {searchQuery.trim().length > 0
                     ? t("account.config.noOverridesMatching", {
                         defaultValue: "No overrides match this search.",
@@ -795,8 +792,8 @@ function DialogContentInner({
                         defaultValue:
                           "This bot does not have any explicit overrides yet.",
                       })}
-                </p>
-                <p className="text-sm text-muted-foreground">
+                </EmptyTitle>
+                <EmptyDescription>
                   {searchQuery.trim().length > 0
                     ? t("account.config.tryDifferentSearch", {
                         defaultValue: "Try a different search term.",
@@ -805,22 +802,24 @@ function DialogContentInner({
                         defaultValue:
                           "Open All settings to inherit values or create the first bot-specific override.",
                       })}
-                </p>
-              </div>
+                </EmptyDescription>
+              </EmptyHeader>
 
               {searchQuery.trim().length === 0 && (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setView("all");
-                  }}
-                >
-                  {t("account.config.openAllSettings", {
-                    defaultValue: "Open all settings",
-                  })}
-                </Button>
+                <EmptyContent className="items-start">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setView("all");
+                    }}
+                  >
+                    {t("account.config.openAllSettings", {
+                      defaultValue: "Open all settings",
+                    })}
+                  </Button>
+                </EmptyContent>
               )}
-            </div>
+            </Empty>
           )}
         </div>
       ) : (

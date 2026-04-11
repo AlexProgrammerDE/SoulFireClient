@@ -7,7 +7,17 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
-import { Input } from "@/components/ui/input.tsx";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { cn } from "@/lib/utils.tsx";
 import { useNodeTypes } from "./NodeTypesContext";
@@ -182,16 +192,17 @@ export function NodePalette({
         <h2 className="mb-2 text-sm font-semibold">
           {t("scripts.editor.palette.title")}
         </h2>
-        <div className="relative">
-          <SearchIcon className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
+        <InputGroup>
+          <InputGroupAddon>
+            <SearchIcon className="text-muted-foreground" />
+          </InputGroupAddon>
+          <InputGroupInput
             type="search"
             placeholder={t("scripts.editor.palette.search")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-8"
           />
-        </div>
+        </InputGroup>
         {searchQuery && (
           <p className="mt-2 text-xs text-muted-foreground">
             {t("scripts.nodes", { count: totalFilteredNodes })}
@@ -216,12 +227,22 @@ export function NodePalette({
             );
           })}
           {searchQuery && totalFilteredNodes === 0 && (
-            <div className="py-8 text-center text-sm text-muted-foreground">
-              {t(
-                "scripts.editor.palette.noResults",
-                "No nodes match your search",
-              )}
-            </div>
+            <Empty className="border-0 p-6">
+              <EmptyHeader>
+                <EmptyTitle>
+                  {t(
+                    "scripts.editor.palette.noResults",
+                    "No nodes match your search",
+                  )}
+                </EmptyTitle>
+                <EmptyDescription>
+                  {t(
+                    "scripts.editor.palette.noResultsDescription",
+                    "Try a different term or clear the current filter.",
+                  )}
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           )}
         </div>
       </ScrollArea>

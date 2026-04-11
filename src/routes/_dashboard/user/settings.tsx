@@ -14,7 +14,13 @@ import {
   ComponentTitle,
   SettingTypeRenderer,
 } from "@/components/settings-page.tsx";
-import { Card } from "@/components/ui/card.tsx";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
 import {
@@ -137,19 +143,19 @@ function Content() {
               </>
             }
           />
-          <Card className="flex w-fit flex-row items-center gap-2 p-3 text-left text-base">
-            <UserAvatar
-              username={clientInfo.username}
-              email={clientInfo.email}
-              className="size-10"
-            />
-            <div className="grid flex-1 text-left text-base leading-tight">
-              <span className="truncate font-semibold">
-                {clientInfo.username}
-              </span>
-              <span className="truncate text-sm">{clientInfo.email}</span>
-            </div>
-          </Card>
+          <Item variant="outline" size="sm" className="w-fit text-left">
+            <ItemMedia>
+              <UserAvatar
+                username={clientInfo.username}
+                email={clientInfo.email}
+                className="size-10"
+              />
+            </ItemMedia>
+            <ItemContent className="text-base leading-tight">
+              <ItemTitle>{clientInfo.username}</ItemTitle>
+              <ItemDescription>{clientInfo.email}</ItemDescription>
+            </ItemContent>
+          </Item>
         </div>
         <SettingTypeRenderer
           settingType={{

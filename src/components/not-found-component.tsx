@@ -9,13 +9,15 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button.tsx";
+import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card.tsx";
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
 import { isTauri, runAsync } from "@/lib/utils.tsx";
 import { logOut } from "@/lib/web-rpc.ts";
 
@@ -26,56 +28,58 @@ export function NotFoundComponent() {
   const [revalidating, setRevalidating] = useState(false);
 
   return (
-    <div className="flex size-full grow">
-      <Card className="m-auto flex flex-col">
-        <CardHeader>
-          <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
-            <SearchXIcon className="h-8" />
-            {t("notFound.page.title")}
-          </CardTitle>
-          <CardDescription>{t("notFound.page.description")}</CardDescription>
-        </CardHeader>
-        <CardFooter className="flex flex-row gap-2">
-          <Button
-            className="w-fit"
-            onClick={() => {
-              runAsync(async () => {
-                if (isTauri()) {
-                  await emit("kill-integrated-server", {});
-                }
-                logOut();
-                await navigate({
-                  to: "/",
-                  replace: true,
+    <div className="flex size-full grow p-4">
+      <Empty className="m-auto max-w-xl rounded-xl border bg-card">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <SearchXIcon className="size-6" />
+          </EmptyMedia>
+          <EmptyTitle>{t("notFound.page.title")}</EmptyTitle>
+          <EmptyDescription>{t("notFound.page.description")}</EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <ButtonGroup>
+            <Button
+              onClick={() => {
+                runAsync(async () => {
+                  if (isTauri()) {
+                    await emit("kill-integrated-server", {});
+                  }
+                  logOut();
+                  await navigate({
+                    to: "/",
+                    replace: true,
+                  });
                 });
-              });
-            }}
-          >
-            <LogOutIcon />
-            {t("notFound.page.logOut")}
-          </Button>
-          <Button
-            onClick={() => {
-              setRevalidating(true);
-              router
-                .invalidate()
-                .then(() => {
-                  setRevalidating(false);
-                })
-                .catch(() => {
-                  setRevalidating(false);
-                });
-            }}
-          >
-            {revalidating ? (
-              <LoaderCircleIcon className="animate-spin" />
-            ) : (
-              <RotateCwIcon />
-            )}
-            {t("notFound.page.reloadPage")}
-          </Button>
-        </CardFooter>
-      </Card>
+              }}
+            >
+              <LogOutIcon />
+              {t("notFound.page.logOut")}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setRevalidating(true);
+                router
+                  .invalidate()
+                  .then(() => {
+                    setRevalidating(false);
+                  })
+                  .catch(() => {
+                    setRevalidating(false);
+                  });
+              }}
+            >
+              {revalidating ? (
+                <LoaderCircleIcon className="animate-spin" />
+              ) : (
+                <RotateCwIcon />
+              )}
+              {t("notFound.page.reloadPage")}
+            </Button>
+          </ButtonGroup>
+        </EmptyContent>
+      </Empty>
     </div>
   );
 }

@@ -1,8 +1,16 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { BlocksIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { InstancePluginInfoCard } from "@/components/instance-plugin-info-card.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/discover")(
@@ -64,30 +72,53 @@ function Discover() {
 }
 
 function Content() {
+  const { t } = useTranslation("common");
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const plugins = instanceInfo.instanceSettings.filter(
+    (settings) =>
+      settings.owningPluginId !== undefined &&
+      settings.enabledIdentifier !== undefined,
+  );
+
+  if (plugins.length === 0) {
+    return (
+      <Empty className="h-full rounded-xl border">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <BlocksIcon className="size-6" />
+          </EmptyMedia>
+          <EmptyTitle>
+            {t("discover.noPluginsTitle", {
+              defaultValue: "No discoverable plugins found",
+            })}
+          </EmptyTitle>
+          <EmptyDescription>
+            {t("discover.noPluginsDescription", {
+              defaultValue:
+                "This instance does not expose any plugin settings yet.",
+            })}
+          </EmptyDescription>
+        </EmptyHeader>
+      </Empty>
+    );
+  }
 
   return (
     <div className="grid h-full w-full grow grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {instanceInfo.instanceSettings
-        .filter(
-          (settings) =>
-            settings.owningPluginId !== undefined &&
-            settings.enabledIdentifier !== undefined,
-        )
-        .map((settings) => {
-          const plugin = instanceInfo.plugins.find(
-            (p) => p.id === settings.owningPluginId,
-          );
-          if (!plugin) return null;
-          return (
-            <InstancePluginInfoCard
-              key={settings.id}
-              settingsEntry={settings}
-              plugin={plugin}
-            />
-          );
-        })}
+      {plugins.map((settings) => {
+        const plugin = instanceInfo.plugins.find(
+          (p) => p.id === settings.owningPluginId,
+        );
+        if (!plugin) return null;
+        return (
+          <InstancePluginInfoCard
+            key={settings.id}
+            settingsEntry={settings}
+            plugin={plugin}
+          />
+        );
+      })}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { ArrowLeftFromLine } from "lucide-react";
 import { memo } from "react";
+import { Empty, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { cn } from "@/lib/utils";
 import { getHandleShape, getPortColor, type PortType } from "./types";
 
@@ -68,9 +69,13 @@ function GroupOutputNodeComponent({ data, selected }: GroupOutputNodeProps) {
 
       {/* Empty state */}
       {inputs.length === 0 && (
-        <div className="px-3 py-2 text-xs text-muted-foreground italic">
-          No outputs defined
-        </div>
+        <Empty className="border-0 p-3">
+          <EmptyHeader className="gap-1">
+            <EmptyTitle className="text-xs text-muted-foreground">
+              No outputs defined
+            </EmptyTitle>
+          </EmptyHeader>
+        </Empty>
       )}
     </div>
   );

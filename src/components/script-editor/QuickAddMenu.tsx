@@ -7,6 +7,12 @@ import {
   XIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -255,9 +261,14 @@ export function QuickAddMenu() {
         <ScrollArea className={isMobile ? "max-h-[40vh]" : "h-[300px]"}>
           <div className="p-1">
             {flatList.length === 0 ? (
-              <div className="py-4 text-center text-sm text-muted-foreground">
-                No nodes found
-              </div>
+              <Empty className="border-0 p-4">
+                <EmptyHeader>
+                  <EmptyTitle>No nodes found</EmptyTitle>
+                  <EmptyDescription>
+                    Try a different search term.
+                  </EmptyDescription>
+                </EmptyHeader>
+              </Empty>
             ) : (
               flatList.map((item, index) => {
                 if (item.type === "category") {

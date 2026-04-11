@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import {
   Credenza,
   CredenzaBody,
@@ -251,7 +252,7 @@ export default function ControlsMenu() {
 
   return (
     <>
-      <div className="flex flex-wrap gap-1">
+      <ButtonGroup className="flex-wrap">
         <Button
           variant="secondary"
           onClick={() => startMutation.mutate()}
@@ -290,7 +291,7 @@ export default function ControlsMenu() {
           <SquareIcon />
           {t("controls.stop")}
         </Button>
-      </div>
+      </ButtonGroup>
 
       {/* Account Warning Dialog */}
       <Credenza

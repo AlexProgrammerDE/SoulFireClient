@@ -1,5 +1,6 @@
 import { Keyboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Kbd } from "@/components/ui/kbd";
 import {
   Tooltip,
   TooltipContent,
@@ -59,9 +60,7 @@ export function KeyboardShortcutsHelp() {
                   className="flex items-center justify-between text-xs"
                 >
                   <span className="text-muted-foreground">{action}</span>
-                  <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
-                    {formatShortcut(keys)}
-                  </kbd>
+                  <Kbd className="font-mono">{formatShortcut(keys)}</Kbd>
                 </div>
               ))}
             </div>

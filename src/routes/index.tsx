@@ -30,6 +30,7 @@ import { ExternalLink } from "@/components/external-link.tsx";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
 import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import {
   Card,
   CardContent,
@@ -54,8 +55,14 @@ import {
   FieldDescription,
   FieldError,
   FieldLabel,
-} from "@/components/ui/form.tsx";
+} from "@/components/ui/field.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group.tsx";
 import {
   InputOTP,
   InputOTPGroup,
@@ -423,11 +430,11 @@ function DefaultMenu(props: {
         <CardDescription>{t("connect.description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <div className="flex flex-row gap-2">
+        <ButtonGroup className="w-full">
           <Button
             autoFocus
             disabled={integratedDisabled}
-            className="grow"
+            className="flex-1"
             variant="outline"
             onClick={() => {
               props.setLoginType("INTEGRATED");
@@ -446,12 +453,12 @@ function DefaultMenu(props: {
               {t("connect.integrated.description")}
             </PopoverContent>
           </Popover>
-        </div>
-        <div className="flex flex-row gap-2">
+        </ButtonGroup>
+        <ButtonGroup className="w-full">
           <Button
             autoFocus={integratedDisabled}
             disabled={isDemo()}
-            className="grow"
+            className="flex-1"
             variant="outline"
             onClick={() => props.setLoginType("DEDICATED")}
           >
@@ -468,12 +475,12 @@ function DefaultMenu(props: {
               {t("connect.dedicated.description")}
             </PopoverContent>
           </Popover>
-        </div>
+        </ButtonGroup>
         {isDemo() && (
-          <div className="flex flex-row gap-2">
+          <ButtonGroup className="w-full">
             <Button
               autoFocus
-              className="grow"
+              className="flex-1"
               variant="outline"
               onClick={() => {
                 void props.demoLogin();
@@ -490,7 +497,7 @@ function DefaultMenu(props: {
               </PopoverTrigger>
               <PopoverContent>{t("connect.demo.description")}</PopoverContent>
             </Popover>
-          </div>
+          </ButtonGroup>
         )}
       </CardContent>
     </Card>
@@ -882,24 +889,26 @@ function IntegratedMobileMenu({
             <FieldLabel>
               {t("integrated.mobile.form.termuxCommand.title")}
             </FieldLabel>
-            <div className="flex flex-row gap-2">
-              <Input
+            <InputGroup>
+              <InputGroupInput
                 autoFocus
                 type="text"
                 inputMode="text"
                 readOnly
                 value={runCommand}
+                className="select-all"
               />
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => {
-                  copyToClipboard(runCommand);
-                }}
-              >
-                <ClipboardIcon />
-              </Button>
-            </div>
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  size="icon-sm"
+                  onClick={() => {
+                    copyToClipboard(runCommand);
+                  }}
+                >
+                  <ClipboardIcon />
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
             <FieldDescription>
               <Trans
                 i18nKey="login:integrated.mobile.form.termuxCommand.description"
