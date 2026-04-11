@@ -1,6 +1,5 @@
 import { useCanGoBack, useLocation, useRouter } from "@tanstack/react-router";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { type as getOsType } from "@tauri-apps/plugin-os";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -9,16 +8,8 @@ import {
   XIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { cn, isTauri } from "@/lib/utils.tsx";
-
-function isDesktopTauri() {
-  if (!isTauri()) {
-    return false;
-  }
-
-  const osType = getOsType();
-  return osType !== "android" && osType !== "ios";
-}
+import { isDesktopTauri } from "@/lib/platform.ts";
+import { cn } from "@/lib/utils.tsx";
 
 function WindowControls() {
   const desktopTauri = isDesktopTauri();
@@ -146,6 +137,10 @@ export function WindowTitlebar() {
   const handleForward = useCallback(() => {
     router.history.forward();
   }, [router]);
+
+  if (!desktopTauri) {
+    return null;
+  }
 
   return (
     <header className="window-topbar">

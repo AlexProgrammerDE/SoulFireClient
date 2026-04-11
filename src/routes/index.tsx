@@ -67,7 +67,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Scroller } from "@/components/ui/scroller.tsx";
 import {
   LoginService,
@@ -248,7 +247,7 @@ function Index() {
           fill={`url(#${circuitPatternId})`}
         />
       </svg>
-      <ScrollArea className="relative min-h-0 flex-1 w-full px-4">
+      <div className="relative min-h-0 flex-1 overflow-y-auto px-4">
         <main className="flex min-h-full w-full flex-col">
           <div className="m-auto flex w-full max-w-lg flex-col gap-4 py-6">
             <ExternalLink
@@ -382,7 +381,7 @@ function Index() {
             </div>
           </div>
         </main>
-      </ScrollArea>
+      </div>
     </div>
   );
 }

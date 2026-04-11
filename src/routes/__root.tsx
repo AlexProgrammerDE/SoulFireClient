@@ -39,6 +39,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { WindowTitlebar } from "@/components/window/window-titlebar.tsx";
 import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics_pb.ts";
 import { useDiscordPresence } from "@/hooks/use-discord-presence.ts";
+import { isDesktopTauri } from "@/lib/platform.ts";
 import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
 
 async function getAvailableProfiles() {
@@ -110,7 +111,7 @@ function RootPending() {
     >
       <WindowThemeSyncer />
       <div vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col">
-        <div className="window-topbar" />
+        {isDesktopTauri() && <div className="window-topbar" />}
       </div>
     </ThemeProvider>
   );
@@ -330,7 +331,7 @@ function RootLayout() {
                     <PointerReset />
                     <CustomContextMenu />
                     <AboutProvider>
-                      <WindowTitlebar />
+                      {isDesktopTauri() && <WindowTitlebar />}
                       <div className="flex min-h-0 flex-1 flex-col">
                         <Outlet />
                       </div>
