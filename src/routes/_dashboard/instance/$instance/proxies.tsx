@@ -81,6 +81,7 @@ import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n.ts";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import { observeServerStream } from "@/lib/protobuf.ts";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
@@ -174,6 +175,8 @@ function ProxyCheckDialog({
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
   validateSearch: dataTableValidateSearch,
+  beforeLoad: () =>
+    staticRouteTitle(() => i18n.t("common:pageName.proxySettings")),
   component: ProxySettings,
 });
 

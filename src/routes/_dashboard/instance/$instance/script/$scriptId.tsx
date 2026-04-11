@@ -48,7 +48,9 @@ import {
   ScriptService,
 } from "@/generated/soulfire/script_pb";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
+import i18n from "@/lib/i18n";
 import { observeServerStream } from "@/lib/protobuf.ts";
+import { routeTitle } from "@/lib/route-title.ts";
 import {
   edgesToProto,
   nodesToProto,
@@ -56,6 +58,7 @@ import {
   scriptQueryOptions,
 } from "@/lib/script-service.ts";
 import { isDemo, timestampToDate } from "@/lib/utils.tsx";
+import { createTransport } from "@/lib/web-rpc.ts";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 
 import "@xyflow/react/dist/style.css";
@@ -84,6 +87,33 @@ interface LogEntry {
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/script/$scriptId",
 )({
+  beforeLoad: () =>
+    routeTitle((match) => {
+      if (typeof match.loaderData === "string" && match.loaderData.trim()) {
+        return match.loaderData;
+      }
+
+      if (match.params.scriptId === "new") {
+        return i18n.t("instance:scripts.createScriptTitle");
+      }
+
+      return i18n.t("instance:scripts.title");
+    }),
+  loader: async (props) => {
+    if (props.params.scriptId === "new") {
+      return null;
+    }
+
+    const script = await props.context.queryClient.ensureQueryData(
+      scriptQueryOptions(
+        createTransport(),
+        props.params.instance,
+        props.params.scriptId,
+      ),
+    );
+
+    return script?.name ?? null;
+  },
   component: ScriptEditorPage,
 });
 

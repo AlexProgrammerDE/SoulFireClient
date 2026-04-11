@@ -12,9 +12,12 @@ import {
   type LogScope,
   LogScopeSchema,
 } from "@/generated/soulfire/logs_pb.ts";
+import i18n from "@/lib/i18n";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import { hasGlobalPermission } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/user/admin/logs")({
+  beforeLoad: () => staticRouteTitle(() => i18n.t("common:pageName.logs")),
   component: Logs,
 });
 

@@ -54,7 +54,9 @@ import type { ScriptInfo } from "@/generated/soulfire/script_pb";
 import { ScriptService } from "@/generated/soulfire/script_pb";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
+import i18n from "@/lib/i18n";
 import { observeServerStream } from "@/lib/protobuf.ts";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import { scriptListQueryOptions } from "@/lib/script-service.ts";
 import { timestampToDate } from "@/lib/utils.tsx";
 
@@ -64,6 +66,8 @@ const createScriptSchema = z.object({
 });
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/scripts")({
+  beforeLoad: () =>
+    staticRouteTitle(() => i18n.t("common:pageName.instanceScripts")),
   component: InstanceScripts,
 });
 

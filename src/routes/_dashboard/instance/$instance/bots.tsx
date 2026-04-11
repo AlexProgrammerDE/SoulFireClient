@@ -53,7 +53,9 @@ import {
 import { MinecraftAccountProto_AccountTypeProto } from "@/generated/soulfire/common_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
+import i18n from "@/lib/i18n";
 import { simpleSearchValidateSearch } from "@/lib/parsers.ts";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import {
   getEnumKeyByValue,
   mapUnionToValue,
@@ -83,7 +85,10 @@ export const Route = createFileRoute("/_dashboard/instance/$instance/bots")({
       },
       refetchInterval: 3_000,
     });
-    return { botStatusQueryOptions };
+    return {
+      botStatusQueryOptions,
+      ...staticRouteTitle(() => i18n.t("common:pageName.bots")),
+    };
   },
   loader: (props) => {
     void props.context.queryClient.prefetchQuery(

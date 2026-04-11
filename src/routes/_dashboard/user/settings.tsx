@@ -28,6 +28,8 @@ import {
   StringSetting_InputType,
   StringSettingSchema,
 } from "@/generated/soulfire/common_pb.ts";
+import i18n from "@/lib/i18n";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import {
   hasGlobalPermission,
   setSelfEmail,
@@ -35,6 +37,7 @@ import {
 } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/user/settings")({
+  beforeLoad: () => staticRouteTitle(() => i18n.t("common:pageName.settings")),
   component: UserSettings,
 });
 

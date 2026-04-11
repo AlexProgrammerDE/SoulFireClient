@@ -97,6 +97,8 @@ import {
   type AutomationTeamState,
   AutomationTeamStateSchema,
 } from "@/generated/soulfire/automation_pb.ts";
+import i18n from "@/lib/i18n";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import { cn, timestampToDate } from "@/lib/utils.tsx";
 import { createTransport } from "@/lib/web-rpc.ts";
 
@@ -417,6 +419,7 @@ export const Route = createFileRoute(
     return {
       automationTeamStateQueryOptions,
       automationCoordinationStateQueryOptions,
+      ...staticRouteTitle(() => i18n.t("common:pageName.automation")),
     };
   },
   loader: (props) => {

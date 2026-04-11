@@ -41,8 +41,10 @@ import {
   WindowTitlebar,
 } from "@/components/window/window-titlebar.tsx";
 import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics_pb.ts";
+import { useCurrentRouteTitle } from "@/hooks/use-current-route-title.ts";
 import { useDiscordPresence } from "@/hooks/use-discord-presence.ts";
 import { isDesktopTauri } from "@/lib/platform.ts";
+import { buildDocumentTitle } from "@/lib/route-title.ts";
 import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
 
 async function getAvailableProfiles() {
@@ -156,6 +158,16 @@ const AppStartedEvent = memo(() => {
       }
     }
   }, [appLoaded, trackEvent]);
+
+  return null;
+});
+
+const DocumentTitleSyncer = memo(() => {
+  const pageTitle = useCurrentRouteTitle();
+
+  useEffect(() => {
+    document.title = buildDocumentTitle(pageTitle);
+  }, [pageTitle]);
 
   return null;
 });
@@ -318,6 +330,7 @@ function RootLayout() {
       >
         <AppStartedEvent />
         <PageChangedEvent />
+        <DocumentTitleSyncer />
         <QueryClientProvider client={queryClient}>
           <DiscordPresenceUpdater />
           <ThemeProvider

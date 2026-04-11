@@ -1,4 +1,4 @@
-import { useCanGoBack, useLocation, useRouter } from "@tanstack/react-router";
+import { useCanGoBack, useRouter } from "@tanstack/react-router";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import {
   ChevronLeftIcon,
@@ -10,6 +10,7 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import { ButtonGroup } from "@/components/ui/button-group.tsx";
+import { useCurrentRouteTitle } from "@/hooks/use-current-route-title.ts";
 import { isDesktopTauri } from "@/lib/platform.ts";
 import { cn } from "@/lib/utils.tsx";
 
@@ -141,8 +142,8 @@ function WindowControls() {
 export function WindowTitlebar() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
-  const location = useLocation();
   const desktopTauri = isDesktopTauri();
+  const pageTitle = useCurrentRouteTitle();
   const canGoForward =
     typeof window !== "undefined" &&
     router.history.location.state.__TSR_index < router.history.length - 1;
@@ -193,7 +194,7 @@ export function WindowTitlebar() {
       >
         <div className="window-topbar-no-drag mx-auto max-w-full px-3 text-center">
           <p className="text-titlebar-foreground/58 truncate text-[11px] font-medium tracking-[0.02em]">
-            {location.pathname === "/" ? "SoulFire" : location.pathname}
+            {pageTitle}
           </p>
         </div>
       </div>

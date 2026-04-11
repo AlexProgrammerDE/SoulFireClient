@@ -19,6 +19,8 @@ import {
   UserListResponseSchema,
   UserService,
 } from "@/generated/soulfire/user_pb.ts";
+import i18n from "@/lib/i18n";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import { serverMetricsQueryOptions } from "@/lib/server-metrics-query.ts";
 import {
   convertFromServerProto,
@@ -116,6 +118,7 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
       serverInfoQueryOptions,
       usersQueryOptions,
       serverMetricsOptions,
+      ...staticRouteTitle(() => i18n.t("common:breadcrumbs.admin")),
     };
   },
   loader: (props) => {

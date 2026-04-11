@@ -123,6 +123,8 @@ import {
 } from "@/generated/soulfire/logs_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
+import i18n from "@/lib/i18n";
+import { routeTitle } from "@/lib/route-title.ts";
 import {
   getEnumKeyByValue,
   mapUnionToValue,
@@ -152,11 +154,28 @@ export const Route = createFileRoute(
       },
       refetchInterval: 1_000, // Faster polling for live data
     });
-    return { botInfoQueryOptions };
+    return {
+      botInfoQueryOptions,
+      ...routeTitle((match) =>
+        typeof match.loaderData === "string" && match.loaderData.trim()
+          ? match.loaderData
+          : i18n.t("common:pageName.botDetail"),
+      ),
+    };
   },
-  loader: (props) => {
+  loader: async (props) => {
     void props.context.queryClient.prefetchQuery(
       props.context.botInfoQueryOptions,
+    );
+
+    const instanceInfo = await props.context.queryClient.ensureQueryData(
+      props.context.instanceInfoQueryOptions,
+    );
+
+    return (
+      instanceInfo.profile.accounts.find(
+        (account) => account.profileId === props.params.botId,
+      )?.lastKnownName ?? null
     );
   },
   component: BotDetail,

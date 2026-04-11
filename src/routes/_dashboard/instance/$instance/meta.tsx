@@ -37,7 +37,9 @@ import {
   StringSettingSchema,
 } from "@/generated/soulfire/common_pb.ts";
 import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
+import i18n from "@/lib/i18n";
 import { jsonToValue, valueToJson } from "@/lib/protobuf.ts";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import {
   formatIconName,
   hasInstancePermission,
@@ -46,6 +48,8 @@ import {
 } from "@/lib/utils.tsx";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/meta")({
+  beforeLoad: () =>
+    staticRouteTitle(() => i18n.t("common:pageName.metaSettings")),
   component: MetaSettings,
 });
 

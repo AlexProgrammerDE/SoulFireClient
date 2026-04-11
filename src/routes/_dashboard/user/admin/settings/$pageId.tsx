@@ -7,9 +7,28 @@ import UserPageLayout from "@/components/nav/user/user-page-layout";
 import { NotFoundComponent } from "@/components/not-found-component.tsx";
 import { AdminSettingsPageComponent } from "@/components/settings-page.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import i18n from "@/lib/i18n";
+import { routeTitle } from "@/lib/route-title.ts";
 
 export const Route = createFileRoute("/_dashboard/user/admin/settings/$pageId")(
   {
+    beforeLoad: () =>
+      routeTitle((match) =>
+        typeof match.loaderData === "string" && match.loaderData.trim()
+          ? match.loaderData
+          : i18n.t("common:breadcrumbs.settings"),
+      ),
+    loader: async (props) => {
+      const serverInfo = await props.context.queryClient.ensureQueryData(
+        props.context.serverInfoQueryOptions,
+      );
+
+      return (
+        serverInfo.serverSettings.find(
+          (setting) => setting.id === props.params.pageId,
+        )?.pageName ?? null
+      );
+    },
     component: SettingsPage,
   },
 );

@@ -12,9 +12,13 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import i18n from "@/lib/i18n";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/discover")(
   {
+    beforeLoad: () =>
+      staticRouteTitle(() => i18n.t("common:pageName.discoverPlugins")),
     component: Discover,
   },
 );

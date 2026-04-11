@@ -101,6 +101,7 @@ import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import { observeServerStream } from "@/lib/protobuf.ts";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import {
   type GenerateAccountsMode,
   getEnumEntries,
@@ -208,6 +209,8 @@ function GenerateAccountsButton() {
 export const Route = createFileRoute("/_dashboard/instance/$instance/accounts")(
   {
     validateSearch: dataTableValidateSearch,
+    beforeLoad: () =>
+      staticRouteTitle(() => i18n.t("common:pageName.accountSettings")),
     component: AccountSettings,
   },
 );

@@ -38,6 +38,7 @@ import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
+import { staticRouteTitle } from "@/lib/route-title.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
@@ -83,6 +84,7 @@ export const Route = createFileRoute(
     });
     return {
       auditLogQueryOptions,
+      ...staticRouteTitle(() => i18n.t("common:pageName.audit-log")),
     };
   },
   loader: (props) => {

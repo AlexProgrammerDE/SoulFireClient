@@ -7,10 +7,29 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { NotFoundComponent } from "@/components/not-found-component.tsx";
 import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import i18n from "@/lib/i18n";
+import { routeTitle } from "@/lib/route-title.ts";
 
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/settings/$pageId",
 )({
+  beforeLoad: () =>
+    routeTitle((match) =>
+      typeof match.loaderData === "string" && match.loaderData.trim()
+        ? match.loaderData
+        : i18n.t("common:breadcrumbs.settings"),
+    ),
+  loader: async (props) => {
+    const instanceInfo = await props.context.queryClient.ensureQueryData(
+      props.context.instanceInfoQueryOptions,
+    );
+
+    return (
+      instanceInfo.instanceSettings.find(
+        (setting) => setting.id === props.params.pageId,
+      )?.pageName ?? null
+    );
+  },
   component: SettingsPage,
 });
 

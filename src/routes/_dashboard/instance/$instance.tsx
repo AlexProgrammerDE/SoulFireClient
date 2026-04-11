@@ -1,6 +1,6 @@
 import { create } from "@bufbuild/protobuf";
 import { createClient } from "@connectrpc/connect";
-import { queryOptions } from "@tanstack/react-query";
+import { type QueryClient, queryOptions } from "@tanstack/react-query";
 import { CatchBoundary, createFileRoute, Outlet } from "@tanstack/react-router";
 import { ErrorComponent } from "@/components/error-component.tsx";
 import { InstanceSidebar } from "@/components/nav/instance/instance-sidebar.tsx";
@@ -28,7 +28,9 @@ import {
 } from "@/generated/soulfire/instance_pb.ts";
 import { useCastBroadcast } from "@/hooks/use-cast-broadcast.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
+import i18n from "@/lib/i18n";
 import { instanceMetricsQueryOptions } from "@/lib/metrics-query.ts";
+import { routeTitle } from "@/lib/route-title.ts";
 import {
   convertFromInstanceProto,
   type InstanceInfoQueryData,
@@ -162,6 +164,16 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
     return {
       instanceInfoQueryOptions,
       metricsQueryOptions,
+      ...routeTitle((match) => {
+        const titleContext = match.context as {
+          queryClient: QueryClient;
+        };
+        const instanceInfo =
+          titleContext.queryClient.getQueryData<InstanceInfoQueryData>(
+            instanceInfoQueryOptions.queryKey,
+          );
+        return instanceInfo?.friendlyName ?? i18n.t("common:pageName.overview");
+      }),
     };
   },
   loader: (props) => {
