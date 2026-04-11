@@ -1,4 +1,5 @@
 import { ChevronRight, Home } from "lucide-react";
+import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 
@@ -71,8 +72,12 @@ export function GroupBreadcrumb() {
       ))}
 
       {/* Keyboard hint */}
-      <span className="ml-2 text-xs text-muted-foreground">
-        Press Tab to exit
+      <span className="ml-2 inline-flex items-center gap-1 text-xs text-muted-foreground">
+        Press
+        <KbdGroup>
+          <Kbd>Tab</Kbd>
+        </KbdGroup>
+        to exit
       </span>
     </div>
   );

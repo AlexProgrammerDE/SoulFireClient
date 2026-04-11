@@ -1,6 +1,7 @@
 import { flexRender, type Table as TanstackTable } from "@tanstack/react-table";
 import type * as React from "react";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
+import { Empty, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import {
   Table,
   TableBody,
@@ -87,9 +88,13 @@ export function DataTable<TData>({
               <TableRow>
                 <TableCell
                   colSpan={table.getAllColumns().length}
-                  className="h-24 text-center"
+                  className="h-36 p-0"
                 >
-                  No results.
+                  <Empty className="h-full rounded-none border-0 px-4 py-8">
+                    <EmptyHeader className="gap-1">
+                      <EmptyTitle className="text-sm">No results.</EmptyTitle>
+                    </EmptyHeader>
+                  </Empty>
                 </TableCell>
               </TableRow>
             )}

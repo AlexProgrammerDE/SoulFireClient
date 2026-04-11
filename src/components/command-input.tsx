@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Kbd } from "@/components/ui/kbd";
 import type {
   CommandCompletion,
   CommandScope,
@@ -684,13 +685,18 @@ export default function CommandInput(props: { scope: CommandScope }) {
             </ul>
           ) : (
             <div className="text-muted-foreground px-3 py-2 text-sm">
-              {inputValue === ""
-                ? t("commandInput.emptySuggestions", {
-                    defaultValue: "Type to request suggestions or press Tab.",
-                  })
-                : t("commandInput.noSuggestions", {
-                    defaultValue: "No suggestions available.",
-                  })}
+              {inputValue === "" ? (
+                <>
+                  {t("commandInput.emptySuggestionsPrefix", {
+                    defaultValue: "Type to request suggestions or press",
+                  })}{" "}
+                  <Kbd>Tab</Kbd>.
+                </>
+              ) : (
+                t("commandInput.noSuggestions", {
+                  defaultValue: "No suggestions available.",
+                })
+              )}
             </div>
           )}
         </div>

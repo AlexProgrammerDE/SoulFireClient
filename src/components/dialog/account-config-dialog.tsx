@@ -926,15 +926,24 @@ function DialogContentInner({
                   })}
                 </div>
               ) : (
-                <div className="flex h-full items-center px-4">
-                  <p className="text-sm text-muted-foreground">
-                    {searchQuery.trim().length > 0
-                      ? t("account.config.noSearchResults", {
-                          defaultValue: "No settings match this search.",
-                        })
-                      : t("account.config.noSettings")}
-                  </p>
-                </div>
+                <Empty className="h-full items-start justify-center border-0 px-4 text-left">
+                  <EmptyHeader className="items-start">
+                    <EmptyTitle className="text-sm">
+                      {searchQuery.trim().length > 0
+                        ? t("account.config.noSearchResults", {
+                            defaultValue: "No settings match this search.",
+                          })
+                        : t("account.config.noSettings")}
+                    </EmptyTitle>
+                    {searchQuery.trim().length > 0 ? (
+                      <EmptyDescription>
+                        {t("account.config.tryDifferentSearch", {
+                          defaultValue: "Try a different search term.",
+                        })}
+                      </EmptyDescription>
+                    ) : null}
+                  </EmptyHeader>
+                </Empty>
               )}
             </div>
           </div>

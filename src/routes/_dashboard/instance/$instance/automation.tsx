@@ -40,7 +40,26 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemTitle,
+} from "@/components/ui/item.tsx";
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValue,
+} from "@/components/ui/progress.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import {
   Select,
@@ -255,6 +274,96 @@ type BotClaimSummary = {
 };
 
 const NO_CHANGE = "__no_change__";
+
+function getQuotaProgressPercentage(current: number, target: number) {
+  return target > 0 ? Math.min(100, Math.round((current / target) * 100)) : 0;
+}
+
+function getQuotaProgressIndicatorClassName(percentage: number) {
+  if (percentage >= 100) {
+    return "[&_[data-slot=progress-indicator]]:bg-emerald-500 dark:[&_[data-slot=progress-indicator]]:bg-emerald-400";
+  }
+
+  if (percentage >= 50) {
+    return "[&_[data-slot=progress-indicator]]:bg-primary";
+  }
+
+  return "[&_[data-slot=progress-indicator]]:bg-amber-500 dark:[&_[data-slot=progress-indicator]]:bg-amber-400";
+}
+
+function InlineEmptyState(props: {
+  title: string;
+  description?: string;
+  className?: string;
+}) {
+  return (
+    <Empty className={cn("border-0 px-0 py-4", props.className)}>
+      <EmptyHeader className="max-w-none gap-1">
+        <EmptyTitle className="text-sm">{props.title}</EmptyTitle>
+        {props.description ? (
+          <EmptyDescription className="text-xs">
+            {props.description}
+          </EmptyDescription>
+        ) : null}
+      </EmptyHeader>
+    </Empty>
+  );
+}
+
+function QuotaSummaryProgress(props: {
+  label: string;
+  current: number;
+  target: number;
+}) {
+  const percentage = getQuotaProgressPercentage(props.current, props.target);
+
+  return (
+    <Progress
+      value={percentage}
+      className={cn(
+        "w-auto flex-nowrap items-center gap-1.5 [&>[data-slot=progress-track]]:order-2 [&>[data-slot=progress-track]]:w-12 [&>[data-slot=progress-track]]:shrink-0",
+        getQuotaProgressIndicatorClassName(percentage),
+      )}
+    >
+      <ProgressLabel className="order-1 text-xs font-normal text-muted-foreground">
+        {props.label}
+      </ProgressLabel>
+      <ProgressValue className="order-3 ml-0 text-xs text-muted-foreground">
+        {() => `${props.current}/${props.target}`}
+      </ProgressValue>
+    </Progress>
+  );
+}
+
+function QuotaEditorProgress(props: {
+  label: string;
+  current: number;
+  target: number;
+  configuredTarget: number;
+}) {
+  const percentage = getQuotaProgressPercentage(props.current, props.target);
+
+  return (
+    <Progress
+      value={percentage}
+      className={cn("gap-2", getQuotaProgressIndicatorClassName(percentage))}
+    >
+      <div className="flex items-center justify-between gap-3 text-sm">
+        <ProgressLabel className="font-medium">{props.label}</ProgressLabel>
+        <ProgressValue className="ml-0 text-muted-foreground tabular-nums">
+          {() => (
+            <>
+              {props.current}/{props.target}
+              {props.configuredTarget > 0 ? (
+                <span className="ml-1 text-xs">(manual)</span>
+              ) : null}
+            </>
+          )}
+        </ProgressValue>
+      </div>
+    </Progress>
+  );
+}
 
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/automation",
@@ -1180,37 +1289,14 @@ function Content() {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <div className="flex items-center gap-2">
               {quotaCards.map((quota) => {
-                const percentage =
-                  quota.target > 0
-                    ? Math.min(
-                        100,
-                        Math.round((quota.current / quota.target) * 100),
-                      )
-                    : 0;
                 return (
                   <Tooltip key={quota.key}>
-                    <TooltipTrigger
-                      render={<div className="flex items-center gap-1.5" />}
-                    >
-                      <span className="text-xs text-muted-foreground">
-                        {quota.label}
-                      </span>
-                      <div className="bg-muted h-1.5 w-12 overflow-hidden rounded-full">
-                        <div
-                          className={cn(
-                            "h-full rounded-full transition-all",
-                            percentage >= 100
-                              ? "bg-emerald-500 dark:bg-emerald-400"
-                              : percentage >= 50
-                                ? "bg-primary"
-                                : "bg-amber-500 dark:bg-amber-400",
-                          )}
-                          style={{ width: `${percentage}%` }}
-                        />
-                      </div>
-                      <span className="text-xs tabular-nums text-muted-foreground">
-                        {quota.current}/{quota.target}
-                      </span>
+                    <TooltipTrigger render={<div />}>
+                      <QuotaSummaryProgress
+                        label={quota.label}
+                        current={quota.current}
+                        target={quota.target}
+                      />
                     </TooltipTrigger>
                     <TooltipContent>
                       {quota.label}: {quota.current}/{quota.target}
@@ -1416,37 +1502,14 @@ function Content() {
               <div className="grid content-start gap-3">
                 <p className="text-sm font-medium">Resource Quotas</p>
                 {quotaCards.map((quota) => {
-                  const percentage =
-                    quota.target > 0
-                      ? Math.min(
-                          100,
-                          Math.round((quota.current / quota.target) * 100),
-                        )
-                      : 0;
                   return (
                     <div key={quota.key} className="grid gap-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">{quota.label}</span>
-                        <span className="text-muted-foreground tabular-nums">
-                          {quota.current}/{quota.target}
-                          {quota.configuredTarget > 0 && (
-                            <span className="ml-1 text-xs">(manual)</span>
-                          )}
-                        </span>
-                      </div>
-                      <div className="bg-muted h-1.5 overflow-hidden rounded-full">
-                        <div
-                          className={cn(
-                            "h-full rounded-full transition-all",
-                            percentage >= 100
-                              ? "bg-emerald-500 dark:bg-emerald-400"
-                              : percentage >= 50
-                                ? "bg-primary"
-                                : "bg-amber-500 dark:bg-amber-400",
-                          )}
-                          style={{ width: `${percentage}%` }}
-                        />
-                      </div>
+                      <QuotaEditorProgress
+                        label={quota.label}
+                        current={quota.current}
+                        target={quota.target}
+                        configuredTarget={quota.configuredTarget}
+                      />
                       <div className="flex items-center gap-1.5">
                         <Input
                           className="h-7 w-16 text-xs"
@@ -1776,9 +1839,11 @@ function Content() {
         )}
 
         {filteredBots.length === 0 ? (
-          <div className="text-muted-foreground rounded-md border border-dashed px-4 py-8 text-center text-sm">
-            No bots match the current filters.
-          </div>
+          <InlineEmptyState
+            title="No bots match the current filters."
+            description="Adjust or clear the current filters to review the full automation roster."
+            className="py-8"
+          />
         ) : (
           <div className="divide-border overflow-hidden rounded-lg border divide-y">
             {filteredBots.map((bot) => (
@@ -2090,17 +2155,21 @@ function SettingToggle(props: {
   onCheckedChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 rounded-md border px-3 py-3">
-      <div className="grid gap-1">
-        <p className="text-sm font-medium">{props.label}</p>
-        <p className="text-muted-foreground text-xs">{props.description}</p>
-      </div>
-      <Switch
-        checked={props.checked}
-        disabled={props.disabled}
-        onCheckedChange={props.onCheckedChange}
-      />
-    </div>
+    <Item variant="outline" size="sm" className="items-start">
+      <ItemContent>
+        <ItemTitle>{props.label}</ItemTitle>
+        <ItemDescription className="line-clamp-none text-xs">
+          {props.description}
+        </ItemDescription>
+      </ItemContent>
+      <ItemActions>
+        <Switch
+          checked={props.checked}
+          disabled={props.disabled}
+          onCheckedChange={props.onCheckedChange}
+        />
+      </ItemActions>
+    </Item>
   );
 }
 
@@ -2582,36 +2651,38 @@ function HealthPanel(props: {
         </div>
       </div>
       {attentionEntries.length === 0 ? (
-        <p className="text-muted-foreground text-sm">
-          No bots currently look stalled or degraded.
-        </p>
+        <InlineEmptyState title="No bots currently look stalled or degraded." />
       ) : (
         <ScrollArea className="h-72">
-          <div className="divide-border divide-y">
+          <ItemGroup className="gap-0 divide-border divide-y">
             {attentionEntries.map((entry) => (
-              <div key={entry.bot.botId} className="py-3 first:pt-0 last:pb-0">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">
-                    {entry.bot.accountName}
-                  </span>
-                  <span
-                    className={cn(
-                      "text-xs",
-                      entry.attention.severity === "critical"
-                        ? "text-red-600 dark:text-red-400"
-                        : "text-amber-600 dark:text-amber-400",
-                    )}
-                  >
-                    {entry.attention.label}
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {entry.attention.summary}
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {entry.attention.operatorHint}
-                </p>
-                <div className="flex gap-1.5 mt-1.5">
+              <Item
+                key={entry.bot.botId}
+                size="sm"
+                className="rounded-none border-0 px-0 py-3"
+              >
+                <ItemContent>
+                  <ItemTitle className="w-full justify-between gap-3">
+                    <span>{entry.bot.accountName}</span>
+                    <span
+                      className={cn(
+                        "text-xs",
+                        entry.attention.severity === "critical"
+                          ? "text-red-600 dark:text-red-400"
+                          : "text-amber-600 dark:text-amber-400",
+                      )}
+                    >
+                      {entry.attention.label}
+                    </span>
+                  </ItemTitle>
+                  <ItemDescription className="line-clamp-none text-xs">
+                    {entry.attention.summary}
+                  </ItemDescription>
+                  <ItemDescription className="line-clamp-none text-xs">
+                    {entry.attention.operatorHint}
+                  </ItemDescription>
+                </ItemContent>
+                <ItemActions className="basis-full justify-start">
                   <Button
                     size="xs"
                     variant="ghost"
@@ -2633,10 +2704,10 @@ function HealthPanel(props: {
                   >
                     Select
                   </Button>
-                </div>
-              </div>
+                </ItemActions>
+              </Item>
             ))}
-          </div>
+          </ItemGroup>
         </ScrollArea>
       )}
     </div>
@@ -2739,30 +2810,35 @@ function ClaimsPanel(props: {
         </div>
       )}
       {props.insights.length === 0 ? (
-        <p className="text-muted-foreground text-sm">
-          {focusedBot
-            ? `${focusedBot.accountName} does not currently own any claims matching the active filters.`
-            : "No claims match the current filters."}
-        </p>
+        <InlineEmptyState
+          title={
+            focusedBot
+              ? `${focusedBot.accountName} does not currently own any claims matching the active filters.`
+              : "No claims match the current filters."
+          }
+        />
       ) : (
         <ScrollArea className="h-72">
-          <div className="divide-border divide-y">
+          <ItemGroup className="gap-0 divide-border divide-y">
             {props.insights.map((insight) => {
               const ownerBot = insight.ownerBot;
               return (
-                <div
+                <Item
                   key={insight.claim.key}
-                  className="flex items-center justify-between gap-3 py-2.5 first:pt-0"
+                  size="sm"
+                  className="rounded-none border-0 px-0 py-2.5"
                 >
-                  <div className="min-w-0">
-                    <p className="truncate text-sm">{insight.purposeLabel}</p>
-                    <p className="text-xs text-muted-foreground">
+                  <ItemContent className="min-w-0">
+                    <ItemTitle className="truncate font-normal">
+                      {insight.purposeLabel}
+                    </ItemTitle>
+                    <ItemDescription className="line-clamp-none text-xs">
                       {insight.kindLabel} /{" "}
                       {ownerBot?.accountName ?? insight.claim.ownerAccountName}{" "}
                       / {claimExpiryLabel(insight.expiresInSeconds)}
-                    </p>
-                  </div>
-                  <div className="flex shrink-0 items-center gap-1.5">
+                    </ItemDescription>
+                  </ItemContent>
+                  <ItemActions className="shrink-0">
                     {ownerBot && (
                       <>
                         <Button
@@ -2789,11 +2865,11 @@ function ClaimsPanel(props: {
                     >
                       Release
                     </Button>
-                  </div>
-                </div>
+                  </ItemActions>
+                </Item>
               );
             })}
-          </div>
+          </ItemGroup>
         </ScrollArea>
       )}
     </div>
@@ -2857,9 +2933,7 @@ function MemoryPanel(props: {
       )}
 
       {props.bots.length === 0 ? (
-        <p className="text-muted-foreground text-sm">
-          No automation bots are available for memory inspection.
-        </p>
+        <InlineEmptyState title="No automation bots are available for memory inspection." />
       ) : props.errorMessage ? (
         <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-3 text-sm">
           <p className="font-medium">Memory snapshot failed.</p>
@@ -2888,26 +2962,30 @@ function MemoryPanel(props: {
                 count={memoryState.blocks.length}
               />
               {memoryState.blocks.length === 0 ? (
-                <p className="text-xs text-muted-foreground">
-                  No remembered blocks in this snapshot.
-                </p>
+                <InlineEmptyState
+                  title="No remembered blocks in this snapshot."
+                  className="py-2"
+                />
               ) : (
-                <div className="divide-border divide-y">
+                <ItemGroup className="gap-0 divide-border divide-y">
                   {memoryState.blocks.map((block) => (
-                    <div
+                    <Item
                       key={`${block.x}:${block.y}:${block.z}:${block.blockId}`}
-                      className="py-2 first:pt-0"
+                      size="sm"
+                      className="rounded-none border-0 px-0 py-2"
                     >
-                      <p className="truncate text-sm font-medium">
-                        {formatNamespacedId(block.blockId)}
-                      </p>
-                      <p className="text-muted-foreground text-xs">
-                        {block.x}, {block.y}, {block.z} / Seen{" "}
-                        {formatSeenTick(memoryState.tick, block.lastSeenTick)}
-                      </p>
-                    </div>
+                      <ItemContent>
+                        <ItemTitle className="truncate">
+                          {formatNamespacedId(block.blockId)}
+                        </ItemTitle>
+                        <ItemDescription className="line-clamp-none text-xs">
+                          {block.x}, {block.y}, {block.z} / Seen{" "}
+                          {formatSeenTick(memoryState.tick, block.lastSeenTick)}
+                        </ItemDescription>
+                      </ItemContent>
+                    </Item>
                   ))}
-                </div>
+                </ItemGroup>
               )}
 
               <MemorySectionHeading
@@ -2915,36 +2993,38 @@ function MemoryPanel(props: {
                 count={memoryState.containers.length}
               />
               {memoryState.containers.length === 0 ? (
-                <p className="text-xs text-muted-foreground">
-                  No remembered containers in this snapshot.
-                </p>
+                <InlineEmptyState
+                  title="No remembered containers in this snapshot."
+                  className="py-2"
+                />
               ) : (
-                <div className="divide-border divide-y">
+                <ItemGroup className="gap-0 divide-border divide-y">
                   {memoryState.containers.map((container) => (
-                    <div
+                    <Item
                       key={`${container.x}:${container.y}:${container.z}:${container.blockId}`}
-                      className="py-2 first:pt-0"
+                      size="sm"
+                      className="rounded-none border-0 px-0 py-2"
                     >
-                      <div className="flex items-center gap-2">
-                        <p className="truncate text-sm font-medium">
+                      <ItemContent>
+                        <ItemTitle className="truncate">
                           {formatNamespacedId(container.blockId)}
-                        </p>
-                        <span className="text-xs text-muted-foreground">
-                          {container.inspected ? "Inspected" : "Unopened"}
-                        </span>
-                      </div>
-                      <p className="text-muted-foreground text-xs">
-                        {container.x}, {container.y}, {container.z} /{" "}
-                        {container.distinctItemKinds} item kinds,{" "}
-                        {container.totalItemCount} total items / Seen{" "}
-                        {formatSeenTick(
-                          memoryState.tick,
-                          container.lastSeenTick,
-                        )}
-                      </p>
-                    </div>
+                          <span className="text-xs font-normal text-muted-foreground">
+                            {container.inspected ? "Inspected" : "Unopened"}
+                          </span>
+                        </ItemTitle>
+                        <ItemDescription className="line-clamp-none text-xs">
+                          {container.x}, {container.y}, {container.z} /{" "}
+                          {container.distinctItemKinds} item kinds,{" "}
+                          {container.totalItemCount} total items / Seen{" "}
+                          {formatSeenTick(
+                            memoryState.tick,
+                            container.lastSeenTick,
+                          )}
+                        </ItemDescription>
+                      </ItemContent>
+                    </Item>
                   ))}
-                </div>
+                </ItemGroup>
               )}
 
               <MemorySectionHeading
@@ -2952,24 +3032,34 @@ function MemoryPanel(props: {
                 count={memoryState.entities.length}
               />
               {memoryState.entities.length === 0 ? (
-                <p className="text-xs text-muted-foreground">
-                  No remembered entities in this snapshot.
-                </p>
+                <InlineEmptyState
+                  title="No remembered entities in this snapshot."
+                  className="py-2"
+                />
               ) : (
-                <div className="divide-border divide-y">
+                <ItemGroup className="gap-0 divide-border divide-y">
                   {memoryState.entities.map((entity) => (
-                    <div key={entity.entityId} className="py-2 first:pt-0">
-                      <p className="truncate text-sm font-medium">
-                        {formatNamespacedId(entity.entityType)}
-                      </p>
-                      <p className="text-muted-foreground text-xs">
-                        {formatPosition(entity.position)} / Entity{" "}
-                        {shortId(entity.entityId)} / Seen{" "}
-                        {formatSeenTick(memoryState.tick, entity.lastSeenTick)}
-                      </p>
-                    </div>
+                    <Item
+                      key={entity.entityId}
+                      size="sm"
+                      className="rounded-none border-0 px-0 py-2"
+                    >
+                      <ItemContent>
+                        <ItemTitle className="truncate">
+                          {formatNamespacedId(entity.entityType)}
+                        </ItemTitle>
+                        <ItemDescription className="line-clamp-none text-xs">
+                          {formatPosition(entity.position)} / Entity{" "}
+                          {shortId(entity.entityId)} / Seen{" "}
+                          {formatSeenTick(
+                            memoryState.tick,
+                            entity.lastSeenTick,
+                          )}
+                        </ItemDescription>
+                      </ItemContent>
+                    </Item>
                   ))}
-                </div>
+                </ItemGroup>
               )}
 
               <MemorySectionHeading
@@ -2977,24 +3067,31 @@ function MemoryPanel(props: {
                 count={memoryState.droppedItems.length}
               />
               {memoryState.droppedItems.length === 0 ? (
-                <p className="text-xs text-muted-foreground">
-                  No remembered dropped items in this snapshot.
-                </p>
+                <InlineEmptyState
+                  title="No remembered dropped items in this snapshot."
+                  className="py-2"
+                />
               ) : (
-                <div className="divide-border divide-y">
+                <ItemGroup className="gap-0 divide-border divide-y">
                   {memoryState.droppedItems.map((item) => (
-                    <div key={item.entityId} className="py-2 first:pt-0">
-                      <p className="truncate text-sm font-medium">
-                        {formatNamespacedId(item.itemId)} x{item.count}
-                      </p>
-                      <p className="text-muted-foreground text-xs">
-                        {formatPosition(item.position)} / Entity{" "}
-                        {shortId(item.entityId)} / Seen{" "}
-                        {formatSeenTick(memoryState.tick, item.lastSeenTick)}
-                      </p>
-                    </div>
+                    <Item
+                      key={item.entityId}
+                      size="sm"
+                      className="rounded-none border-0 px-0 py-2"
+                    >
+                      <ItemContent>
+                        <ItemTitle className="truncate">
+                          {formatNamespacedId(item.itemId)} x{item.count}
+                        </ItemTitle>
+                        <ItemDescription className="line-clamp-none text-xs">
+                          {formatPosition(item.position)} / Entity{" "}
+                          {shortId(item.entityId)} / Seen{" "}
+                          {formatSeenTick(memoryState.tick, item.lastSeenTick)}
+                        </ItemDescription>
+                      </ItemContent>
+                    </Item>
                   ))}
-                </div>
+                </ItemGroup>
               )}
 
               <MemorySectionHeading
@@ -3002,25 +3099,32 @@ function MemoryPanel(props: {
                 count={memoryState.unreachablePositions.length}
               />
               {memoryState.unreachablePositions.length === 0 ? (
-                <p className="text-xs text-muted-foreground">
-                  No unreachable positions in this snapshot.
-                </p>
+                <InlineEmptyState
+                  title="No unreachable positions in this snapshot."
+                  className="py-2"
+                />
               ) : (
-                <div className="divide-border divide-y">
+                <ItemGroup className="gap-0 divide-border divide-y">
                   {memoryState.unreachablePositions.map((position) => (
-                    <div
+                    <Item
                       key={`${position.x}:${position.y}:${position.z}:${position.untilTick}`}
-                      className="py-2 first:pt-0"
+                      size="sm"
+                      className="rounded-none border-0 px-0 py-2"
                     >
-                      <p className="truncate text-sm font-medium">
-                        {position.x}, {position.y}, {position.z}
-                      </p>
-                      <p className="text-muted-foreground text-xs">
-                        {formatUntilTick(memoryState.tick, position.untilTick)}
-                      </p>
-                    </div>
+                      <ItemContent>
+                        <ItemTitle className="truncate">
+                          {position.x}, {position.y}, {position.z}
+                        </ItemTitle>
+                        <ItemDescription className="line-clamp-none text-xs">
+                          {formatUntilTick(
+                            memoryState.tick,
+                            position.untilTick,
+                          )}
+                        </ItemDescription>
+                      </ItemContent>
+                    </Item>
                   ))}
-                </div>
+                </ItemGroup>
               )}
             </div>
           </ScrollArea>
@@ -3045,54 +3149,54 @@ function IntelPanel(props: { coordinationState: AutomationCoordinationState }) {
       <div>
         <h4 className="text-sm font-medium mb-2">Shared Blocks</h4>
         {props.coordinationState.sharedBlocks.length === 0 ? (
-          <p className="text-muted-foreground text-sm">
-            No shared block hints yet.
-          </p>
+          <InlineEmptyState title="No shared block hints yet." />
         ) : (
           <ScrollArea className="h-56">
-            <div className="divide-border divide-y">
+            <ItemGroup className="gap-0 divide-border divide-y">
               {props.coordinationState.sharedBlocks.map((block) => (
-                <div
+                <Item
                   key={`${block.dimension}:${block.x}:${block.y}:${block.z}:${block.blockId}`}
-                  className="py-2 first:pt-0"
+                  size="sm"
+                  className="rounded-none border-0 px-0 py-2"
                 >
-                  <p className="truncate text-sm font-medium">
-                    {block.blockId}
-                  </p>
-                  <p className="text-muted-foreground text-xs">
-                    {block.dimension} @ {block.x}, {block.y}, {block.z} / Seen
-                    by {block.observerAccountName}
-                  </p>
-                </div>
+                  <ItemContent>
+                    <ItemTitle className="truncate">{block.blockId}</ItemTitle>
+                    <ItemDescription className="line-clamp-none text-xs">
+                      {block.dimension} @ {block.x}, {block.y}, {block.z} / Seen
+                      by {block.observerAccountName}
+                    </ItemDescription>
+                  </ItemContent>
+                </Item>
               ))}
-            </div>
+            </ItemGroup>
           </ScrollArea>
         )}
       </div>
       <div>
         <h4 className="text-sm font-medium mb-2">Eye Samples</h4>
         {props.coordinationState.eyeSamples.length === 0 ? (
-          <p className="text-muted-foreground text-sm">
-            No eye samples recorded.
-          </p>
+          <InlineEmptyState title="No eye samples recorded." />
         ) : (
           <ScrollArea className="h-56">
-            <div className="divide-border divide-y">
+            <ItemGroup className="gap-0 divide-border divide-y">
               {props.coordinationState.eyeSamples.map((sample) => (
-                <div
+                <Item
                   key={`${sample.botId}:${sample.recordedAt?.seconds ?? "0"}`}
-                  className="py-2 first:pt-0"
+                  size="sm"
+                  className="rounded-none border-0 px-0 py-2"
                 >
-                  <p className="truncate text-sm font-medium">
-                    {sample.accountName}
-                  </p>
-                  <p className="text-muted-foreground text-xs">
-                    Origin {formatPosition(sample.origin)} / Direction{" "}
-                    {formatPosition(sample.direction)}
-                  </p>
-                </div>
+                  <ItemContent>
+                    <ItemTitle className="truncate">
+                      {sample.accountName}
+                    </ItemTitle>
+                    <ItemDescription className="line-clamp-none text-xs">
+                      Origin {formatPosition(sample.origin)} / Direction{" "}
+                      {formatPosition(sample.direction)}
+                    </ItemDescription>
+                  </ItemContent>
+                </Item>
               ))}
-            </div>
+            </ItemGroup>
           </ScrollArea>
         )}
       </div>

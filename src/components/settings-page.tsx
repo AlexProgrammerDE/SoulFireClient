@@ -38,7 +38,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command.tsx";
-import { Field } from "@/components/ui/field.tsx";
+import {
+  Field,
+  FieldGroup,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import {
   InputGroup,
@@ -666,42 +671,49 @@ export function SettingTypeRenderer(props: {
         max: number;
       };
       return (
-        <>
-          <Field className="max-w-xl">
-            <ComponentTitle
-              title={props.settingType.value.minEntry?.uiName}
-              description={props.settingType.value.minEntry?.description}
-            />
-            <MinMaxComponent
-              setting={props.settingType.value}
-              entry={props.settingType.value.minEntry as MinMaxSetting_Entry}
-              value={castValue.min}
-              changeCallback={(v) => {
-                props.changeCallback({
-                  max: Math.max(castValue.max, v),
-                  min: v,
-                });
-              }}
-            />
-          </Field>
-          <Field className="max-w-xl">
-            <ComponentTitle
-              title={props.settingType.value.maxEntry?.uiName}
-              description={props.settingType.value.maxEntry?.description}
-            />
-            <MinMaxComponent
-              setting={props.settingType.value}
-              entry={props.settingType.value.maxEntry as MinMaxSetting_Entry}
-              value={castValue.max}
-              changeCallback={(v) => {
-                props.changeCallback({
-                  max: v,
-                  min: Math.min(castValue.min, v),
-                });
-              }}
-            />
-          </Field>
-        </>
+        <FieldSet className="max-w-xl gap-4">
+          <FieldLegend className="sr-only">
+            {props.settingType.value.minEntry?.uiName ??
+              props.settingType.value.maxEntry?.uiName ??
+              "Minimum and maximum settings"}
+          </FieldLegend>
+          <FieldGroup className="gap-4">
+            <Field>
+              <ComponentTitle
+                title={props.settingType.value.minEntry?.uiName}
+                description={props.settingType.value.minEntry?.description}
+              />
+              <MinMaxComponent
+                setting={props.settingType.value}
+                entry={props.settingType.value.minEntry as MinMaxSetting_Entry}
+                value={castValue.min}
+                changeCallback={(v) => {
+                  props.changeCallback({
+                    max: Math.max(castValue.max, v),
+                    min: v,
+                  });
+                }}
+              />
+            </Field>
+            <Field>
+              <ComponentTitle
+                title={props.settingType.value.maxEntry?.uiName}
+                description={props.settingType.value.maxEntry?.description}
+              />
+              <MinMaxComponent
+                setting={props.settingType.value}
+                entry={props.settingType.value.maxEntry as MinMaxSetting_Entry}
+                value={castValue.max}
+                changeCallback={(v) => {
+                  props.changeCallback({
+                    max: v,
+                    min: Math.min(castValue.min, v),
+                  });
+                }}
+              />
+            </Field>
+          </FieldGroup>
+        </FieldSet>
       );
     }
   }

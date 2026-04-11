@@ -4,8 +4,8 @@ import type { Column } from "@tanstack/react-table";
 import { PlusCircle, XCircle } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -178,72 +178,78 @@ export function DataTableSliderFilter<TData>({
         ) : null}
       </PopoverTrigger>
       <PopoverContent align="start" className="flex w-auto flex-col gap-4">
-        <div className="flex flex-col gap-3">
+        <FieldGroup className="gap-3">
           <p className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             {title}
           </p>
           <div className="flex items-center gap-4">
-            <Label htmlFor={`${id}-from`} className="sr-only">
-              From
-            </Label>
-            <div className="relative">
-              <Input
-                id={`${id}-from`}
-                type="number"
-                aria-valuemin={min}
-                aria-valuemax={max}
-                inputMode="numeric"
-                pattern="[0-9]*"
-                placeholder={min.toString()}
-                min={min}
-                max={max}
-                value={range[0]?.toString()}
-                onChange={onFromInputChange}
-                className={cn("h-8 w-24", unit && "pr-8")}
-              />
-              {unit && (
-                <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
-                  {unit}
-                </span>
-              )}
-            </div>
-            <Label htmlFor={`${id}-to`} className="sr-only">
-              to
-            </Label>
-            <div className="relative">
-              <Input
-                id={`${id}-to`}
-                type="number"
-                aria-valuemin={min}
-                aria-valuemax={max}
-                inputMode="numeric"
-                pattern="[0-9]*"
-                placeholder={max.toString()}
-                min={min}
-                max={max}
-                value={range[1]?.toString()}
-                onChange={onToInputChange}
-                className={cn("h-8 w-24", unit && "pr-8")}
-              />
-              {unit && (
-                <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
-                  {unit}
-                </span>
-              )}
-            </div>
+            <Field className="gap-2">
+              <FieldLabel htmlFor={`${id}-from`} className="text-xs">
+                From
+              </FieldLabel>
+              <div className="relative">
+                <Input
+                  id={`${id}-from`}
+                  type="number"
+                  aria-valuemin={min}
+                  aria-valuemax={max}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder={min.toString()}
+                  min={min}
+                  max={max}
+                  value={range[0]?.toString()}
+                  onChange={onFromInputChange}
+                  className={cn("h-8 w-24", unit && "pr-8")}
+                />
+                {unit && (
+                  <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
+                    {unit}
+                  </span>
+                )}
+              </div>
+            </Field>
+            <Field className="gap-2">
+              <FieldLabel htmlFor={`${id}-to`} className="text-xs">
+                To
+              </FieldLabel>
+              <div className="relative">
+                <Input
+                  id={`${id}-to`}
+                  type="number"
+                  aria-valuemin={min}
+                  aria-valuemax={max}
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder={max.toString()}
+                  min={min}
+                  max={max}
+                  value={range[1]?.toString()}
+                  onChange={onToInputChange}
+                  className={cn("h-8 w-24", unit && "pr-8")}
+                />
+                {unit && (
+                  <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
+                    {unit}
+                  </span>
+                )}
+              </div>
+            </Field>
           </div>
-          <Label htmlFor={`${id}-slider`} className="sr-only">
-            {title} slider
-          </Label>
-          <Slider
-            id={`${id}-slider`}
-            min={min}
-            max={max}
-            step={step}
-            value={range}
-            onValueChange={onSliderValueChange}
-          />
-        </div>
+          <Field className="gap-2">
+            <FieldLabel htmlFor={`${id}-slider`} className="sr-only">
+              {title} slider
+            </FieldLabel>
+            <Slider
+              id={`${id}-slider`}
+              min={min}
+              max={max}
+              step={step}
+              value={range}
+              onValueChange={onSliderValueChange}
+            />
+          </Field>
+        </FieldGroup>
         <Button
           aria-label={`Clear ${title} filter`}
           variant="outline"

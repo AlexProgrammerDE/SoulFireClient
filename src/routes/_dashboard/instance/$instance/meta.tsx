@@ -18,6 +18,14 @@ import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { SettingTypeRenderer } from "@/components/settings-page.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import type { Value } from "@/generated/google/protobuf/struct_pb.ts";
@@ -497,51 +505,120 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
               void addEntryForm.handleSubmit();
             }}
           >
-            <div className="flex flex-row gap-2">
-              <addEntryForm.Field name="namespace">
-                {(field) => (
-                  <Input
-                    type="text"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.currentTarget.value)}
-                    placeholder={t("instanceMetadata.namespacePlaceholder")}
-                    className="flex-1"
-                  />
-                )}
-              </addEntryForm.Field>
-              <addEntryForm.Field name="key">
-                {(field) => (
-                  <Input
-                    type="text"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.currentTarget.value)}
-                    placeholder={t("instanceMetadata.keyPlaceholder")}
-                    className="flex-1"
-                  />
-                )}
-              </addEntryForm.Field>
-              <addEntryForm.Field name="value">
-                {(field) => (
-                  <Input
-                    type="text"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.currentTarget.value)}
-                    placeholder={t("instanceMetadata.valuePlaceholder")}
-                    className="flex-1 font-mono"
-                  />
-                )}
-              </addEntryForm.Field>
-              <Button
-                type="submit"
-                variant="outline"
-                disabled={addEntryMutation.isPending}
-              >
-                <PlusIcon />
-              </Button>
-            </div>
+            <FieldSet className="gap-3">
+              <FieldLegend variant="label">
+                {t("instanceMetadata.addEntryLegend", {
+                  defaultValue: "Add metadata entry",
+                })}
+              </FieldLegend>
+              <FieldGroup className="gap-3 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-start">
+                <addEntryForm.Field name="namespace">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+
+                    return (
+                      <Field data-invalid={isInvalid} className="gap-2">
+                        <FieldLabel htmlFor={field.name}>
+                          {t("instanceMetadata.namespaceLabel", {
+                            defaultValue: "Namespace",
+                          })}
+                        </FieldLabel>
+                        <Input
+                          id={field.name}
+                          type="text"
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) =>
+                            field.handleChange(e.currentTarget.value)
+                          }
+                          placeholder={t(
+                            "instanceMetadata.namespacePlaceholder",
+                          )}
+                          aria-invalid={isInvalid}
+                        />
+                        {isInvalid ? (
+                          <FieldError errors={field.state.meta.errors} />
+                        ) : null}
+                      </Field>
+                    );
+                  }}
+                </addEntryForm.Field>
+                <addEntryForm.Field name="key">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+
+                    return (
+                      <Field data-invalid={isInvalid} className="gap-2">
+                        <FieldLabel htmlFor={field.name}>
+                          {t("instanceMetadata.keyLabel", {
+                            defaultValue: "Key",
+                          })}
+                        </FieldLabel>
+                        <Input
+                          id={field.name}
+                          type="text"
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) =>
+                            field.handleChange(e.currentTarget.value)
+                          }
+                          placeholder={t("instanceMetadata.keyPlaceholder")}
+                          aria-invalid={isInvalid}
+                        />
+                        {isInvalid ? (
+                          <FieldError errors={field.state.meta.errors} />
+                        ) : null}
+                      </Field>
+                    );
+                  }}
+                </addEntryForm.Field>
+                <addEntryForm.Field name="value">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+
+                    return (
+                      <Field data-invalid={isInvalid} className="gap-2">
+                        <FieldLabel htmlFor={field.name}>
+                          {t("instanceMetadata.valueLabel", {
+                            defaultValue: "Value",
+                          })}
+                        </FieldLabel>
+                        <Input
+                          id={field.name}
+                          type="text"
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) =>
+                            field.handleChange(e.currentTarget.value)
+                          }
+                          placeholder={t("instanceMetadata.valuePlaceholder")}
+                          className="font-mono"
+                          aria-invalid={isInvalid}
+                        />
+                        {isInvalid ? (
+                          <FieldError errors={field.state.meta.errors} />
+                        ) : null}
+                      </Field>
+                    );
+                  }}
+                </addEntryForm.Field>
+                <div className="md:self-end">
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    disabled={addEntryMutation.isPending}
+                  >
+                    <PlusIcon data-icon="inline-start" />
+                    {t("instanceMetadata.addEntryButton", {
+                      defaultValue: "Add entry",
+                    })}
+                  </Button>
+                </div>
+              </FieldGroup>
+            </FieldSet>
           </form>
         </CardHeader>
         <CardContent className="flex max-h-64 flex-col gap-2 overflow-y-auto p-4 pt-0">
@@ -598,46 +675,84 @@ function MetadataEntryRow({
   );
 
   return (
-    <div className="flex flex-row gap-2">
-      <Input
-        type="text"
-        value={entry.namespace}
-        onChange={(e) => onUpdate("namespace", e.currentTarget.value)}
-        onBlur={(e) => {
-          if (e.currentTarget.value !== originalNamespace) {
-            onUpdate("namespace", e.currentTarget.value);
-          }
-        }}
-        placeholder={t("instanceMetadata.namespacePlaceholder")}
-        className="flex-1"
-      />
-      <Input
-        type="text"
-        value={entry.key}
-        onChange={(e) => onUpdate("key", e.currentTarget.value)}
-        onBlur={(e) => {
-          if (e.currentTarget.value !== originalKey) {
-            onUpdate("key", e.currentTarget.value);
-          }
-        }}
-        placeholder={t("instanceMetadata.keyPlaceholder")}
-        className="flex-1"
-      />
-      <Input
-        type="text"
-        value={entry.value}
-        onChange={(e) => onUpdate("value", e.currentTarget.value)}
-        onBlur={(e) => {
-          if (e.currentTarget.value !== originalValue) {
-            onUpdate("value", e.currentTarget.value);
-          }
-        }}
-        placeholder={t("instanceMetadata.valuePlaceholder")}
-        className={`flex-1 font-mono ${!isValidJson ? "border-destructive" : ""}`}
-      />
-      <Button variant="outline" onClick={onDelete} disabled={isDeleting}>
-        <TrashIcon />
-      </Button>
-    </div>
+    <FieldSet className="gap-3 rounded-lg border p-3">
+      <FieldLegend className="sr-only">
+        {t("instanceMetadata.entryLegend", {
+          defaultValue: "Metadata entry",
+        })}
+      </FieldLegend>
+      <FieldGroup className="gap-3 md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-start">
+        <Field className="gap-2">
+          <FieldLabel htmlFor={`${entry.id}-namespace`}>
+            {t("instanceMetadata.namespaceLabel", {
+              defaultValue: "Namespace",
+            })}
+          </FieldLabel>
+          <Input
+            id={`${entry.id}-namespace`}
+            type="text"
+            value={entry.namespace}
+            onChange={(e) => onUpdate("namespace", e.currentTarget.value)}
+            onBlur={(e) => {
+              if (e.currentTarget.value !== originalNamespace) {
+                onUpdate("namespace", e.currentTarget.value);
+              }
+            }}
+            placeholder={t("instanceMetadata.namespacePlaceholder")}
+          />
+        </Field>
+        <Field className="gap-2">
+          <FieldLabel htmlFor={`${entry.id}-key`}>
+            {t("instanceMetadata.keyLabel", {
+              defaultValue: "Key",
+            })}
+          </FieldLabel>
+          <Input
+            id={`${entry.id}-key`}
+            type="text"
+            value={entry.key}
+            onChange={(e) => onUpdate("key", e.currentTarget.value)}
+            onBlur={(e) => {
+              if (e.currentTarget.value !== originalKey) {
+                onUpdate("key", e.currentTarget.value);
+              }
+            }}
+            placeholder={t("instanceMetadata.keyPlaceholder")}
+          />
+        </Field>
+        <Field data-invalid={!isValidJson} className="gap-2">
+          <FieldLabel htmlFor={`${entry.id}-value`}>
+            {t("instanceMetadata.valueLabel", {
+              defaultValue: "Value",
+            })}
+          </FieldLabel>
+          <Input
+            id={`${entry.id}-value`}
+            type="text"
+            value={entry.value}
+            onChange={(e) => onUpdate("value", e.currentTarget.value)}
+            onBlur={(e) => {
+              if (e.currentTarget.value !== originalValue) {
+                onUpdate("value", e.currentTarget.value);
+              }
+            }}
+            placeholder={t("instanceMetadata.valuePlaceholder")}
+            className="font-mono"
+            aria-invalid={!isValidJson}
+          />
+          {!isValidJson ? (
+            <FieldError>{t("instanceMetadata.invalidJson")}</FieldError>
+          ) : null}
+        </Field>
+        <div className="md:self-end">
+          <Button variant="outline" onClick={onDelete} disabled={isDeleting}>
+            <TrashIcon data-icon="inline-start" />
+            {t("instanceMetadata.removeEntryButton", {
+              defaultValue: "Remove",
+            })}
+          </Button>
+        </div>
+      </FieldGroup>
+    </FieldSet>
   );
 }

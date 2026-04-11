@@ -24,6 +24,7 @@ import {
   ChartTooltipContent,
   type CustomTooltipProps,
 } from "@/components/ui/chart";
+import { Empty, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import type {
   GetInstanceMetricsResponse,
   MetricsSnapshot,
@@ -67,6 +68,23 @@ const TIME_AXIS_PROPS = {
 function formatTooltipLabel(payload: CustomTooltipProps["payload"]) {
   const timeLabel = payload?.[0]?.payload?.timeLabel;
   return typeof timeLabel === "string" ? timeLabel : "";
+}
+
+function EmptyMetricCard({ title }: { title: string }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-sm">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Empty className="border-0 px-0 py-8">
+          <EmptyHeader className="gap-1">
+            <EmptyTitle className="text-sm">No data</EmptyTitle>
+          </EmptyHeader>
+        </Empty>
+      </CardContent>
+    </Card>
+  );
 }
 
 // Summary cards at the top
@@ -764,16 +782,7 @@ export function DimensionPieChart({
   }, [dimensionCounts]);
 
   if (chartData.length === 0) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">Dimensions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-center text-sm">No data</p>
-        </CardContent>
-      </Card>
-    );
+    return <EmptyMetricCard title="Dimensions" />;
   }
 
   return (
@@ -829,16 +838,7 @@ export function GameModePieChart({
   }, [gameModeCounts]);
 
   if (chartData.length === 0) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">Game Modes</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-center text-sm">No data</p>
-        </CardContent>
-      </Card>
-    );
+    return <EmptyMetricCard title="Game Modes" />;
   }
 
   return (
@@ -894,16 +894,7 @@ export function PositionScatterChart({
   );
 
   if (chartData.length === 0) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm">Bot Positions (XZ)</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-center text-sm">No data</p>
-        </CardContent>
-      </Card>
-    );
+    return <EmptyMetricCard title="Bot Positions (XZ)" />;
   }
 
   return (

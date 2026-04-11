@@ -61,6 +61,12 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import {
+  Empty,
+  EmptyContent,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import {
   Item,
@@ -254,21 +260,27 @@ function BotDetail() {
         ]}
         pageName={t("pageName.botDetail")}
       >
-        <div className="container flex flex-col items-center justify-center gap-4 py-8">
-          <p className="text-muted-foreground">Bot not found</p>
-          <Button
-            variant="outline"
-            nativeButton={false}
-            render={
-              <Link
-                to="/instance/$instance/bots"
-                params={{ instance: instanceInfo.id }}
-              />
-            }
-          >
-            <ArrowLeftIcon className="mr-2 size-4" />
-            Back to Bots
-          </Button>
+        <div className="container flex py-8">
+          <Empty className="mx-auto max-w-md bg-card">
+            <EmptyHeader>
+              <EmptyTitle>Bot not found</EmptyTitle>
+            </EmptyHeader>
+            <EmptyContent>
+              <Button
+                variant="outline"
+                nativeButton={false}
+                render={
+                  <Link
+                    to="/instance/$instance/bots"
+                    params={{ instance: instanceInfo.id }}
+                  />
+                }
+              >
+                <ArrowLeftIcon data-icon="inline-start" />
+                Back to Bots
+              </Button>
+            </EmptyContent>
+          </Empty>
         </div>
       </InstancePageLayout>
     );
@@ -1893,48 +1905,52 @@ function BotMovementPanel({
             </p>
             <div className="flex flex-col items-center gap-1">
               {/* Forward */}
-              <Button
-                variant={movementState.forward ? "default" : "outline"}
+              <Toggle
+                pressed={movementState.forward}
+                variant="outline"
                 size="sm"
                 className="size-10"
-                onClick={() => toggleMovement("forward")}
+                onPressedChange={() => toggleMovement("forward")}
                 disabled={isPending}
                 title={t("bots.movementPanel.forward")}
               >
-                <ArrowUpIcon className="size-4" />
-              </Button>
+                <ArrowUpIcon />
+              </Toggle>
               {/* Left, Backward, Right */}
               <div className="flex gap-1">
-                <Button
-                  variant={movementState.left ? "default" : "outline"}
+                <Toggle
+                  pressed={movementState.left}
+                  variant="outline"
                   size="sm"
                   className="size-10"
-                  onClick={() => toggleMovement("left")}
+                  onPressedChange={() => toggleMovement("left")}
                   disabled={isPending}
                   title={t("bots.movementPanel.left")}
                 >
-                  <ArrowLeftIcon className="size-4" />
-                </Button>
-                <Button
-                  variant={movementState.backward ? "default" : "outline"}
+                  <ArrowLeftIcon />
+                </Toggle>
+                <Toggle
+                  pressed={movementState.backward}
+                  variant="outline"
                   size="sm"
                   className="size-10"
-                  onClick={() => toggleMovement("backward")}
+                  onPressedChange={() => toggleMovement("backward")}
                   disabled={isPending}
                   title={t("bots.movementPanel.backward")}
                 >
-                  <ArrowDownIcon className="size-4" />
-                </Button>
-                <Button
-                  variant={movementState.right ? "default" : "outline"}
+                  <ArrowDownIcon />
+                </Toggle>
+                <Toggle
+                  pressed={movementState.right}
+                  variant="outline"
                   size="sm"
                   className="size-10"
-                  onClick={() => toggleMovement("right")}
+                  onPressedChange={() => toggleMovement("right")}
                   disabled={isPending}
                   title={t("bots.movementPanel.right")}
                 >
-                  <ArrowRightIcon className="size-4" />
-                </Button>
+                  <ArrowRightIcon />
+                </Toggle>
               </div>
             </div>
           </div>

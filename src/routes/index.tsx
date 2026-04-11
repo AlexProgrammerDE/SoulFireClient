@@ -30,7 +30,6 @@ import { ExternalLink } from "@/components/external-link.tsx";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
 import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import {
   Card,
   CardContent,
@@ -70,11 +69,21 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item.tsx";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Scroller } from "@/components/ui/scroller.tsx";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import {
   LoginService,
   NextAuthFlowResponse_Failure_Reason,
@@ -429,78 +438,81 @@ function DefaultMenu(props: {
         <LoginCardTitle />
         <CardDescription>{t("connect.description")}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        <ButtonGroup className="w-full">
-          <Button
+      <CardContent>
+        <ItemGroup className="gap-3">
+          <LoginOptionCard
             autoFocus
             disabled={integratedDisabled}
-            className="flex-1"
-            variant="outline"
-            onClick={() => {
-              props.setLoginType("INTEGRATED");
-            }}
-          >
-            <LaptopMinimalIcon />
-            {t("connect.integrated.title")}
-          </Button>
-          <Popover>
-            <PopoverTrigger
-              render={<Button className="w-fit" variant="outline" />}
-            >
-              <InfoIcon />
-            </PopoverTrigger>
-            <PopoverContent>
-              {t("connect.integrated.description")}
-            </PopoverContent>
-          </Popover>
-        </ButtonGroup>
-        <ButtonGroup className="w-full">
-          <Button
+            icon={LaptopMinimalIcon}
+            title={t("connect.integrated.title")}
+            description={t("connect.integrated.description")}
+            onSelect={() => props.setLoginType("INTEGRATED")}
+          />
+          <LoginOptionCard
             autoFocus={integratedDisabled}
             disabled={isDemo()}
-            className="flex-1"
-            variant="outline"
-            onClick={() => props.setLoginType("DEDICATED")}
-          >
-            <ServerIcon />
-            {t("connect.dedicated.title")}
-          </Button>
-          <Popover>
-            <PopoverTrigger
-              render={<Button className="w-fit" variant="outline" />}
-            >
-              <InfoIcon />
-            </PopoverTrigger>
-            <PopoverContent>
-              {t("connect.dedicated.description")}
-            </PopoverContent>
-          </Popover>
-        </ButtonGroup>
-        {isDemo() && (
-          <ButtonGroup className="w-full">
-            <Button
+            icon={ServerIcon}
+            title={t("connect.dedicated.title")}
+            description={t("connect.dedicated.description")}
+            onSelect={() => props.setLoginType("DEDICATED")}
+          />
+          {isDemo() && (
+            <LoginOptionCard
               autoFocus
-              className="flex-1"
-              variant="outline"
-              onClick={() => {
+              icon={FlaskConicalIcon}
+              title={t("connect.demo.title")}
+              description={t("connect.demo.description")}
+              onSelect={() => {
                 void props.demoLogin();
               }}
-            >
-              <FlaskConicalIcon />
-              {t("connect.demo.title")}
-            </Button>
-            <Popover>
-              <PopoverTrigger
-                render={<Button className="w-fit" variant="outline" />}
-              >
-                <InfoIcon />
-              </PopoverTrigger>
-              <PopoverContent>{t("connect.demo.description")}</PopoverContent>
-            </Popover>
-          </ButtonGroup>
-        )}
+            />
+          )}
+        </ItemGroup>
       </CardContent>
     </Card>
+  );
+}
+
+function LoginOptionCard(props: {
+  autoFocus?: boolean;
+  disabled?: boolean;
+  icon: typeof LaptopMinimalIcon;
+  title: string;
+  description: string;
+  onSelect: () => void;
+}) {
+  const Icon = props.icon;
+
+  return (
+    <Item
+      render={
+        <button
+          type="button"
+          disabled={props.disabled}
+          onClick={props.onSelect}
+        />
+      }
+      variant="outline"
+      className="w-full cursor-pointer rounded-lg text-left hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      <ItemMedia variant="icon">
+        <Icon />
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>{props.title}</ItemTitle>
+        <ItemDescription className="line-clamp-none">
+          {props.description}
+        </ItemDescription>
+      </ItemContent>
+      <ItemActions>
+        <Popover>
+          <PopoverTrigger render={<Button size="icon-sm" variant="outline" />}>
+            <InfoIcon />
+          </PopoverTrigger>
+          <PopoverContent>{props.description}</PopoverContent>
+        </Popover>
+      </ItemActions>
+    </Item>
   );
 }
 
@@ -994,6 +1006,37 @@ function IntegratedMobileMenu({
 
 type DedicatedType = "email" | "token";
 
+function DedicatedTypeToggle(props: {
+  value: DedicatedType;
+  onValueChange: (value: DedicatedType) => void;
+}) {
+  const { t } = useTranslation("login");
+
+  return (
+    <ToggleGroup
+      value={[props.value]}
+      onValueChange={(value) => {
+        const nextValue = value[0] as DedicatedType | undefined;
+        if (nextValue && nextValue !== props.value) {
+          props.onValueChange(nextValue);
+        }
+      }}
+      variant="outline"
+      size="sm"
+      className="w-full md:w-auto"
+    >
+      <ToggleGroupItem value="email" className="flex-1 md:flex-none">
+        <MailIcon data-icon="inline-start" />
+        {t("dedicated.form.useEmail")}
+      </ToggleGroupItem>
+      <ToggleGroupItem value="token" className="flex-1 md:flex-none">
+        <KeyRoundIcon data-icon="inline-start" />
+        {t("dedicated.form.useToken")}
+      </ToggleGroupItem>
+    </ToggleGroup>
+  );
+}
+
 function DedicatedMenu({
   redirectWithCredentials,
   setLoginType,
@@ -1171,16 +1214,10 @@ function EmailForm({
               <ArrowLeftIcon />
               {t("dedicated.form.back")}
             </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setDedicatedType("token");
-              }}
-              type="button"
-            >
-              <KeyRoundIcon />
-              {t("dedicated.form.useToken")}
-            </Button>
+            <DedicatedTypeToggle
+              value="email"
+              onValueChange={setDedicatedType}
+            />
           </div>
           <Button type="submit">
             <LogInIcon />
@@ -1313,16 +1350,10 @@ function TokenForm({
               <ArrowLeftIcon />
               {t("dedicated.form.back")}
             </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setDedicatedType("email");
-              }}
-              type="button"
-            >
-              <MailIcon />
-              {t("dedicated.form.useEmail")}
-            </Button>
+            <DedicatedTypeToggle
+              value="token"
+              onValueChange={setDedicatedType}
+            />
           </div>
           <Button type="submit">
             <LogInIcon />
