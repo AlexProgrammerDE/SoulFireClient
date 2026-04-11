@@ -24,7 +24,7 @@ import { attachConsole } from "@tauri-apps/plugin-log";
 import { arch, locale, platform, type, version } from "@tauri-apps/plugin-os";
 import { useTheme } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
-import { memo, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, memo, useEffect, useMemo, useState } from "react";
 import { CustomContextMenu } from "@/components/custom-context-menu.tsx";
 import { AboutProvider } from "@/components/dialog/about-dialog.tsx";
 import {
@@ -104,6 +104,10 @@ export const Route = createRootRouteWithContext<{
   pendingComponent: RootPending,
 });
 
+const appShellStyle = {
+  "--titlebar-height": isDesktopTauri() ? "2rem" : "0px",
+} as CSSProperties;
+
 function RootPending() {
   return (
     <ThemeProvider
@@ -113,7 +117,11 @@ function RootPending() {
       disableTransitionOnChange
     >
       <WindowThemeSyncer />
-      <div vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col">
+      <div
+        vaul-drawer-wrapper=""
+        className="flex h-dvh w-dvw flex-col"
+        style={appShellStyle}
+      >
         {isDesktopTauri() && <div className={titlebarClassName} />}
       </div>
     </ThemeProvider>
@@ -330,6 +338,7 @@ function RootLayout() {
                   <div
                     vaul-drawer-wrapper=""
                     className="flex h-dvh w-dvw flex-col"
+                    style={appShellStyle}
                   >
                     <PointerReset />
                     <CustomContextMenu />
