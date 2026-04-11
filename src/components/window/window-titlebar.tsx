@@ -69,6 +69,7 @@ function TitlebarExternalLinks() {
           className={titlebarButtonClassName}
           size="icon-xs"
           variant="ghost"
+          nativeButton={false}
           render={<ExternalLink href={item.url} />}
           aria-label={item.title}
           title={item.title}
