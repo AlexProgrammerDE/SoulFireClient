@@ -43,7 +43,10 @@ import {
 import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics_pb.ts";
 import { useCurrentRouteTitle } from "@/hooks/use-current-route-title.ts";
 import { useDiscordPresence } from "@/hooks/use-discord-presence.ts";
-import { isDesktopTauri } from "@/lib/platform.ts";
+import {
+  useShouldShowWindowTitlebar,
+  WINDOW_TITLEBAR_HEIGHT,
+} from "@/hooks/use-window-titlebar.ts";
 import { buildDocumentTitle } from "@/lib/route-title.ts";
 import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
 
@@ -106,11 +109,14 @@ export const Route = createRootRouteWithContext<{
   pendingComponent: RootPending,
 });
 
-const appShellStyle = {
-  "--titlebar-height": isDesktopTauri() ? "2rem" : "0px",
-} as CSSProperties;
-
 function RootPending() {
+  const shouldShowWindowTitlebar = useShouldShowWindowTitlebar();
+  const appShellStyle = {
+    "--titlebar-height": shouldShowWindowTitlebar
+      ? WINDOW_TITLEBAR_HEIGHT
+      : "0px",
+  } as CSSProperties;
+
   return (
     <ThemeProvider
       attribute="class"
@@ -124,7 +130,7 @@ function RootPending() {
         className="flex h-dvh w-dvw flex-col"
         style={appShellStyle}
       >
-        {isDesktopTauri() && <div className={titlebarClassName} />}
+        {shouldShowWindowTitlebar && <div className={titlebarClassName} />}
       </div>
     </ThemeProvider>
   );
@@ -275,10 +281,16 @@ function WindowThemeSyncer() {
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
   const { queryClient } = Route.useRouteContext();
+  const shouldShowWindowTitlebar = useShouldShowWindowTitlebar();
   const [systemInfoState, setSystemInfoState] = useState<SystemInfo | null>(
     systemInfo,
   );
   const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
+  const appShellStyle = {
+    "--titlebar-height": shouldShowWindowTitlebar
+      ? WINDOW_TITLEBAR_HEIGHT
+      : "0px",
+  } as CSSProperties;
 
   useEffect(() => {
     if (isTauri()) {
@@ -356,7 +368,7 @@ function RootLayout() {
                     <PointerReset />
                     <CustomContextMenu />
                     <AboutProvider>
-                      {isDesktopTauri() && <WindowTitlebar />}
+                      {shouldShowWindowTitlebar && <WindowTitlebar />}
                       <div className="flex min-h-0 flex-1 flex-col">
                         <Outlet />
                       </div>

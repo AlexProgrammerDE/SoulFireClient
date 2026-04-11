@@ -2,7 +2,6 @@ import type * as React from "react";
 import { Suspense } from "react";
 import { NavAccount } from "@/components/nav/nav-account.tsx";
 import { NavDefaultSkeleton } from "@/components/nav/nav-default-skeleton.tsx";
-import { NavSecondary } from "@/components/nav/nav-secondary.tsx";
 import { NavUserAdmin } from "@/components/nav/user/nav-user-admin.tsx";
 import { NavUserOptions } from "@/components/nav/user/nav-user-options.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
@@ -28,7 +27,6 @@ export function UserSidebar({
             <NavUserOptions />
             <NavUserAdmin />
           </Suspense>
-          <NavSecondary className="mt-auto" />
         </SidebarContent>
       </ScrollArea>
       <SidebarFooter className="h-16 justify-center">

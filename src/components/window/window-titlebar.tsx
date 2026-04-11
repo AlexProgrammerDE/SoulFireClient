@@ -1,17 +1,29 @@
+import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { useCanGoBack, useRouter } from "@tanstack/react-router";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import {
+  BookOpenTextIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  CoffeeIcon,
   MinusIcon,
   SquareIcon,
   XIcon,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  type ComponentType,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useTranslation } from "react-i18next";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
+import { ExternalLink } from "@/components/external-link.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import { useCurrentRouteChrome } from "@/hooks/use-current-route-title.ts";
+import { useShouldShowWindowTitlebar } from "@/hooks/use-window-titlebar.ts";
 import { isDesktopTauri } from "@/lib/platform.ts";
 import { cn } from "@/lib/utils.tsx";
 
@@ -20,6 +32,53 @@ const titlebarClassName =
 
 const titlebarButtonClassName =
   "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:text-sidebar-foreground/35 disabled:hover:bg-transparent size-7 shadow-none transition-colors";
+
+type TitlebarLink = {
+  title: string;
+  url: string;
+  icon: ComponentType<{
+    className?: string;
+  }>;
+};
+
+function TitlebarExternalLinks() {
+  const { t } = useTranslation("common");
+  const items: TitlebarLink[] = [
+    {
+      title: t("sidebar.documentation"),
+      url: "https://soulfiremc.com/docs?utm_source=soulfire-client&utm_medium=app&utm_campaign=titlebar-docs",
+      icon: BookOpenTextIcon,
+    },
+    {
+      title: t("sidebar.buyMeACoffee"),
+      url: "https://ko-fi.com/alexprogrammerde",
+      icon: CoffeeIcon,
+    },
+    {
+      title: t("sidebar.discord"),
+      url: "https://soulfiremc.com/discord?utm_source=soulfire-client&utm_medium=app&utm_campaign=titlebar-discord",
+      icon: SiDiscord,
+    },
+  ];
+
+  return (
+    <ButtonGroup className="items-center">
+      {items.map((item) => (
+        <Button
+          key={item.title}
+          className={titlebarButtonClassName}
+          size="icon-xs"
+          variant="ghost"
+          render={<ExternalLink href={item.url} />}
+          aria-label={item.title}
+          title={item.title}
+        >
+          <item.icon className="size-3.5" />
+        </Button>
+      ))}
+    </ButtonGroup>
+  );
+}
 
 function WindowControls() {
   const desktopTauri = isDesktopTauri();
@@ -144,6 +203,7 @@ export function WindowTitlebar() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const desktopTauri = isDesktopTauri();
+  const shouldShowWindowTitlebar = useShouldShowWindowTitlebar();
   const { title: pageTitle, icon: pageIcon } = useCurrentRouteChrome();
   const canGoForward =
     typeof window !== "undefined" &&
@@ -157,38 +217,40 @@ export function WindowTitlebar() {
     router.history.forward();
   }, [router]);
 
-  if (!desktopTauri) {
+  if (!shouldShowWindowTitlebar) {
     return null;
   }
 
   return (
     <header className={titlebarClassName}>
-      <ButtonGroup className="window-topbar-no-drag items-center px-2">
-        <Button
-          className={titlebarButtonClassName}
-          size="icon-xs"
-          type="button"
-          variant="ghost"
-          onClick={handleBack}
-          disabled={!canGoBack}
-          aria-label="Go back"
-          title="Back"
-        >
-          <ChevronLeftIcon className="size-3.5" />
-        </Button>
-        <Button
-          className="window-topbar-button"
-          size="icon-xs"
-          type="button"
-          variant="ghost"
-          onClick={handleForward}
-          disabled={!canGoForward}
-          aria-label="Go forward"
-          title="Forward"
-        >
-          <ChevronRightIcon className="size-3.5" />
-        </Button>
-      </ButtonGroup>
+      {desktopTauri && (
+        <ButtonGroup className="window-topbar-no-drag items-center px-2">
+          <Button
+            className={titlebarButtonClassName}
+            size="icon-xs"
+            type="button"
+            variant="ghost"
+            onClick={handleBack}
+            disabled={!canGoBack}
+            aria-label="Go back"
+            title="Back"
+          >
+            <ChevronLeftIcon className="size-3.5" />
+          </Button>
+          <Button
+            className="window-topbar-button"
+            size="icon-xs"
+            type="button"
+            variant="ghost"
+            onClick={handleForward}
+            disabled={!canGoForward}
+            aria-label="Go forward"
+            title="Forward"
+          >
+            <ChevronRightIcon className="size-3.5" />
+          </Button>
+        </ButtonGroup>
+      )}
       <div
         data-tauri-drag-region={desktopTauri ? "" : undefined}
         className="flex min-w-0 flex-1 items-center"
@@ -215,7 +277,10 @@ export function WindowTitlebar() {
           </p>
         </div>
       </div>
-      <WindowControls />
+      <div className="window-topbar-no-drag flex items-center gap-2 px-2">
+        <TitlebarExternalLinks />
+        <WindowControls />
+      </div>
     </header>
   );
 }

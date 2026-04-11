@@ -6,7 +6,6 @@ import { NavExtensions } from "@/components/nav/instance/nav-extensions.tsx";
 import { NavSettings } from "@/components/nav/instance/nav-settings.tsx";
 import { NavAccount } from "@/components/nav/nav-account.tsx";
 import { NavDefaultSkeleton } from "@/components/nav/nav-default-skeleton.tsx";
-import { NavSecondary } from "@/components/nav/nav-secondary.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import {
   Sidebar,
@@ -33,7 +32,6 @@ export function InstanceSidebar(props: React.ComponentProps<typeof Sidebar>) {
             <NavSettings />
             <NavExtensions />
           </Suspense>
-          <NavSecondary className="mt-auto" />
         </SidebarContent>
       </ScrollArea>
       <SidebarFooter className="h-16 justify-center">
