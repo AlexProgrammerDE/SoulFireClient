@@ -29,6 +29,7 @@ import { TransportContext } from "@/components/providers/transport-context.tsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuPortal,
@@ -190,189 +191,198 @@ function InstanceActionButtons() {
 
   return (
     <>
-      <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
-        {instanceInfo.friendlyName}
-      </DropdownMenuLabel>
-      {isTauri() && systemInfo ? (
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <UploadIcon className="size-4" />
-            {t("instanceSidebar.loadProfile")}
-          </DropdownMenuSubTrigger>
-          <DropdownMenuPortal>
-            <DropdownMenuSubContent>
-              {systemInfo.availableProfiles.length > 0 && (
-                <>
-                  {systemInfo.availableProfiles.map((file) => (
-                    <DropdownMenuItem
-                      key={file}
-                      onClick={() => {
-                        const loadProfile = async () => {
-                          const data = await readTextFile(
-                            await resolve(
-                              await resolve(await appConfigDir(), "profile"),
-                              file,
+      <DropdownMenuGroup>
+        <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
+          {instanceInfo.friendlyName}
+        </DropdownMenuLabel>
+        {isTauri() && systemInfo ? (
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <UploadIcon className="size-4" />
+              {t("instanceSidebar.loadProfile")}
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                {systemInfo.availableProfiles.length > 0 && (
+                  <>
+                    {systemInfo.availableProfiles.map((file) => (
+                      <DropdownMenuItem
+                        key={file}
+                        onClick={() => {
+                          const loadProfile = async () => {
+                            const data = await readTextFile(
+                              await resolve(
+                                await resolve(await appConfigDir(), "profile"),
+                                file,
+                              ),
+                            );
+
+                            await setProfileMutation.mutateAsync(
+                              JSON.parse(data) as ProfileRoot,
+                            );
+                          };
+                          toast.promise(loadProfile(), {
+                            loading: t(
+                              "instanceSidebar.loadProfileToast.loading",
                             ),
-                          );
-
-                          await setProfileMutation.mutateAsync(
-                            JSON.parse(data) as ProfileRoot,
-                          );
-                        };
-                        toast.promise(loadProfile(), {
-                          loading: t(
-                            "instanceSidebar.loadProfileToast.loading",
-                          ),
-                          success: t(
-                            "instanceSidebar.loadProfileToast.success",
-                          ),
-                          error: (e) => {
-                            console.error(e);
-                            return t("instanceSidebar.loadProfileToast.error");
-                          },
-                        });
-                      }}
-                    >
-                      <FileIcon className="size-4" />
-                      {file}
-                    </DropdownMenuItem>
-                  ))}
-                  <DropdownMenuSeparator />
-                </>
-              )}
-              <DropdownMenuItem
-                onClick={() => {
-                  runAsync(async () => {
-                    const profileDir = await resolve(
-                      await appConfigDir(),
-                      "profile",
-                    );
-                    await mkdir(profileDir, { recursive: true });
-
-                    const selected = await open({
-                      title: t("instanceSidebar.loadProfile"),
-                      filters: systemInfo.mobile
-                        ? undefined
-                        : [
-                            {
-                              name: "SoulFire JSON Profile",
-                              extensions: ["json"],
+                            success: t(
+                              "instanceSidebar.loadProfileToast.success",
+                            ),
+                            error: (e) => {
+                              console.error(e);
+                              return t(
+                                "instanceSidebar.loadProfileToast.error",
+                              );
                             },
-                          ],
-                      defaultPath: profileDir,
-                      multiple: false,
-                      directory: false,
-                    });
-
-                    if (selected) {
-                      const data = await readTextFile(selected);
-                      toast.promise(
-                        (async () => {
-                          await setProfileMutation.mutateAsync(
-                            JSON.parse(data) as ProfileRoot,
-                          );
-                        })(),
-                        {
-                          loading: t(
-                            "instanceSidebar.loadProfileToast.loading",
-                          ),
-                          success: t(
-                            "instanceSidebar.loadProfileToast.success",
-                          ),
-                          error: (e) => {
-                            console.error(e);
-                            return t("instanceSidebar.loadProfileToast.error");
-                          },
-                        },
+                          });
+                        }}
+                      >
+                        <FileIcon className="size-4" />
+                        {file}
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                  </>
+                )}
+                <DropdownMenuItem
+                  onClick={() => {
+                    runAsync(async () => {
+                      const profileDir = await resolve(
+                        await appConfigDir(),
+                        "profile",
                       );
-                    }
-                  });
-                }}
-              >
-                <FolderIcon className="size-4" />
-                {t("instanceSidebar.loadFromFile")}
-              </DropdownMenuItem>
-            </DropdownMenuSubContent>
-          </DropdownMenuPortal>
-        </DropdownMenuSub>
-      ) : (
-        <>
-          <input
-            ref={instanceProfileInputRef}
-            type="file"
-            accept=".json"
-            className="hidden"
-            onInput={(e) => {
-              const file = (e.target as HTMLInputElement).files?.item(0);
-              if (!file) return;
+                      await mkdir(profileDir, { recursive: true });
 
-              const reader = new FileReader();
-              reader.onload = () => {
-                const data = reader.result as string;
-                toast.promise(
-                  setProfileMutation.mutateAsync(
-                    JSON.parse(data) as ProfileRoot,
-                  ),
-                  {
-                    loading: t("instanceSidebar.loadProfileToast.loading"),
-                    success: t("instanceSidebar.loadProfileToast.success"),
-                    error: (e) => {
-                      console.error(e);
-                      return t("instanceSidebar.loadProfileToast.error");
+                      const selected = await open({
+                        title: t("instanceSidebar.loadProfile"),
+                        filters: systemInfo.mobile
+                          ? undefined
+                          : [
+                              {
+                                name: "SoulFire JSON Profile",
+                                extensions: ["json"],
+                              },
+                            ],
+                        defaultPath: profileDir,
+                        multiple: false,
+                        directory: false,
+                      });
+
+                      if (selected) {
+                        const data = await readTextFile(selected);
+                        toast.promise(
+                          (async () => {
+                            await setProfileMutation.mutateAsync(
+                              JSON.parse(data) as ProfileRoot,
+                            );
+                          })(),
+                          {
+                            loading: t(
+                              "instanceSidebar.loadProfileToast.loading",
+                            ),
+                            success: t(
+                              "instanceSidebar.loadProfileToast.success",
+                            ),
+                            error: (e) => {
+                              console.error(e);
+                              return t(
+                                "instanceSidebar.loadProfileToast.error",
+                              );
+                            },
+                          },
+                        );
+                      }
+                    });
+                  }}
+                >
+                  <FolderIcon className="size-4" />
+                  {t("instanceSidebar.loadFromFile")}
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+        ) : (
+          <>
+            <input
+              ref={instanceProfileInputRef}
+              type="file"
+              accept=".json"
+              className="hidden"
+              onInput={(e) => {
+                const file = (e.target as HTMLInputElement).files?.item(0);
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                  const data = reader.result as string;
+                  toast.promise(
+                    setProfileMutation.mutateAsync(
+                      JSON.parse(data) as ProfileRoot,
+                    ),
+                    {
+                      loading: t("instanceSidebar.loadProfileToast.loading"),
+                      success: t("instanceSidebar.loadProfileToast.success"),
+                      error: (e) => {
+                        console.error(e);
+                        return t("instanceSidebar.loadProfileToast.error");
+                      },
                     },
-                  },
+                  );
+                };
+                reader.readAsText(file);
+              }}
+            />
+            <DropdownMenuItem
+              onClick={() => {
+                instanceProfileInputRef.current?.click();
+              }}
+            >
+              <UploadIcon className="size-4" />
+              {t("instanceSidebar.loadProfile")}
+            </DropdownMenuItem>
+          </>
+        )}
+        <DropdownMenuItem
+          onClick={() => {
+            const data = JSON.stringify(profile, null, 2);
+            if (isTauri()) {
+              runAsync(async () => {
+                const profileDir = await resolve(
+                  await appConfigDir(),
+                  "profile",
                 );
-              };
-              reader.readAsText(file);
-            }}
-          />
-          <DropdownMenuItem
-            onClick={() => {
-              instanceProfileInputRef.current?.click();
-            }}
-          >
-            <UploadIcon className="size-4" />
-            {t("instanceSidebar.loadProfile")}
-          </DropdownMenuItem>
-        </>
-      )}
-      <DropdownMenuItem
-        onClick={() => {
-          const data = JSON.stringify(profile, null, 2);
-          if (isTauri()) {
-            runAsync(async () => {
-              const profileDir = await resolve(await appConfigDir(), "profile");
-              await mkdir(profileDir, { recursive: true });
+                await mkdir(profileDir, { recursive: true });
 
-              let selected = await save({
-                title: t("instanceSidebar.saveProfile"),
-                filters: [
-                  {
-                    name: "SoulFire JSON Profile",
-                    extensions: ["json"],
-                  },
-                ],
-                defaultPath: profileDir,
-              });
+                let selected = await save({
+                  title: t("instanceSidebar.saveProfile"),
+                  filters: [
+                    {
+                      name: "SoulFire JSON Profile",
+                      extensions: ["json"],
+                    },
+                  ],
+                  defaultPath: profileDir,
+                });
 
-              if (selected) {
-                if (!selected.endsWith(".json")) {
-                  selected += ".json";
+                if (selected) {
+                  if (!selected.endsWith(".json")) {
+                    selected += ".json";
+                  }
+
+                  await writeTextFile(selected, data);
                 }
+              });
+            } else {
+              saveAs(data2blob(data), "profile.json");
+            }
 
-                await writeTextFile(selected, data);
-              }
-            });
-          } else {
-            saveAs(data2blob(data), "profile.json");
-          }
-
-          toast.success(t("instanceSidebar.profileSaved"));
-        }}
-      >
-        <DownloadIcon className="size-4" />
-        {t("instanceSidebar.saveProfile")}
-      </DropdownMenuItem>
+            toast.success(t("instanceSidebar.profileSaved"));
+          }}
+        >
+          <DownloadIcon className="size-4" />
+          {t("instanceSidebar.saveProfile")}
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
       <DropdownMenuSeparator />
     </>
   );
@@ -380,7 +390,7 @@ function InstanceActionButtons() {
 
 function InstanceActionButtonsSkeleton() {
   return (
-    <>
+    <DropdownMenuGroup>
       <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
         <Skeleton className="h-3 w-32" />
       </DropdownMenuLabel>
@@ -389,7 +399,7 @@ function InstanceActionButtonsSkeleton() {
 
         <Skeleton className="h-3 w-32" />
       </DropdownMenuItem>
-    </>
+    </DropdownMenuGroup>
   );
 }
 
@@ -410,12 +420,14 @@ export function InstanceSwitcher() {
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-muted-foreground text-xs">
-              {t("instanceSidebar.instancesGroup")}
-            </DropdownMenuLabel>
-            <Suspense fallback={<InstanceListSkeleton />}>
-              <InstanceList />
-            </Suspense>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel className="text-muted-foreground text-xs">
+                {t("instanceSidebar.instancesGroup")}
+              </DropdownMenuLabel>
+              <Suspense fallback={<InstanceListSkeleton />}>
+                <InstanceList />
+              </Suspense>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem render={<Link to="/user" />}>
               <HomeIcon className="size-4" />

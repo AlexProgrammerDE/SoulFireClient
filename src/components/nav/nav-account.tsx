@@ -170,11 +170,13 @@ export function NavAccount() {
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <Suspense fallback={<DropdownAccountHeaderSkeleton />}>
-                <DropdownAccountHeader />
-              </Suspense>
-            </DropdownMenuLabel>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel className="p-0 font-normal">
+                <Suspense fallback={<DropdownAccountHeaderSkeleton />}>
+                  <DropdownAccountHeader />
+                </Suspense>
+              </DropdownMenuLabel>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuSub>

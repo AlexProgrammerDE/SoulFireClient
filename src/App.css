@@ -156,26 +156,7 @@
 }
 
 @layer components {
-  .window-topbar {
-    height: var(--titlebar-height);
-    @apply bg-sidebar text-sidebar-foreground border-sidebar-border flex shrink-0 items-stretch border-b;
-  }
-
-  .window-topbar-drag {
-    @apply min-w-0;
-  }
-
-  .window-topbar-button {
-    width: 1.75rem;
-    @apply text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:text-sidebar-foreground/35 disabled:hover:bg-transparent inline-flex items-center justify-center rounded-md transition-colors;
-  }
-
-  .window-topbar-button-danger {
-    @apply hover:bg-destructive hover:text-white active:bg-destructive/90;
-  }
-
   .window-topbar .window-topbar-no-drag,
-  .window-topbar .window-topbar-button,
   .window-topbar button,
   .window-topbar a,
   .window-topbar input,

@@ -8,8 +8,16 @@ import {
   XIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button.tsx";
+import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import { isDesktopTauri } from "@/lib/platform.ts";
 import { cn } from "@/lib/utils.tsx";
+
+const titlebarClassName =
+  "window-topbar border-sidebar-border bg-sidebar text-sidebar-foreground flex h-(--titlebar-height) shrink-0 items-stretch border-b";
+
+const titlebarButtonClassName =
+  "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:text-sidebar-foreground/35 disabled:hover:bg-transparent size-7 shadow-none transition-colors";
 
 function WindowControls() {
   const desktopTauri = isDesktopTauri();
@@ -89,35 +97,44 @@ function WindowControls() {
   }
 
   return (
-    <div className="window-topbar-no-drag flex items-stretch">
-      <button
+    <ButtonGroup className="window-topbar-no-drag items-center">
+      <Button
+        className={titlebarButtonClassName}
+        size="icon-xs"
         type="button"
-        className="window-topbar-button"
+        variant="ghost"
         onClick={handleMinimize}
         aria-label="Minimize window"
         title="Minimize"
       >
         <MinusIcon className="size-3.5" />
-      </button>
-      <button
+      </Button>
+      <Button
+        className={titlebarButtonClassName}
+        size="icon-xs"
         type="button"
-        className="window-topbar-button"
+        variant="ghost"
         onClick={handleToggleMaximize}
         aria-label={isMaximized ? "Restore window" : "Maximize window"}
         title={isMaximized ? "Restore" : "Maximize"}
       >
         <SquareIcon className={cn("size-3", isMaximized && "scale-90")} />
-      </button>
-      <button
+      </Button>
+      <Button
+        className={cn(
+          titlebarButtonClassName,
+          "hover:bg-destructive hover:text-white active:bg-destructive/90",
+        )}
+        size="icon-xs"
         type="button"
-        className="window-topbar-button window-topbar-button-danger"
+        variant="ghost"
         onClick={handleClose}
         aria-label="Close window"
         title="Close"
       >
         <XIcon className="size-3.5" />
-      </button>
-    </div>
+      </Button>
+    </ButtonGroup>
   );
 }
 
@@ -143,32 +160,36 @@ export function WindowTitlebar() {
   }
 
   return (
-    <header className="window-topbar">
-      <div className="window-topbar-no-drag flex items-stretch gap-1 px-2">
-        <button
+    <header className={titlebarClassName}>
+      <ButtonGroup className="window-topbar-no-drag items-center px-2">
+        <Button
+          className={titlebarButtonClassName}
+          size="icon-xs"
           type="button"
-          className="window-topbar-button"
+          variant="ghost"
           onClick={handleBack}
           disabled={!canGoBack}
           aria-label="Go back"
           title="Back"
         >
           <ChevronLeftIcon className="size-3.5" />
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
           className="window-topbar-button"
+          size="icon-xs"
+          type="button"
+          variant="ghost"
           onClick={handleForward}
           disabled={!canGoForward}
           aria-label="Go forward"
           title="Forward"
         >
           <ChevronRightIcon className="size-3.5" />
-        </button>
-      </div>
+        </Button>
+      </ButtonGroup>
       <div
         data-tauri-drag-region={desktopTauri ? "" : undefined}
-        className="window-topbar-drag flex min-w-0 flex-1 items-center"
+        className="flex min-w-0 flex-1 items-center"
       >
         <div className="window-topbar-no-drag mx-auto max-w-full px-3 text-center">
           <p className="text-titlebar-foreground/58 truncate text-[11px] font-medium tracking-[0.02em]">
@@ -180,3 +201,5 @@ export function WindowTitlebar() {
     </header>
   );
 }
+
+export { titlebarClassName };

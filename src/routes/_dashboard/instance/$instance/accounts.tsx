@@ -76,6 +76,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -786,114 +787,124 @@ function AddButton() {
           {t("account.addAccounts")}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel>
-            {t("account.import.javaEdition")}
-          </DropdownMenuLabel>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>
+              {t("account.import.javaEdition")}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_java_offline");
+                setAccountTypeCredentialsSelected(
+                  AccountTypeCredentials.OFFLINE,
+                );
+              }}
+            >
+              {t("account.import.offline")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_microsoft_java_credentials");
+                setAccountTypeCredentialsSelected(
+                  AccountTypeCredentials.MICROSOFT_JAVA_CREDENTIALS,
+                );
+              }}
+            >
+              {t("account.import.microsoftCredentials")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_microsoft_java_device_code");
+                setPendingDeviceCodeType(
+                  AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
+                );
+              }}
+            >
+              {t("account.import.microsoftDeviceCode")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_microsoft_java_refresh_token");
+                setAccountTypeCredentialsSelected(
+                  AccountTypeCredentials.MICROSOFT_JAVA_REFRESH_TOKEN,
+                );
+              }}
+            >
+              {t("account.import.microsoftRefreshToken")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_microsoft_java_cookies");
+                setAccountTypeCredentialsSelected(
+                  AccountTypeCredentials.MICROSOFT_JAVA_COOKIES,
+                );
+              }}
+            >
+              {t("account.import.microsoftCookies")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_microsoft_java_access_token");
+                setAccountTypeCredentialsSelected(
+                  AccountTypeCredentials.MICROSOFT_JAVA_ACCESS_TOKEN,
+                );
+              }}
+            >
+              {t("account.import.microsoftAccessToken")}
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_java_offline");
-              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
-            }}
-          >
-            {t("account.import.offline")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_java_credentials");
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.MICROSOFT_JAVA_CREDENTIALS,
-              );
-            }}
-          >
-            {t("account.import.microsoftCredentials")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_java_device_code");
-              setPendingDeviceCodeType(
-                AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
-              );
-            }}
-          >
-            {t("account.import.microsoftDeviceCode")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_java_refresh_token");
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.MICROSOFT_JAVA_REFRESH_TOKEN,
-              );
-            }}
-          >
-            {t("account.import.microsoftRefreshToken")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_java_cookies");
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.MICROSOFT_JAVA_COOKIES,
-              );
-            }}
-          >
-            {t("account.import.microsoftCookies")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_java_access_token");
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.MICROSOFT_JAVA_ACCESS_TOKEN,
-              );
-            }}
-          >
-            {t("account.import.microsoftAccessToken")}
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>
+              {t("account.import.altProviders")}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_ravealts");
+                setRavealtsDialogOpen(true);
+              }}
+            >
+              {t("account.ravealts.button")}
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuLabel>
-            {t("account.import.altProviders")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_ravealts");
-              setRavealtsDialogOpen(true);
-            }}
-          >
-            {t("account.ravealts.button")}
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel>
-            {t("account.import.bedrockEdition")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_bedrock_offline");
-              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
-            }}
-          >
-            {t("account.import.offline")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_bedrock_credentials");
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.MICROSOFT_BEDROCK_CREDENTIALS,
-              );
-            }}
-          >
-            {t("account.import.microsoftCredentials")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_bedrock_device_code");
-              setPendingDeviceCodeType(
-                AccountTypeDeviceCode.MICROSOFT_BEDROCK_DEVICE_CODE,
-              );
-            }}
-          >
-            {t("account.import.microsoftDeviceCode")}
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>
+              {t("account.import.bedrockEdition")}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_bedrock_offline");
+                setAccountTypeCredentialsSelected(
+                  AccountTypeCredentials.OFFLINE,
+                );
+              }}
+            >
+              {t("account.import.offline")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_microsoft_bedrock_credentials");
+                setAccountTypeCredentialsSelected(
+                  AccountTypeCredentials.MICROSOFT_BEDROCK_CREDENTIALS,
+                );
+              }}
+            >
+              {t("account.import.microsoftCredentials")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_account_microsoft_bedrock_device_code");
+                setPendingDeviceCodeType(
+                  AccountTypeDeviceCode.MICROSOFT_BEDROCK_DEVICE_CODE,
+                );
+              }}
+            >
+              {t("account.import.microsoftDeviceCode")}
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
       {deviceCodeData !== null && (

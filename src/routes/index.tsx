@@ -349,28 +349,33 @@ function Index() {
                     )}
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-96">
-                    <DropdownMenuLabel>{t("common:locale")}</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup
-                      value={i18n.resolvedLanguage ?? i18n.language}
-                      onValueChange={(value) => {
-                        if (value) {
-                          void i18n.changeLanguage(value);
-                        }
-                      }}
-                      className="grid grid-cols-1 md:grid-cols-2"
-                    >
-                      {(i18n.options.supportedLngs
-                        ? i18n.options.supportedLngs
-                        : []
-                      )
-                        .filter((lang) => lang !== "cimode")
-                        .map((lang) => (
-                          <DropdownMenuRadioItem key={lang} value={lang}>
-                            {languageEmoji(lang)} {getLanguageName(lang, lang)}
-                          </DropdownMenuRadioItem>
-                        ))}
-                    </DropdownMenuRadioGroup>
+                    <DropdownMenuGroup>
+                      <DropdownMenuLabel>
+                        {t("common:locale")}
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuRadioGroup
+                        value={i18n.resolvedLanguage ?? i18n.language}
+                        onValueChange={(value) => {
+                          if (value) {
+                            void i18n.changeLanguage(value);
+                          }
+                        }}
+                        className="grid grid-cols-1 md:grid-cols-2"
+                      >
+                        {(i18n.options.supportedLngs
+                          ? i18n.options.supportedLngs
+                          : []
+                        )
+                          .filter((lang) => lang !== "cimode")
+                          .map((lang) => (
+                            <DropdownMenuRadioItem key={lang} value={lang}>
+                              {languageEmoji(lang)}{" "}
+                              {getLanguageName(lang, lang)}
+                            </DropdownMenuRadioItem>
+                          ))}
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                       <DropdownMenuItem

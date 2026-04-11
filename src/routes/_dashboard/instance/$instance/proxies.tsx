@@ -65,6 +65,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -692,40 +693,42 @@ function AddButton() {
           {t("proxy.addProxies")}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>{t("proxy.import.proxyType")}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_proxies_http");
-              setProxyTypeSelected(UIProxyType.HTTP);
-            }}
-          >
-            {t("proxy.import.http")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_proxies_socks4");
-              setProxyTypeSelected(UIProxyType.SOCKS4);
-            }}
-          >
-            {t("proxy.import.socks4")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_proxies_socks5");
-              setProxyTypeSelected(UIProxyType.SOCKS5);
-            }}
-          >
-            {t("proxy.import.socks5")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_proxies_uri");
-              setProxyTypeSelected(UIProxyType.URI);
-            }}
-          >
-            {t("proxy.import.uri")}
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>{t("proxy.import.proxyType")}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_proxies_http");
+                setProxyTypeSelected(UIProxyType.HTTP);
+              }}
+            >
+              {t("proxy.import.http")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_proxies_socks4");
+                setProxyTypeSelected(UIProxyType.SOCKS4);
+              }}
+            >
+              {t("proxy.import.socks4")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_proxies_socks5");
+                setProxyTypeSelected(UIProxyType.SOCKS5);
+              }}
+            >
+              {t("proxy.import.socks5")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void trackEvent("import_proxies_uri");
+                setProxyTypeSelected(UIProxyType.URI);
+              }}
+            >
+              {t("proxy.import.uri")}
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
       {proxyTypeSelected !== null && (
@@ -979,20 +982,22 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           <DownloadIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>{t("proxy.export.format")}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => exportSelectedProxies("uri")}>
-            {t("proxy.export.uri")}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => exportSelectedProxies("http")}>
-            {t("proxy.export.http")}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => exportSelectedProxies("socks4")}>
-            {t("proxy.export.socks4")}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => exportSelectedProxies("socks5")}>
-            {t("proxy.export.socks5")}
-          </DropdownMenuItem>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>{t("proxy.export.format")}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => exportSelectedProxies("uri")}>
+              {t("proxy.export.uri")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => exportSelectedProxies("http")}>
+              {t("proxy.export.http")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => exportSelectedProxies("socks4")}>
+              {t("proxy.export.socks4")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => exportSelectedProxies("socks5")}>
+              {t("proxy.export.socks5")}
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
       <DataTableActionBarAction
