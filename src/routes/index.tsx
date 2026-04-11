@@ -9,7 +9,6 @@ import {
   ClipboardIcon,
   FlaskConicalIcon,
   HeartHandshakeIcon,
-  InfoIcon,
   KeyRoundIcon,
   LaptopMinimalIcon,
   LoaderCircleIcon,
@@ -70,18 +69,12 @@ import {
 } from "@/components/ui/input-otp";
 import {
   Item,
-  ItemActions,
   ItemContent,
   ItemDescription,
   ItemGroup,
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item.tsx";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Scroller } from "@/components/ui/scroller.tsx";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import {
@@ -504,14 +497,6 @@ function LoginOptionCard(props: {
           {props.description}
         </ItemDescription>
       </ItemContent>
-      <ItemActions>
-        <Popover>
-          <PopoverTrigger render={<Button size="icon-sm" variant="outline" />}>
-            <InfoIcon />
-          </PopoverTrigger>
-          <PopoverContent>{props.description}</PopoverContent>
-        </Popover>
-      </ItemActions>
     </Item>
   );
 }
