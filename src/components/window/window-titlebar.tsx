@@ -5,7 +5,7 @@ import {
   BookOpenTextIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  CoffeeIcon,
+  HeartIcon,
   MinusIcon,
   SquareIcon,
   XIcon,
@@ -50,9 +50,9 @@ function TitlebarExternalLinks() {
       icon: BookOpenTextIcon,
     },
     {
-      title: t("sidebar.buyMeACoffee"),
-      url: "https://ko-fi.com/alexprogrammerde",
-      icon: CoffeeIcon,
+      title: t("sidebar.supportSoulFire"),
+      url: "https://soulfiremc.com/pricing?utm_source=soulfire-client&utm_medium=app&utm_campaign=titlebar-support",
+      icon: HeartIcon,
     },
     {
       title: t("sidebar.discord"),

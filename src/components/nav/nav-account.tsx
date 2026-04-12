@@ -308,6 +308,14 @@ export function NavAccount() {
             )}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuItem
+                render={
+                  <ExternalLink href="https://soulfiremc.com/pricing?utm_source=soulfire-client&utm_medium=app&utm_campaign=account-menu-support" />
+                }
+              >
+                <HeartHandshakeIcon />
+                {t("userSidebar.supportSoulFire")}
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={openAbout}>
                 <CircleHelpIcon />
                 {t("userSidebar.about")}

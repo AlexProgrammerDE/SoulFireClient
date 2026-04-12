@@ -46,6 +46,13 @@
       },
       "close": "Close"
     },
+    "support": {
+      "title": "Support SoulFire",
+      "description": "SoulFire is free and open-source, built with love by the community.",
+      "body": "If SoulFire has been useful to you, please consider supporting the project. Your contribution helps cover server costs, fund development, and keep SoulFire free for everyone.",
+      "dismiss": "Maybe later",
+      "action": "Support SoulFire"
+    },
     "createInstance": {
       "title": "Create a new instance",
       "description": "Instances need friendly names for you to distinguish them. It can be any name you want, for example, \"My Minecraft Bot\".",
@@ -334,6 +341,7 @@
     },
     "configDir": "Config directory",
     "dataDir": "Data directory",
+    "supportSoulFire": "Support SoulFire",
     "about": "About",
     "logOut": "Log out",
     "logOutToast": {
@@ -347,7 +355,7 @@
   },
   "sidebar": {
     "documentation": "Documentation",
-    "buyMeACoffee": "Buy me a coffee",
+    "supportSoulFire": "Support SoulFire",
     "discord": "Discord"
   },
   "breadcrumbs": {
