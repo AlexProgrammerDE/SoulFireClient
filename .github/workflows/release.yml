@@ -235,7 +235,7 @@ jobs:
 
       - name: 'Windows AMD64/AArch64: Submit signing request'
         if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
-        uses: signpath/github-action-submit-signing-request@bc66d86b015a46e9c6d9700de73143a82f9570ff # 2.1
+        uses: signpath/github-action-submit-signing-request@b9d91eadd323de506c0c81cf0c7fe7438f3360fd # 2.2
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
           organization-id: 'e091b552-3623-4d9d-83d7-059d8f32978b'
