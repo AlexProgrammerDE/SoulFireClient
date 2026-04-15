@@ -67,7 +67,7 @@ importers:
         version: 8.21.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@tanstack/router-devtools':
         specifier: ^1.161.3
-        version: 1.166.13(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 1.166.13(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@tanstack/table-core':
         specifier: ^8.21.3
         version: 8.21.3
@@ -169,7 +169,7 @@ importers:
         version: 0.4.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       nuqs:
         specifier: 2.8.9
-        version: 2.8.9(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)
+        version: 2.8.9(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)
       qrcode:
         specifier: ^1.5.4
         version: 1.5.4
@@ -239,7 +239,7 @@ importers:
         version: 2.4.12
       '@bufbuild/buf':
         specifier: ^1.66.1
-        version: 1.68.0
+        version: 1.68.1
       '@bufbuild/protoc-gen-es':
         specifier: ^2.11.0
         version: 2.11.0(@bufbuild/protobuf@2.11.0)
@@ -260,16 +260,16 @@ importers:
         version: 0.2.21(@types/react@19.2.14)(csstype@3.2.3)(react@19.2.5)(solid-js@1.9.10)
       '@tanstack/react-router':
         specifier: ^1.161.3
-        version: 1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@tanstack/react-router-devtools':
         specifier: ^1.161.3
-        version: 1.166.13(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 1.166.13(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@tanstack/router-cli':
         specifier: ^1.161.3
         version: 1.166.33
       '@tanstack/router-plugin':
         specifier: ^1.161.3
-        version: 1.167.22(@rsbuild/core@1.6.6)(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(vite@8.0.8(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))(webpack@5.95.0(esbuild@0.27.7))
+        version: 1.167.22(@rsbuild/core@1.6.6)(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(vite@8.0.8(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))(webpack@5.95.0(esbuild@0.27.7))
       '@tauri-apps/cli':
         specifier: 2.10.1
         version: 2.10.1
@@ -567,50 +567,50 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@bufbuild/buf-darwin-arm64@1.68.0':
-    resolution: {integrity: sha512-oW+OMJJ+G4btUuhoYJnavFff0qhv9egHldb0GjJ2XkXjU1O8B5+VYoor4JvzlSkVLPof98bx1RKNBKsLZHXGaQ==}
+  '@bufbuild/buf-darwin-arm64@1.68.1':
+    resolution: {integrity: sha512-+Cu/2Kr6Add3s+Zk/edcF9QdpnrsukQkdR/z4fk4+qr6YZqfWfiV8f+s14I3h7qPrPnGeCeynvmZ9NmJ1BMYuA==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [darwin]
 
-  '@bufbuild/buf-darwin-x64@1.68.0':
-    resolution: {integrity: sha512-KuivijoUOQIhVsFQVjWjuIKKnpe30U8JLMB8VrXpy9i4YIuipteUcQ6Yih1o4gd7p5/Sa7BdRQmMZr5CdrJi0Q==}
+  '@bufbuild/buf-darwin-x64@1.68.1':
+    resolution: {integrity: sha512-hvAs452aJ6io9hZKSfr3TvC+//16zW5y5u3ucsIXVkl5mkmKWSCkPbZwGpjNCfRGGUsyRJGL6rixxTgLKw2k5w==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [darwin]
 
-  '@bufbuild/buf-linux-aarch64@1.68.0':
-    resolution: {integrity: sha512-XaXi2SzNyBeIQuOf/ywjvNydwGKfNGg8ZG/dCnfp801r9fMN3Mu4sOin+FRQAOh5ClJEDw/HGKDdvlSHDV3rZw==}
+  '@bufbuild/buf-linux-aarch64@1.68.1':
+    resolution: {integrity: sha512-GLCakHzZVKUPlAiJEPGMBLW+yBk8tuz6NNcoeQU5lB5AO7ks8V8x9cy4CQjne4YSl3niF1JtvAQckLKhEWPueQ==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [linux]
 
-  '@bufbuild/buf-linux-armv7@1.68.0':
-    resolution: {integrity: sha512-ygA/zEuW2bhxQ7S+e5A7V+4Ot/aJY85y0DutzVaRJEWxOcj2jRHPIAR36UEMEJwURxsLsPiNi6WF6oN87ZSqEQ==}
+  '@bufbuild/buf-linux-armv7@1.68.1':
+    resolution: {integrity: sha512-lUMCULl3MOYQe0oAPWnqNVYy8pL+F3Jeq6C4sSY+0E9udaACMc2mZ32gYingaMop9O1qS58HjJbezFxxL+CJqg==}
     engines: {node: '>=12'}
     cpu: [arm]
     os: [linux]
 
-  '@bufbuild/buf-linux-x64@1.68.0':
-    resolution: {integrity: sha512-rXAaDpOQ0mnVxzMloEA67ii6TU2BXekxuIGZRUjzDcYNJmJa44JTlw3i94AwY1V6KGcwwQqJFboLDdNAsAErgA==}
+  '@bufbuild/buf-linux-x64@1.68.1':
+    resolution: {integrity: sha512-eRU3UWiZQthAgx+qFTG3EeJ/VeOcZzAkKYGt5ansOnOIJHBm+3RG2KqA+Jm8q3EFqB1XpVcGxPXnIu/qmFJXaQ==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [linux]
 
-  '@bufbuild/buf-win32-arm64@1.68.0':
-    resolution: {integrity: sha512-OAwC1KLluoOX9c7LCCRmzJVS9l0V6TKRwcrKssPMceW9UdHQa1MZlSvOfXmya7fpqu5hx5f00ekpaQ4znZrXMA==}
+  '@bufbuild/buf-win32-arm64@1.68.1':
+    resolution: {integrity: sha512-v3xlKzs3l2C+mYv+T0sYol05DTmsFKYmM5Vz8+AyrXdjxRwq2QH7m0arVWwxHX2MwyhQxKA+qqjoF8bCUM7xxA==}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [win32]
 
-  '@bufbuild/buf-win32-x64@1.68.0':
-    resolution: {integrity: sha512-D0LU48eBhCgz6yTUYOpacl4LNe7RMZQG2WZDaeBU0XRCl8017X3qKxkkQin3gy26kep5Z0/1XrCLhax87O/8jQ==}
+  '@bufbuild/buf-win32-x64@1.68.1':
+    resolution: {integrity: sha512-b62pwu+G7n5tF8n1QIoT85K7xgKJZS8SzdN020weOa7IVvMNHCDqMq7nrkz46fXCkK7MtD1YJ6sUp86sWSZPsw==}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
 
-  '@bufbuild/buf@1.68.0':
-    resolution: {integrity: sha512-qVdGNNbq8ViLhcsNmzH6j4mEhfnUX9w/ccqN1+doGCM8CKeA22gVyM8LZ7d2vWuWtS00/e81xjup4OSy8+wZrA==}
+  '@bufbuild/buf@1.68.1':
+    resolution: {integrity: sha512-QDJ3oy4qZ5EVS2JYtmpE1n9FuaoABthxIddXB050huGddatr1sjHJSSAXXpLotOI18pW3KQ4zzU1x5Ms+pEEOw==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -2443,8 +2443,8 @@ packages:
       '@tanstack/router-core':
         optional: true
 
-  '@tanstack/react-router@1.168.21':
-    resolution: {integrity: sha512-slnitYiHHmU52eMWtW8JbV9EMT5q6mRMbTA5yepBmJAnj5WZDrDRsLY/TuUrdD97A4W7/25tEQRoqc1G2X0oCw==}
+  '@tanstack/react-router@1.168.22':
+    resolution: {integrity: sha512-W2LyfkfJtDCf//jOjZeUBWwOVl8iDRVTECpGHa2M28MT3T5/VVnjgicYNHR/ax0Filk1iU67MRjcjHheTYvK1Q==}
     engines: {node: '>=20.19'}
     peerDependencies:
       react: '>=18.0.0 || >=19.0.0'
@@ -5429,36 +5429,36 @@ snapshots:
   '@biomejs/cli-win32-x64@2.4.12':
     optional: true
 
-  '@bufbuild/buf-darwin-arm64@1.68.0':
+  '@bufbuild/buf-darwin-arm64@1.68.1':
     optional: true
 
-  '@bufbuild/buf-darwin-x64@1.68.0':
+  '@bufbuild/buf-darwin-x64@1.68.1':
     optional: true
 
-  '@bufbuild/buf-linux-aarch64@1.68.0':
+  '@bufbuild/buf-linux-aarch64@1.68.1':
     optional: true
 
-  '@bufbuild/buf-linux-armv7@1.68.0':
+  '@bufbuild/buf-linux-armv7@1.68.1':
     optional: true
 
-  '@bufbuild/buf-linux-x64@1.68.0':
+  '@bufbuild/buf-linux-x64@1.68.1':
     optional: true
 
-  '@bufbuild/buf-win32-arm64@1.68.0':
+  '@bufbuild/buf-win32-arm64@1.68.1':
     optional: true
 
-  '@bufbuild/buf-win32-x64@1.68.0':
+  '@bufbuild/buf-win32-x64@1.68.1':
     optional: true
 
-  '@bufbuild/buf@1.68.0':
+  '@bufbuild/buf@1.68.1':
     optionalDependencies:
-      '@bufbuild/buf-darwin-arm64': 1.68.0
-      '@bufbuild/buf-darwin-x64': 1.68.0
-      '@bufbuild/buf-linux-aarch64': 1.68.0
-      '@bufbuild/buf-linux-armv7': 1.68.0
-      '@bufbuild/buf-linux-x64': 1.68.0
-      '@bufbuild/buf-win32-arm64': 1.68.0
-      '@bufbuild/buf-win32-x64': 1.68.0
+      '@bufbuild/buf-darwin-arm64': 1.68.1
+      '@bufbuild/buf-darwin-x64': 1.68.1
+      '@bufbuild/buf-linux-aarch64': 1.68.1
+      '@bufbuild/buf-linux-armv7': 1.68.1
+      '@bufbuild/buf-linux-x64': 1.68.1
+      '@bufbuild/buf-win32-arm64': 1.68.1
+      '@bufbuild/buf-win32-x64': 1.68.1
 
   '@bufbuild/protobuf@2.11.0': {}
 
@@ -7171,9 +7171,9 @@ snapshots:
       '@tanstack/query-core': 5.99.0
       react: 19.2.5
 
-  '@tanstack/react-router-devtools@1.166.13(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@tanstack/react-router-devtools@1.166.13(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
-      '@tanstack/react-router': 1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@tanstack/react-router': 1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@tanstack/router-devtools-core': 1.167.3(@tanstack/router-core@1.168.15)(csstype@3.2.3)
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
@@ -7182,7 +7182,7 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@tanstack/history': 1.161.6
       '@tanstack/react-store': 0.9.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -7227,10 +7227,10 @@ snapshots:
     optionalDependencies:
       csstype: 3.2.3
 
-  '@tanstack/router-devtools@1.166.13(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@tanstack/router-devtools@1.166.13(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
-      '@tanstack/react-router': 1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@tanstack/react-router-devtools': 1.166.13(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@tanstack/react-router': 1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@tanstack/react-router-devtools': 1.166.13(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(@tanstack/router-core@1.168.15)(csstype@3.2.3)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       clsx: 2.1.1
       goober: 2.1.18(csstype@3.2.3)
       react: 19.2.5
@@ -7253,7 +7253,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/router-plugin@1.167.22(@rsbuild/core@1.6.6)(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(vite@8.0.8(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))(webpack@5.95.0(esbuild@0.27.7))':
+  '@tanstack/router-plugin@1.167.22(@rsbuild/core@1.6.6)(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(vite@8.0.8(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2))(webpack@5.95.0(esbuild@0.27.7))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-syntax-jsx': 7.28.6(@babel/core@7.29.0)
@@ -7270,7 +7270,7 @@ snapshots:
       zod: 3.25.76
     optionalDependencies:
       '@rsbuild/core': 1.6.6
-      '@tanstack/react-router': 1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@tanstack/react-router': 1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       vite: 8.0.8(@types/node@24.12.2)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.2)
       webpack: 5.95.0(esbuild@0.27.7)
     transitivePeerDependencies:
@@ -8859,12 +8859,12 @@ snapshots:
       path-key: 4.0.0
       unicorn-magic: 0.3.0
 
-  nuqs@2.8.9(@tanstack/react-router@1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5):
+  nuqs@2.8.9(@tanstack/react-router@1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5):
     dependencies:
       '@standard-schema/spec': 1.0.0
       react: 19.2.5
     optionalDependencies:
-      '@tanstack/react-router': 1.168.21(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@tanstack/react-router': 1.168.22(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
 
   object-assign@4.1.1: {}
 
