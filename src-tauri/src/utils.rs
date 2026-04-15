@@ -35,6 +35,8 @@ pub enum SFError {
     JvmExtractIncomplete,
     #[error("server already starting")]
     ServerAlreadyStarting,
+    #[error("SoulFire didn't properly finish loading")]
+    ServerLoadingIncomplete,
 }
 
 #[derive(Debug, thiserror::Error)]

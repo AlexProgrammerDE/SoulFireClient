@@ -15,7 +15,7 @@ use std::sync::Arc;
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::CommandChild;
-use tauri_plugin_shell::process::CommandEvent::Stdout;
+use tauri_plugin_shell::process::CommandEvent::{Stderr, Stdout, Terminated};
 use tauri_plugin_shell::ShellExt;
 
 pub struct IntegratedServerState {
@@ -480,17 +480,34 @@ async fn internal_load_integrated_server(
     let (mut rx, child) = command.spawn()?;
 
     // Print all rx messages until server is ready
+    let mut finished_loading = false;
     while let Some(message) = rx.recv().await {
-        if let Stdout(line) = message {
-            let line = String::from_utf8_lossy(&line);
-            let line = strip_ansi_escapes::strip_str(line);
-            if line.contains("Finished loading!") {
-                send_log(&app_handle, "Server ready")?;
-                break;
-            } else {
+        match message {
+            Stdout(line) => {
+                let line = String::from_utf8_lossy(&line);
+                let line = strip_ansi_escapes::strip_str(line);
+                if line.contains("Finished loading!") {
+                    send_log(&app_handle, "Server ready")?;
+                    finished_loading = true;
+                    break;
+                } else {
+                    send_log(&app_handle, line)?;
+                }
+            }
+            Stderr(line) => {
+                let line = String::from_utf8_lossy(&line);
+                let line = strip_ansi_escapes::strip_str(line);
                 send_log(&app_handle, line)?;
             }
+            Terminated(_) => {
+                break;
+            }
+            _ => {}
         }
+    }
+
+    if !finished_loading {
+        return Err(SFAnyError::from(SFError::ServerLoadingIncomplete));
     }
 
     // Generate JWT directly from the secret key file instead of
