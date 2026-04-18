@@ -34,6 +34,7 @@ import {
   resetIntegratedData,
   runIntegratedServer,
 } from "./native/integrated-server";
+import { trayGuidForPlatform } from "./tray-args";
 import { startUpdater } from "./updater";
 
 const APP_ID = "com.soulfiremc.soulfire";
@@ -42,7 +43,6 @@ const APP_PROTOCOL_HOST = "soulfire";
 const DEEP_LINK_PREFIX = "soulfire://";
 const DEFAULT_WINDOW_HEIGHT = 675;
 const DEFAULT_WINDOW_WIDTH = 1200;
-
 protocol.registerSchemesAsPrivileged([
   {
     scheme: APP_PROTOCOL,
@@ -148,6 +148,53 @@ function rendererEntryUrl(): string {
 function resolveAssetPath(relativePath: string): string {
   const basePath = app.isPackaged ? app.getAppPath() : process.cwd();
   return path.join(basePath, relativePath);
+}
+
+function loadNativeImage(assetPath: string) {
+  const image = nativeImage.createFromPath(assetPath);
+  if (image.isEmpty()) {
+    throw new Error(`Failed to load icon asset: ${assetPath}`);
+  }
+
+  return image;
+}
+
+function appIconPath(): string {
+  switch (process.platform) {
+    case "darwin":
+      return resolveAssetPath("build/icons/icon.png");
+    case "win32":
+      return resolveAssetPath("build/icons/icon.ico");
+    default:
+      return resolveAssetPath("build/icons/icon.png");
+  }
+}
+
+function trayIconPath(): string {
+  switch (process.platform) {
+    case "darwin":
+      return resolveAssetPath("build/icons/trayTemplate.png");
+    case "win32":
+      return resolveAssetPath("build/icons/icon.ico");
+    default:
+      return resolveAssetPath("build/icons/icon.png");
+  }
+}
+
+function windowIcon() {
+  if (process.platform === "darwin") {
+    return undefined;
+  }
+
+  return process.platform === "win32"
+    ? appIconPath()
+    : loadNativeImage(appIconPath());
+}
+
+function applyApplicationIcon(): void {
+  if (process.platform === "darwin" && app.dock) {
+    app.dock.setIcon(loadNativeImage(appIconPath()));
+  }
 }
 
 function sendToMainWindow(channel: string, payload?: unknown): void {
@@ -318,7 +365,6 @@ function registerSecurityHandlers(): void {
 }
 
 async function createMainWindow(): Promise<BrowserWindow> {
-  const iconPath = resolveAssetPath("build/icons/icon.png");
   const state = app.isPackaged
     ? loadStoredWindowState()
     : {
@@ -332,7 +378,7 @@ async function createMainWindow(): Promise<BrowserWindow> {
     center: true,
     frame: false,
     height: state.height,
-    icon: nativeImage.createFromPath(iconPath),
+    icon: windowIcon(),
     minHeight: 500,
     minWidth: 940,
     show: false,
@@ -410,9 +456,14 @@ function persistWindowState(window: BrowserWindow): void {
 }
 
 function createAppTray(): void {
-  const iconPath = resolveAssetPath("build/icons/icon.png");
-  const image = nativeImage.createFromPath(iconPath);
-  tray = new Tray(image);
+  const iconPath = trayIconPath();
+  const image =
+    process.platform === "win32" ? iconPath : loadNativeImage(iconPath);
+  if (process.platform === "darwin" && typeof image !== "string") {
+    image.setTemplateImage(true);
+  }
+  const trayGuid = trayGuidForPlatform(process.platform);
+  tray = trayGuid === null ? new Tray(image) : new Tray(image, trayGuid);
   tray.setToolTip("SoulFire");
   tray.setContextMenu(
     Menu.buildFromTemplate([
@@ -798,6 +849,7 @@ function mapPlatformToType(platformName: string): string {
 
 async function bootstrap(): Promise<void> {
   app.setAppUserModelId(APP_ID);
+  applyApplicationIcon();
   registerSecurityHandlers();
   registerIpcHandlers();
   await registerAppProtocol();
