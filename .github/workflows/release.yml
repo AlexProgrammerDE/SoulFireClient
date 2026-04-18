@@ -55,21 +55,42 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install SignPath command
-        if: matrix.platform == 'windows'
-        shell: powershell
-        run: |
-          Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module -Scope CurrentUser -Force -Name SignPath
-
       - name: Typecheck
         run: pnpm typecheck
 
       - name: Build Electron release artifacts
-        env:
-          SIGNPATH_POLICY_SLUG: release-signing
-          SIGNPATH_API_KEY: ${{ secrets.SIGNPATH_API_TOKEN }}
         run: pnpm build:electron -- --${{ matrix.arch }} -c.publish.channel=${{ matrix.platform }}-${{ matrix.arch }} -c.extraMetadata.version=${{ inputs.app-version }}
+
+      - name: Upload unsigned Windows installer
+        if: matrix.platform == 'windows'
+        id: upload-unsigned-installer
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1
+        with:
+          name: unsigned-installer-${{ matrix.arch }}
+          path: release-artifacts/*.exe
+          if-no-files-found: error
+
+      - name: Submit SignPath signing request
+        if: matrix.platform == 'windows'
+        uses: signpath/github-action-submit-signing-request@v2
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: e091b552-3623-4d9d-83d7-059d8f32978b
+          project-slug: SoulFireClient
+          signing-policy-slug: release-signing
+          github-artifact-id: ${{ steps.upload-unsigned-installer.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: ${{ runner.temp }}/signed
+
+      - name: Replace unsigned Windows installer
+        if: matrix.platform == 'windows'
+        shell: pwsh
+        run: |
+          $signedInstaller = Get-ChildItem "${{ runner.temp }}/signed" -Filter *.exe | Select-Object -First 1
+          if (-not $signedInstaller) {
+            throw "No signed installer returned from SignPath."
+          }
+          Copy-Item $signedInstaller.FullName release-artifacts -Force
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1

@@ -194,9 +194,6 @@
     ],
     "win": {
       "icon": "build/icons/icon.ico",
-      "signtoolOptions": {
-        "sign": "./scripts/sign-windows.js"
-      },
       "target": [
         "nsis"
       ]
