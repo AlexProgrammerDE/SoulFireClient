@@ -1,7 +1,7 @@
 import { mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
 import chokidar from "chokidar";
 import {
   app,
@@ -130,7 +130,7 @@ if (hasSingleInstanceLock) {
 }
 
 function preloadPath(): string {
-  return fileURLToPath(new URL("./preload.mjs", import.meta.url));
+  return path.join(app.getAppPath(), "dist-electron", "preload.mjs");
 }
 
 function appOrigin(): string {

@@ -18,7 +18,7 @@ import type { App } from "electron";
 import * as tar from "tar";
 import { getAppLocalDataDir } from "./app-paths";
 
-const require = createRequire(import.meta.url);
+const require = createRequire(__filename);
 const AdmZip = require("adm-zip") as {
   new (
     path: string,

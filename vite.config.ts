@@ -50,6 +50,18 @@ export default defineConfig({
           electron({
             main: {
               entry: "electron/main.ts",
+              vite: {
+                build: {
+                  lib: {
+                    formats: ["cjs"],
+                  },
+                  rollupOptions: {
+                    output: {
+                      entryFileNames: "[name].cjs",
+                    },
+                  },
+                },
+              },
             },
             preload: {
               input: "electron/preload.ts",
