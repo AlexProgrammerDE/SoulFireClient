@@ -148,7 +148,7 @@ function loadStoredWindowState(): StoredWindowState {
       typeof state.height === "number" && state.height >= 500
         ? state.height
         : DEFAULT_WINDOW_HEIGHT,
-    isMaximized: state.isMaximized === true,
+    isMaximized: state.isMaximized,
     width:
       typeof state.width === "number" && state.width >= 940
         ? state.width
@@ -548,5 +548,8 @@ async function bootstrap(): Promise<void> {
   });
 }
 
-await app.whenReady();
-await bootstrap();
+if (app.isReady()) {
+  void bootstrap();
+} else {
+  app.on("ready", bootstrap);
+}

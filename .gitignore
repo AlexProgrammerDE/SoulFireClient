@@ -30,3 +30,4 @@ dist-ssr
 builddir/
 repo/
 .tanstack/
+dist-electron
