@@ -8,18 +8,30 @@ permissions:
 
 jobs:
   build:
-    name: Build ${{ matrix.name }}
+    name: Build ${{ matrix.platform }} (${{ matrix.arch }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: ubuntu-22.04
-            name: Linux
+            platform: linux
+            arch: x64
+          - os: ubuntu-22.04-arm
+            platform: linux
+            arch: arm64
+          - os: macos-15-intel
+            platform: macos
+            arch: x64
           - os: macos-14
-            name: macOS
+            platform: macos
+            arch: arm64
           - os: windows-2025
-            name: Windows
+            platform: windows
+            arch: x64
+          - os: windows-11-arm
+            platform: windows
+            arch: arm64
 
     steps:
       - name: Checkout repository
@@ -43,11 +55,11 @@ jobs:
         run: pnpm typecheck
 
       - name: Build unpacked Electron app
-        run: pnpm build:dir
+        run: pnpm build:electron:dir -- --${{ matrix.arch }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1
         with:
-          name: electron-${{ matrix.name }}
+          name: electron-${{ matrix.platform }}-${{ matrix.arch }}
           path: release-artifacts/**
           if-no-files-found: error
