@@ -55,17 +55,34 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Install SignPath command
+        if: matrix.platform == 'windows'
+        shell: powershell
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module -Scope CurrentUser -Force -Name SignPath
+
       - name: Typecheck
         run: pnpm typecheck
 
       - name: Build Electron release artifacts
-        run: pnpm build:electron -- --${{ matrix.arch }}
+        env:
+          SIGNPATH_POLICY_SLUG: release-signing
+          SIGNPATH_API_KEY: ${{ secrets.SIGNPATH_API_TOKEN }}
+        run: pnpm build:electron -- --${{ matrix.arch }} -c.publish.channel=${{ matrix.platform }}-${{ matrix.arch }} -c.extraMetadata.version=${{ inputs.app-version }}
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1
         with:
           name: release-${{ matrix.platform }}-${{ matrix.arch }}
-          path: release-artifacts/**
+          path: |
+            release-artifacts/*.AppImage
+            release-artifacts/*.deb
+            release-artifacts/*.dmg
+            release-artifacts/*.exe
+            release-artifacts/*.zip
+            release-artifacts/*.yml
+            release-artifacts/*.blockmap
           if-no-files-found: error
 
   publish-release:
@@ -74,6 +91,20 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # 6.3.0
+        with:
+          node-version: lts/*
+          check-latest: true
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # 5.0.0
+        with:
+          version: latest
+
       - name: Download Linux x64 artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # 8.0.1
         with:
@@ -109,6 +140,12 @@ jobs:
         with:
           name: release-windows-arm64
           path: release-artifacts/windows-arm64
+
+      - name: Generate legacy Tauri updater manifest
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: node scripts/generate-legacy-updater-assets.mjs release-artifacts ${{ inputs.app-version }}
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # 3.0.0

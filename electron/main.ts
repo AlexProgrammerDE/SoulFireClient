@@ -34,6 +34,7 @@ import {
   resetIntegratedData,
   runIntegratedServer,
 } from "./native/integrated-server";
+import { startUpdater } from "./updater";
 
 const APP_ID = "com.soulfiremc.soulfire";
 const APP_PROTOCOL = "app";
@@ -808,6 +809,7 @@ async function bootstrap(): Promise<void> {
 
   mainWindow = await createMainWindow();
   createAppTray();
+  startUpdater();
 
   app.on("activate", async () => {
     if (BrowserWindow.getAllWindows().length === 0) {
