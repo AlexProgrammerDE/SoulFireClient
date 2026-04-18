@@ -27,7 +27,7 @@ import { desktop, isDesktopApp } from "@/lib/desktop.ts";
 import { cn } from "@/lib/utils.tsx";
 
 const titlebarClassName =
-  "window-topbar border-sidebar-border bg-sidebar text-sidebar-foreground flex h-(--titlebar-height) shrink-0 items-stretch border-b";
+  "window-topbar border-sidebar-border bg-sidebar text-sidebar-foreground grid h-(--titlebar-height) shrink-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-stretch border-b";
 
 const titlebarButtonClassName =
   "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:text-sidebar-foreground/35 disabled:hover:bg-transparent size-7 shadow-none transition-colors";
@@ -224,7 +224,7 @@ export function WindowTitlebar() {
   return (
     <header className={titlebarClassName}>
       {desktopApp && (
-        <ButtonGroup className="window-topbar-no-drag items-center px-2">
+        <ButtonGroup className="window-topbar-no-drag col-start-1 items-center justify-self-start px-2">
           <Button
             className={titlebarButtonClassName}
             size="icon-xs"
@@ -253,11 +253,11 @@ export function WindowTitlebar() {
       )}
       <div
         data-app-drag-region={desktopApp ? "" : undefined}
-        className="flex min-w-0 flex-1 items-center"
+        className="col-start-2 flex min-w-0 items-center justify-center px-3"
       >
         <div
           data-app-drag-region={desktopApp ? "" : undefined}
-          className="mx-auto flex min-w-0 max-w-full items-center gap-1.5 px-3 text-center [&>*]:pointer-events-none"
+          className="flex min-w-0 w-[min(32rem,calc(100vw-14rem))] max-w-full items-center justify-center gap-1.5 text-center [&>*]:pointer-events-none"
         >
           {pageIcon?.kind === "dynamic" && (
             <DynamicIcon
@@ -277,7 +277,7 @@ export function WindowTitlebar() {
           </p>
         </div>
       </div>
-      <div className="window-topbar-no-drag flex items-center gap-2 px-2">
+      <div className="window-topbar-no-drag col-start-3 flex items-center justify-self-end gap-2 px-2">
         <TitlebarExternalLinks />
         <WindowControls />
       </div>
