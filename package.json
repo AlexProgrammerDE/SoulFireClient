@@ -156,6 +156,7 @@
     "linux": {
       "category": "Development",
       "icon": "build/icons",
+      "maintainer": "SoulFire <security@soulfiremc.com>",
       "target": [
         "AppImage",
         "deb"
