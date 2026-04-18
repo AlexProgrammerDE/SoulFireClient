@@ -89,6 +89,7 @@ function SupportDialog({
             {t("dialog.support.dismiss")}
           </Button>
           <Button
+            nativeButton={false}
             render={
               <ExternalLink href="https://soulfiremc.com/pricing?utm_source=soulfire-client&utm_medium=app&utm_campaign=support-dialog" />
             }
