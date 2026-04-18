@@ -1,6 +1,6 @@
-import { openUrl } from "@tauri-apps/plugin-opener";
 import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
-import { isTauri, runAsync } from "@/lib/utils.tsx";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
+import { runAsync } from "@/lib/utils.tsx";
 
 export function ExternalLink(
   props: Omit<
@@ -23,9 +23,9 @@ export function ExternalLink(
 
         const href = props.href;
         if (href) {
-          if (isTauri()) {
+          if (isDesktopApp()) {
             runAsync(async () => {
-              await openUrl(href);
+              await desktop.shell.openExternal(href);
             });
           } else {
             window.open(href, "_blank");

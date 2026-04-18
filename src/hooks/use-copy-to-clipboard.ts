@@ -1,15 +1,10 @@
-import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { isTauri } from "@/lib/utils.tsx";
+import { desktop } from "@/lib/desktop.ts";
 
 function copyToClipboard(text: string): Promise<void> {
-  if (isTauri()) {
-    return clipboard.writeText(text);
-  } else {
-    return navigator.clipboard.writeText(text);
-  }
+  return desktop.clipboard.writeText(text);
 }
 
 function truncate(text: string, maxLength: number): string {

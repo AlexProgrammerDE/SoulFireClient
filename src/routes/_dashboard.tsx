@@ -7,7 +7,6 @@ import {
   redirect,
   useNavigate,
 } from "@tanstack/react-router";
-import { emit } from "@tauri-apps/api/event";
 import { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateInstanceProvider } from "@/components/dialog/create-instance-dialog.tsx";
@@ -24,7 +23,8 @@ import {
   InstanceService,
   InstanceState,
 } from "@/generated/soulfire/instance_pb.ts";
-import { isTauri, smartEntries } from "@/lib/utils.tsx";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
+import { smartEntries } from "@/lib/utils.tsx";
 import {
   createTransport,
   isAuthenticated,
@@ -106,8 +106,8 @@ export const Route = createFileRoute("/_dashboard")({
         clientDataQueryOptions,
       };
     } else {
-      if (isTauri()) {
-        await emit("kill-integrated-server", {});
+      if (isDesktopApp()) {
+        await desktop.events.emit("kill-integrated-server");
       }
       logOut();
       // eslint-disable-next-line @typescript-eslint/only-throw-error

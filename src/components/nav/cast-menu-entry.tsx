@@ -1,5 +1,3 @@
-import { invoke } from "@tauri-apps/api/core";
-import { listen } from "@tauri-apps/api/event";
 import { CastIcon, SearchXIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,6 +10,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import { desktop } from "@/lib/desktop.ts";
 import { cancellablePromiseDefault, cn } from "@/lib/utils.tsx";
 
 type MediaDeviceInfo = {
@@ -37,26 +36,28 @@ export default function CastMenuEntry() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      void invoke("get_casts").then((result) => {
-        const devices = result as MediaDeviceInfo[];
-        setDevices((oldDevices) => {
-          return devices.map((device) => {
-            const oldDevice = oldDevices.find((d) => d.info.id === device.id);
-            return {
-              info: device,
-              transport_id: oldDevice?.transport_id ?? null,
-            };
+      void desktop.commands
+        .invoke<MediaDeviceInfo[]>("get_casts")
+        .then((result) => {
+          const devices = result as MediaDeviceInfo[];
+          setDevices((oldDevices) => {
+            return devices.map((device) => {
+              const oldDevice = oldDevices.find((d) => d.info.id === device.id);
+              return {
+                info: device,
+                transport_id: oldDevice?.transport_id ?? null,
+              };
+            });
           });
         });
-      });
     }, 1_000);
 
     const cancel = cancellablePromiseDefault(
-      listen("cast-device-disconnected", (event) => {
-        const payload = event.payload as MediaDeviceDisconnected;
+      desktop.events.listen("cast-device-disconnected", (payload) => {
+        const disconnected = payload as MediaDeviceDisconnected;
         setDevices((devices) =>
           devices.map((device) => {
-            if (device.transport_id === payload.transport_id) {
+            if (device.transport_id === disconnected.transport_id) {
               toast.info(
                 t("castMenu.disconnected", {
                   device: device.info.name,
@@ -81,7 +82,7 @@ export default function CastMenuEntry() {
   }, [t]);
 
   useEffect(() => {
-    void invoke("discover_casts");
+    void desktop.commands.invoke("discover_casts");
   }, []);
 
   return (
@@ -108,7 +109,7 @@ export default function CastMenuEntry() {
                     }
 
                     toast.promise(
-                      invoke("connect_cast", {
+                      desktop.commands.invoke("connect_cast", {
                         address: currentDevice.info.address,
                         port: currentDevice.info.port,
                       }),

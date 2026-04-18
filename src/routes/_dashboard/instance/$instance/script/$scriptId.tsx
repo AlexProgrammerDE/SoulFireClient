@@ -702,8 +702,7 @@ function ScriptEditorContent() {
   }, []);
 
   // Handle drag & drop from palette using pointer events instead of HTML5 DnD.
-  // WebView2 (Tauri on Windows) doesn't support HTML5 drag-and-drop within the webview,
-  // so we use pointer events with a custom drag preview overlay.
+  // This keeps drag behavior consistent across browser and desktop runtimes.
   const handleNodeDragStart = useCallback(
     (nodeType: string, x: number, y: number) => {
       draggedNodeTypeRef.current = nodeType;

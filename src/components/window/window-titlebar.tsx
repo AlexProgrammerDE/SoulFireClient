@@ -1,6 +1,5 @@
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { useCanGoBack, useRouter } from "@tanstack/react-router";
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import {
   BookOpenTextIcon,
   ChevronLeftIcon,
@@ -24,7 +23,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import { useCurrentRouteChrome } from "@/hooks/use-current-route-title.ts";
 import { useShouldShowWindowTitlebar } from "@/hooks/use-window-titlebar.ts";
-import { isDesktopTauri } from "@/lib/platform.ts";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
 import { cn } from "@/lib/utils.tsx";
 
 const titlebarClassName =
@@ -82,10 +81,10 @@ function TitlebarExternalLinks() {
 }
 
 function WindowControls() {
-  const desktopTauri = isDesktopTauri();
+  const desktopApp = isDesktopApp();
   const appWindow = useMemo(
-    () => (desktopTauri ? getCurrentWebviewWindow() : null),
-    [desktopTauri],
+    () => (desktopApp ? desktop.window.current() : null),
+    [desktopApp],
   );
   const [isMaximized, setIsMaximized] = useState(false);
 
@@ -154,7 +153,7 @@ function WindowControls() {
     void appWindow.close();
   }, [appWindow]);
 
-  if (!desktopTauri) {
+  if (!desktopApp) {
     return null;
   }
 
@@ -203,7 +202,7 @@ function WindowControls() {
 export function WindowTitlebar() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
-  const desktopTauri = isDesktopTauri();
+  const desktopApp = isDesktopApp();
   const shouldShowWindowTitlebar = useShouldShowWindowTitlebar();
   const { title: pageTitle, icon: pageIcon } = useCurrentRouteChrome();
   const canGoForward =
@@ -224,7 +223,7 @@ export function WindowTitlebar() {
 
   return (
     <header className={titlebarClassName}>
-      {desktopTauri && (
+      {desktopApp && (
         <ButtonGroup className="window-topbar-no-drag items-center px-2">
           <Button
             className={titlebarButtonClassName}
@@ -253,11 +252,11 @@ export function WindowTitlebar() {
         </ButtonGroup>
       )}
       <div
-        data-tauri-drag-region={desktopTauri ? "" : undefined}
+        data-app-drag-region={desktopApp ? "" : undefined}
         className="flex min-w-0 flex-1 items-center"
       >
         <div
-          data-tauri-drag-region={desktopTauri ? "" : undefined}
+          data-app-drag-region={desktopApp ? "" : undefined}
           className="mx-auto flex min-w-0 max-w-full items-center gap-1.5 px-3 text-center [&>*]:pointer-events-none"
         >
           {pageIcon?.kind === "dynamic" && (

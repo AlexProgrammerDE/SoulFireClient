@@ -1,6 +1,5 @@
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { emit } from "@tauri-apps/api/event";
 import {
   BugIcon,
   ChevronDownIcon,
@@ -24,7 +23,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible.tsx";
-import { isTauri, runAsync } from "@/lib/utils.tsx";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
+import { runAsync } from "@/lib/utils.tsx";
 import { logOut } from "@/lib/web-rpc.ts";
 
 export function ErrorComponent({ error }: { error: Error }) {
@@ -103,8 +103,8 @@ export function ErrorComponent({ error }: { error: Error }) {
             className="w-fit"
             onClick={() =>
               runAsync(async () => {
-                if (isTauri()) {
-                  await emit("kill-integrated-server", {});
+                if (isDesktopApp()) {
+                  await desktop.events.emit("kill-integrated-server");
                 }
                 logOut();
                 await navigate({

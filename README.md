@@ -5,7 +5,7 @@
 # SoulFireClient
 
 This is a frontend for the [SoulFire server](https://github.com/soulfiremc-com/SoulFire).
-It mainly targets the web, but uses native APIs using Tauri.
+It is now packaged as a desktop app with Electron while still using the official SoulFire gRPC API.
 
 > [!NOTE]
 > For more info about SoulFire, take a look at the main [SoulFire repository](https://github.com/soulfiremc-com/SoulFire).
@@ -37,7 +37,7 @@ See which branches are at which URLs:
 
 ## Building
 
-The client has a lot of dependencies. You'll need pnpm, latest node and a nightly rust toolchain installed.
+The client has a lot of dependencies. You'll need pnpm and a current Node.js release installed.
 Take a look at the scripts in `package.json` to see how to run a dev env locally.
 You can also refer to the GitHub actions workflows to see how production builds are made.
 

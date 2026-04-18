@@ -3,8 +3,8 @@ import { devtools } from "@tanstack/devtools-vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import electron from "vite-plugin-electron/simple";
 import svgr from "vite-plugin-svgr";
-import tauriConf from "./src-tauri/tauri.conf.json" with { type: "json" };
 
 const baseEnv = process.env.VERCEL_ENV ?? process.env.NODE_ENV;
 const appEnv =
@@ -26,8 +26,10 @@ const namespaces = fs
   .map((dirent) => dirent.name.split(".")[0])
   .join(",");
 
-const host = process.env.TAURI_DEV_HOST;
 const isDev = appEnv === "development";
+const isElectron = process.env.SF_ELECTRON === "1";
+const desktopCsp =
+  "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; connect-src 'self' https://aptabase.pistonmaster.net https://api.mclo.gs *; font-src 'self'; frame-src 'self'; img-src 'self' data: blob: https://www.gravatar.com https://mc-heads.net https://assets.mcasset.cloud; manifest-src 'self'; media-src 'self'; worker-src 'self';";
 
 export default defineConfig({
   define: {
@@ -43,6 +45,18 @@ export default defineConfig({
         enabled: process.platform !== "win32",
       },
     }),
+    ...(isElectron
+      ? [
+          electron({
+            main: {
+              entry: "electron/main.ts",
+            },
+            preload: {
+              input: "electron/preload.ts",
+            },
+          }),
+        ]
+      : []),
     tanstackRouter({
       target: "react",
       autoCodeSplitting: !isDev,
@@ -56,38 +70,24 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   server: {
-    host: host || false,
+    host: false,
     port: 1420,
     strictPort: true,
-    hmr: host
-      ? {
-          protocol: "ws",
-          host,
-          port: 1421,
-        }
-      : undefined,
     headers: {
       "X-DNS-Prefetch-Control": "on",
       "X-XSS-Protection": "1; mode=block",
       "X-Frame-Options": "SAMEORIGIN",
       "X-Content-Type-Options": "nosniff",
-      "Content-Security-Policy": tauriConf.app.security.csp,
+      "Content-Security-Policy": desktopCsp,
     },
     watch: {
       ignored: ["**/src-tauri/**", "**/target/**", "**/.idea/**"],
     },
   },
-  envPrefix: ["VITE_", "TAURI_ENV_*"],
+  envPrefix: ["VITE_", "SF_"],
   build: {
-    // Tauri uses Chromium on Windows and WebKit on macOS and Linux
-    target: process.env.TAURI_ENV_PLATFORM
-      ? process.env.TAURI_ENV_PLATFORM === "windows"
-        ? "chrome105"
-        : "safari16.4"
-      : "es2020",
-    // don't minify for debug builds
-    minify: !process.env.TAURI_ENV_DEBUG ? "esbuild" : false,
-    // produce sourcemaps for debug builds
-    sourcemap: !!process.env.TAURI_ENV_DEBUG,
+    target: isElectron ? "chrome128" : "es2020",
+    minify: "esbuild",
+    sourcemap: isDev,
   },
 });

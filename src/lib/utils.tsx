@@ -1,7 +1,6 @@
 import { create, type JsonValue } from "@bufbuild/protobuf";
 import { createClient, type Transport } from "@connectrpc/connect";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
-import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import { type ClassValue, clsx } from "clsx";
 import type { FlagComponent } from "country-flag-icons/react/1x1";
 import * as Flags from "country-flag-icons/react/3x2";
@@ -31,6 +30,7 @@ import {
   InstanceService,
 } from "@/generated/soulfire/instance_pb.ts";
 import { ServerService } from "@/generated/soulfire/server_pb.ts";
+import { desktop } from "@/lib/desktop.ts";
 import { jsonToValue } from "@/lib/protobuf.ts";
 import {
   type BaseSettings,
@@ -74,19 +74,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function isTauri() {
-  return (
-    (
-      window as unknown as {
-        __TAURI__?: unknown;
-      }
-    ).__TAURI__ !== undefined
-  );
-}
-
 export function openExternalUrl(url: string) {
-  if (isTauri()) {
-    void shellOpen(url);
+  if (desktop.available()) {
+    void desktop.shell.openExternal(url);
   } else {
     window.open(url, "_blank");
   }

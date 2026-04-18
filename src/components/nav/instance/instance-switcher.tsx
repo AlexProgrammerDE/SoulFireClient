@@ -5,9 +5,6 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
-import { appConfigDir, resolve } from "@tauri-apps/api/path";
-import { open, save } from "@tauri-apps/plugin-dialog";
-import { mkdir, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { saveAs } from "file-saver";
 import {
   ChevronsUpDownIcon,
@@ -52,13 +49,13 @@ import {
   InstancePermission,
 } from "@/generated/soulfire/common_pb.ts";
 import { InstanceService } from "@/generated/soulfire/instance_pb.ts";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
 import { formatShortcut } from "@/lib/platform.ts";
 import { type ProfileRoot, translateInstanceState } from "@/lib/types.ts";
 import {
   data2blob,
   hasGlobalPermission,
   hasInstancePermission,
-  isTauri,
   runAsync,
   setInstanceConfigFull,
 } from "@/lib/utils.tsx";
@@ -195,7 +192,7 @@ function InstanceActionButtons() {
         <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
           {instanceInfo.friendlyName}
         </DropdownMenuLabel>
-        {isTauri() && systemInfo ? (
+        {isDesktopApp() && systemInfo ? (
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <UploadIcon className="size-4" />
@@ -210,9 +207,12 @@ function InstanceActionButtons() {
                         key={file}
                         onClick={() => {
                           const loadProfile = async () => {
-                            const data = await readTextFile(
-                              await resolve(
-                                await resolve(await appConfigDir(), "profile"),
+                            const data = await desktop.fs.readTextFile(
+                              await desktop.path.resolve(
+                                await desktop.path.resolve(
+                                  await desktop.path.appConfigDir(),
+                                  "profile",
+                                ),
                                 file,
                               ),
                             );
@@ -247,13 +247,13 @@ function InstanceActionButtons() {
                 <DropdownMenuItem
                   onClick={() => {
                     runAsync(async () => {
-                      const profileDir = await resolve(
-                        await appConfigDir(),
+                      const profileDir = await desktop.path.resolve(
+                        await desktop.path.appConfigDir(),
                         "profile",
                       );
-                      await mkdir(profileDir, { recursive: true });
+                      await desktop.fs.mkdir(profileDir, { recursive: true });
 
-                      const selected = await open({
+                      const selected = await desktop.dialog.open({
                         title: t("instanceSidebar.loadProfile"),
                         filters: systemInfo.mobile
                           ? undefined
@@ -269,7 +269,10 @@ function InstanceActionButtons() {
                       });
 
                       if (selected) {
-                        const data = await readTextFile(selected);
+                        if (Array.isArray(selected)) {
+                          return;
+                        }
+                        const data = await desktop.fs.readTextFile(selected);
                         toast.promise(
                           (async () => {
                             await setProfileMutation.mutateAsync(
@@ -345,15 +348,15 @@ function InstanceActionButtons() {
         <DropdownMenuItem
           onClick={() => {
             const data = JSON.stringify(profile, null, 2);
-            if (isTauri()) {
+            if (isDesktopApp()) {
               runAsync(async () => {
-                const profileDir = await resolve(
-                  await appConfigDir(),
+                const profileDir = await desktop.path.resolve(
+                  await desktop.path.appConfigDir(),
                   "profile",
                 );
-                await mkdir(profileDir, { recursive: true });
+                await desktop.fs.mkdir(profileDir, { recursive: true });
 
-                let selected = await save({
+                let selected = await desktop.dialog.save({
                   title: t("instanceSidebar.saveProfile"),
                   filters: [
                     {
@@ -369,7 +372,7 @@ function InstanceActionButtons() {
                     selected += ".json";
                   }
 
-                  await writeTextFile(selected, data);
+                  await desktop.fs.writeTextFile(selected, data);
                 }
               });
             } else {

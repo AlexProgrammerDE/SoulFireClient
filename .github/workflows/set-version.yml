@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to set'
+        description: "Version to set"
         required: true
   workflow_call:
     inputs:
@@ -15,76 +15,33 @@ on:
 jobs:
   set-version:
     name: Set Version
-
     permissions:
       contents: write
-
     runs-on: ubuntu-24.04
+
     steps:
-      - name: 'Shared: Checkout repository'
+      - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
         with:
           ref: ${{ github.ref }}
 
-      - name: 'Shared: Setup node'
+      - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # 6.3.0
         with:
           node-version: lts/*
           check-latest: true
 
-      - name: 'Shared: Install pnpm'
+      - name: Install pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # 5.0.0
         with:
           version: latest
 
-      - name: 'Shared: Install Rust toolchain'
-        uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9 # master
-        with:
-          toolchain: nightly
-
-      - name: 'Desktop: Cache dependencies'
-        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # 2.9.1
-        with:
-          prefix-key: set-version
-          save-if: ${{ github.ref == 'refs/heads/main' }}
-          workspaces: src-tauri
-          cache-on-failure: true
-          cache-all-crates: true
-          cache-targets: false
-
-      - name: 'Set JS Version'
-        run: |
-          pnpm version --no-git-tag-version --allow-same-version ${INPUTS_VERSION}
+      - name: Set package version
+        run: pnpm version --no-git-tag-version --allow-same-version ${INPUTS_VERSION}
         env:
           INPUTS_VERSION: ${{ inputs.version }}
 
-      - name: 'Set Cargo Version'
-        run: |
-          cargo install cargo-edit
-          cargo set-version ${INPUTS_VERSION} --manifest-path src-tauri/Cargo.toml
-        env:
-          INPUTS_VERSION: ${{ inputs.version }}
-
-      - name: 'Add to metainfo'
-        run: |
-          if ! grep -q "<release version=\"${INPUTS_VERSION}\"" com.soulfiremc.soulfire.metainfo.xml; then
-            sed -i "/<releases>/a\\
-              <release version=\"${INPUTS_VERSION}\" date=\"$(date +"%Y-%m-%d")\">\\
-                <url type=\"details\">https://github.com/soulfiremc-com/SoulFireClient/releases/tag/${INPUTS_VERSION}</url>\\
-              </release>" com.soulfiremc.soulfire.metainfo.xml
-            echo "Added release ${INPUTS_VERSION} to metainfo file"
-          else
-            echo "Release version ${INPUTS_VERSION} already exists in metainfo file, skipping addition"
-          fi
-        env:
-          INPUTS_VERSION: ${{ inputs.version }}
-
-      - name: 'Bump android version code'
-        run: |
-          jq '.bundle.android.versionCode += 1' src-tauri/tauri.conf.json > tmp.json
-          mv tmp.json src-tauri/tauri.conf.json
-
-      - name: 'Commit Version'
+      - name: Commit version
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # 7.1.0
         with:
-          commit_message: 'chore(release): bump version to ${{ inputs.version }}'
+          commit_message: "chore(release): bump version to ${{ inputs.version }}"

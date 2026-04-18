@@ -1,8 +1,6 @@
 import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { invoke } from "@tauri-apps/api/core";
-import { emit, listen } from "@tauri-apps/api/event";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import {
   ArrowLeftIcon,
@@ -82,6 +80,7 @@ import {
   NextAuthFlowResponse_Failure_Reason,
 } from "@/generated/soulfire/login_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
+import { desktop } from "@/lib/desktop.ts";
 import i18n from "@/lib/i18n";
 import { SOULFIRE_LOGO_ICON, staticRouteChrome } from "@/lib/route-title.ts";
 import { getEnumKeyByValue, type SFServerType } from "@/lib/types.ts";
@@ -205,17 +204,19 @@ function Index() {
     const startTime = Date.now();
     toast.promise(
       (async () => {
-        await emit("kill-integrated-server", {});
+        await desktop.events.emit("kill-integrated-server");
         const args = localStorage.getItem(
           LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
         );
-        const payload = await invoke("run_integrated_server", {
-          jvmArgs:
-            args === null
-              ? DEFAULT_JVM_ARGS
-              : args.split(" ").filter((str) => str !== ""),
-        });
-        const payloadString = payload as string;
+        const payloadString = await desktop.commands.invoke<string>(
+          "run_integrated_server",
+          {
+            jvmArgs:
+              args === null
+                ? DEFAULT_JVM_ARGS
+                : args.split(" ").filter((str) => str !== ""),
+          },
+        );
         const split = payloadString.split("\n");
 
         await redirectWithCredentials("integrated", split[0], split[1]);
@@ -525,11 +526,11 @@ function IntegratedMenu({
 
   useEffect(() => {
     const cancel = cancellablePromiseDefault(
-      listen("integrated-server-start-log", (event) => {
+      desktop.events.listen("integrated-server-start-log", (payload) => {
         setLogs((prev) => [
           ...prev,
           createIntegratedLog(
-            event.payload as string,
+            payload as string,
             (prev[prev.length - 1]?.id ?? 0) + 1,
           ),
         ]);
@@ -799,8 +800,8 @@ function IntegratedErrorMenu({
               setResetting(true);
               toast.promise(
                 (async () => {
-                  await emit("kill-integrated-server", {});
-                  await invoke("reset_integrated_data", {});
+                  await desktop.events.emit("kill-integrated-server");
+                  await desktop.commands.invoke("reset_integrated_data");
                 })(),
                 {
                   loading: t("integrated.reset.loading"),

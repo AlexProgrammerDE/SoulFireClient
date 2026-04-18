@@ -1,6 +1,5 @@
 import type { QueryKey } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { emit } from "@tauri-apps/api/event";
 import { useEffect } from "react";
 import { InstanceState } from "@/generated/soulfire/instance_pb";
 import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics_pb";
@@ -8,8 +7,8 @@ import type {
   CastMetricsSnapshot,
   CastMetricsUpdateMessage,
 } from "@/lib/cast-protocol";
+import { desktop, isDesktopApp } from "@/lib/desktop";
 import type { InstanceInfoQueryData } from "@/lib/types";
-import { isTauri } from "@/lib/utils.tsx";
 
 const BROADCAST_INTERVAL_MS = 5_000;
 const MAX_POSITIONS = 50;
@@ -29,7 +28,7 @@ export function useCastBroadcast(
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (!isTauri()) return;
+    if (!isDesktopApp()) return;
 
     const interval = setInterval(() => {
       const metricsData =
@@ -95,12 +94,12 @@ export function useCastBroadcast(
         },
       };
 
-      void emit("cast-global-message", message);
+      void desktop.events.emit("cast-global-message", message);
     }, BROADCAST_INTERVAL_MS);
 
     return () => {
       clearInterval(interval);
-      void emit("cast-global-message", { type: "METRICS_STOP" });
+      void desktop.events.emit("cast-global-message", { type: "METRICS_STOP" });
     };
   }, [queryClient, metricsQueryKey, instanceInfoQueryKey]);
 }

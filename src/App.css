@@ -154,7 +154,7 @@
     -webkit-app-region: no-drag;
   }
 
-  [data-tauri-drag-region] {
+  [data-app-drag-region] {
     app-region: drag;
     -webkit-app-region: drag;
   }

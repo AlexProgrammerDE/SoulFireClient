@@ -1,6 +1,5 @@
-import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
 import type { Edge, Node } from "@xyflow/react";
-import { isTauri } from "./utils";
+import { desktop, isDesktopApp } from "@/lib/desktop";
 
 const CLIPBOARD_PREFIX = "SOULFIRE_SCRIPT_CLIPBOARD:";
 const LOCAL_STORAGE_KEY = "script-editor-clipboard";
@@ -88,13 +87,13 @@ export function handleNativePaste(
 }
 
 /**
- * Copy to clipboard using Tauri native API (for non-event contexts).
- * Only use this for Tauri, as browser requires user gesture.
+ * Copy to the desktop clipboard for non-event contexts.
+ * In the browser we fall back to localStorage unless there is a user gesture.
  */
-export async function copyToClipboardTauri(
+export async function copyToDesktopClipboard(
   data: ScriptClipboardData,
 ): Promise<void> {
-  if (!isTauri()) {
+  if (!isDesktopApp()) {
     // For browser, just save to localStorage - actual clipboard write
     // should happen via handleNativeCopy in a copy event
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
@@ -102,16 +101,16 @@ export async function copyToClipboardTauri(
   }
 
   const serialized = serializeClipboardData(data);
-  await clipboard.writeText(serialized);
+  await desktop.clipboard.writeText(serialized);
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
 }
 
 /**
- * Read from clipboard using Tauri native API (for non-event contexts).
- * Only use this for Tauri, as browser requires user gesture.
+ * Read from the desktop clipboard for non-event contexts.
+ * In the browser we fall back to localStorage unless there is a user gesture.
  */
-export async function readFromClipboardTauri(): Promise<ScriptClipboardData | null> {
-  if (!isTauri()) {
+export async function readFromDesktopClipboard(): Promise<ScriptClipboardData | null> {
+  if (!isDesktopApp()) {
     // For browser, read from localStorage - actual clipboard read
     // should happen via handleNativePaste in a paste event
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -129,7 +128,7 @@ export async function readFromClipboardTauri(): Promise<ScriptClipboardData | nu
   }
 
   try {
-    const text = await clipboard.readText();
+    const text = await desktop.clipboard.readText();
     const fromClipboard = parseClipboardText(text);
     if (fromClipboard) return fromClipboard;
   } catch {

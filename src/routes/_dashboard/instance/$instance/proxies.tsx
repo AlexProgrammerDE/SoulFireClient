@@ -79,6 +79,7 @@ import { ProxyCheckService } from "@/generated/soulfire/proxy-check_pb.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
 import i18n from "@/lib/i18n.ts";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import { observeServerStream } from "@/lib/protobuf.ts";
@@ -93,7 +94,6 @@ import {
 import {
   addInstanceProxiesBatch,
   data2blob,
-  isTauri,
   removeInstanceProxiesBatch,
   runAsync,
   updateInstanceConfigEntry,
@@ -339,12 +339,9 @@ function formatProxyAsFlat(proxy: ProfileProxy): string {
 }
 
 function saveProxyFile(content: string, filename: string) {
-  if (isTauri()) {
+  if (isDesktopApp()) {
     runAsync(async () => {
-      const { save } = await import("@tauri-apps/plugin-dialog");
-      const { writeTextFile } = await import("@tauri-apps/plugin-fs");
-
-      let selected = await save({
+      let selected = await desktop.dialog.save({
         title: filename,
         filters: [
           {
@@ -358,7 +355,7 @@ function saveProxyFile(content: string, filename: string) {
         if (!selected.endsWith(".txt")) {
           selected += ".txt";
         }
-        await writeTextFile(selected, content);
+        await desktop.fs.writeTextFile(selected, content);
       }
     });
   } else {

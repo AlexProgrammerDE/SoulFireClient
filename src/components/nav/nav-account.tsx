@@ -3,10 +3,6 @@
 import { flavorEntries } from "@catppuccin/palette";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate, useRouteContext } from "@tanstack/react-router";
-import { emit } from "@tauri-apps/api/event";
-import { appConfigDir, appLocalDataDir } from "@tauri-apps/api/path";
-import { openPath } from "@tauri-apps/plugin-opener";
-import { exit } from "@tauri-apps/plugin-process";
 import {
   ChevronsUpDown,
   CircleHelpIcon,
@@ -54,9 +50,9 @@ import {
 } from "@/components/ui/sidebar.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
 import {
   getLanguageName,
-  isTauri,
   languageEmoji,
   runAsync,
   setTerminalTheme,
@@ -277,7 +273,7 @@ export function NavAccount() {
                 </DropdownMenuPortal>
               </DropdownMenuSub>
             </DropdownMenuGroup>
-            {isTauri() && systemInfo && !systemInfo.mobile && (
+            {isDesktopApp() && systemInfo && !systemInfo.mobile && (
               <>
                 <DropdownMenuSeparator />
                 <CastMenuEntry />
@@ -286,7 +282,9 @@ export function NavAccount() {
                   <DropdownMenuItem
                     onClick={() => {
                       runAsync(async () => {
-                        await openPath(await appConfigDir());
+                        await desktop.shell.openPath(
+                          await desktop.path.appConfigDir(),
+                        );
                       });
                     }}
                   >
@@ -296,7 +294,9 @@ export function NavAccount() {
                   <DropdownMenuItem
                     onClick={() => {
                       runAsync(async () => {
-                        await openPath(await appLocalDataDir());
+                        await desktop.shell.openPath(
+                          await desktop.path.appLocalDataDir(),
+                        );
                       });
                     }}
                   >
@@ -341,8 +341,8 @@ export function NavAccount() {
               <DropdownMenuItem
                 onClick={() => {
                   const disconnect = async () => {
-                    if (isTauri()) {
-                      await emit("kill-integrated-server", {});
+                    if (isDesktopApp()) {
+                      await desktop.events.emit("kill-integrated-server");
                     }
                     logOut();
                     await navigate({
@@ -363,10 +363,10 @@ export function NavAccount() {
                 <LogOutIcon />
                 {t("userSidebar.logOut")}
               </DropdownMenuItem>
-              {isTauri() && (
+              {isDesktopApp() && (
                 <DropdownMenuItem
                   onClick={() => {
-                    void exit(0);
+                    void desktop.app.exit(0);
                   }}
                 >
                   <PowerIcon />

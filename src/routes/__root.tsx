@@ -14,14 +14,6 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { setTheme } from "@tauri-apps/api/app";
-import { invoke } from "@tauri-apps/api/core";
-import { emit } from "@tauri-apps/api/event";
-import { appConfigDir, BaseDirectory, resolve } from "@tauri-apps/api/path";
-import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { mkdir, readDir, watch } from "@tauri-apps/plugin-fs";
-import { attachConsole } from "@tauri-apps/plugin-log";
-import { arch, locale, platform, type, version } from "@tauri-apps/plugin-os";
 import { useTheme } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import { type CSSProperties, memo, useEffect, useMemo, useState } from "react";
@@ -48,16 +40,17 @@ import {
   useShouldShowWindowTitlebar,
   WINDOW_TITLEBAR_HEIGHT,
 } from "@/hooks/use-window-titlebar.ts";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
 import { buildDocumentTitle } from "@/lib/route-title.ts";
-import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
+import { getTerminalTheme } from "@/lib/utils.tsx";
 
 async function getAvailableProfiles() {
-  const profileDir = await resolve(
-    await resolve(await appConfigDir(), "profile"),
+  const profileDir = await desktop.path.resolve(
+    await desktop.path.resolve(await desktop.path.appConfigDir(), "profile"),
   );
-  await mkdir(profileDir, { recursive: true });
+  await desktop.fs.mkdir(profileDir, { recursive: true });
 
-  return (await readDir(profileDir))
+  return (await desktop.fs.readDir(profileDir))
     .filter((file) => file.isFile)
     .filter((file) => file.name)
     .map((file) => file.name)
@@ -65,24 +58,24 @@ async function getAvailableProfiles() {
 }
 
 function isMobile() {
-  const osType = type();
+  const osType = desktop.os.type();
   return osType === "android" || osType === "ios";
 }
 
 async function createSystemInfo() {
-  const osType = type();
+  const osType = desktop.os.type();
   const [availableProfiles, osLocale, sfServerVersion] = await Promise.all([
     getAvailableProfiles(),
-    locale(),
-    invoke<string>("get_sf_server_version"),
+    Promise.resolve(desktop.os.locale()),
+    desktop.commands.invoke<string>("get_sf_server_version"),
   ]);
   return {
     availableProfiles,
     osType,
-    osVersion: version(),
-    platformName: platform(),
+    osVersion: desktop.os.version(),
+    platformName: desktop.os.platform(),
     osLocale,
-    archName: arch(),
+    archName: desktop.os.arch(),
     mobile: isMobile(),
     sfServerVersion,
   };
@@ -93,8 +86,8 @@ export const Route = createRootRouteWithContext<{
 }>()({
   loader: async () => {
     let systemInfo: SystemInfo | null;
-    if (isTauri()) {
-      void attachConsole();
+    if (isDesktopApp()) {
+      void desktop.app.attachConsole();
       systemInfo = await createSystemInfo();
     } else {
       systemInfo = null;
@@ -159,10 +152,6 @@ const AppStartedEvent = memo(() => {
     if (!appLoaded) {
       void trackEvent("app_loaded");
       setAppLoaded(true);
-
-      if (isTauri()) {
-        void emit("app-loaded", {});
-      }
     }
   }, [appLoaded, trackEvent]);
 
@@ -262,16 +251,16 @@ function WindowThemeSyncer() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    if (isTauri()) {
+    if (isDesktopApp()) {
       if (theme === "dark") {
-        void setTheme("dark");
-        void getCurrentWebviewWindow().setTheme("dark");
+        void desktop.app.setTheme("dark");
+        void desktop.window.current().setTheme("dark");
       } else if (theme === "light") {
-        void setTheme("light");
-        void getCurrentWebviewWindow().setTheme("light");
+        void desktop.app.setTheme("light");
+        void desktop.window.current().setTheme("light");
       } else if (theme === "system") {
-        void setTheme(null);
-        void getCurrentWebviewWindow().setTheme(null);
+        void desktop.app.setTheme(null);
+        void desktop.window.current().setTheme(null);
       }
     }
   }, [theme]);
@@ -294,34 +283,36 @@ function RootLayout() {
   } as CSSProperties;
 
   useEffect(() => {
-    if (isTauri()) {
+    if (isDesktopApp()) {
       let didUnmount = false;
       let unwatch: null | (() => void) = null;
-      void watch(
-        "profile",
-        () => {
-          void createSystemInfo().then((newSystemInfo) => {
-            setSystemInfoState((oldSystemInfo) => {
-              if (deepEqual(oldSystemInfo, newSystemInfo)) {
-                return oldSystemInfo;
-              } else {
-                return newSystemInfo;
-              }
+      void desktop.fs
+        .watch(
+          "profile",
+          () => {
+            void createSystemInfo().then((newSystemInfo) => {
+              setSystemInfoState((oldSystemInfo) => {
+                if (deepEqual(oldSystemInfo, newSystemInfo)) {
+                  return oldSystemInfo;
+                } else {
+                  return newSystemInfo;
+                }
+              });
             });
-          });
-        },
-        {
-          baseDir: BaseDirectory.AppConfig,
-          delayMs: 500,
-          recursive: true,
-        },
-      ).then((unwatchFn) => {
-        if (didUnmount) {
-          unwatchFn();
-        } else {
-          unwatch = unwatchFn;
-        }
-      });
+          },
+          {
+            baseDir: "AppConfig",
+            delayMs: 500,
+            recursive: true,
+          },
+        )
+        .then((unwatchFn) => {
+          if (didUnmount) {
+            unwatchFn();
+          } else {
+            unwatch = unwatchFn;
+          }
+        });
 
       return () => {
         didUnmount = true;

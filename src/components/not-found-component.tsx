@@ -1,5 +1,4 @@
 import { useNavigate, useRouter } from "@tanstack/react-router";
-import { emit } from "@tauri-apps/api/event";
 import {
   LoaderCircleIcon,
   LogOutIcon,
@@ -18,7 +17,8 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty.tsx";
-import { isTauri, runAsync } from "@/lib/utils.tsx";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
+import { runAsync } from "@/lib/utils.tsx";
 import { logOut } from "@/lib/web-rpc.ts";
 
 export function NotFoundComponent() {
@@ -42,8 +42,8 @@ export function NotFoundComponent() {
             <Button
               onClick={() => {
                 runAsync(async () => {
-                  if (isTauri()) {
-                    await emit("kill-integrated-server", {});
+                  if (isDesktopApp()) {
+                    await desktop.events.emit("kill-integrated-server");
                   }
                   logOut();
                   await navigate({

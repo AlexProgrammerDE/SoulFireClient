@@ -3,10 +3,6 @@ import { createClient } from "@connectrpc/connect";
 import { useForm } from "@tanstack/react-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
-import { downloadDir } from "@tauri-apps/api/path";
-import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
-import { open } from "@tauri-apps/plugin-dialog";
-import { readTextFile } from "@tauri-apps/plugin-fs";
 import { ClipboardIcon, FileIcon, GlobeIcon, TextIcon } from "lucide-react";
 import MimeMatcher from "mime-matcher";
 import type { ReactNode } from "react";
@@ -31,7 +27,8 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import { InstancePermission } from "@/generated/soulfire/common_pb.ts";
 import { DownloadService } from "@/generated/soulfire/download_pb.ts";
-import { hasInstancePermission, isTauri, runAsync } from "@/lib/utils.tsx";
+import { desktop, isDesktopApp } from "@/lib/desktop.ts";
+import { hasInstancePermission, runAsync } from "@/lib/utils.tsx";
 
 export type TextInput = {
   defaultValue: string;
@@ -224,7 +221,7 @@ function MainDialog(
           <CredenzaBody className="pb-4 md:pb-0">
             <div className="flex flex-col gap-4">
               <div className="flex flex-wrap justify-between gap-4">
-                {!isTauri() && (
+                {!isDesktopApp() && (
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -258,10 +255,10 @@ function MainDialog(
                   className="flex-auto"
                   onClick={() => {
                     void trackEvent("import_from_file");
-                    if (isTauri()) {
+                    if (isDesktopApp()) {
                       runAsync(async () => {
-                        const downloadsDir = await downloadDir();
-                        const input = await open({
+                        const downloadsDir = await desktop.path.downloadDir();
+                        const input = await desktop.dialog.open({
                           title: props.title,
                           filters: systemInfo?.mobile
                             ? undefined
@@ -278,7 +275,7 @@ function MainDialog(
                           ? input
                           : [input];
                         for (const file of toParse) {
-                          const data = await readTextFile(file);
+                          const data = await desktop.fs.readTextFile(file);
 
                           props.listener(data);
                         }
@@ -310,8 +307,10 @@ function MainDialog(
                   onClick={() => {
                     void trackEvent("import_from_clipboard");
                     runAsync(async () => {
-                      if (isTauri()) {
-                        props.listener((await clipboard.readText()) ?? "");
+                      if (isDesktopApp()) {
+                        props.listener(
+                          (await desktop.clipboard.readText()) ?? "",
+                        );
                       } else {
                         const mimeTypes = props.filters.map((f) => f.mimeType);
                         const matcher = new MimeMatcher(...mimeTypes);
