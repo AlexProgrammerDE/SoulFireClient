@@ -342,7 +342,7 @@ export function NavAccount() {
                 onClick={() => {
                   const disconnect = async () => {
                     if (isDesktopApp()) {
-                      await desktop.events.emit("kill-integrated-server");
+                      await desktop.integratedServer.kill();
                     }
                     logOut();
                     await navigate({
@@ -366,7 +366,7 @@ export function NavAccount() {
               {isDesktopApp() && (
                 <DropdownMenuItem
                   onClick={() => {
-                    void desktop.app.exit(0);
+                    void desktop.app.quit();
                   }}
                 >
                   <PowerIcon />

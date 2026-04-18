@@ -94,12 +94,12 @@ export function useCastBroadcast(
         },
       };
 
-      void desktop.events.emit("cast-global-message", message);
+      void desktop.cast.broadcast(message);
     }, BROADCAST_INTERVAL_MS);
 
     return () => {
       clearInterval(interval);
-      void desktop.events.emit("cast-global-message", { type: "METRICS_STOP" });
+      void desktop.cast.broadcast({ type: "METRICS_STOP" });
     };
   }, [queryClient, metricsQueryKey, instanceInfoQueryKey]);
 }

@@ -33,7 +33,7 @@ function runCommand(command, args, options = {}) {
   });
 }
 
-test("Electron preload bundle is executable as ESM when the package is type=module", {
+test("Electron preload bundle exposes the explicit bridge and no legacy desktop RPC bus", {
   timeout: 120_000,
 }, async () => {
   const build = await runCommand("pnpm", ["exec", "vite", "build"], {
@@ -50,9 +50,8 @@ test("Electron preload bundle is executable as ESM when the package is type=modu
     "utf8",
   );
 
-  assert.doesNotMatch(
-    preloadBundle,
-    /\brequire\(/,
-    "preload.mjs must not contain CommonJS require() calls because Electron runs it as an ES module with sandbox disabled",
-  );
+  assert.match(preloadBundle, /soulfireElectron/);
+  assert.doesNotMatch(preloadBundle, /desktop:call/);
+  assert.doesNotMatch(preloadBundle, /desktop:emit/);
+  assert.doesNotMatch(preloadBundle, /sendSync\(/);
 });

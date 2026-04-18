@@ -12,9 +12,6 @@ export function useDiscordPresence(state: string, details?: string) {
     prevState.current = state;
     prevDetails.current = details;
 
-    void desktop.commands.invoke("update_discord_activity", {
-      state,
-      details: details ?? null,
-    });
+    void desktop.discord.updateActivity(state, details ?? null);
   }, [state, details]);
 }

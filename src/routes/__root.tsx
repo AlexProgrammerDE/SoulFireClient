@@ -46,7 +46,8 @@ import { getTerminalTheme } from "@/lib/utils.tsx";
 
 async function getAvailableProfiles() {
   const profileDir = await desktop.path.resolve(
-    await desktop.path.resolve(await desktop.path.appConfigDir(), "profile"),
+    await desktop.path.appConfigDir(),
+    "profile",
   );
   await desktop.fs.mkdir(profileDir, { recursive: true });
 
@@ -57,26 +58,26 @@ async function getAvailableProfiles() {
     .filter((file) => file.endsWith(".json"));
 }
 
-function isMobile() {
-  const osType = desktop.os.type();
+function isMobile(osType: string) {
   return osType === "android" || osType === "ios";
 }
 
 async function createSystemInfo() {
-  const osType = desktop.os.type();
-  const [availableProfiles, osLocale, sfServerVersion] = await Promise.all([
+  const [desktopInfo, availableProfiles, sfServerVersion] = await Promise.all([
+    desktop.system.getInfo(),
     getAvailableProfiles(),
-    Promise.resolve(desktop.os.locale()),
-    desktop.commands.invoke<string>("get_sf_server_version"),
+    desktop.integratedServer.getVersion(),
   ]);
+  const osType = desktopInfo.os.type;
+
   return {
     availableProfiles,
     osType,
-    osVersion: desktop.os.version(),
-    platformName: desktop.os.platform(),
-    osLocale,
-    archName: desktop.os.arch(),
-    mobile: isMobile(),
+    osVersion: desktopInfo.os.version,
+    platformName: desktopInfo.os.platform,
+    osLocale: desktopInfo.os.locale,
+    archName: desktopInfo.os.arch,
+    mobile: isMobile(osType),
     sfServerVersion,
   };
 }
@@ -87,7 +88,6 @@ export const Route = createRootRouteWithContext<{
   loader: async () => {
     let systemInfo: SystemInfo | null;
     if (isDesktopApp()) {
-      void desktop.app.attachConsole();
       systemInfo = await createSystemInfo();
     } else {
       systemInfo = null;
@@ -254,13 +254,10 @@ function WindowThemeSyncer() {
     if (isDesktopApp()) {
       if (theme === "dark") {
         void desktop.app.setTheme("dark");
-        void desktop.window.current().setTheme("dark");
       } else if (theme === "light") {
         void desktop.app.setTheme("light");
-        void desktop.window.current().setTheme("light");
       } else if (theme === "system") {
         void desktop.app.setTheme(null);
-        void desktop.window.current().setTheme(null);
       }
     }
   }, [theme]);
@@ -286,9 +283,13 @@ function RootLayout() {
     if (isDesktopApp()) {
       let didUnmount = false;
       let unwatch: null | (() => void) = null;
-      void desktop.fs
-        .watch(
+      void (async () => {
+        const profileDir = await desktop.path.resolve(
+          await desktop.path.appConfigDir(),
           "profile",
+        );
+        const unwatchFn = await desktop.fs.watch(
+          profileDir,
           () => {
             void createSystemInfo().then((newSystemInfo) => {
               setSystemInfoState((oldSystemInfo) => {
@@ -301,18 +302,17 @@ function RootLayout() {
             });
           },
           {
-            baseDir: "AppConfig",
             delayMs: 500,
             recursive: true,
           },
-        )
-        .then((unwatchFn) => {
-          if (didUnmount) {
-            unwatchFn();
-          } else {
-            unwatch = unwatchFn;
-          }
-        });
+        );
+
+        if (didUnmount) {
+          unwatchFn();
+        } else {
+          unwatch = unwatchFn;
+        }
+      })();
 
       return () => {
         didUnmount = true;

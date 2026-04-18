@@ -204,22 +204,18 @@ function Index() {
     const startTime = Date.now();
     toast.promise(
       (async () => {
-        await desktop.events.emit("kill-integrated-server");
+        await desktop.integratedServer.kill();
         const args = localStorage.getItem(
           LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
         );
-        const payloadString = await desktop.commands.invoke<string>(
-          "run_integrated_server",
-          {
-            jvmArgs:
-              args === null
-                ? DEFAULT_JVM_ARGS
-                : args.split(" ").filter((str) => str !== ""),
-          },
-        );
-        const split = payloadString.split("\n");
+        const { address, token } = await desktop.integratedServer.run({
+          jvmArgs:
+            args === null
+              ? DEFAULT_JVM_ARGS
+              : args.split(" ").filter((str) => str !== ""),
+        });
 
-        await redirectWithCredentials("integrated", split[0], split[1]);
+        await redirectWithCredentials("integrated", address, token);
         return Date.now() - startTime;
       })(),
       {
@@ -526,7 +522,7 @@ function IntegratedMenu({
 
   useEffect(() => {
     const cancel = cancellablePromiseDefault(
-      desktop.events.listen("integrated-server-start-log", (payload) => {
+      desktop.integratedServer.onStartLog((payload) => {
         setLogs((prev) => [
           ...prev,
           createIntegratedLog(
@@ -800,8 +796,8 @@ function IntegratedErrorMenu({
               setResetting(true);
               toast.promise(
                 (async () => {
-                  await desktop.events.emit("kill-integrated-server");
-                  await desktop.commands.invoke("reset_integrated_data");
+                  await desktop.integratedServer.kill();
+                  await desktop.integratedServer.resetData();
                 })(),
                 {
                   loading: t("integrated.reset.loading"),

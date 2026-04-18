@@ -43,7 +43,7 @@ export function NotFoundComponent() {
               onClick={() => {
                 runAsync(async () => {
                   if (isDesktopApp()) {
-                    await desktop.events.emit("kill-integrated-server");
+                    await desktop.integratedServer.kill();
                   }
                   logOut();
                   await navigate({

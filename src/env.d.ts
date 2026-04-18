@@ -8,7 +8,7 @@ declare global {
   const APP_NAMESPACES: string;
 
   interface Window {
-    soulfireDesktop?: SoulFireDesktopApi;
+    soulfireElectron?: SoulFireDesktopApi;
   }
 }
 

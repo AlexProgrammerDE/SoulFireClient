@@ -1,18 +1,22 @@
 import type {
-  DesktopBaseDirectory,
+  DesktopCastDevice,
+  DesktopCastDisconnectedEvent,
+  DesktopCastRemovedEvent,
   DesktopFsEntry,
   DesktopFsWatchEvent,
   DesktopFsWatchOptions,
+  DesktopIntegratedServerCredentials,
   DesktopMkdirOptions,
   DesktopOpenDialogOptions,
   DesktopSaveDialogOptions,
+  DesktopSystemInfo,
   DesktopTheme,
   SoulFireDesktopApi,
 } from "@/lib/desktop-api";
 
 declare global {
   interface Window {
-    soulfireDesktop?: SoulFireDesktopApi;
+    soulfireElectron?: SoulFireDesktopApi;
   }
 }
 
@@ -21,7 +25,7 @@ function getDesktopRuntime(): SoulFireDesktopApi | null {
     return null;
   }
 
-  return window.soulfireDesktop ?? null;
+  return window.soulfireElectron ?? null;
 }
 
 function requireDesktopRuntime(): SoulFireDesktopApi {
@@ -38,14 +42,43 @@ export const desktop = {
     return getDesktopRuntime() !== null;
   },
   app: {
-    async attachConsole(): Promise<void> {
-      await requireDesktopRuntime().app.attachConsole();
+    async onOpenUrl(callback: (url: string) => void): Promise<() => void> {
+      return requireDesktopRuntime().app.onOpenUrl(callback);
     },
-    async exit(code = 0): Promise<void> {
-      await requireDesktopRuntime().app.exit(code);
+    async quit(): Promise<void> {
+      await requireDesktopRuntime().app.quit();
     },
     async setTheme(theme: DesktopTheme): Promise<void> {
       await requireDesktopRuntime().app.setTheme(theme);
+    },
+  },
+  cast: {
+    async broadcast(payload?: unknown): Promise<void> {
+      await requireDesktopRuntime().cast.broadcast(payload);
+    },
+    async connect(address: string, port: number): Promise<string> {
+      return requireDesktopRuntime().cast.connect(address, port);
+    },
+    async discover(): Promise<void> {
+      await requireDesktopRuntime().cast.discover();
+    },
+    async getDevices(): Promise<DesktopCastDevice[]> {
+      return requireDesktopRuntime().cast.getDevices();
+    },
+    async onDisconnected(
+      callback: (payload: DesktopCastDisconnectedEvent) => void,
+    ): Promise<() => void> {
+      return requireDesktopRuntime().cast.onDisconnected(callback);
+    },
+    async onDiscovered(
+      callback: (device: DesktopCastDevice) => void,
+    ): Promise<() => void> {
+      return requireDesktopRuntime().cast.onDiscovered(callback);
+    },
+    async onRemoved(
+      callback: (payload: DesktopCastRemovedEvent) => void,
+    ): Promise<() => void> {
+      return requireDesktopRuntime().cast.onRemoved(callback);
     },
   },
   clipboard: {
@@ -56,11 +89,6 @@ export const desktop = {
       await requireDesktopRuntime().clipboard.writeText(text);
     },
   },
-  commands: {
-    invoke<T>(command: string, args?: Record<string, unknown>): Promise<T> {
-      return requireDesktopRuntime().commands.invoke<T>(command, args);
-    },
-  },
   dialog: {
     async open(options: DesktopOpenDialogOptions) {
       return requireDesktopRuntime().dialog.open(options);
@@ -69,36 +97,23 @@ export const desktop = {
       return requireDesktopRuntime().dialog.save(options);
     },
   },
-  events: {
-    async emit(event: string, payload?: unknown): Promise<void> {
-      await requireDesktopRuntime().events.emit(event, payload);
-    },
-    async listen(
-      event: string,
-      callback: (payload: unknown) => void,
-    ): Promise<() => void> {
-      return requireDesktopRuntime().events.listen(event, callback);
+  discord: {
+    async updateActivity(
+      state: string,
+      details?: string | null,
+    ): Promise<void> {
+      await requireDesktopRuntime().discord.updateActivity(state, details);
     },
   },
   fs: {
     async mkdir(dirPath: string, options?: DesktopMkdirOptions): Promise<void> {
       await requireDesktopRuntime().fs.mkdir(dirPath, options);
     },
-    async readDir(
-      dirPath: string,
-      options?: {
-        baseDir?: DesktopBaseDirectory;
-      },
-    ): Promise<DesktopFsEntry[]> {
-      return requireDesktopRuntime().fs.readDir(dirPath, options);
+    async readDir(dirPath: string): Promise<DesktopFsEntry[]> {
+      return requireDesktopRuntime().fs.readDir(dirPath);
     },
-    async readTextFile(
-      filePath: string,
-      options?: {
-        baseDir?: DesktopBaseDirectory;
-      },
-    ): Promise<string> {
-      return requireDesktopRuntime().fs.readTextFile(filePath, options);
+    async readTextFile(filePath: string): Promise<string> {
+      return requireDesktopRuntime().fs.readTextFile(filePath);
     },
     async watch(
       watchPath: string,
@@ -107,18 +122,27 @@ export const desktop = {
     ): Promise<() => void> {
       return requireDesktopRuntime().fs.watch(watchPath, callback, options);
     },
-    async writeTextFile(
-      filePath: string,
-      contents: string,
-      options?: {
-        baseDir?: DesktopBaseDirectory;
-      },
-    ): Promise<void> {
-      await requireDesktopRuntime().fs.writeTextFile(
-        filePath,
-        contents,
-        options,
-      );
+    async writeTextFile(filePath: string, contents: string): Promise<void> {
+      await requireDesktopRuntime().fs.writeTextFile(filePath, contents);
+    },
+  },
+  integratedServer: {
+    async getVersion(): Promise<string> {
+      return requireDesktopRuntime().integratedServer.getVersion();
+    },
+    async kill(): Promise<void> {
+      await requireDesktopRuntime().integratedServer.kill();
+    },
+    async onStartLog(callback: (line: string) => void): Promise<() => void> {
+      return requireDesktopRuntime().integratedServer.onStartLog(callback);
+    },
+    async resetData(): Promise<void> {
+      await requireDesktopRuntime().integratedServer.resetData();
+    },
+    async run(options: {
+      jvmArgs: string[];
+    }): Promise<DesktopIntegratedServerCredentials> {
+      return requireDesktopRuntime().integratedServer.run(options);
     },
   },
   path: {
@@ -143,48 +167,29 @@ export const desktop = {
       return requireDesktopRuntime().shell.openPath(target);
     },
   },
-  window: {
-    current() {
-      return {
-        close: async () => {
-          await requireDesktopRuntime().window.close();
-        },
-        isMaximized: async () => {
-          return requireDesktopRuntime().window.isMaximized();
-        },
-        maximize: async () => {
-          await requireDesktopRuntime().window.maximize();
-        },
-        minimize: async () => {
-          await requireDesktopRuntime().window.minimize();
-        },
-        onResized: async (callback: () => void) => {
-          return requireDesktopRuntime().window.onResized(callback);
-        },
-        setTheme: async (theme: DesktopTheme) => {
-          await requireDesktopRuntime().window.setTheme(theme);
-        },
-        unmaximize: async () => {
-          await requireDesktopRuntime().window.unmaximize();
-        },
-      };
+  system: {
+    async getInfo(): Promise<DesktopSystemInfo> {
+      return requireDesktopRuntime().system.getInfo();
     },
   },
-  os: {
-    arch(): string {
-      return requireDesktopRuntime().os.arch;
+  window: {
+    async close(): Promise<void> {
+      await requireDesktopRuntime().window.close();
     },
-    locale(): string {
-      return requireDesktopRuntime().os.locale;
+    async isMaximized(): Promise<boolean> {
+      return requireDesktopRuntime().window.isMaximized();
     },
-    platform(): string {
-      return requireDesktopRuntime().os.platform;
+    async maximize(): Promise<void> {
+      await requireDesktopRuntime().window.maximize();
     },
-    type(): string {
-      return requireDesktopRuntime().os.type;
+    async minimize(): Promise<void> {
+      await requireDesktopRuntime().window.minimize();
     },
-    version(): string {
-      return requireDesktopRuntime().os.version;
+    async onResized(callback: () => void): Promise<() => void> {
+      return requireDesktopRuntime().window.onResized(callback);
+    },
+    async unmaximize(): Promise<void> {
+      await requireDesktopRuntime().window.unmaximize();
     },
   },
 };

@@ -1,208 +1,130 @@
-import path from "node:path";
-import chokidar from "chokidar";
-import { clipboard, contextBridge, ipcRenderer, shell } from "electron";
-import type {
-  DesktopBaseDirectory,
-  DesktopFsWatchOptions,
-  DesktopTheme,
-  SoulFireDesktopApi,
-} from "../src/lib/desktop-api";
+import { clipboard, contextBridge, ipcRenderer } from "electron";
+import type { SoulFireDesktopApi } from "../src/lib/desktop-api";
 
-const staticInfo = ipcRenderer.sendSync("desktop:get-static") as {
-  appVersion: string;
-  os: SoulFireDesktopApi["os"];
-};
-
-function callMain<T>(
-  namespace: string,
-  method: string,
-  ...args: unknown[]
-): Promise<T> {
-  return ipcRenderer.invoke("desktop:call", {
-    args,
-    method,
-    namespace,
-  }) as Promise<T>;
+function invoke<T>(channel: string, ...args: unknown[]): Promise<T> {
+  return ipcRenderer.invoke(channel, ...args) as Promise<T>;
 }
 
-async function resolveBaseDirectory(
-  baseDir?: DesktopBaseDirectory,
-): Promise<string | null> {
-  switch (baseDir) {
-    case "AppConfig":
-      return callMain("paths", "appConfigDir");
-    case "AppLocalData":
-      return callMain("paths", "appLocalDataDir");
-    case "Download":
-      return callMain("paths", "downloadDir");
-    default:
-      return null;
-  }
-}
+function subscribe<T>(
+  channel: string,
+  callback: (payload: T) => void,
+): Promise<() => void> {
+  const listener = (_event: Electron.IpcRendererEvent, payload: T) => {
+    callback(payload);
+  };
 
-async function resolveFsPath(
-  targetPath: string,
-  baseDir?: DesktopBaseDirectory,
-): Promise<string> {
-  const baseDirectory = await resolveBaseDirectory(baseDir);
-  if (baseDirectory === null) {
-    return targetPath;
-  }
+  ipcRenderer.on(channel, listener);
 
-  return path.resolve(baseDirectory, targetPath);
+  return Promise.resolve(() => {
+    ipcRenderer.removeListener(channel, listener);
+  });
 }
 
 const desktopApi: SoulFireDesktopApi = {
   app: {
-    attachConsole: async () => {},
-    exit: async (code = 0) => {
-      await callMain("app", "exit", code);
+    onOpenUrl: async (callback) => subscribe("app:open-url", callback),
+    quit: async () => {
+      await invoke("app:quit");
     },
-    setTheme: async (theme: DesktopTheme) => {
-      await callMain("app", "setTheme", theme);
+    setTheme: async (theme) => {
+      await invoke("app:set-theme", theme);
     },
   },
-  appVersion: staticInfo.appVersion,
+  cast: {
+    broadcast: async (payload) => {
+      await invoke("cast:broadcast", payload);
+    },
+    connect: async (address, port) => {
+      return invoke("cast:connect", {
+        address,
+        port,
+      });
+    },
+    discover: async () => {
+      await invoke("cast:discover");
+    },
+    getDevices: async () => invoke("cast:get-devices"),
+    onDisconnected: async (callback) =>
+      subscribe("cast:device-disconnected", callback),
+    onDiscovered: async (callback) =>
+      subscribe("cast:device-discovered", callback),
+    onRemoved: async (callback) => subscribe("cast:device-removed", callback),
+  },
   clipboard: {
     readText: async () => clipboard.readText(),
     writeText: async (text: string) => {
       clipboard.writeText(text);
     },
   },
-  commands: {
-    invoke: async <T>(command: string, args?: Record<string, unknown>) =>
-      callMain<T>("commands", "invoke", command, args ?? {}),
-  },
   dialog: {
-    open: async (options) => callMain("dialog", "open", options),
-    save: async (options) => callMain("dialog", "save", options),
+    open: async (options) => invoke("dialog:open", options),
+    save: async (options) => invoke("dialog:save", options),
   },
-  events: {
-    emit: async (event: string, payload?: unknown) => {
-      ipcRenderer.send("desktop:emit", {
-        event,
-        payload,
-      });
-    },
-    listen: async (event: string, callback: (payload: unknown) => void) => {
-      const channel = `desktop:event:${event}`;
-      const listener = (
-        _event: Electron.IpcRendererEvent,
-        payload: unknown,
-      ) => {
-        callback(payload);
-      };
-      ipcRenderer.on(channel, listener);
-      return () => {
-        ipcRenderer.removeListener(channel, listener);
-      };
+  discord: {
+    updateActivity: async (state: string, details?: string | null) => {
+      await invoke("discord:update-activity", state, details);
     },
   },
   fs: {
     mkdir: async (targetPath, options) =>
-      callMain("fs", "mkdir", targetPath, options),
-    readDir: async (targetPath, options) =>
-      callMain("fs", "readDir", targetPath, options),
-    readTextFile: async (targetPath, options) =>
-      callMain("fs", "readTextFile", targetPath, options),
-    watch: async (watchPath, callback, options?: DesktopFsWatchOptions) => {
-      const resolvedWatchPath = await resolveFsPath(
-        watchPath,
-        options?.baseDir,
-      );
-      const changedPaths = new Set<string>();
-      const delayMs = options?.delayMs ?? 0;
-      let debounceTimer: NodeJS.Timeout | null = null;
-
-      const flush = () => {
-        if (changedPaths.size === 0) {
-          return;
-        }
-
-        const paths = Array.from(changedPaths);
-        changedPaths.clear();
-        callback({
-          paths,
-        });
-      };
-
-      const watcher = chokidar.watch(resolvedWatchPath, {
-        depth: options?.recursive === false ? 0 : undefined,
-        ignoreInitial: true,
-        persistent: true,
-      });
-
-      const queuePath = (changedPath: string) => {
-        changedPaths.add(changedPath);
-        if (delayMs === 0) {
-          flush();
-          return;
-        }
-
-        if (debounceTimer !== null) {
-          clearTimeout(debounceTimer);
-        }
-        debounceTimer = setTimeout(flush, delayMs);
-      };
-
-      watcher.on("add", queuePath);
-      watcher.on("addDir", queuePath);
-      watcher.on("change", queuePath);
-      watcher.on("unlink", queuePath);
-      watcher.on("unlinkDir", queuePath);
+      invoke("fs:mkdir", targetPath, options),
+    readDir: async (targetPath) => invoke("fs:read-dir", targetPath),
+    readTextFile: async (targetPath) => invoke("fs:read-text-file", targetPath),
+    watch: async (watchPath, callback, options) => {
+      const watchId = await invoke<number>("fs:watch", watchPath, options);
+      const unlisten = await subscribe(`fs:watch:${watchId}`, callback);
 
       return () => {
-        if (debounceTimer !== null) {
-          clearTimeout(debounceTimer);
-        }
-        void watcher.close();
+        unlisten();
+        void invoke("fs:unwatch", watchId);
       };
     },
-    writeTextFile: async (targetPath, contents, options) =>
-      callMain("fs", "writeTextFile", targetPath, contents, options),
+    writeTextFile: async (targetPath, contents) =>
+      invoke("fs:write-text-file", targetPath, contents),
   },
-  os: staticInfo.os,
+  integratedServer: {
+    getVersion: async () => invoke("integrated-server:get-version"),
+    kill: async () => {
+      await invoke("integrated-server:kill");
+    },
+    onStartLog: async (callback) =>
+      subscribe("integrated-server:start-log", callback),
+    resetData: async () => {
+      await invoke("integrated-server:reset-data");
+    },
+    run: async (options) => invoke("integrated-server:run", options),
+  },
   path: {
-    appConfigDir: async () => callMain("paths", "appConfigDir"),
-    appLocalDataDir: async () => callMain("paths", "appLocalDataDir"),
-    downloadDir: async () => callMain("paths", "downloadDir"),
-    resolve: async (...paths: string[]) =>
-      callMain("paths", "resolve", ...paths),
+    appConfigDir: async () => invoke("path:app-config-dir"),
+    appLocalDataDir: async () => invoke("path:app-local-data-dir"),
+    downloadDir: async () => invoke("path:download-dir"),
+    resolve: async (...paths: string[]) => invoke("path:resolve", ...paths),
   },
   shell: {
     openExternal: async (target) => {
-      await shell.openExternal(target);
+      await invoke("shell:open-external", target);
     },
-    openPath: async (target) => shell.openPath(target),
+    openPath: async (target) => invoke("shell:open-path", target),
+  },
+  system: {
+    getInfo: async () => invoke("system:get-info"),
   },
   window: {
     close: async () => {
-      await callMain("window", "close");
+      await invoke("window:close");
     },
-    isMaximized: async () => callMain("window", "isMaximized"),
+    isMaximized: async () => invoke("window:is-maximized"),
     maximize: async () => {
-      await callMain("window", "maximize");
+      await invoke("window:maximize");
     },
     minimize: async () => {
-      await callMain("window", "minimize");
+      await invoke("window:minimize");
     },
-    onResized: async (callback: () => void) => {
-      const channel = "desktop:event:window-resized";
-      const listener = () => {
-        callback();
-      };
-      ipcRenderer.on(channel, listener);
-      return () => {
-        ipcRenderer.removeListener(channel, listener);
-      };
-    },
-    setTheme: async (theme: DesktopTheme) => {
-      await callMain("window", "setTheme", theme);
-    },
+    onResized: async (callback) => subscribe("window:resized", callback),
     unmaximize: async () => {
-      await callMain("window", "unmaximize");
+      await invoke("window:unmaximize");
     },
   },
 };
 
-contextBridge.exposeInMainWorld("soulfireDesktop", desktopApi);
+contextBridge.exposeInMainWorld("soulfireElectron", desktopApi);

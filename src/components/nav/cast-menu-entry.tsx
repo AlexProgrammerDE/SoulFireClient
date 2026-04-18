@@ -35,25 +35,17 @@ export default function CastMenuEntry() {
   const [devices, setDevices] = useState<MediaDeviceState[]>([]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      void desktop.commands
-        .invoke<MediaDeviceInfo[]>("get_casts")
-        .then((result) => {
-          const devices = result as MediaDeviceInfo[];
-          setDevices((oldDevices) => {
-            return devices.map((device) => {
-              const oldDevice = oldDevices.find((d) => d.info.id === device.id);
-              return {
-                info: device,
-                transport_id: oldDevice?.transport_id ?? null,
-              };
-            });
-          });
-        });
-    }, 1_000);
+    void desktop.cast.getDevices().then((currentDevices) => {
+      setDevices(
+        currentDevices.map((device) => ({
+          info: device,
+          transport_id: null,
+        })),
+      );
+    });
 
-    const cancel = cancellablePromiseDefault(
-      desktop.events.listen("cast-device-disconnected", (payload) => {
+    const cancelDisconnected = cancellablePromiseDefault(
+      desktop.cast.onDisconnected((payload) => {
         const disconnected = payload as MediaDeviceDisconnected;
         setDevices((devices) =>
           devices.map((device) => {
@@ -74,15 +66,42 @@ export default function CastMenuEntry() {
         );
       }),
     );
+    const cancelDiscovered = cancellablePromiseDefault(
+      desktop.cast.onDiscovered((device) => {
+        setDevices((devices) => {
+          if (devices.some((current) => current.info.id === device.id)) {
+            return devices;
+          }
+
+          return [
+            ...devices,
+            {
+              info: device,
+              transport_id: null,
+            },
+          ];
+        });
+      }),
+    );
+    const cancelRemoved = cancellablePromiseDefault(
+      desktop.cast.onRemoved((payload) => {
+        setDevices((devices) =>
+          devices.filter(
+            (device) => device.info.full_name !== payload.full_name,
+          ),
+        );
+      }),
+    );
 
     return () => {
-      clearInterval(interval);
-      cancel();
+      cancelDisconnected();
+      cancelDiscovered();
+      cancelRemoved();
     };
   }, [t]);
 
   useEffect(() => {
-    void desktop.commands.invoke("discover_casts");
+    void desktop.cast.discover();
   }, []);
 
   return (
@@ -109,10 +128,10 @@ export default function CastMenuEntry() {
                     }
 
                     toast.promise(
-                      desktop.commands.invoke("connect_cast", {
-                        address: currentDevice.info.address,
-                        port: currentDevice.info.port,
-                      }),
+                      desktop.cast.connect(
+                        currentDevice.info.address,
+                        currentDevice.info.port,
+                      ),
                       {
                         loading: t("castMenu.connectToast.loading", {
                           device: currentDevice.info.name,

@@ -107,7 +107,7 @@ export const Route = createFileRoute("/_dashboard")({
       };
     } else {
       if (isDesktopApp()) {
-        await desktop.events.emit("kill-integrated-server");
+        await desktop.integratedServer.kill();
       }
       logOut();
       // eslint-disable-next-line @typescript-eslint/only-throw-error

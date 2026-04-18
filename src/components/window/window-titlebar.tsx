@@ -83,7 +83,7 @@ function TitlebarExternalLinks() {
 function WindowControls() {
   const desktopApp = isDesktopApp();
   const appWindow = useMemo(
-    () => (desktopApp ? desktop.window.current() : null),
+    () => (desktopApp ? desktop.window : null),
     [desktopApp],
   );
   const [isMaximized, setIsMaximized] = useState(false);

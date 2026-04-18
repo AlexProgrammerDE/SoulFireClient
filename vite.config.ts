@@ -53,16 +53,6 @@ export default defineConfig({
             },
             preload: {
               input: "electron/preload.ts",
-              vite: {
-                build: {
-                  rollupOptions: {
-                    output: {
-                      // Electron runs `.mjs` preloads as ES modules.
-                      format: "es",
-                    },
-                  },
-                },
-              },
             },
           }),
         ]

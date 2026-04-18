@@ -1,7 +1,5 @@
 export type DesktopTheme = "dark" | "light" | null;
 
-export type DesktopBaseDirectory = "AppConfig" | "AppLocalData" | "Download";
-
 export type DesktopFsEntry = {
   name: string;
   isFile: boolean;
@@ -14,16 +12,11 @@ export type DesktopFsWatchEvent = {
 };
 
 export type DesktopFsWatchOptions = {
-  baseDir?: DesktopBaseDirectory;
   delayMs?: number;
   recursive?: boolean;
 };
 
-export type DesktopFsOptions = {
-  baseDir?: DesktopBaseDirectory;
-};
-
-export type DesktopMkdirOptions = DesktopFsOptions & {
+export type DesktopMkdirOptions = {
   recursive?: boolean;
 };
 
@@ -48,7 +41,7 @@ export type DesktopSaveDialogOptions = {
 
 export type DesktopUnlisten = () => void;
 
-export interface SoulFireDesktopApi {
+export type DesktopSystemInfo = {
   appVersion: string;
   os: {
     arch: string;
@@ -57,17 +50,53 @@ export interface SoulFireDesktopApi {
     type: string;
     version: string;
   };
+};
+
+export type DesktopCastDevice = {
+  address: string;
+  full_name: string;
+  id: string;
+  name: string;
+  port: number;
+};
+
+export type DesktopCastDisconnectedEvent = {
+  transport_id: string;
+};
+
+export type DesktopCastRemovedEvent = {
+  full_name: string;
+};
+
+export type DesktopIntegratedServerCredentials = {
+  address: string;
+  token: string;
+};
+
+export interface SoulFireDesktopApi {
   app: {
-    attachConsole: () => Promise<void>;
-    exit: (code?: number) => Promise<void>;
+    onOpenUrl: (callback: (url: string) => void) => Promise<DesktopUnlisten>;
+    quit: () => Promise<void>;
     setTheme: (theme: DesktopTheme) => Promise<void>;
+  };
+  cast: {
+    broadcast: (payload?: unknown) => Promise<void>;
+    connect: (address: string, port: number) => Promise<string>;
+    discover: () => Promise<void>;
+    getDevices: () => Promise<DesktopCastDevice[]>;
+    onDisconnected: (
+      callback: (payload: DesktopCastDisconnectedEvent) => void,
+    ) => Promise<DesktopUnlisten>;
+    onDiscovered: (
+      callback: (device: DesktopCastDevice) => void,
+    ) => Promise<DesktopUnlisten>;
+    onRemoved: (
+      callback: (payload: DesktopCastRemovedEvent) => void,
+    ) => Promise<DesktopUnlisten>;
   };
   clipboard: {
     readText: () => Promise<string>;
     writeText: (text: string) => Promise<void>;
-  };
-  commands: {
-    invoke: <T>(command: string, args?: Record<string, unknown>) => Promise<T>;
   };
   dialog: {
     open: (
@@ -75,30 +104,28 @@ export interface SoulFireDesktopApi {
     ) => Promise<string | string[] | null>;
     save: (options: DesktopSaveDialogOptions) => Promise<string | null>;
   };
-  events: {
-    emit: (event: string, payload?: unknown) => Promise<void>;
-    listen: (
-      event: string,
-      callback: (payload: unknown) => void,
-    ) => Promise<DesktopUnlisten>;
+  discord: {
+    updateActivity: (state: string, details?: string | null) => Promise<void>;
   };
   fs: {
     mkdir: (path: string, options?: DesktopMkdirOptions) => Promise<void>;
-    readDir: (
-      path: string,
-      options?: DesktopFsOptions,
-    ) => Promise<DesktopFsEntry[]>;
-    readTextFile: (path: string, options?: DesktopFsOptions) => Promise<string>;
+    readDir: (path: string) => Promise<DesktopFsEntry[]>;
+    readTextFile: (path: string) => Promise<string>;
     watch: (
       path: string,
       callback: (event: DesktopFsWatchEvent) => void,
       options?: DesktopFsWatchOptions,
     ) => Promise<DesktopUnlisten>;
-    writeTextFile: (
-      path: string,
-      contents: string,
-      options?: DesktopFsOptions,
-    ) => Promise<void>;
+    writeTextFile: (path: string, contents: string) => Promise<void>;
+  };
+  integratedServer: {
+    getVersion: () => Promise<string>;
+    kill: () => Promise<void>;
+    onStartLog: (callback: (line: string) => void) => Promise<DesktopUnlisten>;
+    resetData: () => Promise<void>;
+    run: (options: {
+      jvmArgs: string[];
+    }) => Promise<DesktopIntegratedServerCredentials>;
   };
   path: {
     appConfigDir: () => Promise<string>;
@@ -110,13 +137,15 @@ export interface SoulFireDesktopApi {
     openExternal: (target: string) => Promise<void>;
     openPath: (target: string) => Promise<string>;
   };
+  system: {
+    getInfo: () => Promise<DesktopSystemInfo>;
+  };
   window: {
     close: () => Promise<void>;
     isMaximized: () => Promise<boolean>;
     maximize: () => Promise<void>;
     minimize: () => Promise<void>;
     onResized: (callback: () => void) => Promise<DesktopUnlisten>;
-    setTheme: (theme: DesktopTheme) => Promise<void>;
     unmaximize: () => Promise<void>;
   };
 }
