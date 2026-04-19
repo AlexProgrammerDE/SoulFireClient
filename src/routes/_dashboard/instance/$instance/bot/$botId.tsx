@@ -992,6 +992,14 @@ function formatItemId(itemId: string): string {
   return itemId.replace("minecraft:", "").replace(/_/g, " ");
 }
 
+function inventoryItemImageSrc(item: InventorySlot): string | undefined {
+  if (!item.iconBase64 || !item.iconMimeType) {
+    return undefined;
+  }
+
+  return `data:${item.iconMimeType};base64,${item.iconBase64}`;
+}
+
 function InventorySlotDisplay({
   item,
   isSelected,
@@ -1076,6 +1084,7 @@ function InventorySlotDisplay({
   const titleParts = [
     `${item.displayName || formatItemId(item.itemId)} x${item.count}`,
   ];
+  const itemImageSrc = inventoryItemImageSrc(item);
   if (devInfoParts.length > 0) {
     titleParts.push("", ...devInfoParts);
   }
@@ -1091,16 +1100,25 @@ function InventorySlotDisplay({
   return (
     <button
       type="button"
-      className={`bg-muted border-border relative ${baseClasses}`}
+      className={`bg-muted border-border relative overflow-hidden ${baseClasses}`}
       onClick={handleClick}
       onContextMenu={handleContextMenu}
       onMouseDown={handleMouseDown}
       title={titleParts.join("\n")}
       disabled={!isClickable}
     >
-      <span className="max-w-full truncate px-0.5 text-center text-[10px] leading-tight">
-        {formatItemId(item.itemId).slice(0, 6)}
-      </span>
+      {itemImageSrc ? (
+        <img
+          src={itemImageSrc}
+          alt=""
+          draggable={false}
+          className="size-full object-contain p-0.5 [image-rendering:pixelated]"
+        />
+      ) : (
+        <span className="max-w-full truncate px-0.5 text-center text-[10px] leading-tight">
+          {formatItemId(item.itemId).slice(0, 6)}
+        </span>
+      )}
       {item.count > 1 && (
         <span className="absolute bottom-0 right-0.5 text-[9px] font-bold">
           {item.count}
@@ -1113,14 +1131,14 @@ function InventorySlotDisplay({
 // Renders a single region of inventory slots
 function SlotRegionGrid({
   region,
-  slots,
+  slotByIndex,
   selectedHotbarSlot,
   onSlotClick,
   onHotbarSlotSelect,
   containerType,
 }: {
   region: SlotRegion;
-  slots: InventorySlot[];
+  slotByIndex: ReadonlyMap<number, InventorySlot>;
   selectedHotbarSlot: number;
   onSlotClick: (slotIndex: number, clickType: ClickType) => void;
   onHotbarSlotSelect?: (slot: number) => void;
@@ -1143,7 +1161,7 @@ function SlotRegionGrid({
       >
         {Array.from({ length: region.slotCount }, (_, i) => {
           const slotIndex = region.startIndex + i;
-          const item = slots.find((s) => s.slot === slotIndex);
+          const item = slotByIndex.get(slotIndex);
           const isSelected = isHotbar && i === selectedHotbarSlot;
 
           return (
@@ -1357,7 +1375,11 @@ function BotInventoryPanel({
 
   const layout = inventoryState?.layout;
   const slots = inventoryState?.slots ?? [];
+  const slotByIndex = new Map(slots.map((slot) => [slot.slot, slot]));
   const carriedItem = inventoryState?.carriedItem;
+  const carriedItemImageSrc = carriedItem
+    ? inventoryItemImageSrc(carriedItem)
+    : undefined;
   const selectedHotbarSlot = inventoryState?.selectedHotbarSlot ?? 0;
   const isPlayerInventory = layout?.title === "Inventory";
   const buttons = layout?.buttons ?? [];
@@ -1376,6 +1398,14 @@ function BotInventoryPanel({
           {carriedItem && (
             <Badge variant="default" className="gap-1">
               <HandIcon className="size-3" />
+              {carriedItemImageSrc && (
+                <img
+                  src={carriedItemImageSrc}
+                  alt=""
+                  draggable={false}
+                  className="size-4 object-contain [image-rendering:pixelated]"
+                />
+              )}
               {formatItemId(carriedItem.itemId)} x{carriedItem.count}
             </Badge>
           )}
@@ -1408,7 +1438,7 @@ function BotInventoryPanel({
             <SlotRegionGrid
               key={region.id}
               region={region}
-              slots={slots}
+              slotByIndex={slotByIndex}
               selectedHotbarSlot={selectedHotbarSlot}
               onSlotClick={handleSlotClick}
               onHotbarSlotSelect={handleHotbarSlotSelect}
