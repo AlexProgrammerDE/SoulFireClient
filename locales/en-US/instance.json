@@ -382,6 +382,102 @@
       "offline": "Bot is offline. Dialogs are only available when the bot is connected."
     }
   },
+  "automation": {
+    "acquire": {
+      "targetPlaceholder": "ender_pearl"
+    },
+    "filters": {
+      "searchBots": "Search bots...",
+      "searchClaims": "Search claims...",
+      "noBotsMatchTitle": "No bots match the current filters.",
+      "noBotsMatchDescription": "Adjust or clear the current filters to review the full automation roster."
+    },
+    "attention": {
+      "empty": "No bots currently look stalled or degraded."
+    },
+    "memory": {
+      "noBots": "No automation bots are available for memory inspection.",
+      "blocks": "Blocks",
+      "noBlocks": "No remembered blocks in this snapshot.",
+      "containers": "Containers",
+      "noContainers": "No remembered containers in this snapshot.",
+      "entities": "Entities",
+      "noEntities": "No remembered entities in this snapshot.",
+      "droppedItems": "Dropped Items",
+      "noDroppedItems": "No remembered dropped items in this snapshot.",
+      "unreachablePositions": "Unreachable Positions",
+      "noUnreachablePositions": "No unreachable positions in this snapshot."
+    },
+    "coordination": {
+      "sharedBlocks": "Shared Blocks",
+      "noBlockHints": "No shared block hints yet.",
+      "eyeSamples": "Eye Samples",
+      "noEyeSamples": "No eye samples recorded."
+    }
+  },
+  "metrics": {
+    "empty": {
+      "noData": "No data"
+    },
+    "summary": {
+      "online": "Online",
+      "packetsPerSecond": "Pkt/s",
+      "traffic": "Traffic",
+      "health": "Health",
+      "tick": "Tick"
+    },
+    "botsOnline": {
+      "title": "Bots Online",
+      "online": "Online",
+      "total": "Total"
+    },
+    "packets": {
+      "title": "Packets / Second",
+      "sent": "Sent/s",
+      "received": "Recv/s"
+    },
+    "bandwidth": {
+      "title": "Bandwidth",
+      "upload": "Upload",
+      "download": "Download"
+    },
+    "tick": {
+      "title": "Tick Duration",
+      "avg": "Avg (ms)",
+      "max": "Max (ms)"
+    },
+    "healthFood": {
+      "title": "Health / Food",
+      "health": "Avg Health",
+      "food": "Avg Food"
+    },
+    "chunksEntities": {
+      "title": "Chunks / Entities",
+      "chunks": "Chunks",
+      "entities": "Entities"
+    },
+    "connections": {
+      "title": "Connection Events",
+      "connections": "Connections",
+      "disconnections": "Disconnections"
+    },
+    "healthDistribution": {
+      "title": "Health Distribution",
+      "bots": "Bots"
+    },
+    "dimensions": {
+      "title": "Dimensions",
+      "bots": "Bots"
+    },
+    "gameModes": {
+      "title": "Game Modes",
+      "bots": "Bots"
+    },
+    "positions": {
+      "title": "Bot Positions (XZ)",
+      "bot": "Bot"
+    }
+  },
   "scripts": {
     "title": "Visual Scripts",
     "description": "Create automation scripts using a visual node-based editor.",
@@ -450,6 +546,7 @@
         "pause": "Pause",
         "pauseTooltip": "Pause script execution",
         "unsaved": "Unsaved",
+        "unsavedChanges": "Unsaved changes",
         "clearCanvas": "Clear canvas",
         "zoomIn": "Zoom in",
         "zoomOut": "Zoom out",
@@ -482,6 +579,64 @@
         "showPreview": "Show Preview",
         "hidePreview": "Hide Preview",
         "delete": "Delete"
+      },
+      "node": {
+        "expand": "Expand node",
+        "collapse": "Collapse node"
+      },
+      "debug": {
+        "copyValue": "Copy current value",
+        "clearHistory": "Clear history"
+      },
+      "edge": {
+        "direction": "Edge direction"
+      },
+      "note": {
+        "placeholder": "Write a note..."
+      },
+      "complexity": {
+        "title": "Script complexity score"
+      },
+      "group": {
+        "returnToRoot": "Return to root (Tab)"
+      },
+      "quickAdd": {
+        "menuLabel": "Quick add node menu",
+        "searchPlaceholder": "Search nodes..."
+      },
+      "diff": {
+        "tooltip": "Review changes"
+      },
+      "dryRun": {
+        "tooltip": "Dry Run",
+        "title": "Dry Run Script",
+        "description": "Run a script from a selected trigger with mock inputs.",
+        "triggerNode": "Trigger Node",
+        "selectTrigger": "Select a trigger...",
+        "triggerDescription": "Pick the trigger node to execute with mock input values.",
+        "mockInputs": "Mock Inputs",
+        "valuePlaceholder": "{{type}} value",
+        "start": "Start Dry Run"
+      },
+      "quotas": {
+        "tooltip": "Script Quotas",
+        "title": "Script Quotas",
+        "description": "Configure resource limits for this script. Empty fields use server defaults.",
+        "maxExecutionCount": "Max Execution Count",
+        "maxExecutionCountPlaceholder": "100000",
+        "maxExecutionCountDescription": "Maximum node executions per trigger invocation",
+        "maxExecutionTime": "Max Execution Time (ms)",
+        "maxExecutionTimePlaceholder": "30000",
+        "maxExecutionTimeDescription": "Maximum wall-clock time per trigger execution",
+        "maxConcurrentTriggers": "Max Concurrent Triggers",
+        "maxConcurrentTriggersPlaceholder": "1",
+        "maxConcurrentTriggersDescription": "Maximum concurrent trigger invocations",
+        "maxStateStoreEntries": "Max State Store Entries",
+        "maxStateStoreEntriesPlaceholder": "Unlimited",
+        "maxStateStoreEntriesDescription": "Maximum entries in the script state store",
+        "disableTimeouts": "Disable Timeouts",
+        "disableTimeoutsDescription": "Disables per-node and data edge timeouts",
+        "save": "Save Quotas"
       }
     }
   }

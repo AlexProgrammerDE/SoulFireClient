@@ -221,7 +221,10 @@ export function ScriptToolbar({
           >
             <span className={cn(isMobile && "truncate")}>{scriptName}</span>
             {isDirty && (
-              <span className="text-muted-foreground" title="Unsaved changes">
+              <span
+                className="text-muted-foreground"
+                title={t("scripts.editor.toolbar.unsavedChanges")}
+              >
                 *
               </span>
             )}

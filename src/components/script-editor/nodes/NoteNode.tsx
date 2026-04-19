@@ -1,5 +1,6 @@
 import { type NodeProps, NodeResizer } from "@xyflow/react";
 import { memo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useNodeEditing } from "../NodeEditingContext";
 import { EditableNodeLabel } from "./EditableNodeLabel";
@@ -19,6 +20,7 @@ interface NoteNodeProps extends NodeProps {
 }
 
 function NoteNodeComponent({ id, data, selected }: NoteNodeProps) {
+  const { t } = useTranslation("instance");
   const { updateNodeData } = useNodeEditing();
   const label = data.label ?? "Note";
   const content = data.content ?? "";
@@ -75,7 +77,7 @@ function NoteNodeComponent({ id, data, selected }: NoteNodeProps) {
           className="nodrag nopan flex-1 w-full bg-transparent text-sm text-black/70 p-3 resize-none outline-none placeholder:text-black/30"
           value={content}
           onChange={handleContentChange}
-          placeholder="Write a note..."
+          placeholder={t("scripts.editor.note.placeholder")}
         />
       </div>
     </>

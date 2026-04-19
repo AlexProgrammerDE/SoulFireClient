@@ -63,6 +63,7 @@
         },
         "role": {
           "label": "Role",
+          "placeholder": "Select a role",
           "description": "The role of the user. Admins can manage users and all instances. Users can only manage their own instances.",
           "user": "User",
           "admin": "Admin"

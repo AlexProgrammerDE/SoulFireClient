@@ -348,6 +348,7 @@ function ComboComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
+  const { t } = useTranslation("common");
   const [open, setOpen] = useState(false);
 
   const selectedOption =
@@ -380,7 +381,9 @@ function ComboComponent(props: {
       </PopoverTrigger>
       <PopoverContent className="w-72 p-0">
         <Command>
-          <CommandInput placeholder="Search value..." />
+          <CommandInput
+            placeholder={t("settingsPage.combo.searchPlaceholder")}
+          />
           <CommandList>
             <CommandGroup>
               {props.setting.options.map((option) => (

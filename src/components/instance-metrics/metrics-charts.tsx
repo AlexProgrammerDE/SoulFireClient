@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Area,
   AreaChart,
@@ -71,6 +72,7 @@ function formatTooltipLabel(payload: CustomTooltipProps["payload"]) {
 }
 
 function EmptyMetricCard({ title }: { title: string }) {
+  const { t } = useTranslation("instance");
   return (
     <Card>
       <CardHeader>
@@ -79,7 +81,9 @@ function EmptyMetricCard({ title }: { title: string }) {
       <CardContent>
         <Empty className="border-0 px-0 py-8">
           <EmptyHeader className="gap-1">
-            <EmptyTitle className="text-sm">No data</EmptyTitle>
+            <EmptyTitle className="text-sm">
+              {t("metrics.empty.noData")}
+            </EmptyTitle>
           </EmptyHeader>
         </Empty>
       </CardContent>
@@ -93,6 +97,7 @@ export function MetricsSummaryCards({
 }: {
   data: GetInstanceMetricsResponse;
 }) {
+  const { t } = useTranslation("instance");
   const latest =
     data.snapshots.length > 0
       ? data.snapshots[data.snapshots.length - 1]
@@ -100,11 +105,13 @@ export function MetricsSummaryCards({
 
   const items = [
     {
-      label: "Online",
+      key: "online",
+      label: t("metrics.summary.online"),
       value: latest ? `${latest.botsOnline}/${latest.botsTotal}` : "-/-",
     },
     {
-      label: "Pkt/s",
+      key: "packets",
+      label: t("metrics.summary.packetsPerSecond"),
       value: latest
         ? formatNumber(
             latest.packetsSentPerSecond + latest.packetsReceivedPerSecond,
@@ -112,17 +119,20 @@ export function MetricsSummaryCards({
         : "-",
     },
     {
-      label: "Traffic",
+      key: "traffic",
+      label: t("metrics.summary.traffic"),
       value: latest
         ? formatBytes(latest.bytesSentPerSecond + latest.bytesReceivedPerSecond)
         : "-",
     },
     {
-      label: "Health",
+      key: "health",
+      label: t("metrics.summary.health"),
       value: latest ? latest.avgHealth.toFixed(1) : "-",
     },
     {
-      label: "Tick",
+      key: "tick",
+      label: t("metrics.summary.tick"),
       value: latest ? `${latest.avgTickDurationMs.toFixed(1)}ms` : "-",
     },
   ];
@@ -130,7 +140,7 @@ export function MetricsSummaryCards({
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
       {items.map((item) => (
-        <Card key={item.label} size="sm">
+        <Card key={item.key} size="sm">
           <CardContent className="flex flex-col items-center py-2">
             <span className="text-muted-foreground text-xs">{item.label}</span>
             <span className="font-mono text-lg font-bold">{item.value}</span>
@@ -142,16 +152,16 @@ export function MetricsSummaryCards({
 }
 
 // Bots Online area chart
-const botsOnlineConfig = {
-  online: { label: "Online", color: "var(--chart-1)" },
-  total: { label: "Total", color: "var(--chart-3)" },
-} satisfies ChartConfig;
-
 export function BotsOnlineChart({
   snapshots,
 }: {
   snapshots: MetricsSnapshot[];
 }) {
+  const { t } = useTranslation("instance");
+  const botsOnlineConfig = {
+    online: { label: t("metrics.botsOnline.online"), color: "var(--chart-1)" },
+    total: { label: t("metrics.botsOnline.total"), color: "var(--chart-3)" },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       downsampleTimeSeriesData(
@@ -168,7 +178,9 @@ export function BotsOnlineChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Bots Online</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.botsOnline.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -220,16 +232,16 @@ export function BotsOnlineChart({
 }
 
 // Network traffic (packets/s)
-const networkConfig = {
-  sent: { label: "Sent/s", color: "var(--chart-1)" },
-  received: { label: "Recv/s", color: "var(--chart-2)" },
-} satisfies ChartConfig;
-
 export function NetworkTrafficChart({
   snapshots,
 }: {
   snapshots: MetricsSnapshot[];
 }) {
+  const { t } = useTranslation("instance");
+  const networkConfig = {
+    sent: { label: t("metrics.packets.sent"), color: "var(--chart-1)" },
+    received: { label: t("metrics.packets.received"), color: "var(--chart-2)" },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       downsampleTimeSeriesData(
@@ -248,7 +260,7 @@ export function NetworkTrafficChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Packets / Second</CardTitle>
+        <CardTitle className="text-sm">{t("metrics.packets.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={networkConfig} className="min-h-[200px] w-full">
@@ -295,16 +307,19 @@ export function NetworkTrafficChart({
 }
 
 // Bandwidth (bytes/s)
-const bandwidthConfig = {
-  upload: { label: "Upload", color: "var(--chart-1)" },
-  download: { label: "Download", color: "var(--chart-2)" },
-} satisfies ChartConfig;
-
 export function BandwidthChart({
   snapshots,
 }: {
   snapshots: MetricsSnapshot[];
 }) {
+  const { t } = useTranslation("instance");
+  const bandwidthConfig = {
+    upload: { label: t("metrics.bandwidth.upload"), color: "var(--chart-1)" },
+    download: {
+      label: t("metrics.bandwidth.download"),
+      color: "var(--chart-2)",
+    },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       downsampleTimeSeriesData(
@@ -321,7 +336,9 @@ export function BandwidthChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Bandwidth</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.bandwidth.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -393,16 +410,16 @@ export function BandwidthChart({
 }
 
 // Tick duration
-const tickConfig = {
-  avg: { label: "Avg (ms)", color: "var(--chart-1)" },
-  max: { label: "Max (ms)", color: "var(--chart-4)" },
-} satisfies ChartConfig;
-
 export function TickDurationChart({
   snapshots,
 }: {
   snapshots: MetricsSnapshot[];
 }) {
+  const { t } = useTranslation("instance");
+  const tickConfig = {
+    avg: { label: t("metrics.tick.avg"), color: "var(--chart-1)" },
+    max: { label: t("metrics.tick.max"), color: "var(--chart-4)" },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       downsampleTimeSeriesData(
@@ -419,7 +436,7 @@ export function TickDurationChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Tick Duration</CardTitle>
+        <CardTitle className="text-sm">{t("metrics.tick.title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={tickConfig} className="min-h-[200px] w-full">
@@ -470,16 +487,16 @@ export function TickDurationChart({
 }
 
 // Health & Food line chart
-const healthFoodConfig = {
-  health: { label: "Avg Health", color: "var(--chart-1)" },
-  food: { label: "Avg Food", color: "var(--chart-2)" },
-} satisfies ChartConfig;
-
 export function HealthFoodChart({
   snapshots,
 }: {
   snapshots: MetricsSnapshot[];
 }) {
+  const { t } = useTranslation("instance");
+  const healthFoodConfig = {
+    health: { label: t("metrics.healthFood.health"), color: "var(--chart-1)" },
+    food: { label: t("metrics.healthFood.food"), color: "var(--chart-2)" },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       downsampleTimeSeriesData(
@@ -496,7 +513,9 @@ export function HealthFoodChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Health / Food</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.healthFood.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -546,16 +565,22 @@ export function HealthFoodChart({
 }
 
 // Chunks & Entities area chart
-const chunksEntitiesConfig = {
-  chunks: { label: "Chunks", color: "var(--chart-1)" },
-  entities: { label: "Entities", color: "var(--chart-3)" },
-} satisfies ChartConfig;
-
 export function ChunksEntitiesChart({
   snapshots,
 }: {
   snapshots: MetricsSnapshot[];
 }) {
+  const { t } = useTranslation("instance");
+  const chunksEntitiesConfig = {
+    chunks: {
+      label: t("metrics.chunksEntities.chunks"),
+      color: "var(--chart-1)",
+    },
+    entities: {
+      label: t("metrics.chunksEntities.entities"),
+      color: "var(--chart-3)",
+    },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       downsampleTimeSeriesData(
@@ -572,7 +597,9 @@ export function ChunksEntitiesChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Chunks / Entities</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.chunksEntities.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -624,16 +651,22 @@ export function ChunksEntitiesChart({
 }
 
 // Connection events bar chart
-const connectionConfig = {
-  connections: { label: "Connections", color: "var(--chart-1)" },
-  disconnections: { label: "Disconnections", color: "var(--chart-4)" },
-} satisfies ChartConfig;
-
 export function ConnectionEventsChart({
   snapshots,
 }: {
   snapshots: MetricsSnapshot[];
 }) {
+  const { t } = useTranslation("instance");
+  const connectionConfig = {
+    connections: {
+      label: t("metrics.connections.connections"),
+      color: "var(--chart-1)",
+    },
+    disconnections: {
+      label: t("metrics.connections.disconnections"),
+      color: "var(--chart-4)",
+    },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       downsampleTimeSeriesData(
@@ -652,7 +685,9 @@ export function ConnectionEventsChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Connection Events</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.connections.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -698,10 +733,6 @@ export function ConnectionEventsChart({
 }
 
 // Health distribution histogram
-const healthDistConfig = {
-  count: { label: "Bots", color: "var(--chart-1)" },
-} satisfies ChartConfig;
-
 const HEALTH_BUCKETS = [
   "0-2",
   "2-4",
@@ -720,6 +751,13 @@ export function HealthDistributionChart({
 }: {
   histogram: number[];
 }) {
+  const { t } = useTranslation("instance");
+  const healthDistConfig = {
+    count: {
+      label: t("metrics.healthDistribution.bots"),
+      color: "var(--chart-1)",
+    },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       HEALTH_BUCKETS.map((label, i) => ({
@@ -732,7 +770,9 @@ export function HealthDistributionChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Health Distribution</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.healthDistribution.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -762,15 +802,15 @@ export function HealthDistributionChart({
 }
 
 // Dimension pie chart
-const dimensionPieConfig = {
-  bots: { label: "Bots" },
-} satisfies ChartConfig;
-
 export function DimensionPieChart({
   dimensionCounts,
 }: {
   dimensionCounts: Record<string, number>;
 }) {
+  const { t } = useTranslation("instance");
+  const dimensionPieConfig = {
+    bots: { label: t("metrics.dimensions.bots") },
+  } satisfies ChartConfig;
   const chartData = useMemo(() => {
     const entries = Object.entries(dimensionCounts);
     if (entries.length === 0) return [];
@@ -782,13 +822,15 @@ export function DimensionPieChart({
   }, [dimensionCounts]);
 
   if (chartData.length === 0) {
-    return <EmptyMetricCard title="Dimensions" />;
+    return <EmptyMetricCard title={t("metrics.dimensions.title")} />;
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Dimensions</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.dimensions.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -818,15 +860,15 @@ export function DimensionPieChart({
 }
 
 // Game mode pie chart
-const gameModePieConfig = {
-  bots: { label: "Bots" },
-} satisfies ChartConfig;
-
 export function GameModePieChart({
   gameModeCounts,
 }: {
   gameModeCounts: Record<string, number>;
 }) {
+  const { t } = useTranslation("instance");
+  const gameModePieConfig = {
+    bots: { label: t("metrics.gameModes.bots") },
+  } satisfies ChartConfig;
   const chartData = useMemo(() => {
     const entries = Object.entries(gameModeCounts);
     if (entries.length === 0) return [];
@@ -838,13 +880,15 @@ export function GameModePieChart({
   }, [gameModeCounts]);
 
   if (chartData.length === 0) {
-    return <EmptyMetricCard title="Game Modes" />;
+    return <EmptyMetricCard title={t("metrics.gameModes.title")} />;
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Game Modes</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.gameModes.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -874,15 +918,15 @@ export function GameModePieChart({
 }
 
 // Position scatter chart
-const positionConfig = {
-  position: { label: "Bot", color: "var(--chart-1)" },
-} satisfies ChartConfig;
-
 export function PositionScatterChart({
   positions,
 }: {
   positions: { x: number; z: number; dimension: string }[];
 }) {
+  const { t } = useTranslation("instance");
+  const positionConfig = {
+    position: { label: t("metrics.positions.bot"), color: "var(--chart-1)" },
+  } satisfies ChartConfig;
   const chartData = useMemo(
     () =>
       positions.map((p) => ({
@@ -894,13 +938,15 @@ export function PositionScatterChart({
   );
 
   if (chartData.length === 0) {
-    return <EmptyMetricCard title="Bot Positions (XZ)" />;
+    return <EmptyMetricCard title={t("metrics.positions.title")} />;
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Bot Positions (XZ)</CardTitle>
+        <CardTitle className="text-sm">
+          {t("metrics.positions.title")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer

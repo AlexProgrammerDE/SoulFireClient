@@ -244,7 +244,11 @@ export function ManageUserDialog({
                       }
                     >
                       <SelectTrigger id={field.name} aria-invalid={isInvalid}>
-                        <SelectValue placeholder="Select a role" />
+                        <SelectValue
+                          placeholder={t(
+                            "users.baseUserDialog.form.role.placeholder",
+                          )}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {getEnumEntries(UserRole).map((role) => (

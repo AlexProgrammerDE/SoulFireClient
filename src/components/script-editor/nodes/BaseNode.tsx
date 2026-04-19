@@ -7,6 +7,7 @@ import {
 } from "@xyflow/react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 import { MultiInputOrderList } from "../MultiInputOrderList";
@@ -291,6 +292,7 @@ function BaseNodeComponent({
   onDataChange,
   typeBindings,
 }: BaseNodeProps) {
+  const { t } = useTranslation("instance");
   const { inputs, outputs, label, color, supportsMuting } = definition;
   const reorderMultiInputEdges = useScriptEditorStore(
     (s) => s.reorderMultiInputEdges,
@@ -492,7 +494,11 @@ function BaseNodeComponent({
             onClick={handleToggleCollapse}
             onMouseDown={(e) => e.stopPropagation()}
             className="nodrag nopan text-muted-foreground hover:text-foreground transition-colors p-0.5 -m-0.5 rounded hover:bg-muted/50"
-            title={isCollapsed ? "Expand node" : "Collapse node"}
+            title={
+              isCollapsed
+                ? t("scripts.editor.node.expand")
+                : t("scripts.editor.node.collapse")
+            }
           >
             {isCollapsed ? (
               <ChevronRight className="h-3 w-3" />

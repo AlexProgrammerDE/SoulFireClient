@@ -81,6 +81,7 @@ function TitlebarExternalLinks() {
 }
 
 function WindowControls() {
+  const { t } = useTranslation("common");
   const desktopApp = isDesktopApp();
   const appWindow = useMemo(
     () => (desktopApp ? desktop.window : null),
@@ -165,8 +166,8 @@ function WindowControls() {
         type="button"
         variant="ghost"
         onClick={handleMinimize}
-        aria-label="Minimize window"
-        title="Minimize"
+        aria-label={t("window.minimizeLabel")}
+        title={t("window.minimize")}
       >
         <MinusIcon className="size-3.5" />
       </Button>
@@ -176,8 +177,10 @@ function WindowControls() {
         type="button"
         variant="ghost"
         onClick={handleToggleMaximize}
-        aria-label={isMaximized ? "Restore window" : "Maximize window"}
-        title={isMaximized ? "Restore" : "Maximize"}
+        aria-label={
+          isMaximized ? t("window.restoreLabel") : t("window.maximizeLabel")
+        }
+        title={isMaximized ? t("window.restore") : t("window.maximize")}
       >
         <SquareIcon className={cn("size-3", isMaximized && "scale-90")} />
       </Button>
@@ -190,8 +193,8 @@ function WindowControls() {
         type="button"
         variant="ghost"
         onClick={handleClose}
-        aria-label="Close window"
-        title="Close"
+        aria-label={t("window.closeLabel")}
+        title={t("window.close")}
       >
         <XIcon className="size-3.5" />
       </Button>
@@ -200,6 +203,7 @@ function WindowControls() {
 }
 
 export function WindowTitlebar() {
+  const { t } = useTranslation("common");
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const desktopApp = isDesktopApp();
@@ -232,8 +236,8 @@ export function WindowTitlebar() {
             variant="ghost"
             onClick={handleBack}
             disabled={!canGoBack}
-            aria-label="Go back"
-            title="Back"
+            aria-label={t("window.backLabel")}
+            title={t("window.back")}
           >
             <ChevronLeftIcon className="size-3.5" />
           </Button>
@@ -244,8 +248,8 @@ export function WindowTitlebar() {
             variant="ghost"
             onClick={handleForward}
             disabled={!canGoForward}
-            aria-label="Go forward"
-            title="Forward"
+            aria-label={t("window.forwardLabel")}
+            title={t("window.forward")}
           >
             <ChevronRightIcon className="size-3.5" />
           </Button>

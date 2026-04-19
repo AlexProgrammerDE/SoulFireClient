@@ -1,6 +1,7 @@
 import { create } from "@bufbuild/protobuf";
 import { Settings2 } from "lucide-react";
 import { useCallback, useEffect, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Credenza,
@@ -34,6 +35,7 @@ function parseOptionalBigIntInput(value: string): bigint | undefined {
  * Empty fields use server defaults.
  */
 export function QuotasDialog() {
+  const { t } = useTranslation("instance");
   const quotas = useScriptEditorStore((s) => s.quotas);
   const setQuotas = useScriptEditorStore((s) => s.setQuotas);
   const [open, setOpen] = useState(false);
@@ -107,84 +109,95 @@ export function QuotasDialog() {
   return (
     <Credenza open={open} onOpenChange={setOpen}>
       <CredenzaTrigger asChild>
-        <Button variant="ghost" size="sm" title="Script Quotas">
+        <Button
+          variant="ghost"
+          size="sm"
+          title={t("scripts.editor.quotas.tooltip")}
+        >
           <Settings2 className="h-4 w-4" />
         </Button>
       </CredenzaTrigger>
       <CredenzaContent>
         <CredenzaHeader>
-          <CredenzaTitle>Script Quotas</CredenzaTitle>
+          <CredenzaTitle>{t("scripts.editor.quotas.title")}</CredenzaTitle>
           <CredenzaDescription>
-            Configure resource limits for this script. Empty fields use server
-            defaults.
+            {t("scripts.editor.quotas.description")}
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody className="flex flex-col gap-4">
           <Field>
             <FieldLabel htmlFor={`${id}-maxExecutionCount`}>
-              Max Execution Count
+              {t("scripts.editor.quotas.maxExecutionCount")}
             </FieldLabel>
             <Input
               id={`${id}-maxExecutionCount`}
               type="number"
-              placeholder="100000"
+              placeholder={t(
+                "scripts.editor.quotas.maxExecutionCountPlaceholder",
+              )}
               value={maxExecutionCount}
               onChange={(e) => setMaxExecutionCount(e.target.value)}
               className="h-8 text-sm"
             />
             <FieldDescription className="text-xs">
-              Maximum node executions per trigger invocation
+              {t("scripts.editor.quotas.maxExecutionCountDescription")}
             </FieldDescription>
           </Field>
 
           <Field>
             <FieldLabel htmlFor={`${id}-maxExecutionTimeMs`}>
-              Max Execution Time (ms)
+              {t("scripts.editor.quotas.maxExecutionTime")}
             </FieldLabel>
             <Input
               id={`${id}-maxExecutionTimeMs`}
               type="number"
-              placeholder="30000"
+              placeholder={t(
+                "scripts.editor.quotas.maxExecutionTimePlaceholder",
+              )}
               value={maxExecutionTimeMs}
               onChange={(e) => setMaxExecutionTimeMs(e.target.value)}
               className="h-8 text-sm"
             />
             <FieldDescription className="text-xs">
-              Maximum wall-clock time per trigger execution
+              {t("scripts.editor.quotas.maxExecutionTimeDescription")}
             </FieldDescription>
           </Field>
 
           <Field>
             <FieldLabel htmlFor={`${id}-maxConcurrentTriggers`}>
-              Max Concurrent Triggers
+              {t("scripts.editor.quotas.maxConcurrentTriggers")}
             </FieldLabel>
             <Input
               id={`${id}-maxConcurrentTriggers`}
               type="number"
-              placeholder="1"
+              placeholder={t(
+                "scripts.editor.quotas.maxConcurrentTriggersPlaceholder",
+              )}
               value={maxConcurrentTriggers}
               onChange={(e) => setMaxConcurrentTriggers(e.target.value)}
               className="h-8 text-sm"
             />
             <FieldDescription className="text-xs">
-              Maximum concurrent trigger invocations
+              {t("scripts.editor.quotas.maxConcurrentTriggersDescription")}
             </FieldDescription>
           </Field>
 
           <Field>
             <FieldLabel htmlFor={`${id}-maxStateStoreEntries`}>
-              Max State Store Entries
+              {t("scripts.editor.quotas.maxStateStoreEntries")}
             </FieldLabel>
             <Input
               id={`${id}-maxStateStoreEntries`}
               type="number"
-              placeholder="Unlimited"
+              placeholder={t(
+                "scripts.editor.quotas.maxStateStoreEntriesPlaceholder",
+              )}
               value={maxStateStoreEntries}
               onChange={(e) => setMaxStateStoreEntries(e.target.value)}
               className="h-8 text-sm"
             />
             <FieldDescription className="text-xs">
-              Maximum entries in the script state store
+              {t("scripts.editor.quotas.maxStateStoreEntriesDescription")}
             </FieldDescription>
           </Field>
 
@@ -194,10 +207,10 @@ export function QuotasDialog() {
           >
             <div className="flex flex-col gap-0.5">
               <FieldLabel htmlFor={`${id}-disableTimeouts`}>
-                Disable Timeouts
+                {t("scripts.editor.quotas.disableTimeouts")}
               </FieldLabel>
               <FieldDescription className="text-xs">
-                Disables per-node and data edge timeouts
+                {t("scripts.editor.quotas.disableTimeoutsDescription")}
               </FieldDescription>
             </div>
             <Switch
@@ -208,7 +221,7 @@ export function QuotasDialog() {
           </Field>
 
           <Button className="w-full" onClick={handleSave}>
-            Save Quotas
+            {t("scripts.editor.quotas.save")}
           </Button>
         </CredenzaBody>
       </CredenzaContent>

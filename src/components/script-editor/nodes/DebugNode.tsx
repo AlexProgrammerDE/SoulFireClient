@@ -1,6 +1,7 @@
 import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { Bug, Copy, Trash2 } from "lucide-react";
 import { memo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -83,6 +84,7 @@ function formatTime(date: Date): string {
  * Shows live values flowing through the script with history.
  */
 function DebugNodeComponent({ id, data, selected }: DebugNodeProps) {
+  const { t } = useTranslation("instance");
   const resolvedType = data.resolvedType ?? "any";
   const color = getPortColor(resolvedType);
   const label = data.label ?? "Debug";
@@ -123,7 +125,7 @@ function DebugNodeComponent({ id, data, selected }: DebugNodeProps) {
           className="h-5 w-5"
           onClick={handleCopyValue}
           disabled={!currentValue}
-          title="Copy current value"
+          title={t("scripts.editor.debug.copyValue")}
         >
           <Copy className="h-3 w-3" />
         </Button>
@@ -133,7 +135,7 @@ function DebugNodeComponent({ id, data, selected }: DebugNodeProps) {
           className="h-5 w-5"
           onClick={handleClear}
           disabled={history.length === 0}
-          title="Clear history"
+          title={t("scripts.editor.debug.clearHistory")}
         >
           <Trash2 className="h-3 w-3" />
         </Button>

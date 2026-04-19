@@ -1,5 +1,6 @@
 import { ClipboardIcon, InfoIcon } from "lucide-react";
 import { type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button.tsx";
 import {
   Popover,
@@ -44,12 +45,13 @@ export function CopyInfoButton(props: { value: string }) {
 function GenericInfoButton(props: {
   value: (closer: () => void) => ReactNode;
 }) {
+  const { t } = useTranslation("common");
   const [open, setOpen] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
-        aria-label="Show info"
+        aria-label={t("infoButton.showInfo")}
         render={
           <Button
             variant="ghost"

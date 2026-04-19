@@ -1,5 +1,6 @@
 import { FileDiff } from "lucide-react";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Credenza,
@@ -74,6 +75,7 @@ function computeDiff(): DiffResult {
 }
 
 export function ScriptDiffDialog() {
+  const { t } = useTranslation("instance");
   const isDirty = useScriptEditorStore((s) => s.isDirty);
   const lastSavedNodes = useScriptEditorStore((s) => s.lastSavedNodes);
 
@@ -93,7 +95,11 @@ export function ScriptDiffDialog() {
   return (
     <Credenza>
       <CredenzaTrigger asChild>
-        <Button variant="ghost" size="sm" title="Review changes">
+        <Button
+          variant="ghost"
+          size="sm"
+          title={t("scripts.editor.diff.tooltip")}
+        >
           <FileDiff className="h-4 w-4" />
           <span className="ml-1 text-xs">{totalChanges}</span>
         </Button>

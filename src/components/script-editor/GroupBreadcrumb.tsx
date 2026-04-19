@@ -1,4 +1,5 @@
 import { ChevronRight, Home } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Kbd, KbdGroup } from "@/components/ui/kbd";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
@@ -8,6 +9,7 @@ import { useScriptEditorStore } from "@/stores/script-editor-store";
  * Shows the path of nested groups when editing inside a group node.
  */
 export function GroupBreadcrumb() {
+  const { t } = useTranslation("instance");
   const nodes = useScriptEditorStore((s) => s.nodes);
   const groupEditStack = useScriptEditorStore((s) => s.groupEditStack);
   const exitToRoot = useScriptEditorStore((s) => s.exitToRoot);
@@ -46,7 +48,7 @@ export function GroupBreadcrumb() {
           "hover:bg-accent text-muted-foreground hover:text-foreground",
           "transition-colors",
         )}
-        title="Return to root (Tab)"
+        title={t("scripts.editor.group.returnToRoot")}
       >
         <Home className="h-3 w-3" />
         <span>Root</span>

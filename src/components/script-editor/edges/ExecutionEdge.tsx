@@ -6,6 +6,7 @@ import {
   getSmoothStepPath,
   Position,
 } from "@xyflow/react";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
 
@@ -41,6 +42,7 @@ function ExecutionEdge({
   data,
   selected,
 }: EdgeProps<ExecutionEdgeType>) {
+  const { t } = useTranslation("instance");
   const [edgePath] = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -77,7 +79,7 @@ function ExecutionEdge({
         >
           <svg
             role="img"
-            aria-label="Edge direction"
+            aria-label={t("scripts.editor.edge.direction")}
             width="10"
             height="10"
             viewBox="0 0 10 10"

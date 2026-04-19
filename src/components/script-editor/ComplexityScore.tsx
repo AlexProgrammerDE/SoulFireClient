@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { getNodeDefinition } from "@/components/script-editor/nodes/types";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 
@@ -7,6 +8,7 @@ import { useScriptEditorStore } from "@/stores/script-editor-store";
  * Score: nodeCount * 1 + edgeCount * 0.5 + loopNodes * 3 + maxFanOut * 2
  */
 export function ComplexityScore() {
+  const { t } = useTranslation("instance");
   const nodes = useScriptEditorStore((s) => s.nodes);
   const edges = useScriptEditorStore((s) => s.edges);
 
@@ -42,7 +44,7 @@ export function ComplexityScore() {
   return (
     <span
       className={`text-xs font-mono ${color}`}
-      title="Script complexity score"
+      title={t("scripts.editor.complexity.title")}
     >
       {score}
     </span>

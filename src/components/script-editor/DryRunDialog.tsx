@@ -1,5 +1,6 @@
 import { FlaskConical } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getNodeDefinition } from "@/components/script-editor/nodes/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +21,7 @@ import { useScriptEditorStore } from "@/stores/script-editor-store";
  * Requires the DryRunScript RPC to be available after proto regeneration.
  */
 export function DryRunDialog() {
+  const { t } = useTranslation("instance");
   const nodes = useScriptEditorStore((s) => s.nodes);
   const [selectedTrigger, setSelectedTrigger] = useState<string>("");
   const [mockInputs, setMockInputs] = useState<Record<string, string>>({});
@@ -52,20 +54,24 @@ export function DryRunDialog() {
   return (
     <Credenza>
       <CredenzaTrigger asChild>
-        <Button variant="ghost" size="sm" title="Dry Run">
+        <Button
+          variant="ghost"
+          size="sm"
+          title={t("scripts.editor.dryRun.tooltip")}
+        >
           <FlaskConical className="h-4 w-4" />
         </Button>
       </CredenzaTrigger>
       <CredenzaContent>
         <CredenzaHeader>
-          <CredenzaTitle>Dry Run Script</CredenzaTitle>
+          <CredenzaTitle>{t("scripts.editor.dryRun.title")}</CredenzaTitle>
           <CredenzaDescription>
-            Run a script from a selected trigger with mock inputs.
+            {t("scripts.editor.dryRun.description")}
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody className="flex flex-col gap-4">
           <Field>
-            <FieldLabel>Trigger Node</FieldLabel>
+            <FieldLabel>{t("scripts.editor.dryRun.triggerNode")}</FieldLabel>
             <select
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               value={selectedTrigger}
@@ -74,7 +80,9 @@ export function DryRunDialog() {
                 setMockInputs({});
               }}
             >
-              <option value="">Select a trigger...</option>
+              <option value="">
+                {t("scripts.editor.dryRun.selectTrigger")}
+              </option>
               {triggerNodes.map((node) => (
                 <option key={node.id} value={node.id}>
                   {(node.data as { label?: string })?.label ??
@@ -84,13 +92,13 @@ export function DryRunDialog() {
               ))}
             </select>
             <FieldDescription>
-              Pick the trigger node to execute with mock input values.
+              {t("scripts.editor.dryRun.triggerDescription")}
             </FieldDescription>
           </Field>
 
           {triggerOutputs.length > 0 && (
             <Field>
-              <FieldLabel>Mock Inputs</FieldLabel>
+              <FieldLabel>{t("scripts.editor.dryRun.mockInputs")}</FieldLabel>
               {triggerOutputs.map((port) => (
                 <Field
                   key={port.id}
@@ -101,7 +109,9 @@ export function DryRunDialog() {
                     {port.label}
                   </FieldLabel>
                   <Input
-                    placeholder={`${port.type} value`}
+                    placeholder={t("scripts.editor.dryRun.valuePlaceholder", {
+                      type: port.type,
+                    })}
                     value={mockInputs[port.id] ?? ""}
                     onChange={(e) => handleInputChange(port.id, e.target.value)}
                     className="h-8 text-sm"
@@ -120,7 +130,7 @@ export function DryRunDialog() {
             }}
           >
             <FlaskConical className="h-4 w-4 mr-2" />
-            Start Dry Run
+            {t("scripts.editor.dryRun.start")}
           </Button>
         </CredenzaBody>
       </CredenzaContent>

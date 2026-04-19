@@ -470,6 +470,7 @@ function AutomationDashboard() {
 }
 
 function Content() {
+  const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instance: instanceId } = Route.useParams();
   const {
@@ -1317,7 +1318,7 @@ function Content() {
                 className="h-8 w-36"
                 value={acquireTarget}
                 onChange={(event) => setAcquireTarget(event.target.value)}
-                placeholder="ender_pearl"
+                placeholder={t("automation.acquire.targetPlaceholder")}
                 disabled={isReadOnlyDemo || teamActionMutation.isPending}
               />
               <Input
@@ -1638,7 +1639,7 @@ function Content() {
             className="h-8 max-w-48"
             value={botSearch}
             onChange={(event) => setBotSearch(event.target.value)}
-            placeholder="Search bots..."
+            placeholder={t("automation.filters.searchBots")}
           />
           <InlineSelect
             value={botRoleFilter}
@@ -1846,8 +1847,8 @@ function Content() {
 
         {filteredBots.length === 0 ? (
           <InlineEmptyState
-            title="No bots match the current filters."
-            description="Adjust or clear the current filters to review the full automation roster."
+            title={t("automation.filters.noBotsMatchTitle")}
+            description={t("automation.filters.noBotsMatchDescription")}
             className="py-8"
           />
         ) : (
@@ -2596,6 +2597,7 @@ function HealthPanel(props: {
   onResumeHealthyPausedBots: () => void;
   onSelectBot: (botId: string) => void;
 }) {
+  const { t } = useTranslation("instance");
   const attentionEntries = props.entries.filter(
     (entry) => entry.attention.severity !== "ok",
   );
@@ -2657,7 +2659,7 @@ function HealthPanel(props: {
         </div>
       </div>
       {attentionEntries.length === 0 ? (
-        <InlineEmptyState title="No bots currently look stalled or degraded." />
+        <InlineEmptyState title={t("automation.attention.empty")} />
       ) : (
         <ScrollArea className="h-72">
           <ItemGroup className="gap-0 divide-border divide-y">
@@ -2748,6 +2750,7 @@ function ClaimsPanel(props: {
   onReleaseClaim: (claimKey: string) => void;
   onReleaseOwnerClaims: (botId: string, accountName: string) => void;
 }) {
+  const { t } = useTranslation("instance");
   const focusedBot = props.focusedBot;
 
   return (
@@ -2762,7 +2765,7 @@ function ClaimsPanel(props: {
       <div className="flex flex-wrap items-center gap-2">
         <Input
           className="h-8 max-w-48"
-          placeholder="Search claims..."
+          placeholder={t("automation.filters.searchClaims")}
           value={props.claimSearch}
           onChange={(event) => props.onClaimSearchChange(event.target.value)}
         />
@@ -2895,6 +2898,7 @@ function MemoryPanel(props: {
   resetDisabled: boolean;
   onResetMemory: () => void;
 }) {
+  const { t } = useTranslation("instance");
   const selectedBot = props.bots.find(
     (bot) => bot.botId === props.selectedBotId,
   );
@@ -2939,7 +2943,7 @@ function MemoryPanel(props: {
       )}
 
       {props.bots.length === 0 ? (
-        <InlineEmptyState title="No automation bots are available for memory inspection." />
+        <InlineEmptyState title={t("automation.memory.noBots")} />
       ) : props.errorMessage ? (
         <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-3 text-sm">
           <p className="font-medium">Memory snapshot failed.</p>
@@ -2964,12 +2968,12 @@ function MemoryPanel(props: {
           <ScrollArea className="h-[28rem]">
             <div className="grid gap-4">
               <MemorySectionHeading
-                title="Blocks"
+                title={t("automation.memory.blocks")}
                 count={memoryState.blocks.length}
               />
               {memoryState.blocks.length === 0 ? (
                 <InlineEmptyState
-                  title="No remembered blocks in this snapshot."
+                  title={t("automation.memory.noBlocks")}
                   className="py-2"
                 />
               ) : (
@@ -2995,12 +2999,12 @@ function MemoryPanel(props: {
               )}
 
               <MemorySectionHeading
-                title="Containers"
+                title={t("automation.memory.containers")}
                 count={memoryState.containers.length}
               />
               {memoryState.containers.length === 0 ? (
                 <InlineEmptyState
-                  title="No remembered containers in this snapshot."
+                  title={t("automation.memory.noContainers")}
                   className="py-2"
                 />
               ) : (
@@ -3034,12 +3038,12 @@ function MemoryPanel(props: {
               )}
 
               <MemorySectionHeading
-                title="Entities"
+                title={t("automation.memory.entities")}
                 count={memoryState.entities.length}
               />
               {memoryState.entities.length === 0 ? (
                 <InlineEmptyState
-                  title="No remembered entities in this snapshot."
+                  title={t("automation.memory.noEntities")}
                   className="py-2"
                 />
               ) : (
@@ -3069,12 +3073,12 @@ function MemoryPanel(props: {
               )}
 
               <MemorySectionHeading
-                title="Dropped Items"
+                title={t("automation.memory.droppedItems")}
                 count={memoryState.droppedItems.length}
               />
               {memoryState.droppedItems.length === 0 ? (
                 <InlineEmptyState
-                  title="No remembered dropped items in this snapshot."
+                  title={t("automation.memory.noDroppedItems")}
                   className="py-2"
                 />
               ) : (
@@ -3101,12 +3105,12 @@ function MemoryPanel(props: {
               )}
 
               <MemorySectionHeading
-                title="Unreachable Positions"
+                title={t("automation.memory.unreachablePositions")}
                 count={memoryState.unreachablePositions.length}
               />
               {memoryState.unreachablePositions.length === 0 ? (
                 <InlineEmptyState
-                  title="No unreachable positions in this snapshot."
+                  title={t("automation.memory.noUnreachablePositions")}
                   className="py-2"
                 />
               ) : (
@@ -3150,12 +3154,15 @@ function MemorySectionHeading(props: { title: string; count: number }) {
 }
 
 function IntelPanel(props: { coordinationState: AutomationCoordinationState }) {
+  const { t } = useTranslation("instance");
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <div>
-        <h4 className="text-sm font-medium mb-2">Shared Blocks</h4>
+        <h4 className="text-sm font-medium mb-2">
+          {t("automation.coordination.sharedBlocks")}
+        </h4>
         {props.coordinationState.sharedBlocks.length === 0 ? (
-          <InlineEmptyState title="No shared block hints yet." />
+          <InlineEmptyState title={t("automation.coordination.noBlockHints")} />
         ) : (
           <ScrollArea className="h-56">
             <ItemGroup className="gap-0 divide-border divide-y">
@@ -3179,9 +3186,11 @@ function IntelPanel(props: { coordinationState: AutomationCoordinationState }) {
         )}
       </div>
       <div>
-        <h4 className="text-sm font-medium mb-2">Eye Samples</h4>
+        <h4 className="text-sm font-medium mb-2">
+          {t("automation.coordination.eyeSamples")}
+        </h4>
         {props.coordinationState.eyeSamples.length === 0 ? (
-          <InlineEmptyState title="No eye samples recorded." />
+          <InlineEmptyState title={t("automation.coordination.noEyeSamples")} />
         ) : (
           <ScrollArea className="h-56">
             <ItemGroup className="gap-0 divide-border divide-y">

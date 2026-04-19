@@ -7,6 +7,7 @@ import {
   XIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Empty,
   EmptyDescription,
@@ -25,6 +26,7 @@ import { getPortTypeFromDefinition, type NodeDefinition } from "./nodes/types";
  * A searchable, categorized menu for adding nodes at the cursor position.
  */
 export function QuickAddMenu() {
+  const { t } = useTranslation("instance");
   const inputRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -233,7 +235,7 @@ export function QuickAddMenu() {
         }
         onKeyDown={handleKeyDown}
         role="dialog"
-        aria-label="Quick add node menu"
+        aria-label={t("scripts.editor.quickAdd.menuLabel")}
       >
         {/* Search input */}
         <div className="flex items-center gap-2 p-2">
@@ -245,7 +247,7 @@ export function QuickAddMenu() {
               setSearch(e.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="Search nodes..."
+            placeholder={t("scripts.editor.quickAdd.searchPlaceholder")}
             className="h-6 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
           <button
