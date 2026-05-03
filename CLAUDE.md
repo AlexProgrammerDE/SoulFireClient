@@ -4,16 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-SoulFireClient is a React/TypeScript + Tauri frontend for the [SoulFire server](https://github.com/soulfiremc-com/SoulFire). It runs on web, desktop (Windows/macOS/Linux), and mobile (Android/iOS) via Tauri 2.
+SoulFireClient is a React/TypeScript frontend for the [SoulFire server](https://github.com/soulfiremc-com/SoulFire). It runs on the web and as a desktop app on Windows, macOS, and Linux through Electron.
 
 ## Build Commands
 
 ```bash
 pnpm install              # Install dependencies
-pnpm dev                  # Start Vite dev server (web only, port 1420)
-pnpm dev-tauri            # Start Tauri dev mode (desktop app with hot reload)
-pnpm build                # Build web bundle
-pnpm build-tauri          # Build Tauri desktop app
+pnpm dev                  # Start Electron dev mode with Vite
+pnpm dev:web              # Start Vite dev server for web only
+pnpm build:web            # Build web bundle
+pnpm build:electron       # Build packaged Electron artifacts
+pnpm build:electron:dir   # Build unpacked Electron app
 pnpm typecheck            # TypeScript type checking
 pnpm check                # Run Biome linter
 pnpm fix                  # Run Biome with auto-fix
@@ -25,20 +26,21 @@ pnpm generate-routes      # Regenerate TanStack Router route tree
 
 ### Tech Stack
 - **Frontend**: React 19, TypeScript, Tailwind CSS 4
-- **Desktop**: Tauri 2 (Rust backend, requires nightly toolchain)
+- **Desktop**: Electron
 - **Routing**: TanStack Router (file-based in `src/routes/`)
 - **State**: Zustand for editor state, TanStack Query for server state
-- **API**: gRPC-Web via `@protobuf-ts` (protos in `protos/`, generated to `src/generated/`)
+- **API**: gRPC-Web via Connect RPC (protos in `protos/`, generated to `src/generated/`)
 - **UI**: shadcn/ui components, Radix primitives, Lucide icons
 
 ### Key Directories
+- `electron/` - Electron main, preload, native integration, tray, and updater code
 - `src/routes/` - File-based routing. `_dashboard.tsx` is authenticated layout, `_dashboard/user/` for admin pages, `_dashboard/instance/$instance/` for instance-scoped pages
 - `src/components/script-editor/` - Visual node-based script editor built on React Flow
 - `src/lib/web-rpc.ts` - gRPC transport setup and auth token management
 - `src/lib/script-service.ts` - Query options and proto↔JS conversion utilities
 - `src/stores/` - Zustand stores (currently just script editor state)
 - `src/generated/` - Auto-generated protobuf types (do not edit manually)
-- `src-tauri/` - Rust Tauri backend code
+- `scripts/generate-legacy-updater-assets.mjs` - Legacy updater bridge for already-installed Tauri clients
 
 ### Import Alias
 Use `@/*` to import from `src/` (e.g., `import { Button } from '@/components/ui/button'`)

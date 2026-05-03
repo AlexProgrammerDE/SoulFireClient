@@ -93,7 +93,7 @@ export default defineConfig({
       "Content-Security-Policy": desktopCsp,
     },
     watch: {
-      ignored: ["**/src-tauri/**", "**/target/**", "**/.idea/**"],
+      ignored: ["**/target/**", "**/.idea/**"],
     },
   },
   envPrefix: ["VITE_", "SF_"],

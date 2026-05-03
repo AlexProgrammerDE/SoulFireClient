@@ -15,7 +15,6 @@
       "!build",
       "!out",
       "!postcss.config.mjs",
-      "!src-tauri",
       "!src/routeTree.gen.ts",
       "!protos",
       "!shared-modules",
