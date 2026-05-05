@@ -69,6 +69,7 @@ export function startUpdater(): void {
   autoUpdater.logger = electronLog;
   autoUpdater.autoDownload = true;
   autoUpdater.autoInstallOnAppQuit = false;
+  autoUpdater.disableWebInstaller = true;
 
   autoUpdater.on("checking-for-update", () => {
     electronLog.info("Checking for updates", updaterTarget);

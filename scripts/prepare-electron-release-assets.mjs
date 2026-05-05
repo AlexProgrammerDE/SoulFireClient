@@ -13,6 +13,8 @@ const releaseArtifactsDir = path.resolve(
   process.argv[2] ?? "release-artifacts",
 );
 const releaseUploadDir = path.resolve(process.argv[3] ?? "release-upload");
+const githubReleaseDownloadBaseUrl =
+  "https://github.com/soulfiremc-com/SoulFireClient/releases/download";
 
 const electronUpdaterMetadataNames = new Set([
   "builder-debug.yml",
@@ -80,6 +82,24 @@ function copyAsset(sourceFile, assetName = path.basename(sourceFile)) {
   assetNames.add(assetName);
 }
 
+function isAbsoluteUrl(value) {
+  try {
+    new URL(value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function toGitHubReleaseAssetUrl(releaseVersion, assetPath) {
+  if (isAbsoluteUrl(assetPath)) {
+    return assetPath;
+  }
+
+  const assetName = path.posix.basename(assetPath);
+  return `${githubReleaseDownloadBaseUrl}/${encodeURIComponent(releaseVersion)}/${encodeURIComponent(assetName)}`;
+}
+
 function readUpdateInfo(sourceFile) {
   const updateInfo = parse(readFileSync(sourceFile, "utf8"));
   if (
@@ -93,11 +113,63 @@ function readUpdateInfo(sourceFile) {
   return updateInfo;
 }
 
-function mergeUpdateInfo(outputName, sourceFiles) {
+function normalizeUpdateInfoUrls(updateInfo, sourceFile) {
+  if (
+    typeof updateInfo.version !== "string" ||
+    updateInfo.version.length === 0
+  ) {
+    throw new Error(`Invalid release version in ${sourceFile}`);
+  }
+
+  const files = updateInfo.files.map((fileInfo) => {
+    if (
+      fileInfo === null ||
+      typeof fileInfo !== "object" ||
+      typeof fileInfo.url !== "string" ||
+      fileInfo.url.length === 0
+    ) {
+      throw new Error(`Invalid updater file entry in ${sourceFile}`);
+    }
+
+    return {
+      ...fileInfo,
+      url: toGitHubReleaseAssetUrl(updateInfo.version, fileInfo.url),
+    };
+  });
+
+  return {
+    ...updateInfo,
+    files,
+    ...(typeof updateInfo.path === "string"
+      ? {
+          path: toGitHubReleaseAssetUrl(updateInfo.version, updateInfo.path),
+        }
+      : {}),
+  };
+}
+
+function writeUpdateInfoAsset(outputName, updateInfo, sourceFile) {
   if (assetNames.has(outputName)) {
     throw new Error(`Duplicate release asset name: ${outputName}`);
   }
 
+  writeFileSync(
+    path.join(releaseUploadDir, outputName),
+    stringify(normalizeUpdateInfoUrls(updateInfo, sourceFile), {
+      lineWidth: 0,
+    }),
+  );
+  assetNames.add(outputName);
+}
+
+function copyUpdateInfoAsset(
+  sourceFile,
+  assetName = path.basename(sourceFile),
+) {
+  writeUpdateInfoAsset(assetName, readUpdateInfo(sourceFile), sourceFile);
+}
+
+function mergeUpdateInfo(outputName, sourceFiles) {
   const updateInfos = sourceFiles.map(readUpdateInfo);
   const [baseUpdateInfo] = updateInfos;
   const version = baseUpdateInfo.version;
@@ -116,13 +188,7 @@ function mergeUpdateInfo(outputName, sourceFiles) {
     files,
   };
 
-  writeFileSync(
-    path.join(releaseUploadDir, outputName),
-    stringify(mergedUpdateInfo, {
-      lineWidth: 0,
-    }),
-  );
-  assetNames.add(outputName);
+  writeUpdateInfoAsset(outputName, mergedUpdateInfo, outputName);
 }
 
 rmSync(releaseUploadDir, { force: true, recursive: true });
@@ -142,7 +208,7 @@ mergeUpdateInfo(
   findMetadataFiles("latest-mac.yml", "macos-"),
 );
 for (const linuxMetadataFile of findLinuxMetadataFiles()) {
-  copyAsset(linuxMetadataFile);
+  copyUpdateInfoAsset(linuxMetadataFile);
 }
 
 console.log("Prepared release assets:");

@@ -172,7 +172,8 @@
     ],
     "publish": {
       "provider": "generic",
-      "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/latest/download"
+      "url": "https://github.com/soulfiremc-com/SoulFireClient/releases/latest/download",
+      "useMultipleRangeRequest": false
     },
     "linux": {
       "category": "Development",
