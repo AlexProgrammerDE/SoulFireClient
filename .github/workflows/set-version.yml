@@ -41,6 +41,20 @@ jobs:
         env:
           INPUTS_VERSION: ${{ inputs.version }}
 
+      - name: Add release to metainfo
+        run: |
+          if ! grep -q "<release version=\"${INPUTS_VERSION}\"" com.soulfiremc.soulfire.metainfo.xml; then
+            sed -i "/<releases>/a\\
+              <release version=\"${INPUTS_VERSION}\" date=\"$(date +"%Y-%m-%d")\">\\
+                <url type=\"details\">https://github.com/soulfiremc-com/SoulFireClient/releases/tag/${INPUTS_VERSION}</url>\\
+              </release>" com.soulfiremc.soulfire.metainfo.xml
+            echo "Added release ${INPUTS_VERSION} to metainfo file"
+          else
+            echo "Release version ${INPUTS_VERSION} already exists in metainfo file, skipping addition"
+          fi
+        env:
+          INPUTS_VERSION: ${{ inputs.version }}
+
       - name: Commit version
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # 7.1.0
         with:

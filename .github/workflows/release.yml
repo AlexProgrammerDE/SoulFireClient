@@ -112,9 +112,16 @@ jobs:
           path: release-artifacts/*.exe
           if-no-files-found: error
 
+      - name: Notify admin for SignPath approval
+        if: matrix.platform == 'windows'
+        uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645 # 7.0.0
+        with:
+          webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
+          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} on windows-${{ matrix.arch }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
+
       - name: Submit SignPath signing request
         if: matrix.platform == 'windows'
-        uses: signpath/github-action-submit-signing-request@v2
+        uses: signpath/github-action-submit-signing-request@b9d91eadd323de506c0c81cf0c7fe7438f3360fd # 2.2
         with:
           api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
           organization-id: e091b552-3623-4d9d-83d7-059d8f32978b
@@ -133,6 +140,10 @@ jobs:
             throw "No signed installer returned from SignPath."
           }
           Copy-Item $signedInstaller.FullName release-artifacts -Force
+
+      - name: Refresh signed Windows updater metadata
+        if: matrix.platform == 'windows'
+        run: node scripts/refresh-electron-updater-metadata.mjs release-artifacts
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # 7.0.1
@@ -206,16 +217,138 @@ jobs:
 
       - name: Generate legacy Tauri updater manifest
         env:
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY || secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD || secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: node scripts/generate-legacy-updater-assets.mjs release-artifacts ${{ inputs.app-version }}
+
+      - name: Collect release file names
+        id: release-files
+        shell: bash
+        run: |
+          find_single_file() {
+            local directory="$1"
+            local pattern="$2"
+            mapfile -t matches < <(find "$directory" -maxdepth 1 -type f -name "$pattern" -printf '%f\n' | sort)
+            if [ "${#matches[@]}" -ne 1 ]; then
+              echo "Expected exactly one $pattern file in $directory, found ${#matches[@]}" >&2
+              exit 1
+            fi
+            printf '%s' "${matches[0]}"
+          }
+
+          {
+            echo "windowsX64File=$(find_single_file release-artifacts/windows-x64 '*.exe')"
+            echo "windowsArm64File=$(find_single_file release-artifacts/windows-arm64 '*.exe')"
+            echo "macosX64DmgFile=$(find_single_file release-artifacts/macos-x64 '*.dmg')"
+            echo "macosArm64DmgFile=$(find_single_file release-artifacts/macos-arm64 '*.dmg')"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@bcae7115752d4ed746ff92feb666574428a79415 # 6.2.1
+        with:
+          mode: COMMIT
+          toTag: ${{ github.ref }}
+          configurationJson: |
+            {
+              "template": "#{{CHANGELOG}}",
+              "commit_template": "- [`#{{SHORT_MERGE_SHA}}`](https://github.com/soulfiremc-com/SoulFireClient/commit/#{{MERGE_SHA}}) #{{TITLE}}",
+              "categories": [
+                {
+                    "title": "## 🚀 Features",
+                    "labels": ["feat", "feature"]
+                },
+                {
+                    "title": "## 🐛 Fixes",
+                    "labels": ["fix", "bug"]
+                },
+                {
+                    "title": "## 🏎️ Performance",
+                    "labels": ["perf"]
+                },
+                {
+                    "title": "## 🏗 Refactor",
+                    "labels": ["refactor"]
+                },
+                {
+                    "title": "## 📝 Documentation",
+                    "labels": ["docs"]
+                },
+                {
+                    "title": "## 🔨 Build",
+                    "labels": ["build", "chore", "ci"]
+                },
+                {
+                    "title": "## 💅 Style",
+                    "labels": ["style"]
+                },
+                {
+                    "title": "## 🧪 Tests",
+                    "labels": ["test"]
+                },
+                {
+                    "title": "## 💬 Other",
+                    "labels": []
+                },
+                {
+                  "title": "## 📦 Dependencies",
+                  "labels": ["dependencies"]
+                }
+              ],
+              "empty_template": "no changes",
+              "label_extractor": [
+                {
+                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
+                  "on_property": "title",
+                  "target": "$1"
+                }
+              ],
+              "custom_placeholders": [
+                {
+                  "name": "SHORT_MERGE_SHA",
+                  "source": "MERGE_SHA",
+                  "transformer": {
+                    "pattern": "^([0-9a-f]{7})[0-9a-f]*$",
+                    "target": "$1"
+                  }
+                }
+              ]
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # 3.0.0
         with:
+          body: |
+            ## Download Links
+
+            | Platform              | Download Link |
+            |-----------------------|---------------|
+            | Windows (x86_64)      | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.release-files.outputs.windowsX64File }}) |
+            | Windows (AArch64)     | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.release-files.outputs.windowsArm64File }}) |
+            | macOS (Intel)         | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.release-files.outputs.macosX64DmgFile }}) |
+            | macOS (Apple Silicon) | [Download](https://github.com/soulfiremc-com/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.release-files.outputs.macosArm64DmgFile }}) |
+            | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+            | Linux (AArch64)       | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+
+            > [!TIP]
+            > x86_64 means Intel and AMD CPUs; AArch64 means ARM CPUs like Qualcomm Snapdragon, which are used in some laptops.
+
+            ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ inputs.app-version }}
           target_commitish: main
           token: ${{ secrets.GITHUB_TOKEN }}
           name: SoulFireClient ${{ inputs.app-version }}
-          generate_release_notes: true
+          generate_release_notes: false
           files: release-artifacts/**/*
+
+      - name: Announce new SoulFireClient release
+        uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645 # 7.0.0
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          content: <@&850705047938793503> New SoulFireClient version released!
+          embed-title: SoulFireClient ${{ inputs.app-version }}
+          embed-description: SoulFireClient ${{ inputs.app-version }} has been released! Download at https://soulfiremc.com/download and changelog at https://github.com/soulfiremc-com/SoulFireClient/releases/tag/${{ inputs.app-version }}
+          embed-color: 3312063
+          embed-thumbnail-url: https://soulfiremc.com/logo.png
