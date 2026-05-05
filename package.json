@@ -16,6 +16,7 @@
     "build:web": "vite build",
     "build:electron": "cross-env SF_ELECTRON=1 vite build && electron-builder --publish never",
     "build:electron:dir": "cross-env SF_ELECTRON=1 vite build && electron-builder --dir --publish never",
+    "build:electron:flatpak": "cross-env SF_ELECTRON=1 vite build && electron-builder --linux flatpak --publish never -c.extraMetadata.desktopName=com.soulfiremc.soulfire.desktop",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "fix": "biome check --write --unsafe",
@@ -147,6 +148,15 @@
     "appId": "com.soulfiremc.soulfire",
     "artifactName": "${productName}-${version}-${arch}.${ext}",
     "asar": true,
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "grantFileProtocolExtraPrivileges": false
+    },
     "electronUpdaterCompatibility": ">=2.16",
     "directories": {
       "output": "release-artifacts"
@@ -166,6 +176,7 @@
     },
     "linux": {
       "category": "Development",
+      "description": "Advanced Minecraft bot tool for testing, automation, and server development.",
       "desktop": {
         "entry": {
           "StartupWMClass": "soulfire",
@@ -173,12 +184,58 @@
         }
       },
       "executableName": "soulfire",
-      "icon": "build/icons",
+      "icon": "build/icons/icon.png",
       "maintainer": "SoulFire <security@soulfiremc.com>",
+      "synopsis": "Advanced Minecraft bot tool",
       "target": [
         "AppImage",
-        "deb"
-      ]
+        "deb",
+        "rpm",
+        "pacman"
+      ],
+      "vendor": "SoulFire"
+    },
+    "appImage": {
+      "license": "LICENSE"
+    },
+    "deb": {
+      "packageCategory": "devel",
+      "priority": "optional"
+    },
+    "rpm": {
+      "packageCategory": "Development/Tools"
+    },
+    "pacman": {
+      "compression": "xz"
+    },
+    "flatpak": {
+      "runtime": "org.freedesktop.Platform",
+      "runtimeVersion": "25.08",
+      "sdk": "org.freedesktop.Sdk",
+      "base": "org.electronjs.Electron2.BaseApp",
+      "baseVersion": "25.08",
+      "branch": "stable",
+      "license": "LICENSE",
+      "files": [
+        [
+          "com.soulfiremc.soulfire.metainfo.xml",
+          "/share/metainfo/com.soulfiremc.soulfire.metainfo.xml"
+        ]
+      ],
+      "finishArgs": [
+        "--share=ipc",
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--device=dri",
+        "--socket=pulseaudio",
+        "--share=network",
+        "--filesystem=home",
+        "--talk-name=org.freedesktop.Notifications",
+        "--talk-name=com.canonical.Unity",
+        "--env=ELECTRON_TRASH=gio",
+        "--env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons"
+      ],
+      "useWaylandFlags": true
     },
     "mac": {
       "category": "public.app-category.developer-tools",

@@ -100,6 +100,10 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Install Linux packaging dependencies
+        if: matrix.platform == 'linux'
+        run: sudo apt-get update && sudo apt-get install --yes libarchive-tools rpm
+
       - name: Build Electron release artifacts
         run: pnpm build:electron -- --${{ matrix.arch }} -c.extraMetadata.version=${{ inputs.app-version }}
 
@@ -152,6 +156,8 @@ jobs:
           path: |
             release-artifacts/*.AppImage
             release-artifacts/*.deb
+            release-artifacts/*.pacman
+            release-artifacts/*.rpm
             release-artifacts/*.dmg
             release-artifacts/*.exe
             release-artifacts/*.zip
