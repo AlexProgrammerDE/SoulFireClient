@@ -84,6 +84,11 @@ export function startUpdater(): void {
   });
   autoUpdater.on("update-downloaded", (info) => {
     electronLog.info("Update downloaded, installing now", info);
+    if (process.platform === "win32") {
+      autoUpdater.quitAndInstall(true, true);
+      return;
+    }
+
     autoUpdater.quitAndInstall();
   });
   autoUpdater.on("error", (error) => {

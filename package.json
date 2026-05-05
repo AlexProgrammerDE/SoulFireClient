@@ -190,7 +190,7 @@
       ]
     },
     "nsis": {
-      "oneClick": false,
+      "oneClick": true,
       "perMachine": false
     },
     "productName": "SoulFire",
