@@ -101,5 +101,13 @@ export default defineConfig({
     target: isElectron ? "chrome128" : "es2020",
     minify: "esbuild",
     sourcemap: isDev,
+    rolldownOptions: {
+      checks: {
+        circularDependency: true,
+      },
+      output: {
+        strictExecutionOrder: true,
+      },
+    },
   },
 });
