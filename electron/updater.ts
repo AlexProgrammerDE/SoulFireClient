@@ -6,14 +6,12 @@ const { autoUpdater } = electronUpdater;
 
 function normalizeUpdaterPlatform(
   platformName: NodeJS.Platform,
-): string | null {
+): NodeJS.Platform | null {
   switch (platformName) {
     case "darwin":
-      return "macos";
     case "linux":
-      return "linux";
     case "win32":
-      return "windows";
+      return platformName;
     default:
       return null;
   }
@@ -30,14 +28,20 @@ function normalizeUpdaterArch(archName: string): string | null {
   }
 }
 
-function getUpdaterChannel(): string | null {
+function getUpdaterTarget(): {
+  arch: string;
+  platform: NodeJS.Platform;
+} | null {
   const platformName = normalizeUpdaterPlatform(process.platform);
   const archName = normalizeUpdaterArch(process.arch);
   if (platformName === null || archName === null) {
     return null;
   }
 
-  return `${platformName}-${archName}`;
+  return {
+    arch: archName,
+    platform: platformName,
+  };
 }
 
 export function startUpdater(): void {
@@ -49,8 +53,8 @@ export function startUpdater(): void {
     return;
   }
 
-  const updaterChannel = getUpdaterChannel();
-  if (updaterChannel === null) {
+  const updaterTarget = getUpdaterTarget();
+  if (updaterTarget === null) {
     electronLog.warn(
       "Skipping updater because the current platform/arch is unsupported",
       {
@@ -65,12 +69,9 @@ export function startUpdater(): void {
   autoUpdater.logger = electronLog;
   autoUpdater.autoDownload = true;
   autoUpdater.autoInstallOnAppQuit = false;
-  autoUpdater.channel = updaterChannel;
 
   autoUpdater.on("checking-for-update", () => {
-    electronLog.info("Checking for updates", {
-      channel: updaterChannel,
-    });
+    electronLog.info("Checking for updates", updaterTarget);
   });
   autoUpdater.on("update-available", (info) => {
     electronLog.info("Update available", info);

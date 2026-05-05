@@ -101,7 +101,7 @@ jobs:
         run: pnpm typecheck
 
       - name: Build Electron release artifacts
-        run: pnpm build:electron -- --${{ matrix.arch }} -c.publish.channel=${{ matrix.platform }}-${{ matrix.arch }} -c.extraMetadata.version=${{ inputs.app-version }}
+        run: pnpm build:electron -- --${{ matrix.arch }} -c.extraMetadata.version=${{ inputs.app-version }}
 
       - name: Upload unsigned Windows installer
         if: matrix.platform == 'windows'
@@ -179,6 +179,9 @@ jobs:
         with:
           version: latest
 
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Download Linux x64 artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # 8.0.1
         with:
@@ -242,6 +245,9 @@ jobs:
             echo "macosX64DmgFile=$(find_single_file release-artifacts/macos-x64 '*.dmg')"
             echo "macosArm64DmgFile=$(find_single_file release-artifacts/macos-arm64 '*.dmg')"
           } >> "$GITHUB_OUTPUT"
+
+      - name: Prepare GitHub release assets
+        run: node scripts/prepare-electron-release-assets.mjs release-artifacts release-upload
 
       - name: Build changelog
         id: github_release
@@ -341,7 +347,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: SoulFireClient ${{ inputs.app-version }}
           generate_release_notes: false
-          files: release-artifacts/**/*
+          files: release-upload/*
 
       - name: Announce new SoulFireClient release
         uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645 # 7.0.0
