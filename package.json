@@ -122,7 +122,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/urijs": "^1.19.26",
     "@vitejs/plugin-react": "^6.0.1",
-    "app-builder-bin": "5.0.0-alpha.12",
+    "app-builder-bin": "5.0.0-alpha.13",
     "autoprefixer": "^10.5.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "cross-env": "^10.1.0",
