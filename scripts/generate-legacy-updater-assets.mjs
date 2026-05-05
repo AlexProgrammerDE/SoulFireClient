@@ -58,6 +58,20 @@ function findSingleFile(directory, matcher) {
   return matches[0];
 }
 
+function isNestedInAppBundle(directory, appBundlePath) {
+  const relativeParentPath = path.relative(
+    directory,
+    path.dirname(appBundlePath),
+  );
+  if (relativeParentPath === "") {
+    return false;
+  }
+
+  return relativeParentPath
+    .split(path.sep)
+    .some((segment) => segment.endsWith(".app"));
+}
+
 function createMacUpdaterArchive(zipPath, outputName) {
   const extractionDir = mkdtempSync(path.join(os.tmpdir(), "sf-updater-mac-"));
 
@@ -69,13 +83,16 @@ function createMacUpdaterArchive(zipPath, outputName) {
     const appBundles = listDirectoriesRecursive(extractionDir).filter(
       (candidate) => candidate.endsWith(".app"),
     );
-    if (appBundles.length !== 1) {
+    const topLevelAppBundles = appBundles.filter(
+      (candidate) => !isNestedInAppBundle(extractionDir, candidate),
+    );
+    if (topLevelAppBundles.length !== 1) {
       throw new Error(
-        `Expected exactly one .app bundle in ${zipPath}, found ${appBundles.length}`,
+        `Expected exactly one top-level .app bundle in ${zipPath}, found ${topLevelAppBundles.length}`,
       );
     }
 
-    const [appBundle] = appBundles;
+    const [appBundle] = topLevelAppBundles;
     const outputPath = path.join(releaseArtifactsDir, outputName);
 
     execFileSync(

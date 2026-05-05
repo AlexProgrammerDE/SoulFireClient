@@ -1,13 +1,10 @@
-import { createHash } from "node:crypto";
-import {
-  readdirSync,
-  readFileSync,
-  rmSync,
-  statSync,
-  writeFileSync,
-} from "node:fs";
+import { execFileSync } from "node:child_process";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 
+const require = createRequire(import.meta.url);
+const { appBuilderPath } = require("app-builder-bin");
 const releaseArtifactsDir = path.resolve(
   process.argv[2] ?? "release-artifacts",
 );
@@ -44,14 +41,43 @@ const signedInstallerPath = findSingleTopLevelFile(
   (name) => name.endsWith(".exe"),
 );
 const signedInstallerName = path.basename(signedInstallerPath);
-const signedInstallerContents = readFileSync(signedInstallerPath);
-const signedInstallerHash = createHash("sha512")
-  .update(signedInstallerContents)
-  .digest("base64");
-const signedInstallerSize = statSync(signedInstallerPath).size;
+const blockMapPath = `${signedInstallerPath}.blockmap`;
+const signedInstallerInfo = JSON.parse(
+  execFileSync(
+    appBuilderPath,
+    ["blockmap", "--input", signedInstallerPath, "--output", blockMapPath],
+    {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "inherit"],
+    },
+  ),
+);
+if (
+  !Number.isSafeInteger(signedInstallerInfo.size) ||
+  typeof signedInstallerInfo.sha512 !== "string"
+) {
+  throw new Error("app-builder returned invalid blockmap metadata");
+}
+const blockMapSize = statSync(blockMapPath).size;
 const metadataFiles = listFilesRecursive(releaseArtifactsDir).filter(
   (filePath) => /\.(ya?ml)$/i.test(filePath),
 );
+
+function updateBlockMapSize(metadata) {
+  if (/^\s+blockMapSize:\s*\d+$/m.test(metadata)) {
+    return metadata.replace(/^(\s+blockMapSize:\s*)\d+$/m, `$1${blockMapSize}`);
+  }
+
+  const updatedMetadata = metadata.replace(
+    /^(\s+)size:\s*\d+$/m,
+    `$1size: ${signedInstallerInfo.size}\n$1blockMapSize: ${blockMapSize}`,
+  );
+  if (updatedMetadata === metadata) {
+    throw new Error("Could not insert blockMapSize into updater metadata");
+  }
+
+  return updatedMetadata;
+}
 
 let updatedMetadataFiles = 0;
 for (const metadataFile of metadataFiles) {
@@ -60,10 +86,9 @@ for (const metadataFile of metadataFiles) {
     continue;
   }
 
-  const updatedMetadata = metadata
-    .replace(/^(\s*sha512:\s*).+$/gm, `$1${signedInstallerHash}`)
-    .replace(/^(\s*size:\s*)\d+$/gm, `$1${signedInstallerSize}`)
-    .replace(/^\s+blockMapSize:\s*\d+\r?\n/gm, "");
+  const updatedMetadata = updateBlockMapSize(metadata)
+    .replace(/^(\s*sha512:\s*).+$/gm, `$1${signedInstallerInfo.sha512}`)
+    .replace(/^(\s*size:\s*)\d+$/gm, `$1${signedInstallerInfo.size}`);
 
   writeFileSync(metadataFile, updatedMetadata);
   updatedMetadataFiles += 1;
@@ -73,10 +98,4 @@ if (updatedMetadataFiles === 0) {
   throw new Error(
     `No Electron updater metadata referenced ${signedInstallerName}`,
   );
-}
-
-for (const filePath of listFilesRecursive(releaseArtifactsDir)) {
-  if (filePath.endsWith(".exe.blockmap")) {
-    rmSync(filePath, { force: true });
-  }
 }
