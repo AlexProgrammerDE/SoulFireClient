@@ -4,15 +4,55 @@ on:
   workflow_dispatch:
     inputs:
       app-version:
-        description: "Version tag to release"
+        description: "Version to release"
+        required: true
+      server-version:
+        description: "Server version to use for release"
         required: true
 
 permissions:
   contents: write
 
 jobs:
+  set-server-version:
+    uses: soulfiremc-com/SoulFireClient/.github/workflows/set-server-version.yml@main
+    with:
+      version: ${{ inputs.server-version }}
+    secrets: inherit
+
+  set-version:
+    needs: set-server-version
+    uses: soulfiremc-com/SoulFireClient/.github/workflows/set-version.yml@main
+    with:
+      version: ${{ inputs.app-version }}
+    secrets: inherit
+
+  push-branch:
+    needs: set-version
+    name: Push Release Branch
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Push to release branch
+        uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # 1.1.0
+        with:
+          branch: release
+
+      - name: Push to demo branch
+        uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # 1.1.0
+        with:
+          branch: demo
+
   build:
     name: Build ${{ matrix.platform }} (${{ matrix.arch }})
+    needs: set-version
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -40,6 +80,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          ref: ${{ github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # 6.4.0
