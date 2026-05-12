@@ -275,8 +275,11 @@
       "@tailwindcss/oxide",
       "core-js",
       "electron",
+      "electron-winstaller",
       "esbuild",
       "msw",
+      "protobufjs",
+      "register-scheme",
       "workerd"
     ]
   }
