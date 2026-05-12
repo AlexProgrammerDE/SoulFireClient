@@ -84,11 +84,16 @@ const desktopApi: SoulFireDesktopApi = {
   },
   integratedServer: {
     getVersion: async () => invoke("integrated-server:get-version"),
+    importCustomJar: async (sourcePath) =>
+      invoke("integrated-server:import-custom-jar", sourcePath),
     kill: async () => {
       await invoke("integrated-server:kill");
     },
+    listCustomJars: async () => invoke("integrated-server:list-custom-jars"),
     onStartLog: async (callback) =>
       subscribe("integrated-server:start-log", callback),
+    removeCustomJar: async (jarId) =>
+      invoke("integrated-server:remove-custom-jar", jarId),
     resetData: async () => {
       await invoke("integrated-server:reset-data");
     },

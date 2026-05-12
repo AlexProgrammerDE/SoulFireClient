@@ -73,6 +73,24 @@ export type DesktopIntegratedServerCredentials = {
   token: string;
 };
 
+export type DesktopIntegratedServerJarSource =
+  | {
+      type: "official";
+    }
+  | {
+      jarId: string;
+      type: "custom";
+    };
+
+export type DesktopCustomSoulFireServerJar = {
+  id: string;
+  importedAt: string;
+  originalName: string;
+  path: string;
+  sha256: string;
+  size: number;
+};
+
 export interface SoulFireDesktopApi {
   app: {
     onOpenUrl: (callback: (url: string) => void) => Promise<DesktopUnlisten>;
@@ -120,10 +138,16 @@ export interface SoulFireDesktopApi {
   };
   integratedServer: {
     getVersion: () => Promise<string>;
+    importCustomJar: (
+      sourcePath: string,
+    ) => Promise<DesktopCustomSoulFireServerJar>;
     kill: () => Promise<void>;
+    listCustomJars: () => Promise<DesktopCustomSoulFireServerJar[]>;
     onStartLog: (callback: (line: string) => void) => Promise<DesktopUnlisten>;
+    removeCustomJar: (jarId: string) => Promise<void>;
     resetData: () => Promise<void>;
     run: (options: {
+      jarSource?: DesktopIntegratedServerJarSource;
       jvmArgs: string[];
     }) => Promise<DesktopIntegratedServerCredentials>;
   };

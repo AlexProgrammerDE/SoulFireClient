@@ -8,6 +8,7 @@ import {
   rename,
   rm,
   stat,
+  unlink,
   writeFile,
 } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -24,10 +25,36 @@ const AdmZip = require("adm-zip") as {
     path: string,
   ): {
     extractAllTo: (targetPath: string, overwrite?: boolean) => void;
+    getEntries: () => Array<{
+      entryName: string;
+      isDirectory: boolean;
+    }>;
   };
 };
 
 const ROOT_USER_UUID = "00000000-0000-0000-0000-000000000000";
+
+export type IntegratedServerJarSource =
+  | {
+      type: "official";
+    }
+  | {
+      jarId: string;
+      type: "custom";
+    };
+
+export type CustomSoulFireServerJar = {
+  id: string;
+  importedAt: string;
+  originalName: string;
+  path: string;
+  sha256: string;
+  size: number;
+};
+
+type CustomSoulFireServerJarIndex = {
+  jars: CustomSoulFireServerJar[];
+};
 
 export type IntegratedServerState = {
   starting: boolean;
@@ -103,6 +130,7 @@ export async function runIntegratedServer(
   app: App,
   state: IntegratedServerState,
   jvmArgs: string[],
+  jarSource: IntegratedServerJarSource,
   broadcast: (event: string, payload?: unknown) => void,
   fallbackVersion: string,
 ): Promise<string> {
@@ -124,21 +152,14 @@ export async function runIntegratedServer(
     const jvmDir = path.join(appLocalDataDir, "jvm-25");
     await ensureJvm(jvmDir, broadcast);
 
-    const jarsDir = path.join(appLocalDataDir, "jars");
-    await mkdir(jarsDir, {
-      recursive: true,
-    });
-
-    const soulFireJarName = `SoulFireDedicated-${serverVersion}.jar`;
-    const soulFireJarPath = path.join(jarsDir, soulFireJarName);
-    await ensureSoulFireJar(
-      serverVersion,
-      soulFireJarName,
-      soulFireJarPath,
-      broadcast,
-    );
-
-    const soulFireRunDir = path.join(appLocalDataDir, "soulfire");
+    const { jarPath: soulFireJarPath, runDir: soulFireRunDir } =
+      await resolveSoulFireJar(
+        app,
+        appLocalDataDir,
+        serverVersion,
+        jarSource,
+        broadcast,
+      );
     await mkdir(soulFireRunDir, {
       recursive: true,
     });
@@ -184,6 +205,232 @@ export async function runIntegratedServer(
     return `http://127.0.0.1:${availablePort}\n${token}`;
   } finally {
     state.starting = false;
+  }
+}
+
+export async function listCustomSoulFireServerJars(
+  app: App,
+): Promise<CustomSoulFireServerJar[]> {
+  const index = await readCustomJarIndex(app);
+  const existingJars = (
+    await Promise.all(
+      index.jars.map(async (jar) => ((await exists(jar.path)) ? jar : null)),
+    )
+  ).filter((jar) => jar !== null);
+
+  if (existingJars.length !== index.jars.length) {
+    await writeCustomJarIndex(app, {
+      jars: existingJars,
+    });
+  }
+
+  return [...existingJars].sort((a, b) =>
+    b.importedAt.localeCompare(a.importedAt),
+  );
+}
+
+export async function importCustomSoulFireServerJar(
+  app: App,
+  sourcePath: string,
+): Promise<CustomSoulFireServerJar> {
+  if (path.extname(sourcePath).toLowerCase() !== ".jar") {
+    throw new Error("Custom SoulFire server file must be a jar");
+  }
+
+  await validateJar(sourcePath);
+
+  const fileStat = await stat(sourcePath);
+  if (!fileStat.isFile()) {
+    throw new Error("Custom SoulFire server jar path is not a file");
+  }
+
+  const sha256 = await sha256FileHex(sourcePath);
+  const customJarsDir = getCustomJarsDir(app);
+  await mkdir(customJarsDir, {
+    recursive: true,
+  });
+
+  const jarPath = path.join(customJarsDir, `${sha256}.jar`);
+  if (!(await exists(jarPath))) {
+    await copyFile(sourcePath, jarPath);
+  }
+
+  const jar: CustomSoulFireServerJar = {
+    id: sha256,
+    importedAt: new Date().toISOString(),
+    originalName: path.basename(sourcePath),
+    path: jarPath,
+    sha256,
+    size: fileStat.size,
+  };
+  const index = await readCustomJarIndex(app);
+  await writeCustomJarIndex(app, {
+    jars: [
+      jar,
+      ...index.jars.filter((existingJar) => existingJar.id !== jar.id),
+    ],
+  });
+
+  return jar;
+}
+
+export async function removeCustomSoulFireServerJar(
+  app: App,
+  jarId: string,
+): Promise<void> {
+  const index = await readCustomJarIndex(app);
+  const jar = index.jars.find((entry) => entry.id === jarId);
+  if (jar !== undefined) {
+    await unlink(jar.path).catch((error: NodeJS.ErrnoException) => {
+      if (error.code !== "ENOENT") {
+        throw error;
+      }
+    });
+  }
+
+  await writeCustomJarIndex(app, {
+    jars: index.jars.filter((entry) => entry.id !== jarId),
+  });
+}
+
+async function resolveSoulFireJar(
+  app: App,
+  appLocalDataDir: string,
+  serverVersion: string,
+  jarSource: IntegratedServerJarSource,
+  broadcast: (event: string, payload?: unknown) => void,
+): Promise<{
+  jarPath: string;
+  runDir: string;
+}> {
+  if (jarSource.type === "custom") {
+    const jar = await findCustomSoulFireServerJar(app, jarSource.jarId);
+    if (jar === null || !(await exists(jar.path))) {
+      throw new Error("Custom SoulFire server jar is no longer available");
+    }
+
+    broadcast(
+      "integrated-server-start-log",
+      `Using custom SoulFire jar: ${jar.originalName}`,
+    );
+
+    return {
+      jarPath: jar.path,
+      runDir: path.join(appLocalDataDir, "soulfire-custom", jar.id),
+    };
+  }
+
+  const jarsDir = path.join(appLocalDataDir, "jars");
+  await mkdir(jarsDir, {
+    recursive: true,
+  });
+
+  const soulFireJarName = `SoulFireDedicated-${serverVersion}.jar`;
+  const soulFireJarPath = path.join(jarsDir, soulFireJarName);
+  await ensureSoulFireJar(
+    serverVersion,
+    soulFireJarName,
+    soulFireJarPath,
+    broadcast,
+  );
+
+  return {
+    jarPath: soulFireJarPath,
+    runDir: path.join(appLocalDataDir, "soulfire"),
+  };
+}
+
+async function findCustomSoulFireServerJar(
+  app: App,
+  jarId: string,
+): Promise<CustomSoulFireServerJar | null> {
+  const index = await readCustomJarIndex(app);
+  return index.jars.find((jar) => jar.id === jarId) ?? null;
+}
+
+function getCustomJarsDir(app: App): string {
+  return path.join(getAppLocalDataDir(app), "custom-jars");
+}
+
+function getCustomJarIndexPath(app: App): string {
+  return path.join(getCustomJarsDir(app), "index.json");
+}
+
+async function readCustomJarIndex(
+  app: App,
+): Promise<CustomSoulFireServerJarIndex> {
+  try {
+    const rawIndex = JSON.parse(
+      await readFile(getCustomJarIndexPath(app), "utf8"),
+    ) as Partial<CustomSoulFireServerJarIndex>;
+
+    return {
+      jars: Array.isArray(rawIndex.jars)
+        ? rawIndex.jars.filter(isCustomSoulFireServerJar)
+        : [],
+    };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return {
+        jars: [],
+      };
+    }
+
+    throw error;
+  }
+}
+
+async function writeCustomJarIndex(
+  app: App,
+  index: CustomSoulFireServerJarIndex,
+): Promise<void> {
+  const customJarsDir = getCustomJarsDir(app);
+  await mkdir(customJarsDir, {
+    recursive: true,
+  });
+
+  await writeFile(
+    getCustomJarIndexPath(app),
+    `${JSON.stringify(index, null, 2)}\n`,
+    "utf8",
+  );
+}
+
+function isCustomSoulFireServerJar(
+  value: unknown,
+): value is CustomSoulFireServerJar {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const jar = value as Record<string, unknown>;
+  return (
+    typeof jar.id === "string" &&
+    typeof jar.importedAt === "string" &&
+    typeof jar.originalName === "string" &&
+    typeof jar.path === "string" &&
+    typeof jar.sha256 === "string" &&
+    typeof jar.size === "number"
+  );
+}
+
+async function validateJar(jarPath: string): Promise<void> {
+  let zip: InstanceType<typeof AdmZip>;
+  try {
+    zip = new AdmZip(jarPath);
+  } catch {
+    throw new Error("Custom SoulFire server jar is not a valid jar file");
+  }
+
+  const hasManifest = zip
+    .getEntries()
+    .some(
+      (entry) =>
+        !entry.isDirectory &&
+        entry.entryName.toUpperCase() === "META-INF/MANIFEST.MF",
+    );
+  if (!hasManifest) {
+    throw new Error("Custom SoulFire server jar is missing a manifest");
   }
 }
 

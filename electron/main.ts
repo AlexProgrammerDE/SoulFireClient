@@ -30,7 +30,10 @@ import { DiscordPresenceManager } from "./native/discord";
 import {
   createIntegratedServerState,
   getSoulFireServerVersion,
+  importCustomSoulFireServerJar,
   killIntegratedServer,
+  listCustomSoulFireServerJars,
+  removeCustomSoulFireServerJar,
   resetIntegratedData,
   runIntegratedServer,
 } from "./native/integrated-server";
@@ -662,6 +665,24 @@ function registerIpcHandlers(): void {
     return getSoulFireServerVersion(app, app.getVersion());
   });
 
+  handleIpc("integrated-server:list-custom-jars", async () => {
+    return listCustomSoulFireServerJars(app);
+  });
+
+  handleIpc(
+    "integrated-server:import-custom-jar",
+    async (_window, sourcePath: string) => {
+      return importCustomSoulFireServerJar(app, sourcePath);
+    },
+  );
+
+  handleIpc(
+    "integrated-server:remove-custom-jar",
+    async (_window, jarId: string) => {
+      await removeCustomSoulFireServerJar(app, jarId);
+    },
+  );
+
   handleIpc("integrated-server:kill", async () => {
     await killIntegratedServer(integratedServerState);
   });
@@ -675,6 +696,10 @@ function registerIpcHandlers(): void {
     async (
       _window,
       options: {
+        jarSource?: {
+          jarId?: string;
+          type: "custom" | "official";
+        };
         jvmArgs: string[];
       },
     ) => {
@@ -682,6 +707,14 @@ function registerIpcHandlers(): void {
         app,
         integratedServerState,
         options.jvmArgs,
+        options.jarSource?.type === "custom" && options.jarSource.jarId
+          ? {
+              jarId: options.jarSource.jarId,
+              type: "custom",
+            }
+          : {
+              type: "official",
+            },
         (_event, payload) => {
           if (_event === "integrated-server-start-log") {
             sendToMainWindow("integrated-server:start-log", payload);

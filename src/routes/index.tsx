@@ -5,6 +5,7 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 import {
   ArrowLeftIcon,
   ClipboardIcon,
+  FileArchiveIcon,
   FlaskConicalIcon,
   HeartHandshakeIcon,
   KeyRoundIcon,
@@ -17,6 +18,8 @@ import {
   RotateCcwIcon,
   SatelliteDishIcon,
   ServerIcon,
+  Trash2Icon,
+  UploadIcon,
 } from "lucide-react";
 import { use, useCallback, useEffect, useId, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -81,6 +84,10 @@ import {
 } from "@/generated/soulfire/login_pb.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { desktop } from "@/lib/desktop.ts";
+import type {
+  DesktopCustomSoulFireServerJar,
+  DesktopIntegratedServerJarSource,
+} from "@/lib/desktop-api.ts";
 import i18n from "@/lib/i18n";
 import { SOULFIRE_LOGO_ICON, staticRouteChrome } from "@/lib/route-title.ts";
 import { getEnumKeyByValue, type SFServerType } from "@/lib/types.ts";
@@ -100,6 +107,10 @@ const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = "form-server-token";
 const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = "form-server-email";
 const LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS =
   "form-integrated-server-jvm-args";
+const LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE =
+  "form-integrated-server-jar-source";
+const LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID =
+  "form-integrated-server-custom-jar-id";
 const LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY =
   "form-mobile-integrated-server-token";
 
@@ -119,6 +130,8 @@ const tokenFormSchema = z.object({
 });
 
 const integratedServerFormSchema = z.object({
+  customJarId: z.string(),
+  jarSource: z.enum(["official", "custom"]),
   jvmArgs: z.string(),
 });
 const mobileIntegratedServerFormSchema = z.object({
@@ -140,6 +153,35 @@ type LoginFunction = (
 
 function createIntegratedLog(message: string, id: number): IntegratedLog {
   return { id, message };
+}
+
+function getStoredIntegratedServerJarSource(): DesktopIntegratedServerJarSource {
+  const jarSource = localStorage.getItem(
+    LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+  );
+  const customJarId = localStorage.getItem(
+    LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+  );
+
+  if (jarSource === "custom" && customJarId !== null && customJarId !== "") {
+    return {
+      jarId: customJarId,
+      type: "custom",
+    };
+  }
+
+  return {
+    type: "official",
+  };
+}
+
+function formatFileSize(size: number): string {
+  return new Intl.NumberFormat(undefined, {
+    maximumFractionDigits: 1,
+    style: "unit",
+    unit: size >= 1024 * 1024 ? "megabyte" : "kilobyte",
+    unitDisplay: "short",
+  }).format(size >= 1024 * 1024 ? size / 1024 / 1024 : size / 1024);
 }
 
 type AuthFlowData = {
@@ -209,6 +251,7 @@ function Index() {
           LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
         );
         const { address, token } = await desktop.integratedServer.run({
+          jarSource: getStoredIntegratedServerJarSource(),
           jvmArgs:
             args === null
               ? DEFAULT_JVM_ARGS
@@ -579,8 +622,25 @@ function IntegratedConfigureMenu({
 }) {
   const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation("login");
+  const initialCustomJarId =
+    localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID) ??
+    "";
+  const initialJarSource =
+    localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE) ===
+    "custom"
+      ? "custom"
+      : "official";
+  const [customJars, setCustomJars] = useState<
+    DesktopCustomSoulFireServerJar[]
+  >([]);
+  const [selectedJarSource, setSelectedJarSource] = useState(initialJarSource);
+  const [selectedCustomJarId, setSelectedCustomJarId] =
+    useState(initialCustomJarId);
+  const [importingCustomJar, setImportingCustomJar] = useState(false);
   const form = useForm({
     defaultValues: {
+      customJarId: initialCustomJarId,
+      jarSource: initialJarSource,
       jvmArgs:
         localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS) ??
         (systemInfo?.mobile
@@ -591,6 +651,19 @@ function IntegratedConfigureMenu({
       onSubmit: integratedServerFormSchema,
     },
     onSubmit: async () => {
+      const customJarId = localStorage.getItem(
+        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+      );
+      if (
+        !systemInfo?.mobile &&
+        localStorage.getItem(
+          LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+        ) === "custom" &&
+        (customJarId === null || customJarId === "")
+      ) {
+        return;
+      }
+
       if (systemInfo?.mobile) {
         setIntegratedState("mobile");
       } else {
@@ -599,6 +672,104 @@ function IntegratedConfigureMenu({
       }
     },
   });
+
+  useEffect(() => {
+    if (systemInfo?.mobile) {
+      return;
+    }
+
+    void desktop.integratedServer
+      .listCustomJars()
+      .then((jars) => {
+        setCustomJars(jars);
+        if (
+          selectedCustomJarId.length > 0 &&
+          !jars.some((jar) => jar.id === selectedCustomJarId)
+        ) {
+          form.setFieldValue("customJarId", "");
+          setSelectedCustomJarId("");
+          localStorage.removeItem(
+            LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [form, selectedCustomJarId, systemInfo?.mobile]);
+
+  const importCustomJar = async () => {
+    const selectedPath = await desktop.dialog.open({
+      filters: [
+        {
+          extensions: ["jar"],
+          name: t("integrated.form.jar.dialog.filter", {
+            defaultValue: "Java archive",
+          }),
+        },
+      ],
+      title: t("integrated.form.jar.dialog.title", {
+        defaultValue: "Select SoulFire server jar",
+      }),
+    });
+    if (typeof selectedPath !== "string") {
+      return;
+    }
+
+    setImportingCustomJar(true);
+    try {
+      const jar = await desktop.integratedServer.importCustomJar(selectedPath);
+      const jars = await desktop.integratedServer.listCustomJars();
+      setCustomJars(jars);
+      form.setFieldValue("jarSource", "custom");
+      form.setFieldValue("customJarId", jar.id);
+      setSelectedJarSource("custom");
+      setSelectedCustomJarId(jar.id);
+      localStorage.setItem(
+        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+        "custom",
+      );
+      localStorage.setItem(
+        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+        jar.id,
+      );
+      toast.success(
+        t("integrated.form.jar.importSuccess", {
+          defaultValue: "Imported {{name}}",
+          name: jar.originalName,
+        }),
+      );
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t("integrated.form.jar.importError", {
+              defaultValue: "Failed to import custom SoulFire jar",
+            }),
+      );
+    } finally {
+      setImportingCustomJar(false);
+    }
+  };
+
+  const removeCustomJar = async (jarId: string) => {
+    await desktop.integratedServer.removeCustomJar(jarId);
+    setCustomJars((jars) => jars.filter((jar) => jar.id !== jarId));
+    if (selectedCustomJarId === jarId) {
+      form.setFieldValue("customJarId", "");
+      form.setFieldValue("jarSource", "official");
+      setSelectedCustomJarId("");
+      setSelectedJarSource("official");
+      localStorage.removeItem(
+        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+      );
+      localStorage.setItem(
+        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+        "official",
+      );
+    }
+  };
 
   return (
     <form
@@ -667,6 +838,171 @@ function IntegratedConfigureMenu({
               );
             }}
           </form.Field>
+          {!systemInfo?.mobile && (
+            <Field>
+              <FieldLabel>
+                {t("integrated.form.jar.title", {
+                  defaultValue: "Server jar",
+                })}
+              </FieldLabel>
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  type="button"
+                  variant={
+                    selectedJarSource === "official" ? "secondary" : "outline"
+                  }
+                  onClick={() => {
+                    form.setFieldValue("jarSource", "official");
+                    setSelectedJarSource("official");
+                    localStorage.setItem(
+                      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+                      "official",
+                    );
+                  }}
+                >
+                  <ServerIcon />
+                  {t("integrated.form.jar.official", {
+                    defaultValue: "Official",
+                  })}
+                </Button>
+                <Button
+                  type="button"
+                  variant={
+                    selectedJarSource === "custom" ? "secondary" : "outline"
+                  }
+                  disabled={customJars.length === 0}
+                  onClick={() => {
+                    const jarId = selectedCustomJarId || customJars[0]?.id;
+                    form.setFieldValue("jarSource", "custom");
+                    if (jarId !== undefined) {
+                      form.setFieldValue("customJarId", jarId);
+                      setSelectedCustomJarId(jarId);
+                      localStorage.setItem(
+                        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+                        jarId,
+                      );
+                    }
+                    setSelectedJarSource("custom");
+                    localStorage.setItem(
+                      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+                      "custom",
+                    );
+                  }}
+                >
+                  <FileArchiveIcon />
+                  {t("integrated.form.jar.custom", {
+                    defaultValue: "Custom",
+                  })}
+                </Button>
+              </div>
+              <div className="flex flex-col gap-2 rounded-md border p-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-medium text-sm">
+                      {selectedJarSource === "custom"
+                        ? t("integrated.form.jar.customTitle", {
+                            defaultValue: "Custom server jar",
+                          })
+                        : t("integrated.form.jar.officialTitle", {
+                            defaultValue: "Official SoulFire server",
+                          })}
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      {selectedJarSource === "custom"
+                        ? t("integrated.form.jar.customDescription", {
+                            defaultValue:
+                              "Runs an imported jar. It is not verified or auto-updated.",
+                          })
+                        : t("integrated.form.jar.officialDescription", {
+                            defaultValue:
+                              "Downloads and verifies the matching SoulFire release.",
+                          })}
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={importingCustomJar}
+                    onClick={() => {
+                      void importCustomJar();
+                    }}
+                  >
+                    {importingCustomJar ? (
+                      <LoaderCircleIcon className="animate-spin" />
+                    ) : (
+                      <UploadIcon />
+                    )}
+                    {t("integrated.form.jar.import", {
+                      defaultValue: "Import",
+                    })}
+                  </Button>
+                </div>
+                {customJars.length > 0 && (
+                  <div className="flex flex-col gap-2">
+                    {customJars.map((jar) => (
+                      <div
+                        key={jar.id}
+                        className="flex items-center justify-between gap-3 rounded-md bg-muted px-3 py-2"
+                      >
+                        <button
+                          type="button"
+                          className="min-w-0 flex-1 text-left"
+                          onClick={() => {
+                            form.setFieldValue("jarSource", "custom");
+                            form.setFieldValue("customJarId", jar.id);
+                            setSelectedJarSource("custom");
+                            setSelectedCustomJarId(jar.id);
+                            localStorage.setItem(
+                              LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+                              "custom",
+                            );
+                            localStorage.setItem(
+                              LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+                              jar.id,
+                            );
+                          }}
+                        >
+                          <span className="block truncate font-medium text-sm">
+                            {jar.originalName}
+                          </span>
+                          <span className="block truncate text-muted-foreground text-xs">
+                            {formatFileSize(jar.size)} -{" "}
+                            {jar.sha256.slice(0, 12)}
+                          </span>
+                        </button>
+                        {selectedCustomJarId === jar.id && (
+                          <span className="text-muted-foreground text-xs">
+                            {t("integrated.form.jar.selected", {
+                              defaultValue: "Selected",
+                            })}
+                          </span>
+                        )}
+                        <Button
+                          type="button"
+                          size="icon"
+                          variant="ghost"
+                          onClick={() => {
+                            void removeCustomJar(jar.id);
+                          }}
+                        >
+                          <Trash2Icon />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {selectedJarSource === "custom" &&
+                selectedCustomJarId.length === 0 && (
+                  <FieldDescription>
+                    {t("integrated.form.jar.selectCustomFirst", {
+                      defaultValue:
+                        "Import and select a custom jar before starting.",
+                    })}
+                  </FieldDescription>
+                )}
+            </Field>
+          )}
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button
@@ -680,7 +1016,12 @@ function IntegratedConfigureMenu({
             <ArrowLeftIcon />
             {t("integrated.form.back")}
           </Button>
-          <Button type="submit">
+          <Button
+            type="submit"
+            disabled={
+              selectedJarSource === "custom" && selectedCustomJarId.length === 0
+            }
+          >
             <PlayIcon />
             {t("integrated.form.start")}
           </Button>

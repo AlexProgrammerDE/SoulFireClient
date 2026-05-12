@@ -2,10 +2,12 @@ import type {
   DesktopCastDevice,
   DesktopCastDisconnectedEvent,
   DesktopCastRemovedEvent,
+  DesktopCustomSoulFireServerJar,
   DesktopFsEntry,
   DesktopFsWatchEvent,
   DesktopFsWatchOptions,
   DesktopIntegratedServerCredentials,
+  DesktopIntegratedServerJarSource,
   DesktopMkdirOptions,
   DesktopOpenDialogOptions,
   DesktopSaveDialogOptions,
@@ -130,16 +132,30 @@ export const desktop = {
     async getVersion(): Promise<string> {
       return requireDesktopRuntime().integratedServer.getVersion();
     },
+    async importCustomJar(
+      sourcePath: string,
+    ): Promise<DesktopCustomSoulFireServerJar> {
+      return requireDesktopRuntime().integratedServer.importCustomJar(
+        sourcePath,
+      );
+    },
     async kill(): Promise<void> {
       await requireDesktopRuntime().integratedServer.kill();
     },
+    async listCustomJars(): Promise<DesktopCustomSoulFireServerJar[]> {
+      return requireDesktopRuntime().integratedServer.listCustomJars();
+    },
     async onStartLog(callback: (line: string) => void): Promise<() => void> {
       return requireDesktopRuntime().integratedServer.onStartLog(callback);
+    },
+    async removeCustomJar(jarId: string): Promise<void> {
+      await requireDesktopRuntime().integratedServer.removeCustomJar(jarId);
     },
     async resetData(): Promise<void> {
       await requireDesktopRuntime().integratedServer.resetData();
     },
     async run(options: {
+      jarSource?: DesktopIntegratedServerJarSource;
       jvmArgs: string[];
     }): Promise<DesktopIntegratedServerCredentials> {
       return requireDesktopRuntime().integratedServer.run(options);
