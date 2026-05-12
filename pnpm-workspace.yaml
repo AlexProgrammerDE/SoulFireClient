@@ -1,3 +1,17 @@
+allowBuilds:
+  "@biomejs/biome": true
+  "@bufbuild/buf": true
+  "@swc/core": true
+  "@tailwindcss/oxide": true
+  core-js: true
+  electron: true
+  electron-winstaller: true
+  esbuild: true
+  msw: true
+  protobufjs: true
+  register-scheme: true
+  workerd: true
+
 onlyBuiltDependencies:
   - "@biomejs/biome"
   - "@bufbuild/buf"
