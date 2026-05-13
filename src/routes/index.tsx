@@ -51,9 +51,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Field,
+  FieldContent,
   FieldDescription,
   FieldError,
   FieldLabel,
+  FieldTitle,
 } from "@/components/ui/field.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import {
@@ -76,6 +78,7 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item.tsx";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group.tsx";
 import { Scroller } from "@/components/ui/scroller.tsx";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group.tsx";
 import {
@@ -650,16 +653,11 @@ function IntegratedConfigureMenu({
     validators: {
       onSubmit: integratedServerFormSchema,
     },
-    onSubmit: async () => {
-      const customJarId = localStorage.getItem(
-        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
-      );
+    onSubmit: async ({ value }) => {
       if (
         !systemInfo?.mobile &&
-        localStorage.getItem(
-          LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
-        ) === "custom" &&
-        (customJarId === null || customJarId === "")
+        value.jarSource === "custom" &&
+        !customJars.some((jar) => jar.id === value.customJarId)
       ) {
         return;
       }
@@ -758,17 +756,65 @@ function IntegratedConfigureMenu({
     setCustomJars((jars) => jars.filter((jar) => jar.id !== jarId));
     if (selectedCustomJarId === jarId) {
       form.setFieldValue("customJarId", "");
-      form.setFieldValue("jarSource", "official");
+      form.setFieldValue("jarSource", "custom");
       setSelectedCustomJarId("");
-      setSelectedJarSource("official");
+      setSelectedJarSource("custom");
       localStorage.removeItem(
         LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
       );
       localStorage.setItem(
         LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
-        "official",
+        "custom",
       );
     }
+  };
+
+  const hasSelectedCustomJar = customJars.some(
+    (jar) => jar.id === selectedCustomJarId,
+  );
+  const isCustomJarStartBlocked =
+    selectedJarSource === "custom" && !hasSelectedCustomJar;
+
+  const selectOfficialJarSource = () => {
+    form.setFieldValue("jarSource", "official");
+    setSelectedJarSource("official");
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+      "official",
+    );
+  };
+
+  const selectCustomJarSource = () => {
+    const jarId = selectedCustomJarId || customJars[0]?.id;
+    form.setFieldValue("jarSource", "custom");
+    if (jarId !== undefined) {
+      form.setFieldValue("customJarId", jarId);
+      setSelectedCustomJarId(jarId);
+      localStorage.setItem(
+        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+        jarId,
+      );
+    }
+    setSelectedJarSource("custom");
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+      "custom",
+    );
+  };
+
+  const selectCustomJar = (jarId: string) => {
+    form.setFieldValue("jarSource", "custom");
+    form.setFieldValue("customJarId", jarId);
+    setSelectedJarSource("custom");
+    setSelectedCustomJarId(jarId);
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
+      "custom",
+    );
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
+      jarId,
+    );
   };
 
   return (
@@ -851,14 +897,7 @@ function IntegratedConfigureMenu({
                   variant={
                     selectedJarSource === "official" ? "secondary" : "outline"
                   }
-                  onClick={() => {
-                    form.setFieldValue("jarSource", "official");
-                    setSelectedJarSource("official");
-                    localStorage.setItem(
-                      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
-                      "official",
-                    );
-                  }}
+                  onClick={selectOfficialJarSource}
                 >
                   <ServerIcon />
                   {t("integrated.form.jar.official", {
@@ -870,24 +909,7 @@ function IntegratedConfigureMenu({
                   variant={
                     selectedJarSource === "custom" ? "secondary" : "outline"
                   }
-                  disabled={customJars.length === 0}
-                  onClick={() => {
-                    const jarId = selectedCustomJarId || customJars[0]?.id;
-                    form.setFieldValue("jarSource", "custom");
-                    if (jarId !== undefined) {
-                      form.setFieldValue("customJarId", jarId);
-                      setSelectedCustomJarId(jarId);
-                      localStorage.setItem(
-                        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
-                        jarId,
-                      );
-                    }
-                    setSelectedJarSource("custom");
-                    localStorage.setItem(
-                      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
-                      "custom",
-                    );
-                  }}
+                  onClick={selectCustomJarSource}
                 >
                   <FileArchiveIcon />
                   {t("integrated.form.jar.custom", {
@@ -919,88 +941,72 @@ function IntegratedConfigureMenu({
                           })}
                     </p>
                   </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    disabled={importingCustomJar}
-                    onClick={() => {
-                      void importCustomJar();
-                    }}
-                  >
-                    {importingCustomJar ? (
-                      <LoaderCircleIcon className="animate-spin" />
-                    ) : (
-                      <UploadIcon />
-                    )}
-                    {t("integrated.form.jar.import", {
-                      defaultValue: "Import",
-                    })}
-                  </Button>
+                  {selectedJarSource === "custom" && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={importingCustomJar}
+                      onClick={() => {
+                        void importCustomJar();
+                      }}
+                    >
+                      {importingCustomJar ? (
+                        <LoaderCircleIcon className="animate-spin" />
+                      ) : (
+                        <UploadIcon />
+                      )}
+                      {t("integrated.form.jar.import", {
+                        defaultValue: "Import jar",
+                      })}
+                    </Button>
+                  )}
                 </div>
-                {customJars.length > 0 && (
-                  <div className="flex flex-col gap-2">
+                {selectedJarSource === "custom" && customJars.length > 0 && (
+                  <RadioGroup
+                    value={selectedCustomJarId}
+                    onValueChange={selectCustomJar}
+                  >
                     {customJars.map((jar) => (
-                      <div
-                        key={jar.id}
-                        className="flex items-center justify-between gap-3 rounded-md bg-muted px-3 py-2"
-                      >
-                        <button
-                          type="button"
-                          className="min-w-0 flex-1 text-left"
-                          onClick={() => {
-                            form.setFieldValue("jarSource", "custom");
-                            form.setFieldValue("customJarId", jar.id);
-                            setSelectedJarSource("custom");
-                            setSelectedCustomJarId(jar.id);
-                            localStorage.setItem(
-                              LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JAR_SOURCE,
-                              "custom",
-                            );
-                            localStorage.setItem(
-                              LOCAL_STORAGE_FORM_INTEGRATED_SERVER_CUSTOM_JAR_ID,
-                              jar.id,
-                            );
-                          }}
-                        >
-                          <span className="block truncate font-medium text-sm">
-                            {jar.originalName}
-                          </span>
-                          <span className="block truncate text-muted-foreground text-xs">
-                            {formatFileSize(jar.size)} -{" "}
-                            {jar.sha256.slice(0, 12)}
-                          </span>
-                        </button>
-                        {selectedCustomJarId === jar.id && (
-                          <span className="text-muted-foreground text-xs">
-                            {t("integrated.form.jar.selected", {
-                              defaultValue: "Selected",
-                            })}
-                          </span>
-                        )}
-                        <Button
-                          type="button"
-                          size="icon"
-                          variant="ghost"
-                          onClick={() => {
-                            void removeCustomJar(jar.id);
-                          }}
-                        >
-                          <Trash2Icon />
-                        </Button>
+                      <div key={jar.id} className="flex items-center gap-2">
+                        <FieldLabel className="min-w-0 flex-1" htmlFor={jar.id}>
+                          <Field orientation="horizontal">
+                            <RadioGroupItem id={jar.id} value={jar.id} />
+                            <FieldContent>
+                              <FieldTitle className="truncate">
+                                {jar.originalName}
+                              </FieldTitle>
+                              <FieldDescription className="truncate text-xs">
+                                {formatFileSize(jar.size)} -{" "}
+                                {jar.sha256.slice(0, 12)}
+                              </FieldDescription>
+                            </FieldContent>
+                            <Button
+                              type="button"
+                              size="icon"
+                              variant="ghost"
+                              onClick={(event) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                void removeCustomJar(jar.id);
+                              }}
+                            >
+                              <Trash2Icon />
+                            </Button>
+                          </Field>
+                        </FieldLabel>
                       </div>
                     ))}
-                  </div>
+                  </RadioGroup>
                 )}
               </div>
-              {selectedJarSource === "custom" &&
-                selectedCustomJarId.length === 0 && (
-                  <FieldDescription>
-                    {t("integrated.form.jar.selectCustomFirst", {
-                      defaultValue:
-                        "Import and select a custom jar before starting.",
-                    })}
-                  </FieldDescription>
-                )}
+              {selectedJarSource === "custom" && !hasSelectedCustomJar && (
+                <FieldDescription>
+                  {t("integrated.form.jar.selectCustomFirst", {
+                    defaultValue:
+                      "Import and select a custom jar before starting.",
+                  })}
+                </FieldDescription>
+              )}
             </Field>
           )}
         </CardContent>
@@ -1016,12 +1022,7 @@ function IntegratedConfigureMenu({
             <ArrowLeftIcon />
             {t("integrated.form.back")}
           </Button>
-          <Button
-            type="submit"
-            disabled={
-              selectedJarSource === "custom" && selectedCustomJarId.length === 0
-            }
-          >
+          <Button type="submit" disabled={isCustomJarStartBlocked}>
             <PlayIcon />
             {t("integrated.form.start")}
           </Button>

@@ -20,7 +20,6 @@ import { useTranslation } from "react-i18next";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { ButtonGroup } from "@/components/ui/button-group.tsx";
 import { useCurrentRouteChrome } from "@/hooks/use-current-route-title.ts";
 import { useShouldShowWindowTitlebar } from "@/hooks/use-window-titlebar.ts";
 import { desktop, isDesktopApp } from "@/lib/desktop.ts";
@@ -30,7 +29,7 @@ const titlebarClassName =
   "window-topbar border-sidebar-border bg-sidebar text-sidebar-foreground grid h-(--titlebar-height) shrink-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-stretch border-b";
 
 const titlebarButtonClassName =
-  "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:text-sidebar-foreground/35 disabled:hover:bg-transparent size-7 shadow-none transition-colors";
+  "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground disabled:text-sidebar-foreground/35 disabled:hover:bg-transparent m-0 h-full w-8 rounded-none! p-0 shadow-none transition-colors";
 
 type TitlebarLink = {
   title: string;
@@ -61,7 +60,7 @@ function TitlebarExternalLinks() {
   ];
 
   return (
-    <ButtonGroup className="items-center">
+    <div className="flex h-full items-center">
       {items.map((item) => (
         <Button
           key={item.title}
@@ -76,7 +75,7 @@ function TitlebarExternalLinks() {
           <item.icon className="size-3.5" />
         </Button>
       ))}
-    </ButtonGroup>
+    </div>
   );
 }
 
@@ -159,7 +158,7 @@ function WindowControls() {
   }
 
   return (
-    <ButtonGroup className="window-topbar-no-drag items-center">
+    <div className="window-topbar-no-drag flex h-full items-center">
       <Button
         className={titlebarButtonClassName}
         size="icon-xs"
@@ -198,7 +197,7 @@ function WindowControls() {
       >
         <XIcon className="size-3.5" />
       </Button>
-    </ButtonGroup>
+    </div>
   );
 }
 
@@ -226,9 +225,12 @@ export function WindowTitlebar() {
   }
 
   return (
-    <header className={titlebarClassName}>
+    <header
+      data-app-drag-region={desktopApp ? "" : undefined}
+      className={titlebarClassName}
+    >
       {desktopApp && (
-        <ButtonGroup className="window-topbar-no-drag col-start-1 items-center justify-self-start px-2">
+        <div className="window-topbar-no-drag col-start-1 flex h-full items-center justify-self-start px-0">
           <Button
             className={titlebarButtonClassName}
             size="icon-xs"
@@ -242,7 +244,7 @@ export function WindowTitlebar() {
             <ChevronLeftIcon className="size-3.5" />
           </Button>
           <Button
-            className="window-topbar-button"
+            className={titlebarButtonClassName}
             size="icon-xs"
             type="button"
             variant="ghost"
@@ -253,7 +255,7 @@ export function WindowTitlebar() {
           >
             <ChevronRightIcon className="size-3.5" />
           </Button>
-        </ButtonGroup>
+        </div>
       )}
       <div
         data-app-drag-region={desktopApp ? "" : undefined}
@@ -281,7 +283,7 @@ export function WindowTitlebar() {
           </p>
         </div>
       </div>
-      <div className="window-topbar-no-drag col-start-3 flex items-center justify-self-end gap-2 px-2">
+      <div className="window-topbar-no-drag col-start-3 flex h-full items-center justify-self-end gap-0 px-0">
         <TitlebarExternalLinks />
         <WindowControls />
       </div>
