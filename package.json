@@ -106,7 +106,7 @@
     "@bufbuild/protoc-gen-es": "^2.11.0",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tailwindcss/postcss": "^4.2.2",
-    "@tanstack/devtools-vite": "^0.6.0",
+    "@tanstack/devtools-vite": "^0.7.0",
     "@tanstack/react-devtools": "^0.10.2",
     "@tanstack/react-form-devtools": "^0.2.21",
     "@tanstack/react-router": "^1.168.22",
