@@ -128,6 +128,7 @@
     "cross-env": "^10.1.0",
     "electron": "^41.5.0",
     "electron-builder": "^26.8.1",
+    "esbuild": "^0.28.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.0",
     "postcss": "^8.5.10",
