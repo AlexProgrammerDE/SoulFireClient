@@ -1,7 +1,7 @@
 import { createRequire } from "node:module";
 
 const require = createRequire(__filename);
-const DiscordRpc = require("discord-rpc") as {
+const DiscordRpc = require("@xhayper/discord-rpc") as {
   Client: new (options: {
     transport: "ipc";
   }) => {
