@@ -105,7 +105,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --yes libarchive-tools rpm
 
       - name: Build Electron release artifacts
-        run: pnpm build:electron -- --${{ matrix.arch }} -c.extraMetadata.version=${{ inputs.app-version }}
+        run: pnpm build:electron -- --${{ matrix.arch }} --config.extraMetadata.version=${{ inputs.app-version }}
 
       - name: Upload unsigned Windows installer
         if: matrix.platform == 'windows'
